@@ -132,6 +132,7 @@
 <span id="132">132</span>
 <span id="133">133</span>
 <span id="134">134</span>
+<span id="135">135</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">AsRef</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CString</span>;
@@ -150,6 +151,7 @@
     <span class="ident">Module</span>,
 }
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Spec</span> {
     <span class="ident">name</span>: <span class="ident">String</span>,
     <span class="ident">cstring</span>: <span class="ident">CString</span>,

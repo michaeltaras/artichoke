@@ -142,7 +142,7 @@
     <span class="comment">// lot of garbage on startup. Eagerly initialize the interpreter to provide</span>
     <span class="comment">// predictable initialization behavior.</span>
     <span class="kw">let</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>();
-    <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ArtichokeError</span>::<span class="ident">New</span>)<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>();
     <span class="ident">arena</span>.<span class="ident">restore</span>();
 
     <span class="ident">interp</span>.<span class="ident">enable_gc</span>();

@@ -188,116 +188,14 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">def</span>::{<span class="ident">EnclosingRubyScope</span>, <span class="ident">Free</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::<span class="ident">Context</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>::<span class="ident">Filesystem</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">module</span>;
@@ -308,8 +206,8 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">State</span> {
     <span class="kw">pub</span> <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="kw">pub</span> <span class="ident">ctx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrbc_context</span>,
-    <span class="ident">classes</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">TypeId</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">modules</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">TypeId</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">classes</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">TypeId</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">modules</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">TypeId</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">Filesystem</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">context_stack</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Context</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">active_regexp_globals</span>: <span class="ident">usize</span>,
@@ -415,139 +313,43 @@
     <span class="doccomment">/// have the same lifetime as the [`State`] because the class def owns the</span>
     <span class="doccomment">/// `mrb_data_type` for the type, which must be long-lived. Class defs are</span>
     <span class="doccomment">/// stored by [`TypeId`] of `T`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Internally, [`class::Spec`]s are stored in an `Rc&lt;RefCell&lt;_&gt;&gt;` which</span>
-    <span class="doccomment">/// allows class specs to have multiple owners, such as being a super class</span>
-    <span class="doccomment">/// or an enclosing scope for a class or a module. To mutate the class spec,</span>
-    <span class="doccomment">/// call `borrow_mut` on the return value of this method to get a mutable</span>
-    <span class="doccomment">/// reference to the class spec.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Class specs can also be retrieved from the state after creation with</span>
-    <span class="doccomment">/// [`State::class_spec`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The recommended pattern for using `def_class` looks like this:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate artichoke_backend;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// use artichoke_backend::convert::Convert;</span>
-    <span class="doccomment">/// use artichoke_backend::def::{ClassLike, Define};</span>
-    <span class="doccomment">/// use artichoke_backend::sys;</span>
-    <span class="doccomment">/// use artichoke_backend::value::Value;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// extern &quot;C&quot; fn value(mrb: *mut sys::mrb_state, _slf: sys::mrb_value) -&gt; sys::mrb_value</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let interp = unsafe { unwrap_interpreter!(mrb) };</span>
-    <span class="doccomment">///     let result: Value = interp.convert(29);</span>
-    <span class="doccomment">///     result.inner()</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// fn main() {</span>
-    <span class="doccomment">///     let interp = artichoke_backend::interpreter().expect(&quot;init&quot;);</span>
-    <span class="doccomment">///     let spec = {</span>
-    <span class="doccomment">///         let mut api = interp.0.borrow_mut();</span>
-    <span class="doccomment">///         let spec = api.def_class::&lt;()&gt;(&quot;Container&quot;, None, None);</span>
-    <span class="doccomment">///         spec.borrow_mut().add_method(&quot;value&quot;, value, sys::mrb_args_none());</span>
-    <span class="doccomment">///         spec.borrow_mut().add_self_method(&quot;value&quot;, value, sys::mrb_args_none());</span>
-    <span class="doccomment">///         spec.borrow_mut().mrb_value_is_rust_backed(true);</span>
-    <span class="doccomment">///         spec</span>
-    <span class="doccomment">///     };</span>
-    <span class="doccomment">///     spec.borrow().define(&amp;interp).expect(&quot;class install&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_class</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Any</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
-        <span class="ident">free</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Free</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="ident">name</span>, <span class="ident">enclosing_scope</span>, <span class="ident">free</span>);
-        <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">spec</span>));
-        <span class="self">self</span>.<span class="ident">classes</span>.<span class="ident">insert</span>(<span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">Rc</span>::<span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="ident">spec</span>));
-        <span class="ident">spec</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_class</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spec</span>: <span class="ident">class</span>::<span class="ident">Spec</span>)
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Any</span>,
+    {
+        <span class="self">self</span>.<span class="ident">classes</span>.<span class="ident">insert</span>(<span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">spec</span>));
     }
 
     <span class="doccomment">/// Retrieve a class definition from the state bound to Rust type `T`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function returns `None` if type `T` has not had a class spec</span>
     <span class="doccomment">/// registered for it using [`State::def_class`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Internally, [`class::Spec`]s are stored in an `Rc&lt;RefCell&lt;_&gt;&gt;` which</span>
-    <span class="doccomment">/// allows class specs to have multiple owners, such as being a super class</span>
-    <span class="doccomment">/// or an enclosing scope for a class or a module. To mutate the class spec,</span>
-    <span class="doccomment">/// call `borrow_mut` on the return value of this method to get a mutable</span>
-    <span class="doccomment">/// reference to the class spec.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">class_spec</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Any</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">classes</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()).<span class="ident">map</span>(<span class="ident">Rc</span>::<span class="ident">clone</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">class_spec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Any</span>,
+    {
+        <span class="self">self</span>.<span class="ident">classes</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()).<span class="ident">map</span>(<span class="ident">Box</span>::<span class="ident">as_ref</span>)
     }
 
     <span class="doccomment">/// Create a module definition bound to a Rust type `T`. Module definitions</span>
     <span class="doccomment">/// have the same lifetime as the [`State`]. Module defs are stored by</span>
     <span class="doccomment">/// [`TypeId`] of `T`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Internally, [`module::Spec`]s are stored in an `Rc&lt;RefCell&lt;_&gt;&gt;` which</span>
-    <span class="doccomment">/// allows module specs to have multiple owners, such as being an enclosing</span>
-    <span class="doccomment">/// scope for a class or a module. To mutate the module spec, call</span>
-    <span class="doccomment">/// `borrow_mut` on the return value of this method to get a mutable</span>
-    <span class="doccomment">/// reference to the module spec.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Module specs can also be retrieved from the state after creation with</span>
-    <span class="doccomment">/// [`State::module_spec`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The recommended pattern for using `def_module` looks like this:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// #[macro_use]</span>
-    <span class="doccomment">/// extern crate artichoke_backend;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// use artichoke_backend::convert::Convert;</span>
-    <span class="doccomment">/// use artichoke_backend::def::{ClassLike, Define};</span>
-    <span class="doccomment">/// use artichoke_backend::sys;</span>
-    <span class="doccomment">/// use artichoke_backend::value::Value;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// extern &quot;C&quot; fn value(mrb: *mut sys::mrb_state, _slf: sys::mrb_value) -&gt; sys::mrb_value</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let interp = unsafe { unwrap_interpreter!(mrb) };</span>
-    <span class="doccomment">///     let result: Value = interp.convert(29);</span>
-    <span class="doccomment">///     result.inner()</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// fn main() {</span>
-    <span class="doccomment">///     let interp = artichoke_backend::interpreter().expect(&quot;init&quot;);</span>
-    <span class="doccomment">///     let spec = {</span>
-    <span class="doccomment">///         let mut api = interp.0.borrow_mut();</span>
-    <span class="doccomment">///         let spec = api.def_module::&lt;()&gt;(&quot;Container&quot;, None);</span>
-    <span class="doccomment">///         spec.borrow_mut().add_method(&quot;value&quot;, value, sys::mrb_args_none());</span>
-    <span class="doccomment">///         spec.borrow_mut().add_self_method(&quot;value&quot;, value, sys::mrb_args_none());</span>
-    <span class="doccomment">///         spec</span>
-    <span class="doccomment">///     };</span>
-    <span class="doccomment">///     spec.borrow().define(&amp;interp).expect(&quot;class install&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Any</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="ident">name</span>, <span class="ident">enclosing_scope</span>);
-        <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">spec</span>));
-        <span class="self">self</span>.<span class="ident">modules</span>.<span class="ident">insert</span>(<span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">Rc</span>::<span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="ident">spec</span>));
-        <span class="ident">spec</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_module</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spec</span>: <span class="ident">module</span>::<span class="ident">Spec</span>)
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Any</span>,
+    {
+        <span class="self">self</span>.<span class="ident">modules</span>.<span class="ident">insert</span>(<span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">spec</span>));
     }
 
     <span class="doccomment">/// Retrieve a module definition from the state bound to Rust type `T`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function returns `None` if type `T` has not had a class spec</span>
     <span class="doccomment">/// registered for it using [`State::def_module`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Internally, [`module::Spec`]s are stored in an `Rc&lt;RefCell&lt;_&gt;&gt;` which</span>
-    <span class="doccomment">/// allows module specs to have multiple owners, such as being an enclosing</span>
-    <span class="doccomment">/// scope for a class or a module. To mutate the module spec, call</span>
-    <span class="doccomment">/// `borrow_mut` on the return value of this method to get a mutable</span>
-    <span class="doccomment">/// reference to the module spec.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">module_spec</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Any</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">modules</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()).<span class="ident">map</span>(<span class="ident">Rc</span>::<span class="ident">clone</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">module_spec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Any</span>,
+    {
+        <span class="self">self</span>.<span class="ident">modules</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()).<span class="ident">map</span>(<span class="ident">Box</span>::<span class="ident">as_ref</span>)
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sym_intern</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sym</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sym</span>

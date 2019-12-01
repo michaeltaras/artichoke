@@ -188,6 +188,13 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -284,6 +291,13 @@
         <span class="comment">// backtrace = exception.backtrace</span>
         <span class="comment">// ```</span>
         <span class="kw">let</span> <span class="ident">exception</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_value</span>(<span class="ident">exc</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) });
+        <span class="comment">// Sometimes when hacking on extn/core it is possible to enter a crash</span>
+        <span class="comment">// loop where an exception is captured by this handler, but extracting</span>
+        <span class="comment">// the exception name or backtrace throws again. Uncommenting the</span>
+        <span class="comment">// folllowing print statement will at least get you the exception class</span>
+        <span class="comment">// and message, which should help debugging.</span>
+        <span class="comment">//</span>
+        <span class="comment">// println!(&quot;{:?}&quot;, exception);</span>
         <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">exception</span>
             .<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>(<span class="string">&quot;class&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>)
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">exception</span><span class="op">|</span> <span class="ident">exception</span>.<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>));

@@ -273,6 +273,9 @@
 <span id="273">273</span>
 <span id="274">274</span>
 <span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -381,8 +384,9 @@
 <span class="doccomment">//! #[macro_use]</span>
 <span class="doccomment">//! extern crate artichoke_backend;</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! use artichoke_backend::class;</span>
 <span class="doccomment">//! use artichoke_backend::convert::{Convert, RustBackedValue, TryConvert};</span>
-<span class="doccomment">//! use artichoke_backend::def::{rust_data_free, ClassLike, Define};</span>
+<span class="doccomment">//! use artichoke_backend::def;</span>
 <span class="doccomment">//! use artichoke_backend::sys;</span>
 <span class="doccomment">//! use artichoke_backend::value::Value;</span>
 <span class="doccomment">//! use artichoke_backend::{Artichoke, ArtichokeError};</span>
@@ -430,11 +434,13 @@
 <span class="doccomment">//!     type Artichoke = Artichoke;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     fn require(interp: &amp;Artichoke) -&gt; Result&lt;(), ArtichokeError&gt; {</span>
-<span class="doccomment">//!         let spec = interp.0.borrow_mut().def_class::&lt;Self&gt;(&quot;Container&quot;, None, Some(rust_data_free::&lt;Self&gt;));</span>
-<span class="doccomment">//!         spec.borrow_mut().add_method(&quot;initialize&quot;, Self::initialize, sys::mrb_args_req(1));</span>
-<span class="doccomment">//!         spec.borrow_mut().add_method(&quot;value&quot;, Self::value, sys::mrb_args_none());</span>
-<span class="doccomment">//!         spec.borrow_mut().mrb_value_is_rust_backed(true);</span>
-<span class="doccomment">//!         spec.borrow().define(&amp;interp)?;</span>
+<span class="doccomment">//!         let spec = class::Spec::new(&quot;Container&quot;, None, Some(def::rust_data_free::&lt;Self&gt;));</span>
+<span class="doccomment">//!         class::Builder::for_spec(interp, &amp;spec)</span>
+<span class="doccomment">//!             .value_is_rust_object()</span>
+<span class="doccomment">//!             .add_method(&quot;initialize&quot;, Self::initialize, sys::mrb_args_req(1))</span>
+<span class="doccomment">//!             .add_method(&quot;value&quot;, Self::value, sys::mrb_args_none())</span>
+<span class="doccomment">//!             .define()?;</span>
+<span class="doccomment">//!         interp.0.borrow_mut().def_class::&lt;Self&gt;(spec);</span>
 <span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//! }</span>
