@@ -1181,7 +1181,7 @@
         ];
 
         <span class="kw">let</span> <span class="ident">value</span>: <span class="ident">Value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">map</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;{1=&gt;2, 7=&gt;8}&quot;</span>, <span class="ident">value</span>.<span class="ident">to_s</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">to_s</span>(), <span class="string">b&quot;{1=&gt;2, 7=&gt;8}&quot;</span>);
 
         <span class="kw">let</span> <span class="ident">pairs</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Value</span>, <span class="ident">Value</span>)<span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
         <span class="kw">let</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">pairs</span>
