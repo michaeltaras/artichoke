@@ -273,6 +273,18 @@
 <span id="273">273</span>
 <span id="274">274</span>
 <span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="kw">_</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -404,19 +416,31 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">index</span>) {
             <span class="prelude-val">Ok</span>((<span class="ident">index</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>))
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(
-                <span class="ident">interp</span>,
-                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;index {} too small for array; minimum: 0&quot;</span>, <span class="ident">index</span>),
-            )))
+            <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="op">-</span><span class="ident">index</span>)
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Positive Int must be usize&quot;</span>))<span class="question-mark">?</span>;
+            <span class="kw">if</span> <span class="ident">index</span> <span class="op">&lt;</span> <span class="ident">len</span> {
+                <span class="prelude-val">Ok</span>((<span class="ident">len</span> <span class="op">-</span> <span class="ident">index</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>))
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(
+                    <span class="ident">interp</span>,
+                    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;index {} too small for array; minimum: -{}&quot;</span>, <span class="ident">index</span>, <span class="ident">len</span>),
+                )))
+            }
         }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">first</span>.<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>(<span class="string">&quot;to_int&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">index</span>) {
             <span class="prelude-val">Ok</span>((<span class="ident">index</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>))
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(
-                <span class="ident">interp</span>,
-                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;index {} too small for array; minimum: 0&quot;</span>, <span class="ident">index</span>),
-            )))
+            <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="op">-</span><span class="ident">index</span>)
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Positive Int must be usize&quot;</span>))<span class="question-mark">?</span>;
+            <span class="kw">if</span> <span class="ident">index</span> <span class="op">&lt;</span> <span class="ident">len</span> {
+                <span class="prelude-val">Ok</span>((<span class="ident">len</span> <span class="op">-</span> <span class="ident">index</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>))
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(
+                    <span class="ident">interp</span>,
+                    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;index {} too small for array; minimum: -{}&quot;</span>, <span class="ident">index</span>, <span class="ident">len</span>),
+                )))
+            }
         }
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="ident">rangelen</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">len</span>)

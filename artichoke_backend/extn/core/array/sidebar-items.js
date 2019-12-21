@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["args",""],["backend",""],["mruby",""],["trampoline",""]],"struct":[["Array",""],["InlineBuffer",""]]});
+initSidebarItems({"enum":[["InlineBuffer",""]],"mod":[["args",""],["backend",""],["mruby",""],["trampoline",""]],"struct":[["Array",""]]});
