@@ -178,6 +178,7 @@
 <span id="178">178</span>
 <span id="179">179</span>
 <span id="180">180</span>
+<span id="181">181</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Infrastructure for `ruby` CLI.</span>
 <span class="doccomment">//!</span>
@@ -198,14 +199,15 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">StructOpt</span>)]</span>
 <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;artichoke&quot;</span>, <span class="ident">about</span> <span class="op">=</span> <span class="string">&quot;Artichoke is a Ruby made with Rust.&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">Opt</span> {
-    <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">long</span>)]</span>
     <span class="doccomment">/// print the copyright</span>
+    <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">long</span>)]</span>
     <span class="ident">copyright</span>: <span class="ident">bool</span>,
 
-    <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">short</span> <span class="op">=</span> <span class="string">&quot;e&quot;</span>, <span class="ident">parse</span>(<span class="ident">from_os_str</span>))]</span>
     <span class="doccomment">/// one line of script. Several -e&#39;s allowed. Omit [programfile]</span>
+    <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">short</span> <span class="op">=</span> <span class="string">&quot;e&quot;</span>, <span class="ident">parse</span>(<span class="ident">from_os_str</span>))]</span>
     <span class="ident">commands</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>,
 
+    <span class="doccomment">/// file whose contents will be read into the `$fixture` global</span>
     <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">long</span> <span class="op">=</span> <span class="string">&quot;with-fixture&quot;</span>, <span class="ident">parse</span>(<span class="ident">from_os_str</span>))]</span>
     <span class="ident">fixture</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span>,
 
