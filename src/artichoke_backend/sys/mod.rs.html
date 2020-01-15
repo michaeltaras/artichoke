@@ -213,8 +213,8 @@
         <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">MRUBY_RUBY_VERSION</span>) };
         <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{} {} [{}]&quot;</span>,
-            <span class="ident">engine</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine name&quot;</span>),
-            <span class="ident">version</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine version&quot;</span>),
+            <span class="ident">engine</span>.<span class="ident">to_string_lossy</span>(),
+            <span class="ident">version</span>.<span class="ident">to_string_lossy</span>(),
             <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>)
         )
     } <span class="kw">else</span> {
@@ -272,7 +272,7 @@
         <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">MRUBY_RUBY_VERSION</span>) };
         <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{} (v{}.{}.{})&quot;</span>,
-            <span class="ident">version</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine version&quot;</span>),
+            <span class="ident">version</span>.<span class="ident">to_string_lossy</span>(),
             <span class="ident">MRUBY_RELEASE_MAJOR</span>,
             <span class="ident">MRUBY_RELEASE_MINOR</span>,
             <span class="ident">MRUBY_RELEASE_TEENY</span>,
@@ -288,8 +288,8 @@
         <span class="macro">write</span><span class="macro">!</span>(
             <span class="ident">f</span>,
             <span class="string">&quot;{} {} (v{}.{}.{}) interpreter at {:p}&quot;</span>,
-            <span class="ident">engine</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine name&quot;</span>),
-            <span class="ident">version</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine version&quot;</span>),
+            <span class="ident">engine</span>.<span class="ident">to_string_lossy</span>(),
+            <span class="ident">version</span>.<span class="ident">to_string_lossy</span>(),
             <span class="ident">MRUBY_RELEASE_MAJOR</span>,
             <span class="ident">MRUBY_RELEASE_MINOR</span>,
             <span class="ident">MRUBY_RELEASE_TEENY</span>,
@@ -306,8 +306,8 @@
         <span class="macro">write</span><span class="macro">!</span>(
             <span class="ident">f</span>,
             <span class="string">&quot;{} {}&quot;</span>,
-            <span class="ident">engine</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine name&quot;</span>),
-            <span class="ident">version</span>.<span class="ident">to_str</span>().<span class="ident">expect</span>(<span class="string">&quot;mruby engine version&quot;</span>),
+            <span class="ident">engine</span>.<span class="ident">to_string_lossy</span>(),
+            <span class="ident">version</span>.<span class="ident">to_string_lossy</span>(),
         )
     }
 }

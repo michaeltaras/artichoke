@@ -321,6 +321,8 @@
 <span id="321">321</span>
 <span id="322">322</span>
 <span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
@@ -434,7 +436,9 @@
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">name</span>.<span class="ident">as_ref</span>()).<span class="ident">expect</span>(<span class="string">&quot;name for data type&quot;</span>);
+        <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">name</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="kw">unsafe</span> {
+            <span class="ident">CString</span>::<span class="ident">from_vec_unchecked</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;UnknownClass&quot;</span>).<span class="ident">into_bytes</span>())
+        });
         <span class="kw">let</span> <span class="ident">data_type</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_data_type</span> {
             <span class="ident">struct_name</span>: <span class="ident">cstring</span>.<span class="ident">as_ptr</span>(),
             <span class="ident">dfree</span>: <span class="ident">free</span>,

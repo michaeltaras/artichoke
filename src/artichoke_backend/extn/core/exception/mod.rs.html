@@ -579,6 +579,18 @@
 <span id="579">579</span>
 <span id="580">580</span>
 <span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Ruby Exception Hierarchy</span>
 <span class="doccomment">//!</span>
@@ -891,6 +903,7 @@
 <span class="kw">where</span>
     <span class="self">Self</span>: <span class="lifetime">&#39;static</span>,
 {
+    <span class="kw">fn</span> <span class="ident">box_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span>;
     <span class="kw">fn</span> <span class="ident">message</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>];
     <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span>;
     <span class="kw">fn</span> <span class="ident">rclass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">RClass</span><span class="op">&gt;</span>;
@@ -898,6 +911,7 @@
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ruby_exception_impl</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
         <span class="attribute">#[<span class="ident">must_use</span>]</span>
         <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span> {
             <span class="ident">interp</span>: <span class="ident">Artichoke</span>,
@@ -959,6 +973,11 @@
         }
 
         <span class="kw">impl</span> <span class="ident">RubyException</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span> {
+            <span class="attribute">#[<span class="ident">must_use</span>]</span>
+            <span class="kw">fn</span> <span class="ident">box_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
+                <span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">clone</span>())
+            }
+
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
             <span class="kw">fn</span> <span class="ident">message</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
                 <span class="self">self</span>.<span class="ident">message</span>.<span class="ident">as_ref</span>()
@@ -1030,6 +1049,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">RubyException</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">fn</span> <span class="ident">box_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">box_clone</span>()
+    }
+
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">fn</span> <span class="ident">message</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">message</span>()
