@@ -378,17 +378,17 @@
     <span class="kw">if</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">Kernel</span><span class="op">&gt;</span>().<span class="ident">is_some</span>() {
         <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
     }
-    <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;Kernel&quot;</span>, <span class="prelude-val">None</span>);
+    <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;Kernel&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
     <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">spec</span>)
-        .<span class="ident">add_method</span>(<span class="string">&quot;require&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">require</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())
+        .<span class="ident">add_method</span>(<span class="string">&quot;require&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">require</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(
             <span class="string">&quot;require_relative&quot;</span>,
             <span class="ident">Kernel</span>::<span class="ident">require_relative</span>,
             <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>(),
-        )
-        .<span class="ident">add_method</span>(<span class="string">&quot;load&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">load</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())
-        .<span class="ident">add_method</span>(<span class="string">&quot;print&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">print</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())
-        .<span class="ident">add_method</span>(<span class="string">&quot;puts&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">puts</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())
+        )<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;load&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">load</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;print&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">print</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;puts&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">puts</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_rest</span>())<span class="question-mark">?</span>
         .<span class="ident">define</span>()<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">Kernel</span><span class="op">&gt;</span>(<span class="ident">spec</span>);
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;kernel.rb&quot;</span>)[..])<span class="question-mark">?</span>;
@@ -399,10 +399,10 @@
         .<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">artichoke</span>::<span class="ident">Artichoke</span><span class="op">&gt;</span>()
         .<span class="ident">map</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>)
         .<span class="ident">ok_or</span>(<span class="ident">ArtichokeError</span>::<span class="ident">New</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;Kernel&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">scope</span>));
+    <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;Kernel&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">scope</span>))<span class="question-mark">?</span>;
     <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">spec</span>)
-        .<span class="ident">add_method</span>(<span class="string">&quot;Integer&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">integer</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req_and_opt</span>(<span class="number">1</span>, <span class="number">1</span>))
-        .<span class="ident">add_self_method</span>(<span class="string">&quot;Integer&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">integer</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req_and_opt</span>(<span class="number">1</span>, <span class="number">1</span>))
+        .<span class="ident">add_method</span>(<span class="string">&quot;Integer&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">integer</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req_and_opt</span>(<span class="number">1</span>, <span class="number">1</span>))<span class="question-mark">?</span>
+        .<span class="ident">add_self_method</span>(<span class="string">&quot;Integer&quot;</span>, <span class="ident">Kernel</span>::<span class="ident">integer</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req_and_opt</span>(<span class="number">1</span>, <span class="number">1</span>))<span class="question-mark">?</span>
         .<span class="ident">define</span>()<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">artichoke</span>::<span class="ident">Kernel</span><span class="op">&gt;</span>(<span class="ident">spec</span>);
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Patched Artichoke::Kernel onto interpreter&quot;</span>);

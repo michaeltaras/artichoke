@@ -129,17 +129,17 @@
         <span class="string">&quot;Environ&quot;</span>,
         <span class="prelude-val">Some</span>(<span class="ident">scope</span>),
         <span class="prelude-val">Some</span>(<span class="ident">def</span>::<span class="ident">rust_data_free</span>::<span class="op">&lt;</span><span class="ident">env</span>::<span class="ident">Environ</span><span class="op">&gt;</span>),
-    );
+    )<span class="question-mark">?</span>;
     <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">spec</span>)
         .<span class="ident">value_is_rust_object</span>()
-        .<span class="ident">add_method</span>(<span class="string">&quot;[]&quot;</span>, <span class="ident">artichoke_env_element_reference</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>))
+        .<span class="ident">add_method</span>(<span class="string">&quot;[]&quot;</span>, <span class="ident">artichoke_env_element_reference</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>))<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(
             <span class="string">&quot;[]=&quot;</span>,
             <span class="ident">artichoke_env_element_assignment</span>,
             <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">2</span>),
-        )
-        .<span class="ident">add_method</span>(<span class="string">&quot;initialize&quot;</span>, <span class="ident">artichoke_env_initialize</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())
-        .<span class="ident">add_method</span>(<span class="string">&quot;to_h&quot;</span>, <span class="ident">artichoke_env_to_h</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())
+        )<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;initialize&quot;</span>, <span class="ident">artichoke_env_initialize</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;to_h&quot;</span>, <span class="ident">artichoke_env_to_h</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">define</span>()<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">env</span>::<span class="ident">Environ</span><span class="op">&gt;</span>(<span class="ident">spec</span>);
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;env.rb&quot;</span>)[..])<span class="question-mark">?</span>;
