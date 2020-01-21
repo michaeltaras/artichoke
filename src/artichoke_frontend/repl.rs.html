@@ -179,6 +179,31 @@
 <span id="179">179</span>
 <span id="180">180</span>
 <span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A REPL (read–eval–print–loop) for an artichoke interpreter exposed by</span>
 <span class="doccomment">//! the [`artichoke-backend`](artichoke_backend) crate.</span>
@@ -187,9 +212,11 @@
 <span class="doccomment">//! multi-line Ruby expressions, CTRL-C to break out of an expression, and can</span>
 <span class="doccomment">//! inspect return values and exception backtraces.</span>
 
+<span class="kw">use</span> <span class="ident">ansi_term</span>::<span class="ident">Style</span>;
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">eval</span>::<span class="ident">Context</span>;
+<span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
-<span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>};
+<span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">BootError</span>};
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="ident">rustyline</span>::<span class="ident">error</span>::<span class="ident">ReadlineError</span>;
@@ -223,9 +250,10 @@
     <span class="ident">ReplInit</span>,
     <span class="doccomment">/// Unrecoverable [`Parser`] error.</span>
     <span class="ident">ReplParse</span>(<span class="ident">parser</span>::<span class="ident">Error</span>),
-    <span class="doccomment">/// Unrecoverable [`ArtichokeError`]. [`ArtichokeError::Exec`] are handled gracefully</span>
-    <span class="doccomment">/// by the REPL. All other `ArtichokeError`s are fatal.</span>
-    <span class="ident">Ruby</span>(<span class="ident">ArtichokeError</span>),
+    <span class="doccomment">/// Error during Artichoke interpreter initialization.</span>
+    <span class="ident">Artichoke</span>(<span class="ident">BootError</span>),
+    <span class="doccomment">/// Exception thrown by eval.</span>
+    <span class="ident">Ruby</span>(<span class="ident">Exception</span>),
     <span class="doccomment">/// IO error when writing to output or error streams.</span>
     <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
 }
@@ -257,12 +285,14 @@
         .<span class="ident">eval</span>(<span class="string">b&quot;RUBY_DESCRIPTION&quot;</span>)
         .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Ruby</span>)<span class="question-mark">?</span>
         .<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>()
-        .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Ruby</span>)<span class="question-mark">?</span>;
+        .<span class="ident">map_err</span>(<span class="ident">BootError</span>::<span class="ident">from</span>)
+        .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Artichoke</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">compiler</span> <span class="op">=</span> <span class="ident">interp</span>
         .<span class="ident">eval</span>(<span class="string">b&quot;ARTICHOKE_COMPILER_VERSION&quot;</span>)
         .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Ruby</span>)<span class="question-mark">?</span>
         .<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>()
-        .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Ruby</span>)<span class="question-mark">?</span>;
+        .<span class="ident">map_err</span>(<span class="ident">BootError</span>::<span class="ident">from</span>)
+        .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Artichoke</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
     <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">description</span>);
     <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
@@ -279,7 +309,7 @@
     <span class="ident">config</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PromptConfig</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">config</span>.<span class="ident">unwrap_or_else</span>(<span class="ident">Default</span>::<span class="ident">default</span>);
-    <span class="kw">let</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Ruby</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Artichoke</span>)<span class="question-mark">?</span>;
     <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">preamble</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>)<span class="question-mark">?</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">Error</span>::<span class="ident">ReplInit</span>)<span class="question-mark">?</span>;
@@ -318,20 +348,40 @@
                 <span class="kw">match</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="ident">buf</span>.<span class="ident">as_bytes</span>()) {
                     <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">inspect</span>();
-                        <span class="ident">io</span>::<span class="ident">stdout</span>()
+                        <span class="ident">output</span>
                             .<span class="ident">write_all</span>(<span class="ident">config</span>.<span class="ident">result_prefix</span>.<span class="ident">as_bytes</span>())
                             .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
-                        <span class="ident">io</span>::<span class="ident">stdout</span>()
-                            .<span class="ident">write_all</span>(<span class="ident">result</span>.<span class="ident">as_slice</span>())
+                        <span class="ident">output</span>.<span class="ident">write_all</span>(<span class="ident">result</span>.<span class="ident">as_slice</span>()).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                    }
+                    <span class="prelude-val">Err</span>(<span class="ident">exc</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">backtrace</span>) <span class="op">=</span> <span class="ident">exc</span>.<span class="ident">backtrace</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>) {
+                            <span class="macro">writeln</span><span class="macro">!</span>(
+                                <span class="ident">error</span>,
+                                <span class="string">&quot;{} (most recent call last)&quot;</span>,
+                                <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;Traceback&quot;</span>)
+                            )
                             .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
-                    }
-                    <span class="prelude-val">Err</span>(<span class="ident">ArtichokeError</span>::<span class="ident">Exec</span>(<span class="ident">backtrace</span>)) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;Backtrace:&quot;</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
-                        <span class="kw">for</span> <span class="ident">frame</span> <span class="kw">in</span> <span class="ident">backtrace</span>.<span class="ident">lines</span>() {
-                            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;    {}&quot;</span>, <span class="ident">frame</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                            <span class="kw">for</span> (<span class="ident">num</span>, <span class="ident">frame</span>) <span class="kw">in</span> <span class="ident">backtrace</span>.<span class="ident">into_iter</span>().<span class="ident">enumerate</span>().<span class="ident">rev</span>() {
+                                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;\t{}: from &quot;</span>, <span class="ident">num</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                                <span class="ident">error</span>.<span class="ident">write_all</span>(<span class="ident">frame</span>.<span class="ident">as_slice</span>()).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">error</span>).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                            }
                         }
+                        <span class="macro">write</span><span class="macro">!</span>(
+                            <span class="ident">error</span>,
+                            <span class="string">&quot;{} {}&quot;</span>,
+                            <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="ident">exc</span>.<span class="ident">name</span>()),
+                            <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;(&quot;</span>)
+                        )
+                        .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                        <span class="ident">Style</span>::<span class="ident">new</span>()
+                            .<span class="ident">bold</span>()
+                            .<span class="ident">underline</span>()
+                            .<span class="ident">paint</span>(<span class="ident">exc</span>.<span class="ident">message</span>())
+                            .<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>)
+                            .<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
+                        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;)&quot;</span>)).<span class="ident">map_err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>)<span class="question-mark">?</span>;
                     }
-                    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Ruby</span>(<span class="ident">err</span>)),
                 }
                 <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="ident">buf</span>.<span class="ident">lines</span>() {
                     <span class="ident">rl</span>.<span class="ident">add_history_entry</span>(<span class="ident">line</span>);

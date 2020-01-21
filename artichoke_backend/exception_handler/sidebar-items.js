@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["ExceptionHandler","Extract the last exception thrown on the interpreter."]]});
