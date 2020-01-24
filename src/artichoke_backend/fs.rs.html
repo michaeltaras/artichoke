@@ -180,14 +180,23 @@
 <span id="180">180</span>
 <span id="181">181</span>
 <span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [`Artichoke`] virtual filesystem used for storing Ruby sources.</span>
 
 <span class="kw">use</span> <span class="ident">artichoke_vfs</span>::{<span class="ident">FakeFileSystem</span>, <span class="ident">FileSystem</span>};
-<span class="kw">use</span> <span class="ident">path_dedot</span>::<span class="ident">ParseDot</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsStr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Component</span>, <span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>};
@@ -306,16 +315,29 @@
 }
 
 <span class="kw">fn</span> <span class="ident">absolutize_relative_to</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">cwd</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_relative</span>() {
-        <span class="ident">cwd</span>.<span class="ident">join</span>(<span class="ident">path</span>)
-            .<span class="ident">parse_dot</span>()
-            .<span class="ident">map_err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">from</span>)
-            .<span class="ident">map_err</span>(<span class="ident">ArtichokeError</span>::<span class="ident">Vfs</span>)
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">components</span>().<span class="ident">peekable</span>();
+    <span class="kw">let</span> <span class="ident">hint</span> <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">size_hint</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">components</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">Component</span>::<span class="ident">RootDir</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">peek</span>() {
+        <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">hint</span>.<span class="number">1</span>.<span class="ident">unwrap_or</span>(<span class="ident">hint</span>.<span class="number">0</span>))
     } <span class="kw">else</span> {
-        <span class="ident">path</span>.<span class="ident">parse_dot</span>()
-            .<span class="ident">map_err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">from</span>)
-            .<span class="ident">map_err</span>(<span class="ident">ArtichokeError</span>::<span class="ident">Vfs</span>)
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">components</span> <span class="op">=</span> <span class="ident">cwd</span>
+            .<span class="ident">components</span>()
+            .<span class="ident">map</span>(<span class="ident">Component</span>::<span class="ident">as_os_str</span>)
+            .<span class="ident">map</span>(<span class="ident">Path</span>::<span class="ident">new</span>)
+            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+        <span class="ident">components</span>.<span class="ident">reserve</span>(<span class="ident">hint</span>.<span class="number">1</span>.<span class="ident">unwrap_or</span>(<span class="ident">hint</span>.<span class="number">0</span>));
+        <span class="ident">components</span>
+    };
+    <span class="kw">for</span> <span class="ident">component</span> <span class="kw">in</span> <span class="ident">iter</span> {
+        <span class="kw">match</span> <span class="ident">component</span> {
+            <span class="ident">Component</span>::<span class="ident">CurDir</span> <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="ident">Component</span>::<span class="ident">ParentDir</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">components</span>.<span class="ident">pop</span>();
+            }
+            <span class="ident">c</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">components</span>.<span class="ident">push</span>(<span class="ident">Path</span>::<span class="ident">new</span>(<span class="ident">c</span>.<span class="ident">as_os_str</span>())),
+        }
     }
+    <span class="prelude-val">Ok</span>(<span class="ident">components</span>.<span class="ident">into_iter</span>().<span class="ident">collect</span>())
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
