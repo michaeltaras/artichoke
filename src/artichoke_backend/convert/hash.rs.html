@@ -662,7 +662,7 @@
                             <span class="ident">from</span>: <span class="ident">Ruby</span>::<span class="ident">Hash</span>,
                             <span class="ident">to</span>: <span class="ident">Rust</span>::<span class="ident">Map</span>,
                         })<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pairs</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Value</span>, <span class="ident">Value</span>)<span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>);
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pairs</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="op">&lt;</span>(<span class="ident">Value</span>, <span class="ident">Value</span>)<span class="op">&gt;</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>);
                     <span class="kw">for</span> <span class="ident">idx</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">size</span> {
                         <span class="comment">// Doing a `hash[key]` access is guaranteed to succeed since</span>
                         <span class="comment">// we&#39;re iterating over the keys in the hash.</span>
