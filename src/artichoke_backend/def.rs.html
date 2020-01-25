@@ -364,18 +364,24 @@
 <span id="364">364</span>
 <span id="365">365</span>
 <span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">NonNull</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">RustBackedValue</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">module</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="doccomment">/// Typedef for an mruby free function for an [`mrb_value`](sys::mrb_value) with</span>
 <span class="doccomment">/// `tt` [`MRB_TT_DATA`](sys::mrb_vtype::MRB_TT_DATA).</span>
@@ -503,10 +509,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The current implemention results in recursive calls to this function</span>
     <span class="doccomment">/// for each enclosing scope.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rclass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">RClass</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rclass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">RClass</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">interp</span>),
-            <span class="self">Self</span>::<span class="ident">Module</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">interp</span>),
+            <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>),
+            <span class="self">Self</span>::<span class="ident">Module</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>),
         }
     }
 
@@ -526,6 +532,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The current implemention results in recursive calls to this function</span>
     <span class="doccomment">/// for each enclosing scope.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fqname</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">fqname</span>(),
@@ -537,6 +544,7 @@
 <span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">EnclosingRubyScope</span> {}
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">EnclosingRubyScope</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> (<span class="self">self</span>, <span class="ident">other</span>) {
             (<span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span>: <span class="ident">this</span> }, <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span>: <span class="ident">other</span> }) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">this</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>,
@@ -570,15 +578,19 @@
 
         <span class="comment">// Setup: define module and class hierarchy</span>
         <span class="kw">let</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">expect</span>(<span class="string">&quot;init&quot;</span>);
-        <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;A&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="string">&quot;A&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span>
-            <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;B&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>))).<span class="ident">unwrap</span>();
+            <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="string">&quot;B&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>))).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span>
             <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;C&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span>
             <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;D&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span>
-            <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;E&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>))).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+            <span class="kw-2">&amp;</span><span class="ident">interp</span>,
+            <span class="string">&quot;E&quot;</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)),
+        )
+        .<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span>
             <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;F&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
         <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">root</span>).<span class="ident">define</span>().<span class="ident">unwrap</span>();
@@ -683,7 +695,7 @@
                 .<span class="ident">define</span>()
                 .<span class="ident">unwrap</span>();
             <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">Class</span><span class="op">&gt;</span>(<span class="ident">class</span>);
-            <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;DefineMethodTestModule&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="string">&quot;DefineMethodTestModule&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
             <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">module</span>)
                 .<span class="ident">add_method</span>(<span class="string">&quot;value&quot;</span>, <span class="ident">value</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())
                 .<span class="ident">unwrap</span>()
