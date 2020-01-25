@@ -189,14 +189,13 @@
 <span id="189">189</span>
 <span id="190">190</span>
 <span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::<span class="ident">Context</span>;
@@ -283,36 +282,33 @@
 
     <span class="doccomment">/// Close a [`State`] and free underlying mruby structs and memory.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="comment">// At this point, the only refs to the smart poitner wrapping the</span>
-            <span class="comment">// state are stored in the `mrb_state-&gt;ud` pointer and any</span>
-            <span class="comment">// `MRB_TT_DATA` objects in the mruby heap.</span>
-            <span class="comment">//</span>
-            <span class="comment">// To clean up:</span>
-            <span class="comment">//</span>
-            <span class="comment">// - Save the raw pointer to the `Artichoke` from the user data.</span>
-            <span class="comment">// - Free the mrb context.</span>
-            <span class="comment">// - Close the interpreter which frees every object in the heap and</span>
-            <span class="comment">//   drops the strong count on the Rc to 1.</span>
-            <span class="comment">// - Rematerialize the `Rc`.</span>
-            <span class="comment">// - Drop the `Rc` which drops the strong count to 0 and frees the</span>
-            <span class="comment">//   state.</span>
-            <span class="comment">// - Set the userdata pointer to null.</span>
-            <span class="comment">// - Set context and mrb properties to null.</span>
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">mrb</span>.<span class="ident">is_null</span>() {
-                <span class="kw">return</span>;
+        <span class="comment">// At this point, the only refs to the smart poitner wrapping the state</span>
+        <span class="comment">// are stored in the `mrb_state-&gt;ud` pointer and any `MRB_TT_DATA`</span>
+        <span class="comment">// objects in the mruby heap.</span>
+        <span class="comment">//</span>
+        <span class="comment">// To clean up:</span>
+        <span class="comment">//</span>
+        <span class="comment">// - Save the raw pointer to the `Artichoke` from the user data.</span>
+        <span class="comment">// - Free the mrb context.</span>
+        <span class="comment">// - Close the interpreter which frees every object in the heap and</span>
+        <span class="comment">// drops the strong count on the Rc to 1.</span>
+        <span class="comment">// - Rematerialize the `Rc`.</span>
+        <span class="comment">// - Drop the `Rc` which drops the strong count to 0 and frees the</span>
+        <span class="comment">//   state.</span>
+        <span class="comment">// - Set the userdata pointer to null.</span>
+        <span class="comment">// - Set context and mrb properties to null.</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">mrb</span>) <span class="op">=</span> <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">mrb</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">_userdata</span>) <span class="op">=</span> <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="kw">unsafe</span> { <span class="ident">mrb</span>.<span class="ident">as_ref</span>().<span class="ident">ud</span> }) {
+                <span class="kw">unsafe</span> {
+                    <span class="comment">// Free mrb data structures</span>
+                    <span class="ident">sys</span>::<span class="ident">mrbc_context_free</span>(<span class="ident">mrb</span>.<span class="ident">as_mut</span>(), <span class="self">self</span>.<span class="ident">ctx</span>);
+                    <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>.<span class="ident">as_mut</span>());
+                }
             }
-            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">mrb</span>).<span class="ident">ud</span>;
-            <span class="kw">if</span> <span class="ident">ptr</span>.<span class="ident">is_null</span>() {
-                <span class="kw">return</span>;
-            }
-            <span class="comment">// Free mrb data structures</span>
-            <span class="ident">sys</span>::<span class="ident">mrbc_context_free</span>(<span class="self">self</span>.<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">ctx</span>);
-            <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="self">self</span>.<span class="ident">mrb</span>);
-            <span class="comment">// Cleanup dangling pointers</span>
-            <span class="self">self</span>.<span class="ident">ctx</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null_mut</span>();
-            <span class="self">self</span>.<span class="ident">mrb</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null_mut</span>();
-        };
+        }
+        <span class="comment">// Cleanup dangling pointers</span>
+        <span class="self">self</span>.<span class="ident">ctx</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>();
+        <span class="self">self</span>.<span class="ident">mrb</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>();
     }
 
     <span class="doccomment">/// Create a class definition bound to a Rust type `T`. Class definitions</span>
