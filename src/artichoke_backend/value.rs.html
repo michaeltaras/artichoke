@@ -696,6 +696,10 @@
 <span id="696">696</span>
 <span id="697">697</span>
 <span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="ident">ValueLike</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -761,7 +765,11 @@
         <span class="comment">// This will always unwrap because we&#39;ve already checked that we</span>
         <span class="comment">// have fewer than `MRB_FUNCALL_ARGC_MAX` args, which is less than</span>
         <span class="comment">// i64 max value.</span>
-        <span class="kw">let</span> <span class="ident">argslen</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">args</span>.<span class="ident">len</span>()).<span class="ident">unwrap_or_default</span>();
+        <span class="kw">let</span> <span class="ident">argslen</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">argslen</span>) <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">args</span>.<span class="ident">len</span>()) {
+            <span class="ident">argslen</span>
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_nil_value</span>();
+        };
         <span class="kw">let</span> <span class="ident">block</span> <span class="op">=</span> <span class="ident">protect</span>.<span class="ident">block</span>;
 
         <span class="comment">// Drop the `Box` to ensure it is freed.</span>

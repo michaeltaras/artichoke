@@ -188,6 +188,12 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-array&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -255,8 +261,14 @@
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="kw">let</span> <span class="ident">interp</span> <span class="op">=</span> <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>);
     <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="ident">ary</span>);
-    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">array</span>::<span class="ident">trampoline</span>::<span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="ident">ary</span>)
-        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">len</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_int</span>::<span class="ident">try_from</span>(<span class="ident">len</span>).<span class="ident">unwrap_or_default</span>());
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">array</span>::<span class="ident">trampoline</span>::<span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="ident">ary</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">len</span><span class="op">|</span> {
+        <span class="ident">sys</span>::<span class="ident">mrb_int</span>::<span class="ident">try_from</span>(<span class="ident">len</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+            <span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">Fatal</span>::<span class="ident">new</span>(
+                <span class="kw-2">&amp;</span><span class="ident">interp</span>,
+                <span class="string">&quot;Array length does not fit in mruby Integer max&quot;</span>,
+            ))
+        })
+    });
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">len</span>).<span class="ident">inner</span>(),
         <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">interp</span>, <span class="ident">exception</span>),
