@@ -282,8 +282,6 @@
 <span id="282">282</span>
 <span id="283">283</span>
 <span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
@@ -362,9 +360,7 @@
                     .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;negative array size&quot;</span>))<span class="question-mark">?</span>;
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">block</span>) <span class="op">=</span> <span class="ident">block</span> {
                     <span class="kw">if</span> <span class="ident">second</span>.<span class="ident">is_some</span>() {
-                        <span class="ident">interp</span>
-                            .<span class="ident">warn</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;warning: block supersedes default value argument&quot;</span>[..])
-                            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Could not emit warning&quot;</span>))<span class="question-mark">?</span>;
+                        <span class="ident">interp</span>.<span class="ident">warn</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;warning: block supersedes default value argument&quot;</span>[..])<span class="question-mark">?</span>;
                     }
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">len</span>);
                     <span class="kw">for</span> <span class="ident">idx</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
