@@ -689,17 +689,6 @@
 <span id="689">689</span>
 <span id="690">690</span>
 <span id="691">691</span>
-<span id="692">692</span>
-<span id="693">693</span>
-<span id="694">694</span>
-<span id="695">695</span>
-<span id="696">696</span>
-<span id="697">697</span>
-<span id="698">698</span>
-<span id="699">699</span>
-<span id="700">700</span>
-<span id="701">701</span>
-<span id="702">702</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="ident">ValueLike</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -928,10 +917,7 @@
         <span class="comment">// Ensure the borrow is out of scope by the time we eval code since</span>
         <span class="comment">// Rust-backed files and types may need to mutably borrow the `Artichoke` to</span>
         <span class="comment">// get access to the underlying `ArtichokeState`.</span>
-        <span class="kw">let</span> (<span class="ident">mrb</span>, <span class="ident">_ctx</span>) <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>();
-            (<span class="ident">borrow</span>.<span class="ident">mrb</span>, <span class="ident">borrow</span>.<span class="ident">ctx</span>)
-        };
+        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
 
         <span class="kw">let</span> <span class="ident">_arena</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>();
 
@@ -942,16 +928,11 @@
                 <span class="ident">args</span>.<span class="ident">len</span>(),
                 <span class="ident">MRB_FUNCALL_ARGC_MAX</span>
             );
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">Fatal</span>::<span class="ident">new</span>(
-                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interp</span>,
-                <span class="macro">format</span><span class="macro">!</span>(
-                    <span class="string">&quot;{}&quot;</span>,
-                    <span class="ident">ArtichokeError</span>::<span class="ident">TooManyArgs</span> {
-                        <span class="ident">given</span>: <span class="ident">args</span>.<span class="ident">len</span>(),
-                        <span class="ident">max</span>: <span class="ident">MRB_FUNCALL_ARGC_MAX</span>,
-                    }
-                ),
-            )));
+            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ArtichokeError</span>::<span class="ident">TooManyArgs</span> {
+                <span class="ident">given</span>: <span class="ident">args</span>.<span class="ident">len</span>(),
+                <span class="ident">max</span>: <span class="ident">MRB_FUNCALL_ARGC_MAX</span>,
+            };
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interp</span>, <span class="ident">err</span>.<span class="ident">to_string</span>())));
         }
         <span class="macro">trace</span><span class="macro">!</span>(
             <span class="string">&quot;Calling {}#{} with {} args{}&quot;</span>,
@@ -997,10 +978,7 @@
                 )))
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-                    <span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(
-                        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interp</span>,
-                        <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Type conversion failed: {}&quot;</span>, <span class="ident">err</span>),
-                    ))
+                    <span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interp</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Type conversion failed: {}&quot;</span>, <span class="ident">err</span>))
                 })<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
             }
@@ -1066,8 +1044,8 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Value</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_s</span>();
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">string_repr</span>))
+        <span class="kw">let</span> <span class="ident">string_repr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_s</span>();
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">string_repr</span>.<span class="ident">as_slice</span>()))
     }
 }
 

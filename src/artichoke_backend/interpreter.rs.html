@@ -80,10 +80,6 @@
 <span id="80">80</span>
 <span id="81">81</span>
 <span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
-<span id="85">85</span>
-<span id="86">86</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
@@ -112,12 +108,8 @@
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">BootError</span>::<span class="ident">from</span>(<span class="ident">ArtichokeError</span>::<span class="ident">New</span>));
     };
 
-    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrbc_context_new</span>(<span class="ident">mrb</span>.<span class="ident">as_mut</span>()) };
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">State</span>::<span class="ident">new</span>(
-        <span class="kw">unsafe</span> { <span class="ident">mrb</span>.<span class="ident">as_mut</span>() },
-        <span class="ident">context</span>,
-        <span class="ident">vfs</span>,
-    )));
+    <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>(<span class="kw">unsafe</span> { <span class="ident">mrb</span>.<span class="ident">as_mut</span>() }, <span class="ident">vfs</span>).<span class="ident">ok_or</span>(<span class="ident">ArtichokeError</span>::<span class="ident">New</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">state</span>));
 
     <span class="comment">// Transmute the smart pointer that wraps the API and store it in the user</span>
     <span class="comment">// data of the mrb interpreter. After this operation, `Rc::strong_count`</span>
