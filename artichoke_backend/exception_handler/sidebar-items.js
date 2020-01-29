@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["ExceptionHandler","Extract the last exception thrown on the interpreter."]]});
+initSidebarItems({"fn":[["last_error","Transform a `Exception` Ruby `Value` into an [`Exception`]."]]});
