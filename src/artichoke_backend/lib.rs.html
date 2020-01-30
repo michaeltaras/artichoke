@@ -256,7 +256,7 @@
 <span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use artichoke_backend::{Eval, ValueLike};</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! let interp = artichoke_backend::interpreter().unwrap();</span>
+<span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;10 * 10&quot;).unwrap();</span>
 <span class="doccomment">//! let result = result.try_into::&lt;i64&gt;();</span>
 <span class="doccomment">//! assert_eq!(result, Ok(100));</span>
