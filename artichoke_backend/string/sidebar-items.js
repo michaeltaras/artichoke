@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["escape_unicode","Write a UTF-8 representation of a (potentially) binary `String`."]],"struct":[["WriteError","Error type for [`escape_unicode`]."]]});
