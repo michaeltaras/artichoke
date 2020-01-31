@@ -230,6 +230,9 @@
 <span id="230">230</span>
 <span id="231">231</span>
 <span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -329,32 +332,35 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">class</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">convert</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">def</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">eval</span>;
+<span class="kw">mod</span> <span class="ident">eval</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">exception</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">exception_handler</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">extn</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ffi</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">fs</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gc</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">intern</span>;
+<span class="kw">mod</span> <span class="ident">intern</span>;
 <span class="kw">mod</span> <span class="ident">interpreter</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">load</span>;
+<span class="kw">mod</span> <span class="ident">load</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">method</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">module</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
+<span class="kw">mod</span> <span class="ident">parser</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">state</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">string</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">sys</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">top_self</span>;
+<span class="kw">mod</span> <span class="ident">top_self</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">value</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">warn</span>;
+<span class="kw">mod</span> <span class="ident">warn</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span> <span class="kw">as</span> <span class="ident">core</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">TryConvert</span>};
+<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::Convert).</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">Convert</span>;
+<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::TryConvert).</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">TryConvert</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">file</span>::<span class="ident">File</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">intern</span>::<span class="ident">Intern</span>;

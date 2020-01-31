@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Convert","Infallible conversion between two types."],["RustBackedValue","Provides converters to and from [`Value`] with ruby type of [`Ruby::Data`]."],["TryConvert","Fallible conversions between two types."]]});
+initSidebarItems({"trait":[["Convert","Re-export from `artichoke_core`. Infallible conversion between two types."],["RustBackedValue","Provides converters to and from [`Value`] with ruby type of [`Ruby::Data`]."],["TryConvert","Re-export from `artichoke_core`. Fallible conversions between two types."]]});
