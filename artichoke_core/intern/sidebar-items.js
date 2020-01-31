@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Intern","Interpreters that implement [`Intern`] expose methods for storing and retrieving byte content that lives for the life of the interpreter."]]});
