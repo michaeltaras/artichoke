@@ -69,6 +69,28 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Types that implement `Value` can be represented in the Artichoke VM.</span>
 
@@ -93,6 +115,12 @@
     <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 
     <span class="doccomment">/// Call a method on this [`Value`] with arguments and an optional block.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If an exception is raised on the interpreter, then an error is returned.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If a [`TryConvert`] conversion fails, then an error is returned.</span>
     <span class="kw">fn</span> <span class="ident">funcall</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">func</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -105,6 +133,10 @@
     <span class="doccomment">/// Consume `self` and try to convert `self` to type `T`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If you do not want to consume this [`Value`], use [`Value::itself`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If a [`TryConvert`] conversion fails, then an error is returned.</span>
     <span class="kw">fn</span> <span class="ident">try_into</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>;
@@ -113,11 +145,19 @@
     <span class="doccomment">/// `T`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If you want to consume this [`Value`], use [`Value::try_into`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If a [`TryConvert`] conversion fails, then an error is returned.</span>
     <span class="kw">fn</span> <span class="ident">itself</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Call `#freeze` on this [`Value`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If an exception is raised on the interpreter, then an error is returned.</span>
     <span class="kw">fn</span> <span class="ident">freeze</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Call `#frozen?` on this [`Value`].</span>
@@ -129,6 +169,10 @@
     <span class="doccomment">/// Whether `self` responds to a method.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Equivalent to invoking `#respond_to?` on this [`Value`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If an exception is raised on the interpreter, then an error is returned.</span>
     <span class="kw">fn</span> <span class="ident">respond_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">method</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Call `#inspect` on this [`Value`].</span>

@@ -369,7 +369,6 @@
 <span id="369">369</span>
 <span id="370">370</span>
 <span id="371">371</span>
-<span id="372">372</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
@@ -533,7 +532,7 @@
     <span class="doccomment">/// The current implemention results in recursive calls to this function</span>
     <span class="doccomment">/// for each enclosing scope.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fqname</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fqname</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">fqname</span>(),
             <span class="self">Self</span>::<span class="ident">Module</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">fqname</span>(),
@@ -544,7 +543,6 @@
 <span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">EnclosingRubyScope</span> {}
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">EnclosingRubyScope</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> (<span class="self">self</span>, <span class="ident">other</span>) {
             (<span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span>: <span class="ident">this</span> }, <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span>: <span class="ident">other</span> }) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">this</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>,

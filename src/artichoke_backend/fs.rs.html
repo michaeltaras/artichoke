@@ -191,6 +191,7 @@
 <span id="191">191</span>
 <span id="192">192</span>
 <span id="193">193</span>
+<span id="194">194</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [`Artichoke`] virtual filesystem used for storing Ruby sources.</span>
 
@@ -281,17 +282,18 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Metadata</span> {
     <span class="kw">pub</span> <span class="ident">require</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequireFunc</span><span class="op">&gt;</span>,
     <span class="ident">already_required</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Metadata</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">default</span>()
     }
 
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mark_required</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">require</span>: <span class="self">self</span>.<span class="ident">require</span>,

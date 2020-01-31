@@ -102,7 +102,6 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
-<span id="105">105</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">DateTime</span>, <span class="ident">Datelike</span>, <span class="ident">Local</span>, <span class="ident">TimeZone</span>, <span class="ident">Timelike</span>, <span class="ident">Weekday</span>};
 
@@ -203,7 +202,6 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MakeTime</span> <span class="kw">for</span> <span class="ident">Factory</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">fn</span> <span class="ident">now</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">TimeType</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
         <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Chrono</span>::<span class="ident">new</span>(<span class="ident">Local</span>::<span class="ident">now</span>()))

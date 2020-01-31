@@ -270,8 +270,6 @@
 <span id="270">270</span>
 <span id="271">271</span>
 <span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
@@ -292,7 +290,6 @@
 <span class="doccomment">/// `ArenaIndex` implements [`Drop`], so letting it go out of scope is</span>
 <span class="doccomment">/// sufficient to ensure objects get collected eventually.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ArenaIndex</span> {
     <span class="ident">index</span>: <span class="ident">i32</span>,
     <span class="ident">interp</span>: <span class="ident">Artichoke</span>,
@@ -369,7 +366,6 @@
         }
     }
 
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">fn</span> <span class="ident">live_object_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
         <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
         <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_sys_gc_live_objects</span>(<span class="ident">mrb</span>) }

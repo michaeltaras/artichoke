@@ -29,6 +29,13 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Convert between Rust and Ruby objects.</span>
 
@@ -48,6 +55,11 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Performs the fallible conversion.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If boxing or unboxing a value into the specified type fails, an error is</span>
+    <span class="doccomment">/// returned.</span>
     <span class="kw">fn</span> <span class="ident">try_convert</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span>;
 }
 
@@ -57,6 +69,8 @@
 <span class="kw">where</span>
     <span class="ident">V</span>: <span class="ident">Convert</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span>,
 {
+    <span class="doccomment">/// Blanket implementation that always succeeds by delegating to</span>
+    <span class="doccomment">/// [`Convert::convert`].</span>
     <span class="kw">fn</span> <span class="ident">try_convert</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">Convert</span>::<span class="ident">convert</span>(<span class="self">self</span>, <span class="ident">value</span>))
     }
