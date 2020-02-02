@@ -14,6 +14,10 @@
 <span id="14">14</span>
 <span id="15">15</span>
 <span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">array</span>;
 <span class="kw">mod</span> <span class="ident">boolean</span>;
@@ -27,8 +31,12 @@
 
 <span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::Convert).</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">Convert</span>;
+<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::ConvertMut).</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">ConvertMut</span>;
 <span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::TryConvert).</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryConvert</span>;
+<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::TryConvertMut).</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryConvertMut</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">object</span>::<span class="ident">RustBackedValue</span>;
 </pre></div>
