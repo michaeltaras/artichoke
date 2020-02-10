@@ -1,44 +1,56 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `artichoke_backend` crate."><meta name="keywords" content="rust, rustlang, rust-lang, artichoke_backend"><title>artichoke_backend - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../artichoke_backend/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate artichoke_backend</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all artichoke_backend's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'artichoke_backend', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/artichoke_backend/lib.rs.html#1-237' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>artichoke_backend</a></span></h1><div class='docblock'><h1 id="artichoke-backend" class="section-header"><a href="#artichoke-backend">artichoke-backend</a></h1>
-<p>artichoke-backend crate provides a Ruby interpreter. It currently is implemented
-with <a href="https://github.com/mruby/mruby">mruby</a> bindings exported by the
-<a href="../artichoke_backend/sys/index.html" title="`sys`"><code>sys</code></a> module.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `artichoke_backend` crate."><meta name="keywords" content="rust, rustlang, rust-lang, artichoke_backend"><title>artichoke_backend - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../artichoke_backend/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate artichoke_backend</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all artichoke_backend's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'artichoke_backend', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/artichoke_backend/lib.rs.html#1-253' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>artichoke_backend</a></span></h1><div class='docblock'><h1 id="artichoke-backend" class="section-header"><a href="#artichoke-backend">artichoke-backend</a></h1>
+<p><code>artichoke-backend</code> crate provides a Ruby interpreter. It currently is
+implemented with <a href="https://github.com/mruby/mruby">mruby</a> bindings exported
+by the <a href="../artichoke_backend/sys/index.html" title="`sys`"><code>sys</code></a> module.</p>
 <h2 id="execute-ruby-code" class="section-header"><a href="#execute-ruby-code">Execute Ruby Code</a></h2>
-<p>artichoke-backend crate exposes several mechanisms for executing Ruby code on
-the interpreter.</p>
+<p><code>artichoke-backend</code> crate exposes several mechanisms for executing Ruby code
+on the interpreter.</p>
 <h3 id="evaling-source-code" class="section-header"><a href="#evaling-source-code">Evaling Source Code</a></h3>
-<p>artichoke-backend crate exposes eval on the <code>State</code> with the <code>Eval</code> trait. Side
-effects from eval are persisted across invocations.</p>
+<p>The <code>artichoke-backend</code> interpreter implements
+<a href="../artichoke_backend/extn/prelude/trait.Eval.html"><code>Eval</code> from <code>artichoke-core</code></a>.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Eval</span>, <span class="ident">ValueLike</span>};
 
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;10 * 10&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="prelude-val">Ok</span>(<span class="number">100</span>));</pre></div>
+<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">100</span>);</pre></div>
+<h3 id="calling-functions-on-ruby-objects" class="section-header"><a href="#calling-functions-on-ruby-objects">Calling Functions on Ruby Objects</a></h3>
+<p><a href="../artichoke_backend/value/struct.Value.html"><code>Value</code></a>s returned by the <code>artichoke-backend</code> interpreter
+implement <a href="../artichoke_backend/extn/prelude/trait.ValueLike.html"><code>Value</code> from <code>artichoke-core</code></a>, which enables
+calling Ruby functions from Rust.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Eval</span>, <span class="ident">ValueLike</span>};
+
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;&#39;ruby funcall&#39;&quot;</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(<span class="string">&quot;length&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">12</span>);</pre></div>
 <h2 id="virtual-filesystem-and-kernelrequire" class="section-header"><a href="#virtual-filesystem-and-kernelrequire">Virtual Filesystem and <code>Kernel#require</code></a></h2>
-<p>The artichoke-backend <code>State</code> embeds an
-<a href="../artichoke_backend/fs/struct.Virtual.html">in-memory virtual filesystem</a>. The VFS stores Ruby sources
-that are either pure Ruby, implemented with a Rust <code>File</code>, or both.</p>
-<p>artichoke-backend crate implements
-<a href="src/extn/core/kernel"><code>Kernel#require</code> and <code>Kernel#require_relative</code></a> which
-loads sources from the VFS. For Ruby sources, the source is loaded from the VFS
-as a <code>Vec&lt;u8&gt;</code> and evaled with <code>Eval::eval_with_context</code>. For Rust sources,
-<code>File::require</code> methods are stored as custom metadata on <code>File</code> nodes in the
-VFS.</p>
+<p>The <code>artichoke-backend</code> interpreter includes an in-memory virtual
+filesystem.  The filesystem stores Ruby sources and Rust extension functions
+that are similar to MRI C extensions.</p>
+<p>The virtual filesystem enables applications built with <code>artichoke-backend</code>
+to <code>require</code> sources that are embedded in the binary without host filesystem
+access.</p>
 <h2 id="embed-rust-types-in-ruby-values" class="section-header"><a href="#embed-rust-types-in-ruby-values">Embed Rust Types in Ruby <code>Value</code>s</a></h2>
-<p>Rust types that implement <code>RustBackedValue</code> can be injected into the interpreter
-as the backend for a Ruby object.</p>
-<p>Examples of <code>RustBackedValues</code> include:</p>
+<p><code>artichoke-backend</code> exposes a concept similar to <code>data</code>-typed values in MRI
+and mruby.</p>
+<p>When Rust types implement a special trait, they can be embedded in a Ruby
+<a href="../artichoke_backend/value/struct.Value.html"><code>Value</code></a> and passed through the Ruby VM as a Ruby object.
+Classes defined in this way can define methods in Rust or Ruby.</p>
+<p>Examples of these types include:</p>
 <ul>
 <li><code>Regexp</code> and <code>MatchData</code>, which are backed by regular expressions from the
 <code>onig</code> and <code>regex</code> crates.</li>
-<li><code>ENV</code> which glues Ruby to an environ backend.</li>
+<li><code>ENV</code>, which glues Ruby to an environ backend.</li>
 </ul>
 <h2 id="converters-between-ruby-and-rust-types" class="section-header"><a href="#converters-between-ruby-and-rust-types">Converters Between Ruby and Rust Types</a></h2>
-<p>The <a href="../artichoke_backend/convert/index.html" title="`convert`"><code>convert</code></a> module provides implementations for conversions
+<p>The <a href="../artichoke_backend/convert/index.html"><code>convert</code> module</a> provides implementations for conversions
 between boxed Ruby values and native Rust types like <code>i64</code> and
-<code>HashMap&lt;String, Option&lt;Vec&lt;u8&gt;&gt;&gt;</code> using an <code>Artichoke</code> interpreter.</p>
+<code>HashMap&lt;String, Option&lt;Vec&lt;u8&gt;&gt;&gt;</code> using an <code>artichoke-backend</code> interpreter.</p>
 <h2 id="license" class="section-header"><a href="#license">License</a></h2>
 <p>artichoke-backend is licensed with the MIT License (c) Ryan Lopopolo.</p>
 <p>Some portions of artichoke-backend are derived from

@@ -235,6 +235,22 @@
 <span id="235">235</span>
 <span id="236">236</span>
 <span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -244,58 +260,74 @@
 
 <span class="doccomment">//! # artichoke-backend</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! artichoke-backend crate provides a Ruby interpreter. It currently is implemented</span>
-<span class="doccomment">//! with [mruby](https://github.com/mruby/mruby) bindings exported by the</span>
-<span class="doccomment">//! [`sys`] module.</span>
+<span class="doccomment">//! `artichoke-backend` crate provides a Ruby interpreter. It currently is</span>
+<span class="doccomment">//! implemented with [mruby](https://github.com/mruby/mruby) bindings exported</span>
+<span class="doccomment">//! by the [`sys`] module.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Execute Ruby Code</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! artichoke-backend crate exposes several mechanisms for executing Ruby code on</span>
-<span class="doccomment">//! the interpreter.</span>
+<span class="doccomment">//! `artichoke-backend` crate exposes several mechanisms for executing Ruby code</span>
+<span class="doccomment">//! on the interpreter.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Evaling Source Code</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! artichoke-backend crate exposes eval on the `State` with the `Eval` trait. Side</span>
-<span class="doccomment">//! effects from eval are persisted across invocations.</span>
+<span class="doccomment">//! The `artichoke-backend` interpreter implements</span>
+<span class="doccomment">//! [`Eval` from `artichoke-core`](crate::Eval).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use artichoke_backend::{Eval, ValueLike};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;10 * 10&quot;).unwrap();</span>
-<span class="doccomment">//! let result = result.try_into::&lt;i64&gt;();</span>
-<span class="doccomment">//! assert_eq!(result, Ok(100));</span>
+<span class="doccomment">//! let result = result.try_into::&lt;i64&gt;().unwrap();</span>
+<span class="doccomment">//! assert_eq!(result, 100);</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Calling Functions on Ruby Objects</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [`Value`](value::Value)s returned by the `artichoke-backend` interpreter</span>
+<span class="doccomment">//! implement [`Value` from `artichoke-core`](crate::ValueLike), which enables</span>
+<span class="doccomment">//! calling Ruby functions from Rust.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! use artichoke_backend::{Eval, ValueLike};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
+<span class="doccomment">//! let result = interp.eval(b&quot;&#39;ruby funcall&#39;&quot;).unwrap();</span>
+<span class="doccomment">//! let result = result.funcall::&lt;usize&gt;(&quot;length&quot;, &amp;[], None).unwrap();</span>
+<span class="doccomment">//! assert_eq!(result, 12);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Virtual Filesystem and `Kernel#require`</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The artichoke-backend `State` embeds an</span>
-<span class="doccomment">//! [in-memory virtual filesystem](fs::Virtual). The VFS stores Ruby sources</span>
-<span class="doccomment">//! that are either pure Ruby, implemented with a Rust `File`, or both.</span>
+<span class="doccomment">//! The `artichoke-backend` interpreter includes an in-memory virtual</span>
+<span class="doccomment">//! filesystem.  The filesystem stores Ruby sources and Rust extension functions</span>
+<span class="doccomment">//! that are similar to MRI C extensions.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! artichoke-backend crate implements</span>
-<span class="doccomment">//! [`Kernel#require` and `Kernel#require_relative`](src/extn/core/kernel) which</span>
-<span class="doccomment">//! loads sources from the VFS. For Ruby sources, the source is loaded from the VFS</span>
-<span class="doccomment">//! as a `Vec&lt;u8&gt;` and evaled with `Eval::eval_with_context`. For Rust sources,</span>
-<span class="doccomment">//! `File::require` methods are stored as custom metadata on `File` nodes in the</span>
-<span class="doccomment">//! VFS.</span>
+<span class="doccomment">//! The virtual filesystem enables applications built with `artichoke-backend`</span>
+<span class="doccomment">//! to `require` sources that are embedded in the binary without host filesystem</span>
+<span class="doccomment">//! access.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Embed Rust Types in Ruby `Value`s</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Rust types that implement `RustBackedValue` can be injected into the interpreter</span>
-<span class="doccomment">//! as the backend for a Ruby object.</span>
+<span class="doccomment">//! `artichoke-backend` exposes a concept similar to `data`-typed values in MRI</span>
+<span class="doccomment">//! and mruby.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Examples of `RustBackedValues` include:</span>
+<span class="doccomment">//! When Rust types implement a special trait, they can be embedded in a Ruby</span>
+<span class="doccomment">//! [`Value`](value::Value) and passed through the Ruby VM as a Ruby object.</span>
+<span class="doccomment">//! Classes defined in this way can define methods in Rust or Ruby.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Examples of these types include:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! - `Regexp` and `MatchData`, which are backed by regular expressions from the</span>
 <span class="doccomment">//!   `onig` and `regex` crates.</span>
-<span class="doccomment">//! - `ENV` which glues Ruby to an environ backend.</span>
+<span class="doccomment">//! - `ENV`, which glues Ruby to an environ backend.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Converters Between Ruby and Rust Types</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The [`convert`] module provides implementations for conversions</span>
+<span class="doccomment">//! The [`convert` module](convert) provides implementations for conversions</span>
 <span class="doccomment">//! between boxed Ruby values and native Rust types like `i64` and</span>
-<span class="doccomment">//! `HashMap&lt;String, Option&lt;Vec&lt;u8&gt;&gt;&gt;` using an `Artichoke` interpreter.</span>
+<span class="doccomment">//! `HashMap&lt;String, Option&lt;Vec&lt;u8&gt;&gt;&gt;` using an `artichoke-backend` interpreter.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## License</span>
 <span class="doccomment">//!</span>

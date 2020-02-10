@@ -100,6 +100,22 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -110,14 +126,30 @@
 <span class="doccomment">//! # artichoke-core</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! `artichoke-core` crate provides a set of traits that, when implemented,</span>
-<span class="doccomment">//! create a complete Ruby interpreter.</span>
+<span class="doccomment">//! provide a complete Ruby interpreter.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`artichoke-backend`](https://artichoke.github.io/artichoke/artichoke_backend/)</span>
 <span class="doccomment">//! is one implementation of the `artichoke-core` traits.</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! ## Core APIs</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `artichoke-core` contains traits for the core set of APIs an interpreter</span>
+<span class="doccomment">//! must implement. The traits in `artichoke-core` define:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - APIs a concrete VM must implement to support the Artichoke runtime and</span>
+<span class="doccomment">//!   frontends.</span>
+<span class="doccomment">//! - How to box polymorphic core types into [Ruby `Value`](value::Value).</span>
+<span class="doccomment">//! - [Interoperability](convert) between the VM backend and the</span>
+<span class="doccomment">//!   Rust-implemented core.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Some of the core APIs a Ruby implementation must provide are</span>
+<span class="doccomment">//! [evaluating code](eval::Eval),</span>
+<span class="doccomment">//! [converting Rust data structures to boxed `Value`s on the interpreter heap](convert::ConvertMut),</span>
+<span class="doccomment">//! and [interning `Symbol`s](intern::Intern).</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! ## License</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! artichoke-core is licensed with the [MIT License](/LICENSE) (c) Ryan Lopopolo.</span>
+<span class="doccomment">//! artichoke-core is licensed with the MIT License (c) Ryan Lopopolo.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
