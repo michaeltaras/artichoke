@@ -776,7 +776,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::{<span class="self">self</span>, <span class="ident">Config</span>, <span class="ident">Encoding</span>, <span class="ident">Regexp</span>, <span class="ident">RegexpType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HashOfStringToArrayOfInt</span>, <span class="ident">NilableString</span>};
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">NameToCaptureLocations</span>, <span class="ident">NilableString</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Onig</span> {
@@ -1237,7 +1237,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">named_captures</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashOfStringToArrayOfInt</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">named_captures</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NameToCaptureLocations</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="comment">// Use a Vec of key-value pairs because insertion order matters for spec</span>
         <span class="comment">// compliance.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
