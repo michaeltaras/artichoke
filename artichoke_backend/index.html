@@ -18,7 +18,7 @@ effects from eval are persisted across invocations.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="prelude-val">Ok</span>(<span class="number">100</span>));</pre></div>
 <h2 id="virtual-filesystem-and-kernelrequire" class="section-header"><a href="#virtual-filesystem-and-kernelrequire">Virtual Filesystem and <code>Kernel#require</code></a></h2>
 <p>The artichoke-backend <code>State</code> embeds an
-<a href="/artichoke-vfs">in-memory virtual Unix filesystem</a>. The VFS stores Ruby sources
+<a href="../artichoke_backend/fs/struct.Virtual.html">in-memory virtual filesystem</a>. The VFS stores Ruby sources
 that are either pure Ruby, implemented with a Rust <code>File</code>, or both.</p>
 <p>artichoke-backend crate implements
 <a href="src/extn/core/kernel"><code>Kernel#require</code> and <code>Kernel#require_relative</code></a> which
@@ -40,8 +40,7 @@ as the backend for a Ruby object.</p>
 between boxed Ruby values and native Rust types like <code>i64</code> and
 <code>HashMap&lt;String, Option&lt;Vec&lt;u8&gt;&gt;&gt;</code> using an <code>Artichoke</code> interpreter.</p>
 <h2 id="license" class="section-header"><a href="#license">License</a></h2>
-<p>artichoke-backend is licensed with the <a href="/LICENSE">MIT License</a> (c) Ryan
-Lopopolo.</p>
+<p>artichoke-backend is licensed with the MIT License (c) Ryan Lopopolo.</p>
 <p>Some portions of artichoke-backend are derived from
 <a href="https://github.com/mruby/mruby">mruby</a> which is Copyright (c) 2019 mruby
 developers. mruby is licensed with the
@@ -57,7 +56,7 @@ Emscripten authors. emsdk is licensed with the
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use <a class="mod" href="../artichoke_core/index.html" title="mod artichoke_core">artichoke_core</a> as core;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table><tr class='module-item'><td><a class="mod" href="class/index.html" title='artichoke_backend::class mod'>class</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="convert/index.html" title='artichoke_backend::convert mod'>convert</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="def/index.html" title='artichoke_backend::def mod'>def</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="exception/index.html" title='artichoke_backend::exception mod'>exception</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="exception_handler/index.html" title='artichoke_backend::exception_handler mod'>exception_handler</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="extn/index.html" title='artichoke_backend::extn mod'>extn</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="ffi/index.html" title='artichoke_backend::ffi mod'>ffi</a></td><td class='docblock-short'><p>Functions for interacting directly with mruby structs from <a href="../artichoke_backend/sys/index.html" title="`sys`"><code>sys</code></a>.</p>
-</td></tr><tr class='module-item'><td><a class="mod" href="fs/index.html" title='artichoke_backend::fs mod'>fs</a></td><td class='docblock-short'><p><a href="../artichoke_backend/struct.Artichoke.html" title="`Artichoke`"><code>Artichoke</code></a> virtual filesystem used for storing Ruby sources.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="fs/index.html" title='artichoke_backend::fs mod'>fs</a></td><td class='docblock-short'><p>Virtual filesystem.</p>
 </td></tr><tr class='module-item'><td><a class="mod" href="gc/index.html" title='artichoke_backend::gc mod'>gc</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="method/index.html" title='artichoke_backend::method mod'>method</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="module/index.html" title='artichoke_backend::module mod'>module</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="state/index.html" title='artichoke_backend::state mod'>state</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="string/index.html" title='artichoke_backend::string mod'>string</a></td><td class='docblock-short'><p>Utilities for working with Ruby <code>String</code>s.</p>
 </td></tr><tr class='module-item'><td><a class="mod" href="sys/index.html" title='artichoke_backend::sys mod'>sys</a></td><td class='docblock-short'><p>Rust bindings for mruby, customized for Artichoke.</p>
 </td></tr><tr class='module-item'><td><a class="mod" href="types/index.html" title='artichoke_backend::types mod'>types</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="mod" href="value/index.html" title='artichoke_backend::value mod'>value</a></td><td class='docblock-short'></td></tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>

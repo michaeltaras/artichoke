@@ -77,8 +77,6 @@
 <span id="77">77</span>
 <span id="78">78</span>
 <span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
@@ -86,7 +84,6 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>::<span class="ident">Filesystem</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">state</span>::<span class="ident">State</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::{<span class="self">self</span>, <span class="ident">DescribeState</span>};
@@ -95,10 +92,9 @@
 <span class="doccomment">/// Create and initialize an [`Artichoke`] interpreter.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function creates a new [`State`], embeds it in the [`sys::mrb_state`],</span>
-<span class="doccomment">/// initializes an [in memory virtual filesystem](Filesystem), and loads the</span>
-<span class="doccomment">/// [`extn`] extensions to Ruby Core and Stdlib.</span>
+<span class="doccomment">/// initializes an [in memory virtual filesystem](crate::fs::Virtual), and loads</span>
+<span class="doccomment">/// the [`extn`] extensions to Ruby Core and Stdlib.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">BootError</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">vfs</span> <span class="op">=</span> <span class="ident">Filesystem</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">mrb</span>) <span class="op">=</span> <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_open</span>() }) {
         <span class="ident">mrb</span>
     } <span class="kw">else</span> {
@@ -106,7 +102,7 @@
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">BootError</span>::<span class="ident">from</span>(<span class="ident">ArtichokeError</span>::<span class="ident">New</span>));
     };
 
-    <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>(<span class="kw">unsafe</span> { <span class="ident">mrb</span>.<span class="ident">as_mut</span>() }, <span class="ident">vfs</span>).<span class="ident">ok_or</span>(<span class="ident">ArtichokeError</span>::<span class="ident">New</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>(<span class="kw">unsafe</span> { <span class="ident">mrb</span>.<span class="ident">as_mut</span>() }).<span class="ident">ok_or</span>(<span class="ident">ArtichokeError</span>::<span class="ident">New</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">state</span>));
 
     <span class="comment">// Transmute the smart pointer that wraps the API and store it in the user</span>

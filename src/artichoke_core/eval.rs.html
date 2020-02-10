@@ -35,9 +35,11 @@
 <span id="35">35</span>
 <span id="36">36</span>
 <span id="37">37</span>
+<span id="38">38</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Run code on an Artichoke interpreter.</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsStr</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
@@ -53,7 +55,7 @@
     <span class="kw">type</span> <span class="ident">Value</span>: <span class="ident">Value</span>;
 
     <span class="doccomment">/// Concrete error type for eval functions.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
 
     <span class="doccomment">/// Eval code on the Artichoke interpreter using the current `Context`.</span>
     <span class="doccomment">///</span>
