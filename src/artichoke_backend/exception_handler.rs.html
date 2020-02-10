@@ -183,7 +183,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;waffles&quot;</span>[..], <span class="ident">err</span>.<span class="ident">message</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="prelude-val">Some</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Vec</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;(eval):1&quot;</span>[..])]),
-            <span class="ident">err</span>.<span class="ident">backtrace</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>)
+            <span class="ident">err</span>.<span class="ident">vm_backtrace</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>)
         );
     }
 
@@ -193,7 +193,7 @@
         <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;def bad; (; end&quot;</span>).<span class="ident">unwrap_err</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;SyntaxError&quot;</span>, <span class="ident">err</span>.<span class="ident">name</span>().<span class="ident">as_str</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;syntax error&quot;</span>[..], <span class="ident">err</span>.<span class="ident">message</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">err</span>.<span class="ident">backtrace</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">err</span>.<span class="ident">vm_backtrace</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
