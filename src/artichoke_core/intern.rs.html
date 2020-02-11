@@ -29,16 +29,20 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Intern symbols on an Artichoke interpreter.</span>
+<span class="doccomment">//! Intern [`Symbol`][symbol]s on an interpreter.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Symbols are immutable byte vectors that have the same lifetime as the</span>
+<span class="doccomment">//! `Symbol`s are immutable byte vectors that have the same lifetime as the</span>
 <span class="doccomment">//! interpreter.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [symbol]: https://ruby-doc.org/core-2.6.3/Symbol.html</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
-<span class="doccomment">/// Interpreters that implement [`Intern`] expose methods for storing and</span>
-<span class="doccomment">/// retrieving byte content that lives for the life of the interpreter.</span>
+<span class="doccomment">/// Store and retrieve byte vectors that have the same lifetime as the</span>
+<span class="doccomment">/// interpreter.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See the [Ruby `Symbol` type][symbol].</span>
 <span class="doccomment">///</span>
@@ -47,7 +51,7 @@
     <span class="doccomment">/// Concrete type for symbol identifiers.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The symbol identifier enables lookups in the underlying storage.</span>
-    <span class="kw">type</span> <span class="ident">Symbol</span>;
+    <span class="kw">type</span> <span class="ident">Symbol</span>: <span class="ident">Copy</span>;
 
     <span class="doccomment">/// Store an immutable byte vector for the life of the interpreter.</span>
     <span class="doccomment">///</span>

@@ -65,15 +65,13 @@
 <span id="65">65</span>
 <span id="66">66</span>
 <span id="67">67</span>
-<span id="68">68</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse code on an Artichoke interpreter.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
-<span class="doccomment">/// Interpreters that implement [`Parser`] expose methods for manipulating parser</span>
-<span class="doccomment">/// state, active filename context, and line number metadata.</span>
+<span class="doccomment">/// Manage parser state, active filename context, and line number metadata.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Parsers maintain a stack of `Context`s which are modified as successive</span>
 <span class="doccomment">/// sources are parsed, for example as a set of nested `require`s.</span>

@@ -47,7 +47,6 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
-<span id="50">50</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Load Ruby and Rust sources into the VM.</span>
 
@@ -56,8 +55,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">file</span>::<span class="ident">File</span>;
 
-<span class="doccomment">/// Interpreters that implement [`LoadSources`] expose methods for loading Ruby</span>
-<span class="doccomment">/// and Rust sources into the VM.</span>
+<span class="doccomment">/// Load Ruby sources and Rust extensions into an interpreter.</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">LoadSources</span> {
     <span class="doccomment">/// Concrete type for interpreter.</span>
@@ -69,9 +67,9 @@
     <span class="doccomment">/// Concrete type for errors returned by `File::require`.</span>
     <span class="kw">type</span> <span class="ident">Exception</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
 
-    <span class="doccomment">/// Add a Rust-backed Ruby source file to the virtual filesystem. A stub</span>
-    <span class="doccomment">/// Ruby file is added to the filesystem and [`File::require`] will</span>
-    <span class="doccomment">/// dynamically define Ruby items when invoked via `Kernel#require`.</span>
+    <span class="doccomment">/// Add a Rust extension hook to the virtual filesystem. A stub Ruby file is</span>
+    <span class="doccomment">/// added to the filesystem and [`File::require`] will dynamically define</span>
+    <span class="doccomment">/// Ruby items when invoked via `Kernel#require`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If filename is a relative path, the Ruby source is added to the</span>
     <span class="doccomment">/// filesystem relative to `RUBY_LOAD_PATH`. If the path is absolute, the</span>
@@ -85,7 +83,7 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">File</span><span class="op">&lt;</span><span class="ident">Artichoke</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Artichoke</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Exception</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Add a pure Ruby source file to the virtual filesystem.</span>
+    <span class="doccomment">/// Add a Ruby source to the virtual filesystem.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If filename is a relative path, the Ruby source is added to the</span>
     <span class="doccomment">/// filesystem relative to `RUBY_LOAD_PATH`. If the path is absolute, the</span>

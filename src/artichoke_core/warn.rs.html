@@ -24,20 +24,22 @@
 <span id="24">24</span>
 <span id="25">25</span>
 <span id="26">26</span>
+<span id="27">27</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Emit warnings during VM execution.</span>
+<span class="doccomment">//! Emit warnings during interpreter execution.</span>
 
-<span class="doccomment">/// Interpreters that implement [`Warn`] expose methods for emitting warnings</span>
-<span class="doccomment">/// during execution.</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+
+<span class="doccomment">/// Emit warnings during interpreter execution to stderr.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Some functionality required to be compliant with ruby-spec is deprecated or</span>
-<span class="doccomment">/// invalid behavior and ruby-spec expects a warning to be emitted to `$stderr`</span>
-<span class="doccomment">/// using the</span>
-<span class="doccomment">/// [`Warning`](https://ruby-doc.org/core-2.6.3/Warning.html#method-i-warn)</span>
-<span class="doccomment">/// module from the standard library.</span>
+<span class="doccomment">/// Some functionality required to be compliant with ruby/spec is deprecated or</span>
+<span class="doccomment">/// invalid behavior and ruby/spec expects a warning to be emitted to `$stderr`</span>
+<span class="doccomment">/// using the [`Warning`][warningmod] module from the standard library.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [warningmod]: https://ruby-doc.org/core-2.6.3/Warning.html#method-i-warn</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Warn</span> {
     <span class="doccomment">/// Concrete error type for errors encountered when outputting warnings.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
 
     <span class="doccomment">/// Emit a warning message using `Warning#warn`.</span>
     <span class="doccomment">///</span>

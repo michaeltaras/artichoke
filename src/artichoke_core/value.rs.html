@@ -91,13 +91,21 @@
 <span id="91">91</span>
 <span id="92">92</span>
 <span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Types that implement `Value` can be represented in the Artichoke VM.</span>
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">TryConvert</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ArtichokeError</span>;
 
-<span class="doccomment">/// A value in the Artichoke VM, equivalent to an `RValue` in MRI.</span>
+<span class="doccomment">/// A boxed Ruby value owned by the interpreter.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `Value` is equivalent to an `RValue` in MRI or `mrb_value` in mruby.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Value</span>
 <span class="kw">where</span>
     <span class="self">Self</span>: <span class="ident">Sized</span>,
@@ -112,7 +120,7 @@
     <span class="kw">type</span> <span class="ident">Block</span>;
 
     <span class="doccomment">/// Concrete error type for funcall errors.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
 
     <span class="doccomment">/// Call a method on this [`Value`] with arguments and an optional block.</span>
     <span class="doccomment">///</span>
