@@ -108,14 +108,6 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -183,12 +175,6 @@
         <span class="doccomment">/// Destination type of conversion.</span>
         <span class="ident">to</span>: <span class="ident">types</span>::<span class="ident">Rust</span>,
     },
-    <span class="doccomment">/// Constant name is invalid for the VM backend.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For example, if the name contains a NUL byte, or is invalid UTF-8.</span>
-    <span class="ident">InvalidConstantName</span>,
-    <span class="doccomment">/// Unable to initalize interpreter.</span>
-    <span class="ident">New</span>,
     <span class="doccomment">/// Class or module with this name is not defined in the artichoke VM.</span>
     <span class="ident">NotDefined</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Arg count exceeds maximum allowed by the VM.</span>
@@ -215,8 +201,6 @@
             <span class="self">Self</span>::<span class="ident">ConvertToRust</span> { <span class="ident">from</span>, <span class="ident">to</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Failed to convert from {} to {}&quot;</span>, <span class="ident">from</span>, <span class="ident">to</span>)
             }
-            <span class="self">Self</span>::<span class="ident">InvalidConstantName</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid constant name&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">New</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Failed to create interpreter&quot;</span>),
             <span class="self">Self</span>::<span class="ident">NotDefined</span>(<span class="ident">fqname</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{} not defined&quot;</span>, <span class="ident">fqname</span>),
             <span class="self">Self</span>::<span class="ident">TooManyArgs</span> { <span class="ident">given</span>, <span class="ident">max</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
