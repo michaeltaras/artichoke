@@ -100,13 +100,11 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
-<span id="103">103</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">TryConvert</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Ruby</span>, <span class="ident">Rust</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>, <span class="ident">Convert</span>, <span class="ident">TryConvert</span>};
 
 <span class="kw">impl</span> <span class="ident">Convert</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {

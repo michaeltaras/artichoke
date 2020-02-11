@@ -139,12 +139,12 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">ConvertMut</span>, <span class="ident">RustBackedValue</span>, <span class="ident">TryConvert</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">RustBackedValue</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">array</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Int</span>, <span class="ident">Ruby</span>, <span class="ident">Rust</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>};
 
 <span class="comment">// TODO: implement `PartialEq`, `Eq`, and `Hash` on `Value`, see GH-159.</span>
 <span class="comment">// TODO: implement `Convert&lt;HashMap&lt;Value, Value&gt;&gt;`, see GH-160.</span>

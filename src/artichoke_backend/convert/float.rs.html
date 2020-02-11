@@ -82,13 +82,11 @@
 <span id="82">82</span>
 <span id="83">83</span>
 <span id="84">84</span>
-<span id="85">85</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Float</span>, <span class="ident">Ruby</span>, <span class="ident">Rust</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>};
 
 <span class="comment">// TODO: when ,mruby is gone, float conversion should not allocate.</span>
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Float</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {

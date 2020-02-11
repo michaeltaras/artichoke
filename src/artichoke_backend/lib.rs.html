@@ -246,11 +246,6 @@
 <span id="246">246</span>
 <span id="247">247</span>
 <span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -392,15 +387,10 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span> <span class="kw">as</span> <span class="ident">core</span>;
 
-<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::Convert).</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">Convert</span>;
-<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::ConvertMut).</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">ConvertMut</span>;
-<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::TryConvert).</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryConvert</span>;
-<span class="doccomment">/// Re-export from [`artichoke_core`](artichoke_core::convert::TryConvertMut).</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryConvertMut</span>;
-
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">Convert</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">ConvertMut</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">TryConvert</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">TryConvertMut</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">file</span>::<span class="ident">File</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">intern</span>::<span class="ident">Intern</span>;
