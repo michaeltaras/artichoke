@@ -680,16 +680,6 @@
 <span id="680">680</span>
 <span id="681">681</span>
 <span id="682">682</span>
-<span id="683">683</span>
-<span id="684">684</span>
-<span id="685">685</span>
-<span id="686">686</span>
-<span id="687">687</span>
-<span id="688">688</span>
-<span id="689">689</span>
-<span id="690">690</span>
-<span id="691">691</span>
-<span id="692">692</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -701,7 +691,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::{<span class="self">self</span>, <span class="ident">protect</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="self">self</span>, <span class="ident">Int</span>, <span class="ident">Ruby</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>, <span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">Intern</span>, <span class="ident">TryConvert</span>, <span class="ident">ValueLike</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">Intern</span>, <span class="ident">TryConvert</span>, <span class="ident">ValueLike</span>};
 
 <span class="doccomment">/// Max argument count for function calls including initialize and yield.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MRB_FUNCALL_ARGC_MAX</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
@@ -847,7 +837,7 @@
         <span class="ident">block</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Block</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+        <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>,
     {
         <span class="comment">// Ensure the borrow is out of scope by the time we eval code since</span>
         <span class="comment">// Rust-backed files and types may need to mutably borrow the `Artichoke` to</span>
@@ -901,9 +891,7 @@
                         <span class="string">&quot;Unreachable Ruby value&quot;</span>,
                     )))
                 } <span class="kw">else</span> {
-                    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-                        <span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interp</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Type conversion failed: {}&quot;</span>, <span class="ident">err</span>))
-                    })<span class="question-mark">?</span>;
+                    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
                     <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
                 }
             }
@@ -914,20 +902,14 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">try_into</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">try_into</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+        <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>,
     {
         <span class="comment">// We must clone interp out of self because try_convert consumes self.</span>
         <span class="kw">let</span> <span class="ident">interp</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">clone</span>();
-        <span class="ident">interp</span>.<span class="ident">try_convert</span>(<span class="self">self</span>)
-    }
-
-    <span class="kw">fn</span> <span class="ident">itself</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ArtichokeError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="self">Self</span>::<span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>,
-    {
-        <span class="self">self</span>.<span class="ident">clone</span>().<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">freeze</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1017,7 +999,7 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">yield_arg</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+        <span class="ident">Artichoke</span>: <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">T</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Exception</span><span class="op">&gt;</span>,
     {
         <span class="comment">// Ensure the borrow is out of scope by the time we eval code since</span>
         <span class="comment">// Rust-backed files and types may need to mutably borrow the `Artichoke` to</span>
@@ -1041,9 +1023,7 @@
                         <span class="string">&quot;Unreachable Ruby value&quot;</span>,
                     )))
                 } <span class="kw">else</span> {
-                    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
-                        <span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Type conversion failed: {}&quot;</span>, <span class="ident">err</span>))
-                    })<span class="question-mark">?</span>;
+                    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
                     <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
                 }
             }

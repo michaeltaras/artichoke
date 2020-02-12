@@ -160,6 +160,8 @@
 <span id="160">160</span>
 <span id="161">161</span>
 <span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
@@ -230,9 +232,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">expect</span>(<span class="string">&quot;init&quot;</span>);
 
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">br#&quot;&quot;cat o&#39; 9 tails&quot; =~ /\d/&quot;#</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span>(), <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="number">7</span>)));
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">value</span>, <span class="prelude-val">Some</span>(<span class="number">7</span>));
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">br#&quot;&quot;cat o&#39; 9 tails&quot; =~ 9&quot;#</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span>(), <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>));
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">is_none</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["RustBackedValue","Provides converters to and from [`Value`] with ruby type of [`Ruby::Data`]."]]});
+initSidebarItems({"struct":[["BoxIntoRubyError","Failed to convert from Rust type to a boxed Ruby value."],["UnboxRubyError","Failed to convert from boxed Ruby value to a Rust type."]],"trait":[["RustBackedValue","Provides converters to and from [`Value`] with ruby type of [`Ruby::Data`]."]]});
