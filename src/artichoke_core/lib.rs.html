@@ -83,9 +83,6 @@
 <span id="83">83</span>
 <span id="84">84</span>
 <span id="85">85</span>
-<span id="86">86</span>
-<span id="87">87</span>
-<span id="88">88</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -155,8 +152,6 @@
     <span class="doccomment">/// Arg count exceeds maximum allowed by the VM.</span>
     <span class="doccomment">/// Attempted to use an uninitialized interpreter.</span>
     <span class="ident">Uninitialized</span>,
-    <span class="doccomment">/// Eval or funcall returned an interpreter-internal value.</span>
-    <span class="ident">UnreachableValue</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ArtichokeError</span> {
@@ -169,7 +164,6 @@
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Failed to convert from {} to {}&quot;</span>, <span class="ident">from</span>, <span class="ident">to</span>)
             }
             <span class="self">Self</span>::<span class="ident">Uninitialized</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Interpreter not initialized&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">UnreachableValue</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Extracted unreachable type from interpreter&quot;</span>),
         }
     }
 }

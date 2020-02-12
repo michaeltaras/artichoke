@@ -689,6 +689,7 @@
 <span id="689">689</span>
 <span id="690">690</span>
 <span id="691">691</span>
+<span id="692">692</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -752,15 +753,16 @@
         }
     }
 
+    <span class="doccomment">/// Whether a value is an interpreter-only variant not exposed to Ruby.</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// Some type tags like [`MRB_TT_UNDEF`](sys::mrb_vtype::MRB_TT_UNDEF) are</span>
     <span class="doccomment">/// internal to the mruby VM and manipulating them with the [`sys`] API is</span>
     <span class="doccomment">/// unspecified and may result in a segfault.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// After extracting a [`sys::mrb_value`] from the interpreter, check to see</span>
-    <span class="doccomment">/// if the value is [unreachable](Ruby::Unreachable) and propagate an</span>
-    <span class="doccomment">/// [`ArtichokeError::UnreachableValue`](crate::ArtichokeError::UnreachableValue) error.</span>
+    <span class="doccomment">/// if the value is [unreachable](Ruby::Unreachable) a [`Fatal`] exception.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See: &lt;https://github.com/mruby/mruby/issues/4460&gt;</span>
+    <span class="doccomment">/// See: [mruby GH-4460](https://github.com/mruby/mruby/issues/4460).</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_unreachable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">ruby_type</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">Ruby</span>::<span class="ident">Unreachable</span>
