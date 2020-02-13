@@ -165,12 +165,6 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [`MatchData#[]`](https://ruby-doc.org/core-2.6.3/MatchData.html#method-i-5B-5D)</span>
 
@@ -303,15 +297,9 @@
                 <span class="kw">let</span> <span class="ident">group</span> <span class="op">=</span> <span class="ident">indexes</span>
                     .<span class="ident">iter</span>()
                     .<span class="ident">copied</span>()
-                    .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">index</span><span class="op">|</span> {
-                        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="ident">group</span>)) <span class="op">=</span> <span class="ident">captures</span>.<span class="ident">get</span>(<span class="ident">index</span>) {
-                            <span class="prelude-val">Some</span>(<span class="ident">group</span>)
-                        } <span class="kw">else</span> {
-                            <span class="prelude-val">None</span>
-                        }
-                    })
+                    .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">index</span><span class="op">|</span> <span class="ident">captures</span>.<span class="ident">get</span>(<span class="ident">index</span>).<span class="ident">map</span>(<span class="prelude-ty">Option</span>::<span class="ident">as_deref</span>).<span class="ident">flatten</span>())
                     .<span class="ident">last</span>();
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">group</span>.<span class="ident">map</span>(<span class="ident">Vec</span>::<span class="ident">as_slice</span>)))
+                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">group</span>))
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;undefined group name reference: \&quot;&quot;</span>);
                 <span class="ident">string</span>::<span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">name</span>)<span class="question-mark">?</span>;
