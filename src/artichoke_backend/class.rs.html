@@ -427,17 +427,17 @@
         <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">super_class</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">spec</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">super_class</span> {
             <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>)
-                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">Super</span>(<span class="ident">spec</span>.<span class="ident">fqname</span>().<span class="ident">into_owned</span>()))<span class="question-mark">?</span>
+                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">super_class</span>(<span class="ident">spec</span>.<span class="ident">fqname</span>().<span class="ident">into_owned</span>()))<span class="question-mark">?</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">object_class</span> };
-            <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">rclass</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">Super</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;Object&quot;</span>)))<span class="question-mark">?</span>
+            <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">rclass</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">super_class</span>(<span class="string">&quot;Object&quot;</span>))<span class="question-mark">?</span>
         };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rclass</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>) {
             <span class="ident">rclass</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">scope</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">enclosing_scope</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scope_rclass</span> <span class="op">=</span> <span class="ident">scope</span>
                 .<span class="ident">rclass</span>(<span class="ident">mrb</span>)
-                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">EnclosingScope</span>(<span class="ident">scope</span>.<span class="ident">fqname</span>().<span class="ident">into_owned</span>()))<span class="question-mark">?</span>;
+                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">enclosing_scope</span>(<span class="ident">scope</span>.<span class="ident">fqname</span>().<span class="ident">into_owned</span>()))<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> {
                 <span class="ident">sys</span>::<span class="ident">mrb_define_class_under</span>(
                     <span class="ident">mrb</span>,
@@ -447,13 +447,13 @@
                 )
             };
             <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">rclass</span>)
-                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">Class</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()))<span class="question-mark">?</span>
+                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">class</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()))<span class="question-mark">?</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> {
                 <span class="ident">sys</span>::<span class="ident">mrb_define_class</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name_c_str</span>().<span class="ident">as_ptr</span>(), <span class="ident">super_class</span>.<span class="ident">as_mut</span>())
             };
             <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">rclass</span>)
-                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">Class</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()))<span class="question-mark">?</span>
+                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">class</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()))<span class="question-mark">?</span>
         };
         <span class="kw">for</span> <span class="ident">method</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">methods</span> {
             <span class="kw">unsafe</span> {
