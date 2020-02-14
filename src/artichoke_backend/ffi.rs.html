@@ -284,7 +284,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">ArgumentError</span>, <span class="ident">Fatal</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">state</span>::<span class="ident">State</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::{<span class="self">self</span>, <span class="ident">DescribeState</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ConvertMut</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
@@ -341,7 +341,7 @@
     <span class="comment">// At this point, `Rc::strong_count` will be increased by 1.</span>
     <span class="macro">trace</span><span class="macro">!</span>(
         <span class="string">&quot;Extracted Artichoke from user data pointer on {}&quot;</span>,
-        <span class="ident">mrb</span>.<span class="ident">debug</span>()
+        <span class="ident">sys</span>::<span class="ident">mrb_sys_state_debug</span>(<span class="ident">mrb</span>.<span class="ident">as_mut</span>())
     );
     <span class="prelude-val">Ok</span>(<span class="ident">Artichoke</span>(<span class="ident">api</span>))
 }

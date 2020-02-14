@@ -208,7 +208,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception_handler</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::<span class="ident">Fatal</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::{<span class="ident">protect</span>, <span class="ident">DescribeState</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::{<span class="self">self</span>, <span class="ident">protect</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">Eval</span>};
 
@@ -224,7 +224,7 @@
         <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">parser</span>.<span class="ident">context_mut</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
 
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Evaling code on {}&quot;</span>, <span class="ident">mrb</span>.<span class="ident">debug</span>());
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Evaling code on {}&quot;</span>, <span class="ident">sys</span>::<span class="ident">mrb_sys_state_debug</span>(<span class="ident">mrb</span>));
         <span class="kw">match</span> <span class="kw">unsafe</span> { <span class="ident">protect</span>::<span class="ident">eval</span>(<span class="ident">mrb</span>, <span class="ident">context</span>, <span class="ident">code</span>) } {
             <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">value</span>);
