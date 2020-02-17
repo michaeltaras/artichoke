@@ -688,7 +688,7 @@
 <span class="doccomment">/// Because there is no C API to resolve class and module names directly, each</span>
 <span class="doccomment">/// class-like holds a reference to its enclosing scope so it can recursively</span>
 <span class="doccomment">/// resolve its enclosing [`RClass *`](sys::RClass).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">EnclosingRubyScope</span> {
     <span class="doccomment">/// Reference to a Ruby `Class` enclosing scope.</span>
     <span class="ident">Class</span> {

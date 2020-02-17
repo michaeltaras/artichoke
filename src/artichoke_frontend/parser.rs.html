@@ -170,6 +170,7 @@
 <span id="170">170</span>
 <span id="171">171</span>
 <span id="172">172</span>
+<span id="173">173</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parser for Ruby code that determines if it is fit to eval on an interpreter.</span>
 
@@ -232,6 +233,7 @@
 }
 
 <span class="doccomment">/// Wraps a [`artichoke_backend`] mruby parser.</span>
+<span class="comment">// TODO: add a `Debug` impl</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Parser</span> {
     <span class="ident">parser</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_parser_state</span>,
     <span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrbc_context</span>,

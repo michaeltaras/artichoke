@@ -216,6 +216,7 @@
 <span id="216">216</span>
 <span id="217">217</span>
 <span id="218">218</span>
+<span id="219">219</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A REPL (read–eval–print–loop) for an artichoke interpreter exposed by</span>
 <span class="doccomment">//! the [`artichoke-backend`](artichoke_backend) crate.</span>
@@ -284,6 +285,7 @@
 }
 
 <span class="doccomment">/// Configuration for the REPL readline prompt.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PromptConfig</span> {
     <span class="doccomment">/// Basic prompt for start of a new expression.</span>
     <span class="kw">pub</span> <span class="ident">simple</span>: <span class="ident">String</span>,

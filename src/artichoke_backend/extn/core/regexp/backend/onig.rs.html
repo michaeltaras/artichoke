@@ -731,18 +731,6 @@
 <span id="731">731</span>
 <span id="732">732</span>
 <span id="733">733</span>
-<span id="734">734</span>
-<span id="735">735</span>
-<span id="736">736</span>
-<span id="737">737</span>
-<span id="738">738</span>
-<span id="739">739</span>
-<span id="740">740</span>
-<span id="741">741</span>
-<span id="742">742</span>
-<span id="743">743</span>
-<span id="744">744</span>
-<span id="745">745</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">onig</span>::{<span class="ident">Regex</span>, <span class="ident">Syntax</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::{<span class="self">self</span>, <span class="ident">Ordering</span>};
@@ -758,7 +746,7 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">NameToCaptureLocations</span>, <span class="ident">NilableString</span>};
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Onig</span> {
     <span class="ident">literal</span>: <span class="ident">Config</span>,
     <span class="ident">derived</span>: <span class="ident">Config</span>,
@@ -795,18 +783,6 @@
             <span class="ident">regex</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">regex</span>),
         };
         <span class="prelude-val">Ok</span>(<span class="ident">regexp</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Onig</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(
-            <span class="ident">f</span>,
-            <span class="string">&quot;/{}/{}{}&quot;</span>,
-            <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="self">self</span>.<span class="ident">literal</span>.<span class="ident">pattern</span>.<span class="ident">as_slice</span>()).<span class="ident">replace</span>(<span class="string">&quot;/&quot;</span>, <span class="string">r&quot;\/&quot;</span>),
-            <span class="self">self</span>.<span class="ident">literal</span>.<span class="ident">options</span>.<span class="ident">modifier_string</span>(),
-            <span class="self">self</span>.<span class="ident">encoding</span>.<span class="ident">string</span>()
-        )
     }
 }
 
