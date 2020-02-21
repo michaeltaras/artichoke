@@ -347,7 +347,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">escaped</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="string">&quot;\n&quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+        <span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="string">b&quot;\n&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">r&quot;\n&quot;</span>, <span class="ident">buf</span>.<span class="ident">as_str</span>());
     }
 }

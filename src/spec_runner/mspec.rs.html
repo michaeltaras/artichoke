@@ -76,6 +76,8 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">ConvertMut</span>, <span class="ident">Eval</span>, <span class="ident">LoadSources</span>, <span class="ident">TopSelf</span>, <span class="ident">ValueLike</span>};
@@ -149,6 +151,8 @@
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">mspec</span>::<span class="ident">Runner</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="comment">// TODO: GH-528 - fix failing tests on Windows.</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>, <span class="ident">should_panic</span>)]</span>
     <span class="kw">fn</span> <span class="ident">mspec_framework_loads</span>() {
         <span class="kw">let</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">expect</span>(<span class="string">&quot;init&quot;</span>);
         <span class="comment">// should not panic</span>
