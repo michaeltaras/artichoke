@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/circleci/project/target/debug/build/artichoke-backend-dcbb34f545f2eef6/out/ffi.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ffi.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../light.css" id="themeStyle"><script src="../../../../../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../../../../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../../../../../artichoke_backend/index.html'><div class='logo-container'><img src='../../../../../../../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../../../../../../../settings.html"><img src="../../../../../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/work/artichoke/artichoke/target/debug/build/artichoke-backend-fe4e3852f80bfc41/out/ffi.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ffi.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../light.css" id="themeStyle"><script src="../../../../../../../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../../../../../../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../../../../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../../../../../../../artichoke_backend/index.html'><div class='logo-container'><img src='../../../../../../../../../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../../../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../../../../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../../../../../../../../../settings.html"><img src="../../../../../../../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -6561,6 +6561,66 @@
 <span id="6561">6561</span>
 <span id="6562">6562</span>
 <span id="6563">6563</span>
+<span id="6564">6564</span>
+<span id="6565">6565</span>
+<span id="6566">6566</span>
+<span id="6567">6567</span>
+<span id="6568">6568</span>
+<span id="6569">6569</span>
+<span id="6570">6570</span>
+<span id="6571">6571</span>
+<span id="6572">6572</span>
+<span id="6573">6573</span>
+<span id="6574">6574</span>
+<span id="6575">6575</span>
+<span id="6576">6576</span>
+<span id="6577">6577</span>
+<span id="6578">6578</span>
+<span id="6579">6579</span>
+<span id="6580">6580</span>
+<span id="6581">6581</span>
+<span id="6582">6582</span>
+<span id="6583">6583</span>
+<span id="6584">6584</span>
+<span id="6585">6585</span>
+<span id="6586">6586</span>
+<span id="6587">6587</span>
+<span id="6588">6588</span>
+<span id="6589">6589</span>
+<span id="6590">6590</span>
+<span id="6591">6591</span>
+<span id="6592">6592</span>
+<span id="6593">6593</span>
+<span id="6594">6594</span>
+<span id="6595">6595</span>
+<span id="6596">6596</span>
+<span id="6597">6597</span>
+<span id="6598">6598</span>
+<span id="6599">6599</span>
+<span id="6600">6600</span>
+<span id="6601">6601</span>
+<span id="6602">6602</span>
+<span id="6603">6603</span>
+<span id="6604">6604</span>
+<span id="6605">6605</span>
+<span id="6606">6606</span>
+<span id="6607">6607</span>
+<span id="6608">6608</span>
+<span id="6609">6609</span>
+<span id="6610">6610</span>
+<span id="6611">6611</span>
+<span id="6612">6612</span>
+<span id="6613">6613</span>
+<span id="6614">6614</span>
+<span id="6615">6615</span>
+<span id="6616">6616</span>
+<span id="6617">6617</span>
+<span id="6618">6618</span>
+<span id="6619">6619</span>
+<span id="6620">6620</span>
+<span id="6621">6621</span>
+<span id="6622">6622</span>
+<span id="6623">6623</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">/* automatically generated by rust-bindgen */</span>
 
@@ -7231,6 +7291,66 @@
         ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">align_of</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>(),
         <span class="number">8usize</span>,
         <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;Alignment of &quot;</span>, <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>))
+    );
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>())).<span class="ident">freelist</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span> },
+        <span class="number">0usize</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(
+            <span class="string">&quot;Offset of field: &quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>),
+            <span class="string">&quot;::&quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">freelist</span>)
+        )
+    );
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>())).<span class="ident">prev</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span> },
+        <span class="number">8usize</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(
+            <span class="string">&quot;Offset of field: &quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>),
+            <span class="string">&quot;::&quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">prev</span>)
+        )
+    );
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>())).<span class="ident">next</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span> },
+        <span class="number">16usize</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(
+            <span class="string">&quot;Offset of field: &quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>),
+            <span class="string">&quot;::&quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">next</span>)
+        )
+    );
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>())).<span class="ident">free_next</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span> },
+        <span class="number">24usize</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(
+            <span class="string">&quot;Offset of field: &quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>),
+            <span class="string">&quot;::&quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">free_next</span>)
+        )
+    );
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>())).<span class="ident">free_prev</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span> },
+        <span class="number">32usize</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(
+            <span class="string">&quot;Offset of field: &quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>),
+            <span class="string">&quot;::&quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">free_prev</span>)
+        )
+    );
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>::<span class="op">&lt;</span><span class="ident">mrb_heap_page</span><span class="op">&gt;</span>())).<span class="ident">objects</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span> },
+        <span class="number">48usize</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(
+            <span class="string">&quot;Offset of field: &quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">mrb_heap_page</span>),
+            <span class="string">&quot;::&quot;</span>,
+            <span class="macro">stringify</span><span class="macro">!</span>(<span class="ident">objects</span>)
+        )
     );
 }
 <span class="kw">impl</span> <span class="ident">mrb_heap_page</span> {
@@ -13126,4 +13246,4 @@
     <span class="kw">pub</span> <span class="ident">_address</span>: <span class="ident">u8</span>,
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../../../../../../aliases.js"></script><script src="../../../../../../../../../../main.js"></script><script src="../../../../../../../../../../source-script.js"></script><script src="../../../../../../../../../../source-files.js"></script><script defer src="../../../../../../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../../../../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../../../../../../../../aliases.js"></script><script src="../../../../../../../../../../../../main.js"></script><script src="../../../../../../../../../../../../source-script.js"></script><script src="../../../../../../../../../../../../source-files.js"></script><script defer src="../../../../../../../../../../../../search-index.js"></script></body></html>

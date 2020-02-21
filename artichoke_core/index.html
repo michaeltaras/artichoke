@@ -9,14 +9,14 @@ must implement. The traits in <code>artichoke-core</code> define:</p>
 <ul>
 <li>APIs a concrete VM must implement to support the Artichoke runtime and
 frontends.</li>
-<li>How to box polymorphic core types into <a href="value::Value">Ruby <code>Value</code></a>.</li>
-<li><a href="convert">Interoperability</a> between the VM backend and the
+<li>How to box polymorphic core types into <a href="../artichoke_core/value/trait.Value.html">Ruby <code>Value</code></a>.</li>
+<li><a href="../artichoke_core/convert/index.html">Interoperability</a> between the VM backend and the
 Rust-implemented core.</li>
 </ul>
 <p>Some of the core APIs a Ruby implementation must provide are
-<a href="eval::Eval">evaluating code</a>,
-<a href="convert::ConvertMut">converting Rust data structures to boxed <code>Value</code>s on the interpreter heap</a>,
-and <a href="intern::Intern">interning <code>Symbol</code>s</a>.</p>
+<a href="../artichoke_core/eval/trait.Eval.html">evaluating code</a>,
+<a href="../artichoke_core/convert/trait.ConvertMut.html">converting Rust data structures to boxed <code>Value</code>s on the interpreter heap</a>,
+and <a href="../artichoke_core/intern/trait.Intern.html">interning <code>Symbol</code>s</a>.</p>
 <h2 id="license" class="section-header"><a href="#license">License</a></h2>
 <p>artichoke-core is licensed with the MIT License (c) Ryan Lopopolo.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
