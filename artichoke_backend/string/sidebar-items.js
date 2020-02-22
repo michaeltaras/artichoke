@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["escape_unicode","Write a UTF-8 representation of a (potentially) binary `String`."],["format_int_into",""]],"struct":[["WriteError","Error type for [`escape_unicode`]."]]});
+initSidebarItems({"fn":[["format_int_into",""],["format_unicode_debug_into","Write a UTF-8 debug representation of a byte slice into the given writer."]],"struct":[["WriteError","Error type for [`format_unicode_debug_into`]."]]});

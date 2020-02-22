@@ -174,6 +174,8 @@
 <span id="174">174</span>
 <span id="175">175</span>
 <span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Utilities for working with Ruby `String`s.</span>
 <span class="doccomment">//!</span>
@@ -192,50 +194,58 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ConvertMut</span>};
 
-<span class="doccomment">/// Write a UTF-8 representation of a (potentially) binary `String`.</span>
+<span class="doccomment">/// Write a UTF-8 debug representation of a byte slice into the given writer.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This function encodes a bytes slice into a UTF-8 valid representation by</span>
+<span class="doccomment">/// This method encodes a bytes slice into a UTF-8 valid representation by</span>
 <span class="doccomment">/// writing invalid sequences as `\xXX` escape codes.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This function uses `char::escape_debug` which means UTF-8 valid characters</span>
-<span class="doccomment">/// like `\n` and `\t` are also escaped.</span>
+<span class="doccomment">/// This method also escapes UTF-8 valid characters like `\n` and `\t`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// Basic usage:</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # use artichoke_backend::string::escape_unicode;</span>
+<span class="doccomment">/// # use artichoke_backend::string::format_unicode_debug_into;</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// let mut message = String::from(&quot;cannot load such file -- &quot;);</span>
-<span class="doccomment">/// let filename = b&quot;oh-no-\xFF&quot;;</span>
-<span class="doccomment">/// escape_unicode(&amp;mut message, &amp;filename[..]);</span>
-<span class="doccomment">/// assert_eq!(r&quot;cannot load such file -- oh-no-\xFF&quot;, message);</span>
+<span class="doccomment">/// let filename = b&quot;utf8-invalid-name-\xFF&quot;;</span>
+<span class="doccomment">/// format_unicode_debug_into(&amp;mut message, &amp;filename[..]);</span>
+<span class="doccomment">/// assert_eq!(r&quot;cannot load such file -- utf8-invalid-name-\xFF&quot;, message);</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape_unicode</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">string</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">WriteError</span><span class="op">&gt;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Errors</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This method only returns an error when the given writer returns an</span>
+<span class="doccomment">/// error.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_unicode_debug_into</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">W</span>, <span class="ident">string</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">WriteError</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>,
+    <span class="ident">W</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>,
 {
-    <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">bstr</span>::<span class="ident">B</span>(<span class="ident">string</span>);
-    <span class="kw">for</span> (<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">ch</span>) <span class="kw">in</span> <span class="ident">buf</span>.<span class="ident">char_indices</span>() {
+    <span class="kw">for</span> (<span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">ch</span>) <span class="kw">in</span> <span class="ident">string</span>.<span class="ident">char_indices</span>() {
         <span class="kw">if</span> <span class="ident">ch</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{FFFD}&#39;</span> {
-            <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="ident">buf</span>[<span class="ident">start</span>..<span class="ident">end</span>].<span class="ident">as_bytes</span>() {
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;\x{:X}&quot;</span>, <span class="ident">byte</span>)<span class="question-mark">?</span>;
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">slice</span>) <span class="op">=</span> <span class="ident">string</span>.<span class="ident">get</span>(<span class="ident">start</span>..<span class="ident">end</span>) {
+                <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="ident">slice</span> {
+                    <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;\x{:X}&quot;</span>, <span class="ident">byte</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>)<span class="question-mark">?</span>;
+                }
             }
         } <span class="kw">else</span> {
-            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">ch</span>.<span class="ident">escape_debug</span>())<span class="question-mark">?</span>;
+            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">ch</span>.<span class="ident">escape_debug</span>()).<span class="ident">map_err</span>(<span class="ident">WriteError</span>)<span class="question-mark">?</span>;
         }
     }
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_int_into</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">WriteError</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_int_into</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">f</span>: <span class="ident">W</span>, <span class="ident">value</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">WriteError</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>,
+    <span class="ident">W</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>,
     <span class="ident">I</span>: <span class="ident">itoa</span>::<span class="ident">Integer</span>,
 {
-    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="ident">f</span>, <span class="ident">value</span>)<span class="question-mark">?</span>;
+    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="ident">f</span>, <span class="ident">value</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="doccomment">/// Error type for [`escape_unicode`].</span>
+<span class="doccomment">/// Error type for [`format_unicode_debug_into`].</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This error type wraps a [`fmt::Error`].</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
@@ -245,12 +255,6 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Error</span> {
         <span class="self">self</span>.<span class="number">0</span>
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WriteError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">fmt</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="ident">err</span>)
     }
 }
 
@@ -321,33 +325,33 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">escape_unicode</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">format_unicode_debug_into</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">invalid_utf8</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;abc\xFF&quot;</span>[..]).<span class="ident">unwrap</span>();
+        <span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;abc\xFF&quot;</span>[..]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">r&quot;abc\xFF&quot;</span>, <span class="ident">buf</span>.<span class="ident">as_str</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">ascii</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;abc&quot;</span>[..]).<span class="ident">unwrap</span>();
+        <span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;abc&quot;</span>[..]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">r&quot;abc&quot;</span>, <span class="ident">buf</span>.<span class="ident">as_str</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">emoji</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="string">&quot;Ruby 💎&quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+        <span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="string">&quot;Ruby 💎&quot;</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">r&quot;Ruby 💎&quot;</span>, <span class="ident">buf</span>.<span class="ident">as_str</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">escaped</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">escape_unicode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="string">b&quot;\n&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="string">b&quot;\n&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">r&quot;\n&quot;</span>, <span class="ident">buf</span>.<span class="ident">as_str</span>());
     }
 }
