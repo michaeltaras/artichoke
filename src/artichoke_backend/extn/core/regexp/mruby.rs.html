@@ -271,6 +271,7 @@
 <span id="271">271</span>
 <span id="272">272</span>
 <span id="273">273</span>
+<span id="274">274</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
@@ -307,15 +308,16 @@
         .<span class="ident">define</span>()<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">regexp</span>::<span class="ident">Regexp</span><span class="op">&gt;</span>(<span class="ident">spec</span>);
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;regexp.rb&quot;</span>)[..])<span class="question-mark">?</span>;
-    <span class="comment">// TODO: Add proper constant defs to class::Spec, see GH-27.</span>
-    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="macro">format</span><span class="macro">!</span>(
-        <span class="string">&quot;class Regexp; IGNORECASE = {}; EXTENDED = {}; MULTILINE = {}; FIXEDENCODING = {}; NOENCODING = {}; end&quot;</span>,
-        <span class="ident">regexp</span>::<span class="ident">IGNORECASE</span>,
-        <span class="ident">regexp</span>::<span class="ident">EXTENDED</span>,
-        <span class="ident">regexp</span>::<span class="ident">MULTILINE</span>,
-        <span class="ident">regexp</span>::<span class="ident">FIXEDENCODING</span>,
-        <span class="ident">regexp</span>::<span class="ident">NOENCODING</span>,
-    ).<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">ignorecase</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">regexp</span>::<span class="ident">IGNORECASE</span>);
+    <span class="ident">interp</span>.<span class="ident">define_class_constant</span>::<span class="op">&lt;</span><span class="ident">regexp</span>::<span class="ident">Regexp</span><span class="op">&gt;</span>(<span class="string">&quot;IGNORECASE&quot;</span>, <span class="ident">ignorecase</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">extended</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">regexp</span>::<span class="ident">EXTENDED</span>);
+    <span class="ident">interp</span>.<span class="ident">define_class_constant</span>::<span class="op">&lt;</span><span class="ident">regexp</span>::<span class="ident">Regexp</span><span class="op">&gt;</span>(<span class="string">&quot;EXTENDED&quot;</span>, <span class="ident">extended</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">multiline</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">regexp</span>::<span class="ident">MULTILINE</span>);
+    <span class="ident">interp</span>.<span class="ident">define_class_constant</span>::<span class="op">&lt;</span><span class="ident">regexp</span>::<span class="ident">Regexp</span><span class="op">&gt;</span>(<span class="string">&quot;MULTILINE&quot;</span>, <span class="ident">multiline</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">fixed_encoding</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">regexp</span>::<span class="ident">FIXEDENCODING</span>);
+    <span class="ident">interp</span>.<span class="ident">define_class_constant</span>::<span class="op">&lt;</span><span class="ident">regexp</span>::<span class="ident">Regexp</span><span class="op">&gt;</span>(<span class="string">&quot;FIXEDENCODING&quot;</span>, <span class="ident">fixed_encoding</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">no_encoding</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">regexp</span>::<span class="ident">NOENCODING</span>);
+    <span class="ident">interp</span>.<span class="ident">define_class_constant</span>::<span class="op">&lt;</span><span class="ident">regexp</span>::<span class="ident">Regexp</span><span class="op">&gt;</span>(<span class="string">&quot;NOENCODING&quot;</span>, <span class="ident">no_encoding</span>)<span class="question-mark">?</span>;
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Patched Regexp onto interpreter&quot;</span>);
     <span class="prelude-val">Ok</span>(())
 }
