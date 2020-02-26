@@ -171,6 +171,23 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parser for Ruby code that determines if it is fit to eval on an interpreter.</span>
 
@@ -178,15 +195,18 @@
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">Artichoke</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">NonNull</span>;
 
 <span class="doccomment">/// State shows whether artichoke can parse some code or why it cannot.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This enum only encapsulates whether artichoke can parse the code. It may</span>
 <span class="doccomment">/// still have syntactic or semantic errors.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">State</span> {
     <span class="doccomment">/// Internal parser error. This is a fatal error.</span>
     <span class="ident">ParseError</span>,
+    <span class="doccomment">/// Code must be fewer than `isize::max_value` bytes.</span>
+    <span class="ident">CodeTooLong</span>,
     <span class="doccomment">/// The code has too many end statements.</span>
     <span class="ident">UnexpectedEnd</span>,
     <span class="doccomment">/// The code has unclosed blocks.</span>
@@ -204,14 +224,37 @@
 }
 
 <span class="kw">impl</span> <span class="ident">State</span> {
-    <span class="doccomment">/// Does this state indicate a code block is open? Used by the REPL to know</span>
-    <span class="doccomment">/// whether to buffer code before attempting to eval it on the interpreter.</span>
+    <span class="doccomment">/// Whether this variant indicates a code block is open.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method can be used by a REPL to check whether to buffer code or</span>
+    <span class="doccomment">/// begin a multi-line editing session before attempting to eval the code on</span>
+    <span class="doccomment">/// an interpreter.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_code_block_open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_code_block_open</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Valid</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedEnd</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedRegexpBegin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="self">Self</span>::<span class="ident">Valid</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedEnd</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedRegexpBegin</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">CodeTooLong</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="bool-val">false</span>
+            }
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         }
+    }
+
+    <span class="doccomment">/// Whether this variant is a recoverable error.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Recoverable errors should be handled by resetting the parser and input</span>
+    <span class="doccomment">/// buffer.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_recoverable_error</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">CodeTooLong</span>
+    }
+
+    <span class="doccomment">/// Whether this variant is a fatal parse error.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Fatal parser states indicate the parser is corrupted and cannot be used</span>
+    <span class="doccomment">/// again.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_fatal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">ParseError</span>
     }
 }
 
@@ -221,22 +264,11 @@
     }
 }
 
-<span class="doccomment">/// Errors encountered during parsing some Ruby code.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// Code must be fewer than `isize::max_value` bytes.</span>
-    <span class="ident">CodeTooLong</span>,
-    <span class="doccomment">/// Too many lines parsed.</span>
-    <span class="ident">TooManyLines</span>,
-    <span class="doccomment">/// Fatal error with message.</span>
-    <span class="ident">Fatal</span>(<span class="ident">String</span>),
-}
-
 <span class="doccomment">/// Wraps a [`artichoke_backend`] mruby parser.</span>
 <span class="comment">// TODO: add a `Debug` impl</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Parser</span> {
-    <span class="ident">parser</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_parser_state</span>,
-    <span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrbc_context</span>,
+    <span class="ident">parser</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_parser_state</span><span class="op">&gt;</span>,
+    <span class="ident">context</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrbc_context</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Parser</span> {
@@ -246,12 +278,10 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>();
         <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">mrb</span>;
         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">parser</span>.<span class="ident">context_mut</span>();
+        <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">context</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_parser_new</span>(<span class="ident">mrb</span>) };
-        <span class="kw">if</span> <span class="ident">parser</span>.<span class="ident">is_null</span>() {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="self">Self</span> { <span class="ident">parser</span>, <span class="ident">context</span> })
-        }
+        <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">parser</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Some</span>(<span class="self">Self</span> { <span class="ident">parser</span>, <span class="ident">context</span> })
     }
 
     <span class="doccomment">/// Parse the code buffer to determine if the code is a complete expression</span>
@@ -265,44 +295,48 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the underlying parser returns a UTF-8 invalid error message, an error</span>
     <span class="doccomment">/// is returned.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">code</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">State</span>, <span class="ident">Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-    {
-        <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">code</span>.<span class="ident">as_ref</span>();
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">isize</span>::<span class="ident">try_from</span>(<span class="ident">bytes</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">CodeTooLong</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">code_has_unterminated_expression</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>;
-            (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">s</span> <span class="op">=</span> <span class="ident">ptr</span>;
-            (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">send</span> <span class="op">=</span> <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">len</span>);
-            (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">lineno</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">context</span>).<span class="ident">lineno</span>;
-            <span class="ident">sys</span>::<span class="ident">mrb_parser_parse</span>(<span class="self">self</span>.<span class="ident">parser</span>, <span class="self">self</span>.<span class="ident">context</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">code</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">State</span> {
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">isize</span>::<span class="ident">try_from</span>(<span class="ident">code</span>.<span class="ident">len</span>()) {
+            <span class="ident">len</span>
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> <span class="ident">State</span>::<span class="ident">CodeTooLong</span>;
+        };
+        <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">as_mut</span>() };
+        <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>() };
 
-            <span class="kw">if</span> <span class="op">!</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">parsing_heredoc</span>.<span class="ident">is_null</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">UnterminatedHeredoc</span>);
+        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">code</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>;
+        <span class="ident">parser</span>.<span class="ident">s</span> <span class="op">=</span> <span class="ident">ptr</span>;
+        <span class="ident">parser</span>.<span class="ident">send</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">len</span>) };
+        <span class="ident">parser</span>.<span class="ident">lineno</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">lineno</span>;
+        <span class="kw">unsafe</span> {
+            <span class="ident">sys</span>::<span class="ident">mrb_parser_parse</span>(<span class="ident">parser</span>, <span class="ident">context</span>);
+        }
+
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">parser</span>.<span class="ident">parsing_heredoc</span>.<span class="ident">is_null</span>() {
+            <span class="kw">return</span> <span class="ident">State</span>::<span class="ident">UnterminatedHeredoc</span>;
+        }
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">parser</span>.<span class="ident">lex_strterm</span>.<span class="ident">is_null</span>() {
+            <span class="kw">return</span> <span class="ident">State</span>::<span class="ident">UnterminatedString</span>;
+        }
+        <span class="kw">if</span> <span class="ident">parser</span>.<span class="ident">nerr</span> <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="kw">let</span> <span class="ident">errmsg</span> <span class="op">=</span> <span class="ident">parser</span>.<span class="ident">error_buffer</span>[<span class="number">0</span>].<span class="ident">message</span>;
+            <span class="kw">if</span> <span class="ident">errmsg</span>.<span class="ident">is_null</span>() {
+                <span class="kw">return</span> <span class="ident">State</span>::<span class="ident">ParseError</span>;
             }
-            <span class="kw">if</span> <span class="op">!</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">lex_strterm</span>.<span class="ident">is_null</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">UnterminatedString</span>);
-            }
-            <span class="kw">if</span> (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">nerr</span> <span class="op">&gt;</span> <span class="number">0</span> {
-                <span class="kw">let</span> <span class="ident">errmsg</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">error_buffer</span>[<span class="number">0</span>].<span class="ident">message</span>;
-                <span class="kw">if</span> <span class="ident">errmsg</span>.<span class="ident">is_null</span>() {
-                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">ParseError</span>);
+            <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">errmsg</span>) };
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">message</span>) <span class="op">=</span> <span class="ident">cstring</span>.<span class="ident">to_str</span>() {
+                <span class="kw">match</span> <span class="ident">message</span> {
+                    <span class="string">&quot;syntax error, unexpected $end&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State</span>::<span class="ident">UnexpectedProgramEnd</span>,
+                    <span class="string">&quot;syntax error, unexpected keyword_end&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State</span>::<span class="ident">UnexpectedEnd</span>,
+                    <span class="string">&quot;syntax error, unexpected tREGEXP_BEG&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State</span>::<span class="ident">UnexpectedRegexpBegin</span>,
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State</span>::<span class="ident">ParseError</span>,
                 }
-                <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">errmsg</span>);
-                <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">cstring</span>.<span class="ident">to_str</span>().<span class="ident">map</span>(<span class="ident">ToOwned</span>::<span class="ident">to_owned</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                    <span class="ident">Error</span>::<span class="ident">Fatal</span>(<span class="string">&quot;parser error with unparseable message&quot;</span>.<span class="ident">to_owned</span>())
-                })<span class="question-mark">?</span>;
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">match_same_arms</span>)]</span>
-                <span class="kw">return</span> <span class="kw">match</span> <span class="ident">message</span>.<span class="ident">as_str</span>() {
-                    <span class="string">&quot;syntax error, unexpected $end&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">UnexpectedProgramEnd</span>),
-                    <span class="string">&quot;syntax error, unexpected keyword_end&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">UnexpectedEnd</span>),
-                    <span class="string">&quot;syntax error, unexpected tREGEXP_BEG&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">UnexpectedRegexpBegin</span>),
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">ParseError</span>),
-                };
+            } <span class="kw">else</span> {
+                <span class="ident">State</span>::<span class="ident">ParseError</span>
             }
+        } <span class="kw">else</span> {
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">match_same_arms</span>)]</span>
-            <span class="kw">match</span> (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">parser</span>).<span class="ident">lstate</span> {
+            <span class="kw">let</span> <span class="ident">code_has_unterminated_expression</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">parser</span>.<span class="ident">lstate</span> {
                 <span class="comment">// beginning of a statement, that means previous line ended</span>
                 <span class="ident">sys</span>::<span class="ident">mrb_lex_state_enum</span>::<span class="ident">EXPR_BEG</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
                 <span class="comment">// a message dot was the last token, there has to come more</span>
@@ -328,12 +362,12 @@
                 <span class="comment">// this token is unreachable and is used to do integer math on the</span>
                 <span class="comment">// values of `mrb_lex_state_enum`.</span>
                 <span class="ident">sys</span>::<span class="ident">mrb_lex_state_enum</span>::<span class="ident">EXPR_MAX_STATE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            };
+            <span class="kw">if</span> <span class="ident">code_has_unterminated_expression</span> {
+                <span class="ident">State</span>::<span class="ident">UnterminatedBlock</span>
+            } <span class="kw">else</span> {
+                <span class="ident">State</span>::<span class="ident">Valid</span>
             }
-        };
-        <span class="kw">if</span> <span class="ident">code_has_unterminated_expression</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">UnterminatedBlock</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">State</span>::<span class="ident">Valid</span>)
         }
     }
 }
@@ -341,7 +375,7 @@
 <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Parser</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
-            <span class="ident">sys</span>::<span class="ident">mrb_parser_free</span>(<span class="self">self</span>.<span class="ident">parser</span>);
+            <span class="ident">sys</span>::<span class="ident">mrb_parser_free</span>(<span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">as_mut</span>());
         }
     }
 }

@@ -213,6 +213,37 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A REPL (read–eval–print–loop) for an artichoke interpreter exposed by</span>
 <span class="doccomment">//! the [`artichoke-backend`](artichoke_backend) crate.</span>
@@ -228,9 +259,11 @@
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">Eval</span>, <span class="ident">Parser</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">ValueLike</span>};
 <span class="kw">use</span> <span class="ident">rustyline</span>::<span class="ident">error</span>::<span class="ident">ReadlineError</span>;
 <span class="kw">use</span> <span class="ident">rustyline</span>::<span class="ident">Editor</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">parser</span>::{<span class="self">self</span>, <span class="ident">Parser</span>, <span class="ident">State</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">parser</span>::{<span class="ident">Parser</span>, <span class="ident">State</span>};
 
 <span class="kw">const</span> <span class="ident">REPL_FILENAME</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="string">b&quot;(airb)&quot;</span>;
 
@@ -243,36 +276,59 @@
     }
 }
 
-<span class="doccomment">/// REPL errors.</span>
+<span class="doccomment">/// Failed to initialize parser during REPL boot.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The parser is needed to properly enter and exit multi-line editing mode.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">struct</span> <span class="ident">ParserAllocError</span>;
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParserAllocError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Failed to initialize Ruby parser&quot;</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">ParserAllocError</span> {}
+
+<span class="doccomment">/// Parser processed too many lines of input.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">struct</span> <span class="ident">ParserLineCountError</span>;
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParserLineCountError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;The interpreter has parsed too many lines and must exit&quot;</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">ParserLineCountError</span> {}
+
+<span class="doccomment">/// Internal fatal parser error.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is usually an unknown FFI to Rust translation.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">struct</span> <span class="ident">ParserInternalError</span>;
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParserInternalError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;A fatal parsing error occurred&quot;</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">ParserInternalError</span> {}
+
+<span class="doccomment">/// The input loop encountered an unknown error condition.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// Fatal error.</span>
-    <span class="ident">Fatal</span>,
-    <span class="doccomment">/// Could not initialize REPL.</span>
-    <span class="ident">ReplInit</span>,
-    <span class="doccomment">/// Unrecoverable [`Parser`] error.</span>
-    <span class="ident">ReplParse</span>(<span class="ident">parser</span>::<span class="ident">Error</span>),
-    <span class="doccomment">/// Exception thrown by eval.</span>
-    <span class="ident">Ruby</span>(<span class="ident">Exception</span>),
-    <span class="doccomment">/// IO error when writing to output or error streams.</span>
-    <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
-}
+<span class="kw">struct</span> <span class="ident">UnhandledReadlineError</span>(<span class="ident">ReadlineError</span>);
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">parser</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">parser</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">ReplParse</span>(<span class="ident">err</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">UnhandledReadlineError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unhandled REPL Readline error: {}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Exception</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">Exception</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Ruby</span>(<span class="ident">err</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Io</span>(<span class="ident">err</span>)
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">UnhandledReadlineError</span> {
+    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
     }
 }
 
@@ -291,22 +347,21 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">PromptConfig</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">simple</span>: <span class="string">&quot;&gt;&gt;&gt; &quot;</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">continued</span>: <span class="string">&quot;... &quot;</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">result_prefix</span>: <span class="string">&quot;=&gt; &quot;</span>.<span class="ident">to_owned</span>(),
+            <span class="ident">simple</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;&gt;&gt;&gt; &quot;</span>),
+            <span class="ident">continued</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;... &quot;</span>),
+            <span class="ident">result_prefix</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;=&gt; &quot;</span>),
         }
     }
 }
 
-<span class="kw">fn</span> <span class="ident">preamble</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">preamble</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">description</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;RUBY_DESCRIPTION&quot;</span>)<span class="question-mark">?</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">compiler</span> <span class="op">=</span> <span class="ident">interp</span>
         .<span class="ident">eval</span>(<span class="string">b&quot;ARTICHOKE_COMPILER_VERSION&quot;</span>)<span class="question-mark">?</span>
         .<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="ident">description</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">2</span> <span class="op">+</span> <span class="ident">compiler</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>);
     <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">description</span>);
-    <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
-    <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;[&#39;</span>);
+    <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;\n[&quot;</span>);
     <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">compiler</span>);
     <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;]&#39;</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
@@ -331,7 +386,7 @@
     <span class="kw-2">mut</span> <span class="ident">output</span>: <span class="kw">impl</span> <span class="ident">Write</span>,
     <span class="kw-2">mut</span> <span class="ident">error</span>: <span class="kw">impl</span> <span class="ident">Write</span>,
     <span class="ident">config</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PromptConfig</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">config</span>.<span class="ident">unwrap_or_default</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
     <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">preamble</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
@@ -342,7 +397,7 @@
     <span class="comment">// REPL_FILENAME is controlled by this crate and asserts this invariant</span>
     <span class="comment">// with a test.</span>
     <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">REPL_FILENAME</span>.<span class="ident">to_vec</span>()) });
-    <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">Error</span>::<span class="ident">ReplInit</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">ParserAllocError</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rl</span> <span class="op">=</span> <span class="ident">Editor</span>::<span class="op">&lt;</span>()<span class="op">&gt;</span>::<span class="ident">new</span>();
     <span class="comment">// If a code block is open, accumulate code from multiple readlines in this</span>
@@ -361,9 +416,17 @@
         <span class="kw">match</span> <span class="ident">readline</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">line</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">line</span>.<span class="ident">as_str</span>());
-                <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">parser</span>.<span class="ident">parse</span>(<span class="ident">buf</span>.<span class="ident">as_str</span>())<span class="question-mark">?</span>;
+                <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">parser</span>.<span class="ident">parse</span>(<span class="ident">buf</span>.<span class="ident">as_bytes</span>());
+                <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_fatal</span>() {
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">ParserInternalError</span>));
+                }
                 <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_code_block_open</span>() {
                     <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
+                    <span class="kw">continue</span>;
+                }
+                <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_recoverable_error</span>() {
+                    <span class="macro">write</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;Could not parse input&quot;</span>)<span class="question-mark">?</span>;
+                    <span class="ident">buf</span>.<span class="ident">clear</span>();
                     <span class="kw">continue</span>;
                 }
                 <span class="kw">match</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="ident">buf</span>.<span class="ident">as_bytes</span>()) {
@@ -406,10 +469,10 @@
                         .<span class="ident">borrow_mut</span>()
                         .<span class="ident">parser</span>
                         .<span class="ident">add_fetch_lineno</span>(<span class="number">1</span>)
-                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">parser</span>::<span class="ident">Error</span>::<span class="ident">TooManyLines</span>)<span class="question-mark">?</span>;
+                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ParserLineCountError</span>)<span class="question-mark">?</span>;
                 }
-                <span class="comment">// mruby eval successful, so reset the REPL state for the</span>
-                <span class="comment">// next expression.</span>
+                <span class="comment">// Eval successful, so reset the REPL state for the next</span>
+                <span class="comment">// expression.</span>
                 <span class="ident">interp</span>.<span class="ident">incremental_gc</span>();
                 <span class="ident">buf</span>.<span class="ident">clear</span>();
             }
@@ -420,11 +483,10 @@
                 <span class="comment">// clear parser state</span>
                 <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">default</span>();
                 <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;^C&quot;</span>)<span class="question-mark">?</span>;
-                <span class="kw">continue</span>;
             }
             <span class="comment">// Gracefully exit on CTRL-D EOF</span>
             <span class="prelude-val">Err</span>(<span class="ident">ReadlineError</span>::<span class="ident">Eof</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Fatal</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">UnhandledReadlineError</span>(<span class="ident">err</span>))),
         };
     }
     <span class="prelude-val">Ok</span>(())
