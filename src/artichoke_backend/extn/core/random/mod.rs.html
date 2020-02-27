@@ -188,6 +188,7 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
+<span id="191">191</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="self">self</span>, <span class="ident">Rng</span>, <span class="ident">RngCore</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -324,10 +325,11 @@
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">inner_mut</span>().<span class="ident">rand_float</span>(<span class="ident">interp</span>, <span class="prelude-val">Some</span>(<span class="ident">max</span>));
             <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
         }
-        <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span> <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
-            <span class="ident">interp</span>,
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;invalid argument - {}&quot;</span>, <span class="ident">max</span>),
-        ))),
+        <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span> <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;invalid argument - &quot;</span>);
+            <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">max</span>)<span class="question-mark">?</span>;
+            <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+        }
         <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">rand</span>.<span class="ident">borrow_mut</span>();
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">inner_mut</span>().<span class="ident">rand_int</span>(<span class="ident">interp</span>, <span class="ident">max</span>);
