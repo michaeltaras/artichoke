@@ -147,11 +147,13 @@
 <span id="147">147</span>
 <span id="148">148</span>
 <span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">num</span>::<span class="ident">NonZeroUsize</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
@@ -172,7 +174,7 @@
     <span class="ident">classes</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">TypeId</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">modules</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">TypeId</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">Virtual</span>,
-    <span class="kw">pub</span> <span class="ident">active_regexp_globals</span>: <span class="ident">usize</span>,
+    <span class="kw">pub</span> <span class="ident">active_regexp_globals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NonZeroUsize</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">output</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">output</span>::<span class="ident">Output</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-random&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">prng</span>: <span class="ident">prng</span>::<span class="ident">Prng</span>,
@@ -198,7 +200,7 @@
             <span class="ident">classes</span>: <span class="ident">HashMap</span>::<span class="ident">default</span>(),
             <span class="ident">modules</span>: <span class="ident">HashMap</span>::<span class="ident">default</span>(),
             <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">Virtual</span>::<span class="ident">new</span>(),
-            <span class="ident">active_regexp_globals</span>: <span class="number">0</span>,
+            <span class="ident">active_regexp_globals</span>: <span class="prelude-val">None</span>,
             <span class="ident">output</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">output</span>::<span class="ident">Process</span>::<span class="ident">new</span>()),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-random&quot;</span>)]</span>
             <span class="ident">prng</span>: <span class="ident">prng</span>::<span class="ident">Prng</span>::<span class="ident">default</span>(),
