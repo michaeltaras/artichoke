@@ -187,11 +187,36 @@
 <span id="187">187</span>
 <span id="188">188</span>
 <span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">numeric</span>::<span class="ident">Numeric</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>;
 
@@ -284,21 +309,46 @@
         }
         <span class="ident">Ruby</span>::<span class="ident">Float</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">denominator</span> <span class="op">=</span> <span class="ident">denominator</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">types</span>::<span class="ident">Float</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
-            <span class="kw">if</span> <span class="ident">denominator</span> <span class="op">=</span><span class="op">=</span> <span class="number">0.0</span> {
-                <span class="kw">match</span> <span class="ident">value</span> {
-                    <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">Float</span>::<span class="ident">INFINITY</span>)),
-                    <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">Float</span>::<span class="ident">NEG_INFINITY</span>)),
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">Float</span>::<span class="ident">NAN</span>)),
-                }
-            } <span class="kw">else</span> {
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_precision_loss</span>)]</span>
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">value</span> <span class="kw">as</span> <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">/</span> <span class="ident">denominator</span>))
-            }
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_precision_loss</span>)]</span>
+            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">value</span> <span class="kw">as</span> <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">/</span> <span class="ident">denominator</span>))
         }
         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">denominator</span>.<span class="ident">pretty_name</span>());
-            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; can&#39;t be coerced into Integer&quot;</span>);
-            <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+            <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>();
+            <span class="kw">let</span> <span class="ident">numeric</span> <span class="op">=</span> <span class="ident">borrow</span>
+                .<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">Numeric</span><span class="op">&gt;</span>()
+                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">class</span>(<span class="string">&quot;Numeric&quot;</span>))<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">numeric</span> <span class="op">=</span> <span class="ident">numeric</span>
+                .<span class="ident">value</span>(<span class="ident">interp</span>)
+                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">class</span>(<span class="string">&quot;Numeric&quot;</span>))<span class="question-mark">?</span>;
+            <span class="ident">drop</span>(<span class="ident">borrow</span>);
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=</span> <span class="ident">denominator</span>.<span class="ident">funcall</span>(<span class="string">&quot;is_a?&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">numeric</span>], <span class="prelude-val">None</span>) {
+                <span class="kw">if</span> <span class="ident">denominator</span>.<span class="ident">respond_to</span>(<span class="string">&quot;to_f&quot;</span>)<span class="question-mark">?</span> {
+                    <span class="kw">let</span> <span class="ident">coerced</span> <span class="op">=</span> <span class="ident">denominator</span>.<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>(<span class="string">&quot;to_f&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">coerced</span>.<span class="ident">ruby_type</span>() {
+                        <span class="kw">let</span> <span class="ident">denom</span> <span class="op">=</span> <span class="ident">coerced</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Float</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+                        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_precision_loss</span>)]</span>
+                        <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">value</span> <span class="kw">as</span> <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">/</span> <span class="ident">denom</span>))
+                    } <span class="kw">else</span> {
+                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
+                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">denominator</span>.<span class="ident">pretty_name</span>());
+                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Float (&quot;</span>);
+                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">denominator</span>.<span class="ident">pretty_name</span>());
+                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_f gives &quot;</span>);
+                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">coerced</span>.<span class="ident">pretty_name</span>());
+                        <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
+                        <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                    }
+                } <span class="kw">else</span> {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
+                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">denominator</span>.<span class="ident">pretty_name</span>());
+                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Float&quot;</span>);
+                    <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                }
+            } <span class="kw">else</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">denominator</span>.<span class="ident">pretty_name</span>());
+                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; can&#39;t be coerced into Integer&quot;</span>);
+                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+            }
         }
     }
 }
