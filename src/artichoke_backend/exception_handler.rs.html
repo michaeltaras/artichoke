@@ -103,19 +103,7 @@
 <span id="103">103</span>
 <span id="104">104</span>
 <span id="105">105</span>
-<span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
-<span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
-
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">CaughtException</span>, <span class="ident">Exception</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
@@ -137,14 +125,6 @@
     <span class="comment">// `mrb_value`. `Value::funcall` handles errors by calling this</span>
     <span class="comment">// function, so not clearing the exception results in a stack overflow.</span>
 
-    <span class="comment">// Safety:</span>
-    <span class="comment">//</span>
-    <span class="comment">// - Artichoke is guaranteed to be constructed with a non-null `mrb`</span>
-    <span class="comment">//   pointer by `ffi::from_user_data` and `interpreter::interpreter`.</span>
-    <span class="kw">unsafe</span> {
-        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
-        (<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">exc</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>();
-    }
     <span class="comment">// Generate exception metadata in by executing the Ruby code:</span>
     <span class="comment">//</span>
     <span class="comment">// ```ruby</span>

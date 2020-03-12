@@ -151,7 +151,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">fn</span> <span class="ident">rng_must_be_cryptographically_secure</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">rand</span>::<span class="ident">CryptoRng</span><span class="op">&gt;</span>(<span class="ident">_rng</span>: <span class="ident">T</span>) {}
+    <span class="kw">fn</span> <span class="ident">rng_must_be_cryptographically_secure</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">_rng</span>: <span class="ident">T</span>)
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">rand</span>::<span class="ident">CryptoRng</span>,
+    {
+    }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">rand_thread_rng_must_be_cryptographically_secure</span>() {
@@ -162,118 +166,114 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SecureRandom</span>;
 
-<span class="kw">impl</span> <span class="ident">SecureRandom</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_bytes</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">implicitly_convert_to_int</span>()<span class="question-mark">?</span>;
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
-                <span class="kw">if</span> <span class="ident">len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>());
-                }
-                <span class="ident">len</span>
-            } <span class="kw">else</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_bytes</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">implicitly_convert_to_int</span>()<span class="question-mark">?</span>;
+        <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
+            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
+            <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">len</span>,
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
                     <span class="ident">interp</span>,
                     <span class="string">&quot;negative string size (or size too big)&quot;</span>,
-                )));
-            }
-        } <span class="kw">else</span> {
-            <span class="ident">DEFAULT_REQUESTED_BYTES</span>
-        };
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">len</span>];
-        <span class="ident">rng</span>.<span class="ident">try_fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bytes</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">RuntimeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">err</span>.<span class="ident">to_string</span>()))<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">bytes</span>)
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_number</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-        <span class="kw">enum</span> <span class="ident">Max</span> {
-            <span class="ident">Float</span>(<span class="ident">Float</span>),
-            <span class="ident">Int</span>(<span class="ident">Int</span>),
-            <span class="prelude-val">None</span>,
-        }
-        <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span>.<span class="ident">clone</span>().<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>() {
-                <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>)
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span>.<span class="ident">clone</span>().<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Float</span><span class="op">&gt;</span>() {
-                <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>)
-            } <span class="kw">else</span> {
-                <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">max</span>.<span class="ident">implicitly_convert_to_int</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;invalid argument - &quot;</span>.<span class="ident">to_vec</span>();
-                    <span class="ident">message</span>.<span class="ident">extend</span>(<span class="ident">max</span>.<span class="ident">inspect</span>().<span class="ident">as_slice</span>());
-                    <span class="ident">ArgumentError</span>::<span class="ident">new_raw</span>(<span class="ident">interp</span>, <span class="ident">message</span>)
-                })<span class="question-mark">?</span>;
-                <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>)
-            }
-        } <span class="kw">else</span> {
-            <span class="ident">Max</span>::<span class="prelude-val">None</span>
-        };
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
-        <span class="kw">match</span> <span class="ident">max</span> {
-            <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
-            }
-            <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="ident">max</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
-            }
-            <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
-            }
-            <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">max</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">number</span>))
-            }
-            <span class="ident">Max</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
+                )))
             }
         }
-    }
+    } <span class="kw">else</span> {
+        <span class="ident">DEFAULT_REQUESTED_BYTES</span>
+    };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">len</span>];
+    <span class="ident">rng</span>.<span class="ident">try_fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bytes</span>)
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">RuntimeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">err</span>.<span class="ident">to_string</span>()))<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(<span class="ident">bytes</span>)
+}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hex</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">random_bytes</span>(<span class="ident">interp</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">hex</span>::<span class="ident">encode</span>(<span class="ident">bytes</span>))
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_number</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+    <span class="kw">enum</span> <span class="ident">Max</span> {
+        <span class="ident">Float</span>(<span class="ident">Float</span>),
+        <span class="ident">Int</span>(<span class="ident">Int</span>),
+        <span class="prelude-val">None</span>,
     }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base64</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">random_bytes</span>(<span class="ident">interp</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">base64</span>::<span class="ident">encode</span>(<span class="ident">bytes</span>.<span class="ident">as_slice</span>()))
+    <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span>.<span class="ident">clone</span>().<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>() {
+            <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>)
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span>.<span class="ident">clone</span>().<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Float</span><span class="op">&gt;</span>() {
+            <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>)
+        } <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">max</span>.<span class="ident">implicitly_convert_to_int</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;invalid argument - &quot;</span>.<span class="ident">to_vec</span>();
+                <span class="ident">message</span>.<span class="ident">extend</span>(<span class="ident">max</span>.<span class="ident">inspect</span>().<span class="ident">as_slice</span>());
+                <span class="ident">ArgumentError</span>::<span class="ident">new_raw</span>(<span class="ident">interp</span>, <span class="ident">message</span>)
+            })<span class="question-mark">?</span>;
+            <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>)
+        }
+    } <span class="kw">else</span> {
+        <span class="ident">Max</span>::<span class="prelude-val">None</span>
+    };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
+    <span class="kw">match</span> <span class="ident">max</span> {
+        <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
+        }
+        <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="ident">max</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
+        }
+        <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
+        }
+        <span class="ident">Max</span>::<span class="ident">Int</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">max</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">number</span>))
+        }
+        <span class="ident">Max</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">number</span>))
+        }
     }
+}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">alphanumeric</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">implicitly_convert_to_int</span>()<span class="question-mark">?</span>;
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
-                <span class="kw">if</span> <span class="ident">len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">String</span>::<span class="ident">new</span>());
-                }
-                <span class="ident">len</span>
-            } <span class="kw">else</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hex</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">random_bytes</span>(<span class="ident">interp</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(<span class="ident">hex</span>::<span class="ident">encode</span>(<span class="ident">bytes</span>))
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base64</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">random_bytes</span>(<span class="ident">interp</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(<span class="ident">base64</span>::<span class="ident">encode</span>(<span class="ident">bytes</span>.<span class="ident">as_slice</span>()))
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">alphanumeric</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">implicitly_convert_to_int</span>()<span class="question-mark">?</span>;
+        <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
+            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">String</span>::<span class="ident">new</span>()),
+            <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">len</span>,
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
                     <span class="ident">interp</span>,
                     <span class="string">&quot;negative string size (or size too big)&quot;</span>,
-                )));
+                )))
             }
-        } <span class="kw">else</span> {
-            <span class="ident">DEFAULT_REQUESTED_BYTES</span>
-        };
-        <span class="kw">let</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
-        <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">sample_iter</span>(<span class="ident">Alphanumeric</span>).<span class="ident">take</span>(<span class="ident">len</span>).<span class="ident">collect</span>();
-        <span class="prelude-val">Ok</span>(<span class="ident">string</span>)
-    }
+        }
+    } <span class="kw">else</span> {
+        <span class="ident">DEFAULT_REQUESTED_BYTES</span>
+    };
+    <span class="kw">let</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
+    <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">sample_iter</span>(<span class="ident">Alphanumeric</span>).<span class="ident">take</span>(<span class="ident">len</span>).<span class="ident">collect</span>();
+    <span class="prelude-val">Ok</span>(<span class="ident">string</span>)
+}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uuid</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
-        <span class="kw">let</span> <span class="ident">uuid</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">new_v4</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">encode_buffer</span>();
-        <span class="kw">let</span> <span class="ident">enc</span> <span class="op">=</span> <span class="ident">uuid</span>.<span class="ident">to_hyphenated</span>().<span class="ident">encode_lower</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
-        <span class="ident">enc</span>.<span class="ident">to_owned</span>()
-    }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uuid</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
+    <span class="kw">let</span> <span class="ident">uuid</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">new_v4</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Uuid</span>::<span class="ident">encode_buffer</span>();
+    <span class="kw">let</span> <span class="ident">enc</span> <span class="op">=</span> <span class="ident">uuid</span>.<span class="ident">to_hyphenated</span>().<span class="ident">encode_lower</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
+    <span class="ident">enc</span>.<span class="ident">to_owned</span>()
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../aliases.js"></script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>
