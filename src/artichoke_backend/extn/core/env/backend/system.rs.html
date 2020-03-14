@@ -122,6 +122,15 @@
 <span id="122">122</span>
 <span id="123">123</span>
 <span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -199,6 +208,9 @@
         <span class="comment">// sign &#39;=&#39; or the NUL character &#39;\0&#39;, or when the value contains the</span>
         <span class="comment">// NUL character.</span>
         <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">is_empty</span>() {
+            <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_none</span>() {
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            }
             <span class="comment">// TODO: This should raise `Errno::EINVAL`.</span>
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
                 <span class="ident">interp</span>,
@@ -206,13 +218,19 @@
             )));
         }
         <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">find_byte</span>(<span class="string">b&#39;\0&#39;</span>).<span class="ident">is_some</span>() {
+            <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_none</span>() {
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            }
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
                 <span class="ident">interp</span>,
                 <span class="string">&quot;bad environment variable name: contains null byte&quot;</span>,
             )));
         }
         <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">find_byte</span>(<span class="string">b&#39;=&#39;</span>).<span class="ident">is_some</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;Invalid argumen - setenv(&quot;</span>.<span class="ident">to_vec</span>();
+            <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_none</span>() {
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
+            }
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;Invalid argument - setenv(&quot;</span>.<span class="ident">to_vec</span>();
             <span class="ident">message</span>.<span class="ident">extend</span>(<span class="ident">name</span>.<span class="ident">to_vec</span>());
             <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">b&#39;)&#39;</span>);
             <span class="comment">// TODO: This should raise `Errno::EINVAL`.</span>
