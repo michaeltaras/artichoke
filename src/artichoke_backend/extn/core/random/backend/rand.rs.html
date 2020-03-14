@@ -102,8 +102,8 @@
 <span id="102">102</span>
 <span id="103">103</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">rngs</span>::<span class="ident">SmallRng</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="self">self</span>, <span class="ident">Rng</span>, <span class="ident">SeedableRng</span>};
+<span class="kw">use</span> <span class="ident">rand_pcg</span>::<span class="ident">Pcg64</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">random</span>::<span class="ident">backend</span>::{<span class="ident">InternalState</span>, <span class="ident">RandType</span>};
@@ -111,7 +111,7 @@
 
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RandType</span><span class="op">&gt;</span> {
-    <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Rand</span>::<span class="op">&lt;</span><span class="ident">SmallRng</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">seed</span>))
+    <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Rand</span>::<span class="op">&lt;</span><span class="ident">Pcg64</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">seed</span>))
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>

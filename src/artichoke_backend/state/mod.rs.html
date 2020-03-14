@@ -163,7 +163,7 @@
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">output</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-random&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prng</span>;
 
 <span class="comment">// NOTE: `State` assumes that it it is stored in `mrb_state-&gt;ud` wrapped in a</span>
@@ -176,7 +176,7 @@
     <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">Virtual</span>,
     <span class="kw">pub</span> <span class="ident">active_regexp_globals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NonZeroUsize</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">output</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">output</span>::<span class="ident">Output</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-random&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">prng</span>: <span class="ident">prng</span>::<span class="ident">Prng</span>,
 }
 
@@ -189,7 +189,7 @@
     <span class="doccomment">/// - `Regexp` global state.</span>
     <span class="doccomment">/// - [In memory virtual filesystem](fs::Virtual).</span>
     <span class="doccomment">/// - Ruby parser and file context.</span>
-    <span class="doccomment">/// - [Intepreter-level PRNG](prng::Prng) (behind the `artichoke-random`</span>
+    <span class="doccomment">/// - [Intepreter-level PRNG](prng::Prng) (behind the `core-random`</span>
     <span class="doccomment">///   feature).</span>
     <span class="doccomment">/// - IO capturing strategy.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mrb</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -202,7 +202,7 @@
             <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">Virtual</span>::<span class="ident">new</span>(),
             <span class="ident">active_regexp_globals</span>: <span class="prelude-val">None</span>,
             <span class="ident">output</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">output</span>::<span class="ident">Process</span>::<span class="ident">new</span>()),
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-random&quot;</span>)]</span>
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
             <span class="ident">prng</span>: <span class="ident">prng</span>::<span class="ident">Prng</span>::<span class="ident">default</span>(),
         };
         <span class="prelude-val">Some</span>(<span class="ident">state</span>)
@@ -294,7 +294,7 @@
             .<span class="ident">field</span>(<span class="string">&quot;vfs&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">vfs</span>)
             .<span class="ident">field</span>(<span class="string">&quot;active_regexp_globals&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">active_regexp_globals</span>)
             .<span class="ident">field</span>(<span class="string">&quot;output&quot;</span>, <span class="self">self</span>.<span class="ident">output</span>.<span class="ident">as_debug</span>());
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke-random&quot;</span>)]</span>
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
         <span class="ident">fmt</span>.<span class="ident">field</span>(<span class="string">&quot;prng&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">prng</span>);
         <span class="ident">fmt</span>.<span class="ident">finish</span>()
     }
