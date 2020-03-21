@@ -186,8 +186,8 @@
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">bytes_to_os_str</span>(<span class="ident">name</span>)<span class="question-mark">?</span>;
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var_os</span>(<span class="ident">name</span>) {
-                <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">os_str_to_bytes</span>(<span class="ident">value</span>.<span class="ident">as_os_str</span>())<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">to_vec</span>().<span class="ident">into</span>()))
+                <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">os_string_to_bytes</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">into</span>()))
             } <span class="kw">else</span> {
                 <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
             }
@@ -258,9 +258,9 @@
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">default</span>();
         <span class="kw">for</span> (<span class="ident">name</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">vars_os</span>() {
-            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">os_str_to_bytes</span>(<span class="ident">name</span>.<span class="ident">as_os_str</span>())<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">os_str_to_bytes</span>(<span class="ident">value</span>.<span class="ident">as_os_str</span>())<span class="question-mark">?</span>;
-            <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">name</span>.<span class="ident">to_vec</span>(), <span class="ident">value</span>.<span class="ident">to_vec</span>());
+            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">os_string_to_bytes</span>(<span class="ident">name</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">os_string_to_bytes</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
+            <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">name</span>, <span class="ident">value</span>);
         }
         <span class="prelude-val">Ok</span>(<span class="ident">map</span>)
     }
