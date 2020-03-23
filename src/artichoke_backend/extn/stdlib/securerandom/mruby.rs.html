@@ -155,6 +155,7 @@
 <span id="155">155</span>
 <span id="156">156</span>
 <span id="157">157</span>
+<span id="158">158</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">stdlib</span>::<span class="ident">securerandom</span>::{<span class="self">self</span>, <span class="ident">trampoline</span>};
@@ -165,6 +166,7 @@
     <span class="prelude-val">Ok</span>(())
 }
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SecureRandomFile</span>;
 
 <span class="kw">impl</span> <span class="ident">File</span> <span class="kw">for</span> <span class="ident">SecureRandomFile</span> {
