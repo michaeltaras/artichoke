@@ -262,6 +262,9 @@
 <span id="262">262</span>
 <span id="263">263</span>
 <span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
@@ -377,19 +380,22 @@
             <span class="ident">args</span>::<span class="ident">ElementReference</span>::<span class="ident">Index</span>(<span class="ident">index</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">index</span>, <span class="prelude-val">None</span>),
             <span class="ident">args</span>::<span class="ident">ElementReference</span>::<span class="ident">StartLen</span>(<span class="ident">index</span>, <span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">index</span>, <span class="prelude-val">Some</span>(<span class="ident">len</span>)),
         };
-        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">index</span> <span class="op">&lt;</span> <span class="number">0</span> {
-            <span class="comment">// Positive Int must be usize</span>
-            <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="op">-</span><span class="ident">index</span>)
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Expected positive index to convert to usize&quot;</span>))<span class="question-mark">?</span>;
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>().<span class="ident">checked_sub</span>(<span class="ident">idx</span>) {
-                <span class="ident">index</span>
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">start</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">index</span>) {
+            <span class="ident">start</span>
+        } <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">index</span>
+                .<span class="ident">checked_neg</span>()
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">index</span><span class="op">|</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">index</span>).<span class="ident">ok</span>())
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">index</span><span class="op">|</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>().<span class="ident">checked_sub</span>(<span class="ident">index</span>));
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">start</span>) <span class="op">=</span> <span class="ident">idx</span> {
+                <span class="ident">start</span>
             } <span class="kw">else</span> {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>));
             }
-        } <span class="kw">else</span> {
-            <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">index</span>)
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Expected positive index to convert to usize&quot;</span>))<span class="question-mark">?</span>
         };
+        <span class="kw">if</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>));
+        }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">slice</span>(<span class="ident">interp</span>, <span class="ident">start</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">Self</span>(<span class="ident">result</span>);
