@@ -291,12 +291,15 @@
 <span id="291">291</span>
 <span id="292">292</span>
 <span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 
 <span class="doccomment">/// Artichoke native floating point type.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `Float` is the backend to the `Float` class.</span>
+<span class="doccomment">/// `Float` is the backend to the [`Float`](crate::extn::core::float::Float)</span>
+<span class="doccomment">/// class.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The `Float` type alias is for the `f64` floating point primitive.</span>
 <span class="doccomment">///</span>
@@ -311,7 +314,8 @@
 
 <span class="doccomment">/// Artichoke native integer type.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `Int` is the fixed size (`Fixnum`) backend to the `Integer` class.</span>
+<span class="doccomment">/// `Int` is the fixed size (`Fixnum`) backend to the</span>
+<span class="doccomment">/// [`Integer`](crate::extn::core::integer::Integer) class.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The `Int` type alias is for the `i64` integer primitive.</span>
 <span class="doccomment">///</span>

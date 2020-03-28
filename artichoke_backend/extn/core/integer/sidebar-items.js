@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Quotient",""]],"fn":[["chr",""],["div",""],["element_reference",""],["size",""]],"mod":[["mruby",""],["trampoline",""]],"struct":[["Integer",""]]});
+initSidebarItems({"mod":[["mruby",""],["trampoline",""]],"struct":[["Integer",""]]});
