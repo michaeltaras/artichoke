@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["entrypoint","Main entrypoint for Artichoke's version of the `ruby` CLI."]]});
+initSidebarItems({"fn":[["entrypoint","Main entrypoint for Artichoke's version of the `ruby` CLI."],["format_backtrace_into","Format an [`Exception`] backtrace into the given writer."]]});

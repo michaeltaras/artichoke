@@ -199,25 +199,33 @@
 <span id="199">199</span>
 <span id="200">200</span>
 <span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Infrastructure for `ruby` CLI.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Exported as `ruby` and `artichoke` binaries.</span>
+<span class="doccomment">//! Exported as `artichoke` binary.</span>
 
 <span class="kw">use</span> <span class="ident">ansi_term</span>::<span class="ident">Style</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">OsStr</span>, <span class="ident">OsString</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 <span class="kw">use</span> <span class="ident">structopt</span>::<span class="ident">StructOpt</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">exception</span>::<span class="ident">RubyException</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">IOError</span>, <span class="ident">LoadError</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">state</span>::<span class="ident">parser</span>::<span class="ident">Context</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">string</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">sys</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::{<span class="ident">ConvertMut</span>, <span class="ident">Eval</span>, <span class="ident">Intern</span>, <span class="ident">Parser</span> <span class="kw">as</span> <span class="kw">_</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">ConvertMut</span>, <span class="ident">Eval</span>, <span class="ident">Globals</span>, <span class="ident">Parser</span> <span class="kw">as</span> <span class="kw">_</span>};
 
 <span class="kw">const</span> <span class="ident">INLINE_EVAL_SWITCH_FILENAME</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="string">b&quot;-e&quot;</span>;
 
@@ -257,12 +265,12 @@
 <span class="doccomment">/// # Errors</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If an exception is raised on the interpreter, then an error is returned.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entrypoint</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entrypoint</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">opt</span> <span class="op">=</span> <span class="ident">Opt</span>::<span class="ident">from_args</span>();
     <span class="kw">if</span> <span class="ident">opt</span>.<span class="ident">copyright</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;puts RUBY_COPYRIGHT&quot;</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(()))
     } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">opt</span>.<span class="ident">commands</span>.<span class="ident">is_empty</span>() {
         <span class="ident">execute_inline_eval</span>(<span class="ident">opt</span>.<span class="ident">commands</span>, <span class="ident">opt</span>.<span class="ident">fixture</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">Path</span>::<span class="ident">new</span>))
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">programfile</span>) <span class="op">=</span> <span class="ident">opt</span>.<span class="ident">programfile</span> {
@@ -273,16 +281,20 @@
         <span class="ident">io</span>::<span class="ident">stdin</span>()
             .<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">program</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">IOError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="string">&quot;Could not read program from STDIN&quot;</span>))<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>
-            .<span class="ident">eval</span>(<span class="ident">program</span>.<span class="ident">as_slice</span>())
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">exc</span><span class="op">|</span> <span class="ident">handle_exception</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">exc</span>));
-
-        <span class="prelude-val">Ok</span>(())
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">exc</span>) <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="ident">program</span>.<span class="ident">as_slice</span>()) {
+            <span class="ident">format_backtrace_into</span>(<span class="ident">io</span>::<span class="ident">stdout</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">exc</span>)<span class="question-mark">?</span>;
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(()));
+        }
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(()))
     }
 }
 
-<span class="kw">fn</span> <span class="ident">execute_inline_eval</span>(<span class="ident">commands</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>, <span class="ident">fixture</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">execute_inline_eval</span>(
+    <span class="ident">commands</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>,
+    <span class="ident">fixture</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">pop_context</span>();
     <span class="comment">// safety:</span>
     <span class="comment">//</span>
     <span class="comment">// - `Context::new_unchecked` requires that its argument has no NUL bytes.</span>
@@ -298,23 +310,25 @@
                 <span class="ident">load_error</span>(<span class="ident">fixture</span>.<span class="ident">as_os_str</span>(), <span class="string">&quot;No such file or directory&quot;</span>)<span class="question-mark">?</span>,
             )));
         };
-        <span class="kw">let</span> <span class="ident">sym</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">intern_symbol</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;$fixture&quot;</span>[..]);
-        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">data</span>);
-        <span class="kw">unsafe</span> {
-            <span class="ident">sys</span>::<span class="ident">mrb_gv_set</span>(<span class="ident">mrb</span>, <span class="ident">sym</span>, <span class="ident">value</span>.<span class="ident">inner</span>());
-        }
+        <span class="ident">interp</span>.<span class="ident">set_global_variable</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;$fixture&quot;</span>[..], <span class="kw-2">&amp;</span><span class="ident">value</span>)<span class="question-mark">?</span>;
     }
     <span class="kw">for</span> <span class="ident">command</span> <span class="kw">in</span> <span class="ident">commands</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">exc</span>) <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval_os_str</span>(<span class="ident">command</span>.<span class="ident">as_os_str</span>()) {
-            <span class="ident">handle_exception</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">exc</span>)<span class="question-mark">?</span>;
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(()); <span class="comment">// short circuit, but don&#39;t return an error since we already printed it</span>
+            <span class="ident">format_backtrace_into</span>(<span class="ident">io</span>::<span class="ident">stdout</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">exc</span>)<span class="question-mark">?</span>;
+            <span class="comment">// short circuit, but don&#39;t return an error since we already printed it</span>
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(()));
         }
+        <span class="comment">// TODO: Do not suppress this error and implement RubyException for it.</span>
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">add_fetch_lineno</span>(<span class="number">1</span>);
     }
-    <span class="prelude-val">Ok</span>(())
+    <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(()))
 }
 
-<span class="kw">fn</span> <span class="ident">execute_program_file</span>(<span class="ident">programfile</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">fixture</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">execute_program_file</span>(
+    <span class="ident">programfile</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>,
+    <span class="ident">fixture</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">fixture</span>) <span class="op">=</span> <span class="ident">fixture</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">data</span>) <span class="op">=</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">read</span>(<span class="ident">fixture</span>) {
@@ -325,12 +339,8 @@
                 <span class="ident">load_error</span>(<span class="ident">fixture</span>.<span class="ident">as_os_str</span>(), <span class="string">&quot;No such file or directory&quot;</span>)<span class="question-mark">?</span>,
             )));
         };
-        <span class="kw">let</span> <span class="ident">sym</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">intern_symbol</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;$fixture&quot;</span>[..]);
-        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">data</span>);
-        <span class="kw">unsafe</span> {
-            <span class="ident">sys</span>::<span class="ident">mrb_gv_set</span>(<span class="ident">mrb</span>, <span class="ident">sym</span>, <span class="ident">value</span>.<span class="ident">inner</span>());
-        }
+        <span class="ident">interp</span>.<span class="ident">set_global_variable</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;$fixture&quot;</span>[..], <span class="kw-2">&amp;</span><span class="ident">value</span>)<span class="question-mark">?</span>;
     }
     <span class="kw">let</span> <span class="ident">program</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">read</span>(<span class="ident">programfile</span>) {
         <span class="prelude-val">Ok</span>(<span class="ident">programfile</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">programfile</span>,
@@ -351,12 +361,11 @@
             }
         }
     };
-
-    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>
-        .<span class="ident">eval</span>(<span class="ident">program</span>.<span class="ident">as_slice</span>())
-        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">exc</span><span class="op">|</span> <span class="ident">handle_exception</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">exc</span>));
-
-    <span class="prelude-val">Ok</span>(())
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">exc</span>) <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="ident">program</span>.<span class="ident">as_slice</span>()) {
+        <span class="ident">format_backtrace_into</span>(<span class="ident">io</span>::<span class="ident">stdout</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">exc</span>)<span class="question-mark">?</span>;
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(()));
+    }
+    <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(()))
 }
 
 <span class="kw">fn</span> <span class="ident">load_error</span>(<span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
@@ -367,38 +376,49 @@
     <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
 }
 
-<span class="kw">fn</span> <span class="ident">handle_exception</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">artichoke_backend</span>::<span class="ident">Artichoke</span>,
-    <span class="ident">exc</span>: <span class="kw-2">&amp;</span><span class="ident">artichoke_backend</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="doccomment">/// Format an [`Exception`] backtrace into the given writer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Errors</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If writing into the provided `out` writer fails, an error is returned.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_backtrace_into</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(
+    <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">W</span>,
+    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
+    <span class="ident">exc</span>: <span class="kw-2">&amp;</span><span class="ident">Exception</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
+{
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">top</span> <span class="op">=</span> <span class="prelude-val">None</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">backtrace</span>) <span class="op">=</span> <span class="ident">exc</span>.<span class="ident">vm_backtrace</span>(<span class="ident">interp</span>) {
         <span class="macro">writeln</span><span class="macro">!</span>(
-            <span class="ident">io</span>::<span class="ident">stderr</span>(),
-            <span class="string">&quot;{} (most recent call last)&quot;</span>,
+            <span class="ident">out</span>,
+            <span class="string">&quot;{} (most recent call last):&quot;</span>,
             <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;Traceback&quot;</span>)
         )<span class="question-mark">?</span>;
-        <span class="kw">for</span> (<span class="ident">num</span>, <span class="ident">frame</span>) <span class="kw">in</span> <span class="ident">backtrace</span>.<span class="ident">into_iter</span>().<span class="ident">enumerate</span>().<span class="ident">rev</span>() {
-            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">io</span>::<span class="ident">stderr</span>(), <span class="string">&quot;\t{}: from &quot;</span>, <span class="ident">num</span> <span class="op">+</span> <span class="number">1</span>)<span class="question-mark">?</span>;
-            <span class="ident">io</span>::<span class="ident">stderr</span>().<span class="ident">write_all</span>(<span class="ident">frame</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>;
-            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">io</span>::<span class="ident">stderr</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">backtrace</span>.<span class="ident">into_iter</span>().<span class="ident">enumerate</span>();
+        <span class="ident">top</span> <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>();
+        <span class="kw">for</span> (<span class="ident">num</span>, <span class="ident">frame</span>) <span class="kw">in</span> <span class="ident">iter</span>.<span class="ident">rev</span>() {
+            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;\t{}: from &quot;</span>, <span class="ident">num</span> <span class="op">+</span> <span class="number">1</span>)<span class="question-mark">?</span>;
+            <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">frame</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>;
+            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         }
     }
-
-    <span class="macro">write</span><span class="macro">!</span>(
-        <span class="ident">io</span>::<span class="ident">stderr</span>(),
-        <span class="string">&quot;{} {}&quot;</span>,
-        <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="ident">exc</span>.<span class="ident">name</span>()),
-        <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;(&quot;</span>)
-    )<span class="question-mark">?</span>;
-
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">frame</span>)) <span class="op">=</span> <span class="ident">top</span> {
+        <span class="ident">out</span>.<span class="ident">write_all</span>(<span class="ident">frame</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>;
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;: &quot;</span>)<span class="question-mark">?</span>;
+    }
     <span class="ident">Style</span>::<span class="ident">new</span>()
         .<span class="ident">bold</span>()
-        .<span class="ident">underline</span>()
         .<span class="ident">paint</span>(<span class="ident">exc</span>.<span class="ident">message</span>())
-        .<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">io</span>::<span class="ident">stderr</span>())<span class="question-mark">?</span>;
-
-    <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">io</span>::<span class="ident">stderr</span>(), <span class="string">&quot;{}&quot;</span>, <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;)&quot;</span>))<span class="question-mark">?</span>;
-
+        .<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>)<span class="question-mark">?</span>;
+    <span class="macro">writeln</span><span class="macro">!</span>(
+        <span class="ident">out</span>,
+        <span class="string">&quot; {}{}{}&quot;</span>,
+        <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;(&quot;</span>),
+        <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">underline</span>().<span class="ident">paint</span>(<span class="ident">exc</span>.<span class="ident">name</span>()),
+        <span class="ident">Style</span>::<span class="ident">new</span>().<span class="ident">bold</span>().<span class="ident">paint</span>(<span class="string">&quot;)&quot;</span>)
+    )<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </pre></div>
