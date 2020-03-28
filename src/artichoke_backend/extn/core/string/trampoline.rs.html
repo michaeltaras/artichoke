@@ -144,7 +144,7 @@
     } <span class="kw">else</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;empty string&quot;</span>)));
     };
-    <span class="ident">interp</span>.<span class="ident">try_convert</span>(<span class="ident">ord</span>)
+    <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">ord</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scan</span>(
