@@ -509,6 +509,32 @@
 <span id="509">509</span>
 <span id="510">510</span>
 <span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [ruby/spec](https://github.com/ruby/spec) compliant implementation of</span>
 <span class="doccomment">//! [`Regexp`](https://ruby-doc.org/core-2.6.3/Regexp.html).</span>
@@ -713,11 +739,16 @@
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">pattern</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">pattern</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-            <span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Regexp::escape only supports UTF-8 patterns&quot;</span>)
-        })<span class="question-mark">?</span>;
-
+        <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">pattern</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+            <span class="ident">pattern</span>
+        } <span class="kw">else</span> {
+            <span class="comment">// drop(bytes);</span>
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
+                <span class="ident">interp</span>,
+                <span class="string">&quot;invalid encoding (non UTF-8)&quot;</span>,
+            )));
+        };
         <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">syntax</span>::<span class="ident">escape</span>(<span class="ident">pattern</span>)))
     }
 
@@ -732,13 +763,16 @@
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">regexp</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">try_from_ruby</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">pattern</span>) } {
                             <span class="ident">patterns</span>.<span class="ident">push</span>(<span class="ident">regexp</span>.<span class="ident">borrow</span>().<span class="number">0</span>.<span class="ident">derived_config</span>().<span class="ident">pattern</span>.<span class="ident">clone</span>());
                         } <span class="kw">else</span> {
-                            <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
-                            <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">pattern</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                                <span class="ident">ArgumentError</span>::<span class="ident">new</span>(
+                            <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
+                            <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">pattern</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+                                <span class="ident">pattern</span>
+                            } <span class="kw">else</span> {
+                                <span class="comment">// drop(bytes);</span>
+                                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
                                     <span class="ident">interp</span>,
-                                    <span class="string">&quot;Regexp::union only supports UTF-8 patterns&quot;</span>,
-                                )
-                            })<span class="question-mark">?</span>;
+                                    <span class="string">&quot;invalid encoding (non UTF-8)&quot;</span>,
+                                )));
+                            };
                             <span class="ident">patterns</span>.<span class="ident">push</span>(<span class="ident">syntax</span>::<span class="ident">escape</span>(<span class="ident">pattern</span>).<span class="ident">into_bytes</span>());
                         }
                     }
@@ -748,10 +782,16 @@
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">regexp</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">try_from_ruby</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">pattern</span>) } {
                         <span class="ident">regexp</span>.<span class="ident">borrow</span>().<span class="number">0</span>.<span class="ident">derived_config</span>().<span class="ident">pattern</span>.<span class="ident">clone</span>()
                     } <span class="kw">else</span> {
-                        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
-                        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">pattern</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                            <span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Regexp::union only supports UTF-8 patterns&quot;</span>)
-                        })<span class="question-mark">?</span>;
+                        <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
+                        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">pattern</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+                            <span class="ident">pattern</span>
+                        } <span class="kw">else</span> {
+                            <span class="comment">// drop(bytes);</span>
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
+                                <span class="ident">interp</span>,
+                                <span class="string">&quot;invalid encoding (non UTF-8)&quot;</span>,
+                            )));
+                        };
                         <span class="ident">syntax</span>::<span class="ident">escape</span>(<span class="ident">pattern</span>).<span class="ident">into_bytes</span>()
                     }
                 }
@@ -761,9 +801,15 @@
                     <span class="ident">patterns</span>.<span class="ident">push</span>(<span class="ident">regexp</span>.<span class="ident">borrow</span>().<span class="number">0</span>.<span class="ident">derived_config</span>().<span class="ident">pattern</span>.<span class="ident">clone</span>());
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                        <span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Regexp::union only supports UTF-8 patterns&quot;</span>)
-                    })<span class="question-mark">?</span>;
+                    <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">pattern</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+                        <span class="ident">pattern</span>
+                    } <span class="kw">else</span> {
+                        <span class="comment">// drop(bytes);</span>
+                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
+                            <span class="ident">interp</span>,
+                            <span class="string">&quot;invalid encoding (non UTF-8)&quot;</span>,
+                        )));
+                    };
                     <span class="ident">patterns</span>.<span class="ident">push</span>(<span class="ident">syntax</span>::<span class="ident">escape</span>(<span class="ident">pattern</span>).<span class="ident">into_bytes</span>());
                 }
                 <span class="kw">for</span> <span class="ident">pattern</span> <span class="kw">in</span> <span class="ident">iter</span> {
@@ -771,9 +817,15 @@
                         <span class="ident">patterns</span>.<span class="ident">push</span>(<span class="ident">regexp</span>.<span class="ident">borrow</span>().<span class="number">0</span>.<span class="ident">derived_config</span>().<span class="ident">pattern</span>.<span class="ident">clone</span>());
                     } <span class="kw">else</span> {
                         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">pattern</span>.<span class="ident">implicitly_convert_to_string</span>()<span class="question-mark">?</span>;
-                        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                            <span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Regexp::union only supports UTF-8 patterns&quot;</span>)
-                        })<span class="question-mark">?</span>;
+                        <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">pattern</span>) <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+                            <span class="ident">pattern</span>
+                        } <span class="kw">else</span> {
+                            <span class="comment">// drop(bytes);</span>
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
+                                <span class="ident">interp</span>,
+                                <span class="string">&quot;invalid encoding (non UTF-8)&quot;</span>,
+                            )));
+                        };
                         <span class="ident">patterns</span>.<span class="ident">push</span>(<span class="ident">syntax</span>::<span class="ident">escape</span>(<span class="ident">pattern</span>).<span class="ident">into_bytes</span>());
                     }
                 }
