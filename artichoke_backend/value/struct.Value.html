@@ -8,7 +8,7 @@ internal to the mruby VM and manipulating them with the <a href="../../artichoke
 unspecified and may result in a segfault.</p>
 <p>After extracting a <a href="../../artichoke_backend/sys/struct.mrb_value.html" title="`sys::mrb_value`"><code>sys::mrb_value</code></a> from the interpreter, check to see
 if the value is <a href="../../artichoke_backend/types/enum.Ruby.html#Unreachable.v">unreachable</a> a <a href="../../artichoke_backend/extn/core/exception/struct.Fatal.html" title="`Fatal`"><code>Fatal</code></a> exception.</p>
-<p>See: <a href="https://github.com/mruby/mruby/issues/4460">mruby GH-4460</a>.</p>
+<p>See: <a href="https://github.com/mruby/mruby/issues/4460">mruby#4460</a>.</p>
 </div><h4 id='method.protect' class="method"><code id='protect.v'>pub fn <a href='#method.protect' class='fnname'>protect</a>(&amp;self)</code><a class='srclink' href='../../src/artichoke_backend/value.rs.html#85-88' title='goto source code'>[src]</a></h4><div class='docblock'><p>Prevent this value from being garbage collected.</p>
 <p>Calls <a href="../../artichoke_backend/sys/fn.mrb_gc_protect.html" title="`sys::mrb_gc_protect`"><code>sys::mrb_gc_protect</code></a> on this value which adds it to the GC
 arena. This object will remain in the arena until

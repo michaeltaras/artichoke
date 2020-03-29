@@ -320,7 +320,7 @@ Thread.current.thread_variable_get(:local) == 42
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="comment">// TODO: GH-528 - fix failing tests on Windows.</span>
+    <span class="comment">// TODO(GH-528): fix failing tests on Windows.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>, <span class="ident">should_panic</span>)]</span>
     <span class="kw">fn</span> <span class="ident">thread_abort_on_exception</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">expect</span>(<span class="string">&quot;init&quot;</span>);

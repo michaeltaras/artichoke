@@ -528,7 +528,7 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">require_relative</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">file</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> {
         <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>();
-        <span class="comment">// TODO: GH-468 - Use `Parser::peek_context`.</span>
+        <span class="comment">// TODO(GH-468): Use `Parser::peek_context`.</span>
         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">borrow</span>
             .<span class="ident">parser</span>
             .<span class="ident">peek_context</span>()
