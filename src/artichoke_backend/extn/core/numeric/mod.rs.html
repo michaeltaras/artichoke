@@ -281,12 +281,12 @@
                         }
                     } <span class="kw">else</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">y</span>.<span class="ident">pretty_name</span>());
+                        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">y</span>.<span class="ident">pretty_name</span>(<span class="ident">interp</span>));
                         <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Float&quot;</span>);
                         <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
                     }
                 } <span class="kw">else</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">y</span>.<span class="ident">pretty_name</span>());
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">y</span>.<span class="ident">pretty_name</span>(<span class="ident">interp</span>));
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; can&#39;t be coerced into Float&quot;</span>);
                     <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
                 }
