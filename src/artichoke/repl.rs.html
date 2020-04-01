@@ -405,7 +405,7 @@
                     <span class="kw">continue</span>;
                 }
                 <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_recoverable_error</span>() {
-                    <span class="macro">write</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;Could not parse input&quot;</span>)<span class="question-mark">?</span>;
+                    <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">error</span>, <span class="string">&quot;Could not parse input&quot;</span>)<span class="question-mark">?</span>;
                     <span class="ident">buf</span>.<span class="ident">clear</span>();
                     <span class="kw">continue</span>;
                 }
