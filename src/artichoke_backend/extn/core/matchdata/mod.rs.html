@@ -412,6 +412,7 @@
 <span id="412">412</span>
 <span id="413">413</span>
 <span id="414">414</span>
+<span id="415">415</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! An implementation of [`MatchData`][matchdata] for all [`Regexp`] backends.</span>
 <span class="doccomment">//!</span>
@@ -424,6 +425,7 @@
 <span class="doccomment">//! [matchdata]: https://ruby-doc.org/core-2.6.3/MatchData.html</span>
 <span class="doccomment">//! [rubyspec]: https://github.com/ruby/spec</span>
 
+<span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Bound</span>, <span class="ident">RangeBounds</span>};
@@ -533,7 +535,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MatchData</span> {
-    <span class="ident">haystack</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="ident">haystack</span>: <span class="ident">BString</span>,
     <span class="ident">regexp</span>: <span class="ident">Regexp</span>,
     <span class="ident">region</span>: <span class="ident">Region</span>,
 }
@@ -552,7 +554,7 @@
     {
         <span class="kw">let</span> <span class="ident">region</span> <span class="op">=</span> <span class="ident">Region</span>::<span class="ident">from_range</span>(<span class="ident">bounds</span>);
         <span class="self">Self</span> {
-            <span class="ident">haystack</span>,
+            <span class="ident">haystack</span>: <span class="ident">haystack</span>.<span class="ident">into</span>(),
             <span class="ident">regexp</span>,
             <span class="ident">region</span>,
         }
