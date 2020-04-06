@@ -14,7 +14,7 @@ on the interpreter.</p>
 
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;10 * 10&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">100</span>);</pre></div>
 <h3 id="calling-functions-on-ruby-objects" class="section-header"><a href="#calling-functions-on-ruby-objects">Calling Functions on Ruby Objects</a></h3>
 <p><a href="../artichoke_backend/value/struct.Value.html"><code>Value</code></a>s returned by the <code>artichoke-backend</code> interpreter
@@ -26,7 +26,7 @@ calling Ruby functions from Rust.</p>
 
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">artichoke_backend</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;&#39;ruby funcall&#39;&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(<span class="string">&quot;length&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">funcall</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;length&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">12</span>);</pre></div>
 <h2 id="virtual-filesystem-and-kernelrequire" class="section-header"><a href="#virtual-filesystem-and-kernelrequire">Virtual Filesystem and <code>Kernel#require</code></a></h2>
 <p>The <code>artichoke-backend</code> interpreter includes an in-memory virtual

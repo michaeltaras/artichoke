@@ -589,6 +589,22 @@
 <span id="589">589</span>
 <span id="590">590</span>
 <span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
@@ -1003,127 +1019,153 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+    <span class="kw">mod</span> <span class="ident">fqname</span> {
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fqname</span>() {
-        <span class="kw">struct</span> <span class="ident">Root</span>; <span class="comment">// A</span>
-        <span class="kw">struct</span> <span class="ident">ModuleUnderRoot</span>; <span class="comment">// A::B</span>
-        <span class="kw">struct</span> <span class="ident">ClassUnderRoot</span>; <span class="comment">// A::C</span>
-        <span class="kw">struct</span> <span class="ident">ClassUnderModule</span>; <span class="comment">// A::B::D</span>
-        <span class="kw">struct</span> <span class="ident">ModuleUnderClass</span>; <span class="comment">// A::C::E</span>
-        <span class="kw">struct</span> <span class="ident">ClassUnderClass</span>; <span class="comment">// A::C::F</span>
+        <span class="doccomment">/// A</span>
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">Root</span>;
 
-        <span class="comment">// Setup: define module and class hierarchy</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">expect</span>(<span class="string">&quot;init&quot;</span>);
-        <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;A&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span>
-            <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;B&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>))).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span>
-            <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;C&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span>
-            <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;D&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>,
-            <span class="string">&quot;E&quot;</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)),
-        )
-        .<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span>
-            <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;F&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-        <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">root</span>).<span class="ident">define</span>().<span class="ident">unwrap</span>();
-        <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)
-            .<span class="ident">define</span>()
-            .<span class="ident">unwrap</span>();
-        <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)
-            .<span class="ident">define</span>()
-            .<span class="ident">unwrap</span>();
-        <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">cls_under_mod</span>)
-            .<span class="ident">define</span>()
-            .<span class="ident">unwrap</span>();
-        <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">mod_under_cls</span>)
-            .<span class="ident">define</span>()
-            .<span class="ident">unwrap</span>();
-        <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">cls_under_cls</span>)
-            .<span class="ident">define</span>()
-            .<span class="ident">unwrap</span>();
-        <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">Root</span><span class="op">&gt;</span>(<span class="ident">root</span>);
-        <span class="ident">interp</span>
-            .<span class="number">0</span>
-            .<span class="ident">borrow_mut</span>()
-            .<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderRoot</span><span class="op">&gt;</span>(<span class="ident">mod_under_root</span>);
-        <span class="ident">interp</span>
-            .<span class="number">0</span>
-            .<span class="ident">borrow_mut</span>()
-            .<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">ClassUnderRoot</span><span class="op">&gt;</span>(<span class="ident">cls_under_root</span>);
-        <span class="ident">interp</span>
-            .<span class="number">0</span>
-            .<span class="ident">borrow_mut</span>()
-            .<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">ClassUnderModule</span><span class="op">&gt;</span>(<span class="ident">cls_under_mod</span>);
-        <span class="ident">interp</span>
-            .<span class="number">0</span>
-            .<span class="ident">borrow_mut</span>()
-            .<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderClass</span><span class="op">&gt;</span>(<span class="ident">mod_under_cls</span>);
-        <span class="ident">interp</span>
-            .<span class="number">0</span>
-            .<span class="ident">borrow_mut</span>()
-            .<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">ClassUnderClass</span><span class="op">&gt;</span>(<span class="ident">cls_under_cls</span>);
+        <span class="doccomment">/// A::B</span>
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">ModuleUnderRoot</span>;
 
-        <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>();
-        <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">Root</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">root</span>), <span class="string">&quot;artichoke module spec -- A&quot;</span>);
-        <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderRoot</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mod_under_root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::B&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">mod_under_root</span>),
-            <span class="string">&quot;artichoke module spec -- A::B&quot;</span>
-        );
-        <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderRoot</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_root</span>),
-            <span class="string">&quot;artichoke class spec -- A::C&quot;</span>
-        );
-        <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderModule</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_mod</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::B::D&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_mod</span>),
-            <span class="string">&quot;artichoke class spec -- A::B::D&quot;</span>
-        );
-        <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderClass</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mod_under_cls</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C::E&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">mod_under_cls</span>),
-            <span class="string">&quot;artichoke module spec -- A::C::E&quot;</span>
-        );
-        <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderClass</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_cls</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C::F&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_cls</span>),
-            <span class="string">&quot;artichoke class spec -- A::C::F&quot;</span>
-        );
+        <span class="doccomment">/// A::C</span>
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">ClassUnderRoot</span>;
+
+        <span class="doccomment">/// A::B::D</span>
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">ClassUnderModule</span>;
+
+        <span class="doccomment">/// A::C::E</span>
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">ModuleUnderClass</span>;
+
+        <span class="doccomment">/// A::C::F</span>
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">ClassUnderClass</span>;
+
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">integration_test</span>() {
+            <span class="comment">// Setup: define module and class hierarchy</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;A&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span>
+                <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;B&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)))
+                    .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span>
+                <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;C&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span>
+                <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;D&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)), <span class="prelude-val">None</span>)
+                    .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>,
+                <span class="string">&quot;E&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)),
+            )
+            .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span>
+                <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;F&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)), <span class="prelude-val">None</span>)
+                    .<span class="ident">unwrap</span>();
+            <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">root</span>).<span class="ident">define</span>().<span class="ident">unwrap</span>();
+            <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)
+                .<span class="ident">define</span>()
+                .<span class="ident">unwrap</span>();
+            <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)
+                .<span class="ident">define</span>()
+                .<span class="ident">unwrap</span>();
+            <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">cls_under_mod</span>)
+                .<span class="ident">define</span>()
+                .<span class="ident">unwrap</span>();
+            <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">mod_under_cls</span>)
+                .<span class="ident">define</span>()
+                .<span class="ident">unwrap</span>();
+            <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">cls_under_cls</span>)
+                .<span class="ident">define</span>()
+                .<span class="ident">unwrap</span>();
+            <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">Root</span><span class="op">&gt;</span>(<span class="ident">root</span>);
+            <span class="ident">interp</span>
+                .<span class="number">0</span>
+                .<span class="ident">borrow_mut</span>()
+                .<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderRoot</span><span class="op">&gt;</span>(<span class="ident">mod_under_root</span>);
+            <span class="ident">interp</span>
+                .<span class="number">0</span>
+                .<span class="ident">borrow_mut</span>()
+                .<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">ClassUnderRoot</span><span class="op">&gt;</span>(<span class="ident">cls_under_root</span>);
+            <span class="ident">interp</span>
+                .<span class="number">0</span>
+                .<span class="ident">borrow_mut</span>()
+                .<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">ClassUnderModule</span><span class="op">&gt;</span>(<span class="ident">cls_under_mod</span>);
+            <span class="ident">interp</span>
+                .<span class="number">0</span>
+                .<span class="ident">borrow_mut</span>()
+                .<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderClass</span><span class="op">&gt;</span>(<span class="ident">mod_under_cls</span>);
+            <span class="ident">interp</span>
+                .<span class="number">0</span>
+                .<span class="ident">borrow_mut</span>()
+                .<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">ClassUnderClass</span><span class="op">&gt;</span>(<span class="ident">cls_under_cls</span>);
+
+            <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>();
+            <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">Root</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">root</span>), <span class="string">&quot;artichoke module spec -- A&quot;</span>);
+            <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderRoot</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mod_under_root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::B&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">mod_under_root</span>),
+                <span class="string">&quot;artichoke module spec -- A::B&quot;</span>
+            );
+            <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderRoot</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_root</span>),
+                <span class="string">&quot;artichoke class spec -- A::C&quot;</span>
+            );
+            <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderModule</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_mod</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::B::D&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_mod</span>),
+                <span class="string">&quot;artichoke class spec -- A::B::D&quot;</span>
+            );
+            <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderClass</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mod_under_cls</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C::E&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">mod_under_cls</span>),
+                <span class="string">&quot;artichoke module spec -- A::C::E&quot;</span>
+            );
+            <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderClass</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_cls</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C::F&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_cls</span>),
+                <span class="string">&quot;artichoke class spec -- A::C::F&quot;</span>
+            );
+        }
     }
 
     <span class="kw">mod</span> <span class="ident">functional</span> {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">define_method</span>() {
-            <span class="kw">struct</span> <span class="ident">Class</span>;
-            <span class="kw">struct</span> <span class="ident">Module</span>;
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">Class</span>;
 
-            <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">value</span>(<span class="ident">_mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
-                <span class="kw">unsafe</span> {
-                    <span class="kw">match</span> <span class="ident">slf</span>.<span class="ident">tt</span> {
-                        <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="ident">MRB_TT_CLASS</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">8</span>),
-                        <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="ident">MRB_TT_MODULE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">27</span>),
-                        <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="ident">MRB_TT_OBJECT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">64</span>),
-                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">125</span>),
-                    }
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">Module</span>;
+
+        <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">value</span>(<span class="ident">_mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+            <span class="kw">unsafe</span> {
+                <span class="kw">match</span> <span class="ident">slf</span>.<span class="ident">tt</span> {
+                    <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="ident">MRB_TT_CLASS</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">8</span>),
+                    <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="ident">MRB_TT_MODULE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">27</span>),
+                    <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="ident">MRB_TT_OBJECT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">64</span>),
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_fixnum_value</span>(<span class="number">125</span>),
                 }
             }
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">expect</span>(<span class="string">&quot;init&quot;</span>);
+        }
+
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">define_method</span>() {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;DefineMethodTestClass&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
             <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">class</span>)
                 .<span class="ident">add_method</span>(<span class="string">&quot;value&quot;</span>, <span class="ident">value</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())
@@ -1144,39 +1186,29 @@
             <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">Module</span><span class="op">&gt;</span>(<span class="ident">module</span>);
 
             <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>
-                .<span class="ident">eval</span>(
-                    <span class="string">br#&quot;
-                    class DynamicTestClass
-                        include DefineMethodTestModule
-                        extend DefineMethodTestModule
-                    end
+                .<span class="ident">eval</span>(<span class="string">b&quot;class DynamicTestClass; include DefineMethodTestModule; extend DefineMethodTestModule; end&quot;</span>)
+                .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>
+                .<span class="ident">eval</span>(<span class="string">b&quot;module DynamicTestModule; extend DefineMethodTestModule; end&quot;</span>)
+                .<span class="ident">unwrap</span>();
 
-                    module DynamicTestModule
-                        extend DefineMethodTestModule
-                    end
-                    &quot;#</span>,
-                )
-                .<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>
-                .<span class="ident">eval</span>(<span class="string">b&quot;DefineMethodTestClass.new.value&quot;</span>)
-                .<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DefineMethodTestClass.new.value&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">64</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DefineMethodTestClass.value&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DefineMethodTestClass.value&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">8</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DefineMethodTestModule.value&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DefineMethodTestModule.value&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">27</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DynamicTestClass.new.value&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DynamicTestClass.new.value&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">64</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DynamicTestClass.value&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DynamicTestClass.value&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">8</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DynamicTestModule.value&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;eval&quot;</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;convert&quot;</span>);
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;DynamicTestModule.value&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">27</span>);
         }
     }

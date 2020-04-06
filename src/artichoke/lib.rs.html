@@ -139,7 +139,7 @@
 <span class="doccomment">//! # fn main() -&gt; Result&lt;(), artichoke::backend::exception::Exception&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke::interpreter()?;</span>
 <span class="doccomment">//! let s = interp.convert_mut(&quot;💎&quot;);</span>
-<span class="doccomment">//! let codepoint = s.funcall::&lt;u32&gt;(&quot;ord&quot;, &amp;[] /* args */, None /* block parameter */)?;</span>
+<span class="doccomment">//! let codepoint = s.funcall::&lt;u32&gt;(&amp;mut interp, &quot;ord&quot;, &amp;[] /* args */, None /* block */)?;</span>
 <span class="doccomment">//! assert_eq!(128142, codepoint);</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>

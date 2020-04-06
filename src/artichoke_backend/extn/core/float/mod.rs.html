@@ -452,7 +452,7 @@
         <span class="ident">other</span>: <span class="ident">Value</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Outcome</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">ruby_type</span>() {
-            <span class="kw">let</span> <span class="ident">other</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Float</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">other</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
             <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">modulo</span>(<span class="ident">other</span>).<span class="ident">into</span>());
         }
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="self">self</span>);

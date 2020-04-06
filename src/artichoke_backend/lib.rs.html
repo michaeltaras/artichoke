@@ -213,7 +213,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;10 * 10&quot;).unwrap();</span>
-<span class="doccomment">//! let result = result.try_into::&lt;i64&gt;().unwrap();</span>
+<span class="doccomment">//! let result = result.try_into::&lt;i64&gt;(&amp;interp).unwrap();</span>
 <span class="doccomment">//! assert_eq!(result, 100);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -228,7 +228,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;&#39;ruby funcall&#39;&quot;).unwrap();</span>
-<span class="doccomment">//! let result = result.funcall::&lt;usize&gt;(&quot;length&quot;, &amp;[], None).unwrap();</span>
+<span class="doccomment">//! let result = result.funcall::&lt;usize&gt;(&amp;mut interp, &quot;length&quot;, &amp;[], None).unwrap();</span>
 <span class="doccomment">//! assert_eq!(result, 12);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
