@@ -176,17 +176,12 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::{<span class="ident">args</span>, <span class="ident">CaptureAt</span>, <span class="ident">MatchData</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::{<span class="ident">CaptureAt</span>, <span class="ident">MatchData</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">protect</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">begin</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">value</span>: <span class="ident">Value</span>, <span class="ident">at</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">MatchData</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
@@ -221,8 +216,6 @@
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">MatchData</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">borrow</span>();
-    <span class="comment">// TODO(GH-308): Once extracting a `Range` is safe, extract this conversion</span>
-    <span class="comment">// to a `TryConvert&lt;&amp;&#39;a Value, CaptureAt&lt;&#39;a&gt;&gt;` impl.</span>
     <span class="kw">let</span> <span class="ident">at</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
         <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
@@ -237,15 +230,10 @@
         <span class="kw">let</span> <span class="ident">captures_len</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">regexp</span>.<span class="ident">inner</span>().<span class="ident">captures_len</span>(<span class="ident">interp</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">rangelen</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">captures_len</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;input string too long&quot;</span>))<span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="kw">unsafe</span> { <span class="ident">args</span>::<span class="ident">is_range</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">elem</span>, <span class="ident">rangelen</span>) } {
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>((<span class="ident">start</span>, <span class="ident">len</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">CaptureAt</span>::<span class="ident">StartLen</span>(<span class="ident">start</span>, <span class="ident">len</span>),
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>)),
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;no implicit conversion of &quot;</span>);
-                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">elem</span>.<span class="ident">pretty_name</span>(<span class="ident">interp</span>));
-                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Integer&quot;</span>);
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)));
-            }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">protect</span>::<span class="ident">Range</span> { <span class="ident">start</span>, <span class="ident">len</span> }) <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">is_range</span>(<span class="ident">interp</span>, <span class="ident">rangelen</span>)<span class="question-mark">?</span> {
+            <span class="ident">CaptureAt</span>::<span class="ident">StartLen</span>(<span class="ident">start</span>, <span class="ident">len</span>)
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>));
         }
     };
     <span class="kw">let</span> <span class="ident">matched</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">capture_at</span>(<span class="ident">interp</span>, <span class="ident">at</span>)<span class="question-mark">?</span>;

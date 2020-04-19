@@ -633,6 +633,21 @@
 <span id="633">633</span>
 <span id="634">634</span>
 <span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -733,6 +748,21 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_dead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
         <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_sys_value_is_dead</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">inner</span>()) }
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_range</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
+        <span class="ident">len</span>: <span class="ident">Int</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">protect</span>::<span class="ident">Range</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="number">0</span>.<span class="ident">borrow</span>().<span class="ident">mrb</span>;
+        <span class="kw">match</span> <span class="kw">unsafe</span> { <span class="ident">protect</span>::<span class="ident">is_range</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">inner</span>(), <span class="ident">len</span>) } {
+            <span class="prelude-val">Ok</span>(<span class="ident">range</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">range</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">exception</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">exception</span>);
+                <span class="prelude-val">Err</span>(<span class="ident">exception_handler</span>::<span class="ident">last_error</span>(<span class="ident">interp</span>, <span class="ident">exception</span>)<span class="question-mark">?</span>)
+            }
+        }
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">implicitly_convert_to_int</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">TypeError</span><span class="op">&gt;</span> {
