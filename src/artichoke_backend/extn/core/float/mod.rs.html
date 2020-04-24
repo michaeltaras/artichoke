@@ -228,11 +228,7 @@
 <span id="228">228</span>
 <span id="229">229</span>
 <span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">f64</span>;
-
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">numeric</span>::{<span class="self">self</span>, <span class="ident">Coercion</span>, <span class="ident">Outcome</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>;
@@ -329,40 +325,40 @@
     <span class="doccomment">/// floating point.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 15.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DIG</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">DIGITS</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DIG</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">DIGITS</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// The difference between 1 and the smallest double-precision floating</span>
     <span class="doccomment">/// point number greater than 1.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 2.2204460492503131e-16.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EPSILON</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">EPSILON</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EPSILON</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">EPSILON</span>;
 
     <span class="doccomment">/// An expression representing positive infinity.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">INFINITY</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">INFINITY</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">INFINITY</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">INFINITY</span>;
 
     <span class="doccomment">/// The minimum number of significant decimal digits in a double-precision</span>
     <span class="doccomment">/// floating point.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 15.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MANT_DIG</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MANTISSA_DIGITS</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MANT_DIG</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MANTISSA_DIGITS</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// The largest possible integer in a double-precision floating point</span>
     <span class="doccomment">/// number.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 1.7976931348623157e+308.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MAX</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MAX</span>;
 
     <span class="doccomment">/// The largest positive exponent in a double-precision floating point where</span>
     <span class="doccomment">/// 10 raised to this power minus 1.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 308.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_10_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MAX_10_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_10_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MAX_10_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// The largest possible exponent value in a double-precision floating</span>
     <span class="doccomment">/// point.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 1024.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MAX_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MAX_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// The smallest positive normalized number in a double-precision floating</span>
     <span class="doccomment">/// point.</span>
@@ -372,31 +368,31 @@
     <span class="doccomment">/// If the platform supports denormalized numbers, there are numbers between</span>
     <span class="doccomment">/// zero and [`Float::MIN`]. `0.0.next_float` returns the smallest positive</span>
     <span class="doccomment">/// floating point number including denormalized numbers.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MIN</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MIN</span>;
 
     <span class="doccomment">/// The smallest negative exponent in a double-precision floating point</span>
     <span class="doccomment">/// where 10 raised to this power minus 1.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to -307.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN_10_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MIN_10_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN_10_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MIN_10_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// The smallest possible exponent value in a double-precision floating</span>
     <span class="doccomment">/// point.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to -1021.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">MIN_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIN_EXP</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">MIN_EXP</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// An expression representing a value which is &quot;not a number&quot;.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NAN</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">NAN</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NAN</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">NAN</span>;
 
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NEG_INFINITY</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">NEG_INFINITY</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NEG_INFINITY</span>: <span class="ident">types</span>::<span class="ident">Float</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">NEG_INFINITY</span>;
 
     <span class="doccomment">/// The base of the floating point, or number of unique digits used to</span>
     <span class="doccomment">/// represent the number.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Usually defaults to 2 on most systems, which would represent a base-10</span>
     <span class="doccomment">/// decimal.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RADIX</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">RADIX</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RADIX</span>: <span class="ident">Int</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">Float</span>::<span class="ident">RADIX</span> <span class="kw">as</span> <span class="ident">Int</span>;
 
     <span class="doccomment">/// Represents the rounding mode for floating point addition.</span>
     <span class="doccomment">///</span>

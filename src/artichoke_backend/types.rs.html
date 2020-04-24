@@ -293,6 +293,7 @@
 <span id="293">293</span>
 <span id="294">294</span>
 <span id="295">295</span>
+<span id="296">296</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 
@@ -337,6 +338,7 @@
 <span class="doccomment">/// This function collapses some mruby types into a [`Ruby::Unreachable`] type</span>
 <span class="doccomment">/// that force an interaction with the VM to return an error.</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">enum_glob_use</span>)]</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ruby_from_mrb_value</span>(<span class="ident">value</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ruby</span> {
     <span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">mrb_vtype</span>::<span class="kw-2">*</span>;

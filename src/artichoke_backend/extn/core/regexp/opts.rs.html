@@ -202,6 +202,7 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
+<span id="205">205</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse options parameter to `Regexp#initialize` and `Regexp::compile`.</span>
 
@@ -210,6 +211,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">struct_excessive_bools</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Options</span> {
     <span class="kw">pub</span> <span class="ident">multiline</span>: <span class="ident">bool</span>,
