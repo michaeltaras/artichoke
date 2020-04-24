@@ -493,7 +493,7 @@
                 }
             }
             <span class="ident">Ruby</span>::<span class="ident">Float</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">denom</span> <span class="op">=</span> <span class="ident">denominator</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">denom</span> <span class="op">=</span> <span class="ident">denominator</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Fp</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>((<span class="self">self</span>.<span class="ident">as_f64</span>() <span class="op">/</span> <span class="ident">denom</span>).<span class="ident">into</span>())
             }
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {

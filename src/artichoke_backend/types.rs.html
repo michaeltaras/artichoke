@@ -293,25 +293,23 @@
 <span id="293">293</span>
 <span id="294">294</span>
 <span id="295">295</span>
-<span id="296">296</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 
 <span class="doccomment">/// Artichoke native floating point type.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `Float` is the backend to the [`Float`](crate::extn::core::float::Float)</span>
-<span class="doccomment">/// class.</span>
+<span class="doccomment">/// `Fp` is the backend to the [`Float`](crate::extn::core::float::Float) class.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The `Float` type alias is for the `f64` floating point primitive.</span>
+<span class="doccomment">/// The `Fp` type alias is for the `f64` floating point primitive.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use std::any::TypeId;</span>
 <span class="doccomment">/// # use std::mem;</span>
-<span class="doccomment">/// # use artichoke_backend::types::Float;</span>
-<span class="doccomment">/// assert_eq!(mem::size_of::&lt;f64&gt;(), mem::size_of::&lt;Float&gt;());</span>
-<span class="doccomment">/// assert_eq!(TypeId::of::&lt;f64&gt;(), TypeId::of::&lt;Float&gt;());</span>
+<span class="doccomment">/// # use artichoke_backend::types::Fp;</span>
+<span class="doccomment">/// assert_eq!(mem::size_of::&lt;f64&gt;(), mem::size_of::&lt;Fp&gt;());</span>
+<span class="doccomment">/// assert_eq!(TypeId::of::&lt;f64&gt;(), TypeId::of::&lt;Fp&gt;());</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Float</span> <span class="op">=</span> <span class="ident">f64</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Fp</span> <span class="op">=</span> <span class="ident">f64</span>;
 
 <span class="doccomment">/// Artichoke native integer type.</span>
 <span class="doccomment">///</span>
