@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["output",""],["parser",""],["prng",""]],"struct":[["State",""]]});
+initSidebarItems({"mod":[["output",""],["parser",""],["prng",""],["regexp",""]],"struct":[["State",""]]});
