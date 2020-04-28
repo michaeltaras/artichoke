@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["integer",""],["load",""],["print",""],["puts",""],["require",""],["require_relative",""]]});
+initSidebarItems({"fn":[["integer",""],["load",""],["p",""],["print",""],["puts",""],["require",""],["require_relative",""]]});
