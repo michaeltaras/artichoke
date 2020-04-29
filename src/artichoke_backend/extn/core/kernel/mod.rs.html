@@ -225,7 +225,7 @@
         <span class="kw">fn</span> <span class="ident">integration_test</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="ident">IntegrationTest</span><span class="op">&gt;</span>(<span class="string">b&quot;file.rb&quot;</span>)
+                .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">IntegrationTest</span><span class="op">&gt;</span>(<span class="string">&quot;file.rb&quot;</span>)
                 .<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;file&#39;&quot;</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">require_result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
@@ -252,7 +252,7 @@
         <span class="kw">fn</span> <span class="ident">absolute_path</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_rb_source_file</span>(<span class="string">b&quot;/foo/bar/source.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;# a source file&quot;</span>[..])
+                .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/foo/bar/source.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;# a source file&quot;</span>[..])
                 .<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;/foo/bar/source.rb&#39;&quot;</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>());
@@ -264,10 +264,10 @@
         <span class="kw">fn</span> <span class="ident">relative_with_dotted_path</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_rb_source_file</span>(<span class="string">b&quot;/foo/bar/source.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;require_relative &#39;../bar.rb&#39;&quot;</span>[..])
+                .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/foo/bar/source.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;require_relative &#39;../bar.rb&#39;&quot;</span>[..])
                 .<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_rb_source_file</span>(<span class="string">b&quot;/foo/bar.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;# a source file&quot;</span>[..])
+                .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/foo/bar.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;# a source file&quot;</span>[..])
                 .<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;/foo/bar/source.rb&#39;&quot;</span>).<span class="ident">unwrap</span>();
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>());
@@ -288,10 +288,10 @@
         <span class="kw">fn</span> <span class="ident">path_defined_as_source_then_extension_file</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_rb_source_file</span>(<span class="string">b&quot;foo.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;module Foo; RUBY = 3; end&quot;</span>[..])
+                .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;foo.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;module Foo; RUBY = 3; end&quot;</span>[..])
                 .<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="ident">HybridRustAndRuby</span><span class="op">&gt;</span>(<span class="string">b&quot;foo.rb&quot;</span>)
+                .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">HybridRustAndRuby</span><span class="op">&gt;</span>(<span class="string">&quot;foo.rb&quot;</span>)
                 .<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;foo&#39;&quot;</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
@@ -308,10 +308,10 @@
         <span class="kw">fn</span> <span class="ident">path_defined_as_extension_file_then_source</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="ident">HybridRustAndRuby</span><span class="op">&gt;</span>(<span class="string">b&quot;foo.rb&quot;</span>)
+                .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">HybridRustAndRuby</span><span class="op">&gt;</span>(<span class="string">&quot;foo.rb&quot;</span>)
                 .<span class="ident">unwrap</span>();
             <span class="ident">interp</span>
-                .<span class="ident">def_rb_source_file</span>(<span class="string">b&quot;foo.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;module Foo; RUBY = 3; end&quot;</span>[..])
+                .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;foo.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;module Foo; RUBY = 3; end&quot;</span>[..])
                 .<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;foo&#39;&quot;</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();

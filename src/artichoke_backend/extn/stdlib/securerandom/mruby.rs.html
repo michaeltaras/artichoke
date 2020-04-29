@@ -162,7 +162,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">File</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">InitializeResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="ident">interp</span>.<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="ident">SecureRandomFile</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;securerandom.rb&quot;</span>[..])<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">SecureRandomFile</span><span class="op">&gt;</span>(<span class="string">&quot;securerandom.rb&quot;</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
