@@ -654,14 +654,14 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="self">self</span>, <span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="kw">_</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">Intern</span>, <span class="ident">TryConvert</span>, <span class="ident">Value</span> <span class="kw">as</span> <span class="ident">ValueCore</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception_handler</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">ArgumentError</span>, <span class="ident">Fatal</span>, <span class="ident">TypeError</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::{<span class="self">self</span>, <span class="ident">protect</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="self">self</span>, <span class="ident">Int</span>, <span class="ident">Ruby</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">Intern</span>, <span class="ident">TryConvert</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="doccomment">/// Max argument count for function calls including initialize and yield.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MRB_FUNCALL_ARGC_MAX</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
@@ -850,7 +850,7 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">for</span> <span class="ident">Value</span> {
+<span class="kw">impl</span> <span class="ident">ValueCore</span> <span class="kw">for</span> <span class="ident">Value</span> {
     <span class="kw">type</span> <span class="ident">Artichoke</span> <span class="op">=</span> <span class="ident">Artichoke</span>;
     <span class="kw">type</span> <span class="ident">Arg</span> <span class="op">=</span> <span class="self">Self</span>;
     <span class="kw">type</span> <span class="ident">Block</span> <span class="op">=</span> <span class="self">Self</span>;

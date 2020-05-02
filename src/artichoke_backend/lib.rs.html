@@ -184,6 +184,13 @@
 <span id="184">184</span>
 <span id="185">185</span>
 <span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -194,7 +201,7 @@
 
 <span class="doccomment">//! # artichoke-backend</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! `artichoke-backend` crate provides a Ruby interpreter. It currently is</span>
+<span class="doccomment">//! `artichoke-backend` crate provides a Ruby interpreter. It is currently</span>
 <span class="doccomment">//! implemented with [mruby](https://github.com/mruby/mruby) bindings exported</span>
 <span class="doccomment">//! by the [`sys`] module.</span>
 <span class="doccomment">//!</span>
@@ -206,10 +213,11 @@
 <span class="doccomment">//! ### Evaling Source Code</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The `artichoke-backend` interpreter implements</span>
-<span class="doccomment">//! [`Eval` from `artichoke-core`](crate::Eval).</span>
+<span class="doccomment">//! [`Eval` from `artichoke-core`](crate::prelude::core::Eval).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use artichoke_backend::{Eval, ValueLike};</span>
+<span class="doccomment">//! use artichoke_backend::prelude::core::*;</span>
+<span class="doccomment">//! use artichoke_backend::prelude::*;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;10 * 10&quot;).unwrap();</span>
@@ -220,11 +228,12 @@
 <span class="doccomment">//! ### Calling Functions on Ruby Objects</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`Value`](value::Value)s returned by the `artichoke-backend` interpreter</span>
-<span class="doccomment">//! implement [`Value` from `artichoke-core`](crate::ValueLike), which enables</span>
-<span class="doccomment">//! calling Ruby functions from Rust.</span>
+<span class="doccomment">//! implement [`Value` from `artichoke-core`](crate::core::prelude::Value),</span>
+<span class="doccomment">//! which enables calling Ruby functions from Rust.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use artichoke_backend::{Eval, ValueLike};</span>
+<span class="doccomment">//! use artichoke_backend::prelude::core::*;</span>
+<span class="doccomment">//! use artichoke_backend::prelude::*;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter().unwrap();</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;&#39;ruby funcall&#39;&quot;).unwrap();</span>
@@ -305,24 +314,29 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span> <span class="kw">as</span> <span class="ident">core</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::<span class="ident">interpreter</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">prelude</span> <span class="kw">as</span> <span class="ident">core</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">constant</span>::<span class="ident">DefineConstant</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">Convert</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">ConvertMut</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">TryConvert</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::<span class="ident">TryConvertMut</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">file</span>::<span class="ident">File</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">globals</span>::<span class="ident">Globals</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">intern</span>::<span class="ident">Intern</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">load</span>::<span class="ident">LoadSources</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">parser</span>::<span class="ident">Parser</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">top_self</span>::<span class="ident">TopSelf</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="ident">ValueLike</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">warn</span>::<span class="ident">Warn</span>;
+<span class="doccomment">/// A &quot;prelude&quot; for users of the `artichoke-backend` crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This prelude is similar to the standard library&#39;s prelude in that you&#39;ll</span>
+<span class="doccomment">/// almost always want to import its entire contents, but unlike the standard</span>
+<span class="doccomment">/// library&#39;s prelude, you&#39;ll have to do so manually:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use artichoke_backend::prelude::*;</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The prelude may grow over time as additional items see ubiquitous use.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">interpreter</span>::<span class="ident">interpreter</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">raise</span>, <span class="ident">Exception</span>, <span class="ident">RubyException</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="kw-2">*</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::<span class="ident">interpreter</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
+}
 
 <span class="doccomment">/// Interpreter instance.</span>
 <span class="doccomment">///</span>

@@ -605,6 +605,7 @@
 <span id="605">605</span>
 <span id="606">606</span>
 <span id="607">607</span>
+<span id="608">608</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
@@ -617,11 +618,12 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">RustBackedValue</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">ConvertMut</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">NameError</span>, <span class="ident">ScriptError</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">module</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ConvertMut</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="doccomment">/// Typedef for an mruby free function for an [`mrb_value`](sys::mrb_value) with</span>
 <span class="doccomment">/// `tt` [`MRB_TT_DATA`](sys::mrb_vtype::MRB_TT_DATA).</span>

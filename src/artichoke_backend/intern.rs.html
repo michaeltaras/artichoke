@@ -33,11 +33,13 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">Intern</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">Intern</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="kw">impl</span> <span class="ident">Intern</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">type</span> <span class="ident">Symbol</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_sym</span>;

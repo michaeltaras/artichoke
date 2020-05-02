@@ -43,6 +43,34 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -83,11 +111,39 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">globals</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">intern</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">io</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">load</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">top_self</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">value</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">warn</span>;
+
+<span class="doccomment">/// A &quot;prelude&quot; for users of the `artichoke-core` crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This prelude is similar to the standard library&#39;s prelude in that you&#39;ll</span>
+<span class="doccomment">/// almost always want to import its entire contents, but unlike the standard</span>
+<span class="doccomment">/// library&#39;s prelude, you&#39;ll have to do so manually:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use artichoke_core::prelude::*;</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The prelude may grow over time as additional items see ubiquitous use.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">constant</span>::<span class="ident">DefineConstant</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>, <span class="ident">TryConvertMut</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">file</span>::<span class="ident">File</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">globals</span>::<span class="ident">Globals</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">intern</span>::<span class="ident">Intern</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">io</span>::<span class="ident">Io</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">load</span>::<span class="ident">LoadSources</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">parser</span>::{<span class="ident">IncrementLinenoError</span>, <span class="ident">Parser</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">top_self</span>::<span class="ident">TopSelf</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Ruby</span>, <span class="ident">Rust</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">warn</span>::<span class="ident">Warn</span>;
+}
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_core";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["interpreter","Create and initialize an [`Artichoke`] interpreter."]],"mod":[["core","A \"prelude\" for users of the `artichoke-core` crate."]]});
