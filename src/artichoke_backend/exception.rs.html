@@ -193,6 +193,7 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
+<span id="196">196</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -203,7 +204,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">Guard</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Exception</span>(<span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span>);
@@ -252,9 +253,10 @@
 <span class="doccomment">/// Because this precondition must hold for all frames between the caller and</span>
 <span class="doccomment">/// the closest [`sys::mrb_protect`] landing pad, this function should only be</span>
 <span class="doccomment">/// called in the entrypoint into Rust from mruby.</span>
-<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">raise</span>(<span class="kw-2">mut</span> <span class="ident">interp</span>: <span class="ident">Artichoke</span>, <span class="ident">exception</span>: <span class="kw">impl</span> <span class="ident">RubyException</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="op">!</span> {
-    <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">exception</span>.<span class="ident">as_mrb_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>);
-    <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">Artichoke</span>::<span class="ident">into_raw</span>(<span class="ident">interp</span>);
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">raise</span>(<span class="kw-2">mut</span> <span class="ident">guard</span>: <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">exception</span>: <span class="kw">impl</span> <span class="ident">RubyException</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="op">!</span> {
+    <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">exception</span>.<span class="ident">as_mrb_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>);
+    <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
+    <span class="ident">drop</span>(<span class="ident">guard</span>);
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">exc</span>) <span class="op">=</span> <span class="ident">exc</span> {
         <span class="comment">// Any non-`Copy` objects that we haven&#39;t cleaned up at this point will</span>
         <span class="comment">// leak, so drop everything.</span>

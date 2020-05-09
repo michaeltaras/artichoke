@@ -110,6 +110,7 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
+<span id="113">113</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -158,7 +159,8 @@
 <span class="doccomment">//! # fn main() -&gt; Result&lt;(), Exception&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke::interpreter()?;</span>
 <span class="doccomment">//! let s = interp.convert_mut(&quot;💎&quot;);</span>
-<span class="doccomment">//! let codepoint = s.funcall::&lt;u32&gt;(&amp;mut interp, &quot;ord&quot;, &amp;[] /* args */, None /* block */)?;</span>
+<span class="doccomment">//! let codepoint = s.funcall(&amp;mut interp, &quot;ord&quot;, &amp;[] /* args */, None /* block */)?;</span>
+<span class="doccomment">//! let codepoint = codepoint.try_into::&lt;u32&gt;(&amp;interp)?;</span>
 <span class="doccomment">//! assert_eq!(128142, codepoint);</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>

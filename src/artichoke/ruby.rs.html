@@ -178,6 +178,7 @@
 <span id="178">178</span>
 <span id="179">179</span>
 <span id="180">180</span>
+<span id="181">181</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Artichoke CLI entrypoint.</span>
 <span class="doccomment">//!</span>
@@ -271,13 +272,14 @@
     <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
 {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
-    <span class="ident">interp</span>.<span class="ident">pop_context</span>();
+    <span class="ident">interp</span>.<span class="ident">pop_context</span>()<span class="question-mark">?</span>;
     <span class="comment">// safety:</span>
     <span class="comment">//</span>
     <span class="comment">// - `Context::new_unchecked` requires that its argument has no NUL bytes.</span>
     <span class="comment">// - `INLINE_EVAL_SWITCH_FILENAME` is controlled by this crate.</span>
     <span class="comment">// - A test asserts that `INLINE_EVAL_SWITCH_FILENAME` has no NUL bytes.</span>
-    <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">INLINE_EVAL_SWITCH_FILENAME</span>) });
+    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">INLINE_EVAL_SWITCH_FILENAME</span>) };
+    <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="ident">context</span>)<span class="question-mark">?</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">fixture</span>) <span class="op">=</span> <span class="ident">fixture</span> {
         <span class="ident">setup_fixture_hack</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="ident">fixture</span>)<span class="question-mark">?</span>;
     }

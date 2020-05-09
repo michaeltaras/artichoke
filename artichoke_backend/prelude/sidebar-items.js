@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["interpreter","Create and initialize an [`Artichoke`] interpreter."]],"mod":[["core","A \"prelude\" for users of the `artichoke-core` crate."]]});
+initSidebarItems({"fn":[["interpreter","Create and initialize an [`Artichoke`] interpreter."]],"mod":[["core","A \"prelude\" for users of the `artichoke-core` crate."]],"struct":[["Artichoke","Interpreter instance."],["Guard","Interpreter guard that prepares an [`Artichoke`] to re-enter an FFI boundary."]]});

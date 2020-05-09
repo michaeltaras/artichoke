@@ -16,24 +16,66 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Track `Regexp` global state.</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+
 <span class="doccomment">/// Track the state of `Regexp` globals and global interpreter state.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Regexp</span> {
+    <span class="doccomment">/// Concrete error type for errors encountered when manipulating `Regexp`</span>
+    <span class="doccomment">/// state.</span>
+    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+
     <span class="doccomment">/// Retrieve the current number of set `Regexp` global variables.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// `Regexp` global variables like `$1` and `$7` are defined after certain</span>
     <span class="doccomment">/// `Regexp` matching methods for each capturing group in the regular</span>
     <span class="doccomment">/// expression.</span>
-    <span class="kw">fn</span> <span class="ident">active_regexp_globals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the `Regexp` state is inaccessible, an error is returned.</span>
+    <span class="kw">fn</span> <span class="ident">active_regexp_globals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Set the current number of set `Regexp` global variables.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// `Regexp` global variables like `$1` and `$7` are defined after certain</span>
     <span class="doccomment">/// `Regexp` matching methods for each capturing group in the regular</span>
     <span class="doccomment">/// expression.</span>
-    <span class="kw">fn</span> <span class="ident">set_active_regexp_globals</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">count</span>: <span class="ident">usize</span>);
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the `Regexp` state is inaccessible, an error is returned.</span>
+    <span class="kw">fn</span> <span class="ident">set_active_regexp_globals</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">count</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Clear all `Regexp` state.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the `Regexp` state is inaccessible, an error is returned.</span>
+    <span class="kw">fn</span> <span class="ident">clear_regexp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_core";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

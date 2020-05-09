@@ -220,12 +220,6 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -264,23 +258,10 @@
         })
     }
 
-    <span class="doccomment">/// Used for moving a `State` out of the larger Artichoke State to</span>
-    <span class="doccomment">/// work around Artichoke State being stored in a [`RefCell`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function creates an uninitialized parser state. Calling methods on</span>
-    <span class="doccomment">/// it is unlikely to be correct.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">uninit</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">context</span>: <span class="ident">NonNull</span>::<span class="ident">dangling</span>(),
-            <span class="ident">stack</span>: <span class="macro">vec</span><span class="macro">!</span>[],
-        }
-    }
-
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) {
         <span class="kw">unsafe</span> {
-            <span class="ident">sys</span>::<span class="ident">mrbc_context_free</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>());
+            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>();
+            <span class="ident">sys</span>::<span class="ident">mrbc_context_free</span>(<span class="ident">mrb</span>, <span class="ident">ctx</span>);
         }
     }
 
@@ -291,16 +272,18 @@
     <span class="doccomment">/// Reset line number to `1`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) {
         <span class="kw">unsafe</span> {
-            <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>().<span class="ident">lineno</span> <span class="op">=</span> <span class="number">1</span>;
+            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>();
+            <span class="ident">ctx</span>.<span class="ident">lineno</span> <span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">reset_context_filename</span>(<span class="ident">mrb</span>, <span class="ident">ctx</span>);
         }
         <span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">clear</span>();
-        <span class="ident">reset_context_filename</span>(<span class="ident">mrb</span>, <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>() });
     }
 
     <span class="doccomment">/// Fetch the current line number from the parser state.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_lineno</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="ident">usize</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_ref</span>() }.<span class="ident">lineno</span>)
+        <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_ref</span>() };
+        <span class="ident">usize</span>::<span class="ident">from</span>(<span class="ident">ctx</span>.<span class="ident">lineno</span>)
     }
 
     <span class="doccomment">/// Increment line number and return the new value.</span>
@@ -330,7 +313,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">context</span>: <span class="ident">Context</span>) {
         <span class="kw">let</span> <span class="ident">filename</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">filename_as_c_str</span>();
         <span class="kw">unsafe</span> {
-            <span class="ident">sys</span>::<span class="ident">mrbc_filename</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>(), <span class="ident">filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>);
+            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>();
+            <span class="ident">sys</span>::<span class="ident">mrbc_filename</span>(<span class="ident">mrb</span>, <span class="ident">ctx</span>, <span class="ident">filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>);
         }
         <span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">context</span>);
     }
@@ -345,10 +329,14 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">current</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">stack</span>.<span class="ident">last</span>() {
             <span class="kw">let</span> <span class="ident">filename</span> <span class="op">=</span> <span class="ident">current</span>.<span class="ident">filename_as_c_str</span>();
             <span class="kw">unsafe</span> {
-                <span class="ident">sys</span>::<span class="ident">mrbc_filename</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>(), <span class="ident">filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>);
+                <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>();
+                <span class="ident">sys</span>::<span class="ident">mrbc_filename</span>(<span class="ident">mrb</span>, <span class="ident">ctx</span>, <span class="ident">filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>);
             }
         } <span class="kw">else</span> {
-            <span class="ident">reset_context_filename</span>(<span class="ident">mrb</span>, <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>() });
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">as_mut</span>();
+                <span class="ident">reset_context_filename</span>(<span class="ident">mrb</span>, <span class="ident">ctx</span>);
+            }
         }
         <span class="ident">context</span>
     }

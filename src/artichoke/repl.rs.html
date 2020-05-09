@@ -220,6 +220,10 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A REPL (read–eval–print–loop) for an Artichoke interpreter.</span>
 <span class="doccomment">//!</span>
@@ -329,10 +333,12 @@
 }
 
 <span class="kw">fn</span> <span class="ident">preamble</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">description</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;RUBY_DESCRIPTION&quot;</span>)<span class="question-mark">?</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">description</span> <span class="op">=</span> <span class="ident">interp</span>
+        .<span class="ident">eval</span>(<span class="string">b&quot;RUBY_DESCRIPTION&quot;</span>)<span class="question-mark">?</span>
+        .<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">compiler</span> <span class="op">=</span> <span class="ident">interp</span>
         .<span class="ident">eval</span>(<span class="string">b&quot;ARTICHOKE_COMPILER_VERSION&quot;</span>)<span class="question-mark">?</span>
-        .<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+        .<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="ident">description</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">2</span> <span class="op">+</span> <span class="ident">compiler</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>);
     <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">description</span>);
     <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;\n[&quot;</span>);
@@ -369,13 +375,15 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
     <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">preamble</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
-    <span class="ident">interp</span>.<span class="ident">reset_parser</span>();
+    <span class="ident">interp</span>.<span class="ident">reset_parser</span>()<span class="question-mark">?</span>;
     <span class="comment">// safety:</span>
-    <span class="comment">// Context::new_unchecked requires that REPL_FILENAME have no NUL bytes.</span>
-    <span class="comment">// REPL_FILENAME is controlled by this crate and asserts this invariant</span>
-    <span class="comment">// with a test.</span>
-    <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">REPL_FILENAME</span>.<span class="ident">to_vec</span>()) });
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">ParserAllocError</span>)<span class="question-mark">?</span>;
+    <span class="comment">//</span>
+    <span class="comment">// - `Context::new_unchecked` requires that its argument has no NUL bytes.</span>
+    <span class="comment">// - `REPL_FILENAME` is controlled by this crate.</span>
+    <span class="comment">// - A test asserts that `REPL_FILENAME` has no NUL bytes.</span>
+    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">REPL_FILENAME</span>.<span class="ident">to_vec</span>()) };
+    <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="ident">context</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">ParserAllocError</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rl</span> <span class="op">=</span> <span class="ident">Editor</span>::<span class="op">&lt;</span>()<span class="op">&gt;</span>::<span class="ident">new</span>();
     <span class="comment">// If a code block is open, accumulate code from multiple readlines in this</span>
