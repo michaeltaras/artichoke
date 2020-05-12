@@ -221,9 +221,14 @@
 <span id="221">221</span>
 <span id="222">222</span>
 <span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">NonNull</span>;
 
@@ -291,8 +296,8 @@
             <span class="comment">//</span>
             <span class="comment">// Safety:</span>
             <span class="comment">//</span>
-            <span class="comment">// 1. The `Artichoke` struct is partially uninitialized with the</span>
-            <span class="comment">//    dangling `NonNull`.</span>
+            <span class="comment">// 1. Extract a `*mut sys::mrb_state` pointer from the `NonNull` mrb</span>
+            <span class="comment">//    field.</span>
             <span class="comment">// 2. Function safety conditions declare that `Artichoke` is not</span>
             <span class="comment">//    accessed inside the closure.</span>
             <span class="comment">// 3. Rust borrowing rules enforce that `Artichoke` is not accessed</span>
@@ -307,8 +312,7 @@
             <span class="comment">// 9. Replace `self` with the new interpreter.</span>
 
             <span class="comment">// Step 1</span>
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">mrb</span>, <span class="ident">NonNull</span>::<span class="ident">dangling</span>());
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">mrb</span>.<span class="ident">as_ptr</span>();
+            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mrb</span>.<span class="ident">as_ptr</span>();
 
             <span class="comment">// Step 4</span>
             (<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">ud</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">state</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
@@ -320,7 +324,7 @@
             <span class="kw">let</span> <span class="ident">extracted</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">from_user_data</span>(<span class="ident">mrb</span>)<span class="question-mark">?</span>;
 
             <span class="comment">// Step 9</span>
-            <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">extracted</span>;
+            <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">extracted</span>.<span class="ident">state</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>)
@@ -344,23 +348,32 @@
     <span class="doccomment">/// then call [`Artichoke::close`].</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="kw-2">mut</span> <span class="ident">interp</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span> {
-        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span> {
-            <span class="ident">mrb</span>.<span class="ident">ud</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">state</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
-        } <span class="kw">else</span> {
-            <span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Called Artichoke::into_raw with no State&quot;</span>);
-        }
-        <span class="ident">mrb</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">guard</span> <span class="op">=</span> <span class="ident">Guard</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>);
+        <span class="ident">guard</span>.<span class="ident">interp</span>().<span class="ident">mrb</span>.<span class="ident">as_ptr</span>()
     }
 
     <span class="doccomment">/// Consume an interpreter and free all live objects.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span> {
-                <span class="ident">state</span>.<span class="ident">close</span>(<span class="ident">mrb</span>);
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">take</span>() {
+                <span class="comment">// Do not free class and module specs before running the final</span>
+                <span class="comment">// garbage collection on `mrb_close`.</span>
+                <span class="kw">let</span> <span class="ident">State</span> {
+                    <span class="ident">parser</span>,
+                    <span class="ident">classes</span>,
+                    <span class="ident">modules</span>,
+                    ..
+                } <span class="op">=</span> <span class="kw-2">*</span><span class="ident">state</span>;
+
+                <span class="ident">parser</span>.<span class="ident">close</span>(<span class="ident">mrb</span>);
+                <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>);
+
+                <span class="ident">drop</span>(<span class="ident">classes</span>);
+                <span class="ident">drop</span>(<span class="ident">modules</span>);
+            } <span class="kw">else</span> {
+                <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>);
             }
-            <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>);
         }
     }
 }
@@ -434,14 +447,13 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">state</span>.<span class="ident">take</span>();
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Dropping Guard with no State&quot;</span>));
+
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">state</span>.<span class="ident">take</span>() {
-                <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Serializing Artichoke State into mrb to prepare for FFI boundary&quot;</span>);
-                <span class="ident">mrb</span>.<span class="ident">ud</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">state</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
-            } <span class="kw">else</span> {
-                <span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Dropping Guard with no State&quot;</span>);
-            }
+            <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Serializing Artichoke State into mrb to prepare for FFI boundary&quot;</span>);
+            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">mrb</span>.<span class="ident">as_ptr</span>();
+            (<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">ud</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">state</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
         }
     }
 }

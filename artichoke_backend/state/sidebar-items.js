@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["output",""],["parser",""],["prng",""],["regexp",""],["type_registry",""]],"struct":[["State",""]]});
+initSidebarItems({"mod":[["output",""],["parser",""],["prng",""],["regexp",""],["type_registry",""]],"struct":[["State","Container for domain-specific interpreter state."]]});
