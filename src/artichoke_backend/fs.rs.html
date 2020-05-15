@@ -549,7 +549,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This signature is equivalent to the signature for `File::require` as defined</span>
 <span class="doccomment">/// by the `artichoke-backend` implementation of</span>
-<span class="doccomment">/// [`LoadSources`](crate::LoadSources).</span>
+<span class="doccomment">/// [`LoadSources`](crate::core::LoadSources).</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ExtensionHook</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -673,8 +673,8 @@
 <span class="doccomment">///   MRI C extension rubygem).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Sources in `Virtual` are only writable via the</span>
-<span class="doccomment">/// [`LoadSources`](crate::LoadSources) trait. Sources can only be completely</span>
-<span class="doccomment">/// replaced.</span>
+<span class="doccomment">/// [`LoadSources`](crate::core::LoadSources) trait. Sources can only be</span>
+<span class="doccomment">/// completely replaced.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// These APIs are consumed primarily by the `Kernel::require` implementation in</span>
 <span class="doccomment">/// [`extn::core::kernel::require`](crate::extn::core::kernel::require).</span>

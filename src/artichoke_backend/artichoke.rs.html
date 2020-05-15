@@ -218,15 +218,6 @@
 <span id="218">218</span>
 <span id="219">219</span>
 <span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
@@ -238,18 +229,9 @@
 
 <span class="doccomment">/// Interpreter instance.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The interpreter [`State`](state::State) is wrapped in an `Rc&lt;RefCell&lt;_&gt;&gt;`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The [`Rc`] enables the State to be cloned so it can be stored in the</span>
-<span class="doccomment">/// [`sys::mrb_state`],</span>
-<span class="doccomment">/// [extracted in `extern &quot;C&quot;` functions](ffi::from_user_data), and used in</span>
-<span class="doccomment">/// [`Value`](value::Value) instances.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The [`RefCell`] enables mutable access to the underlying</span>
-<span class="doccomment">/// [`State`](state::State), even across an FFI boundary.</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// Functionality is added to the interpreter via traits, for example,</span>
-<span class="doccomment">/// [garbage collection](gc::MrbGarbageCollection) or [eval](eval::Eval).</span>
+<span class="doccomment">/// [garbage collection](crate::gc::MrbGarbageCollection) or</span>
+<span class="doccomment">/// [eval](crate::core::Eval).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Artichoke</span> {
     <span class="doccomment">/// Underlying mruby interpreter.</span>

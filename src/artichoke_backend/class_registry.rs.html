@@ -193,9 +193,9 @@
 <span class="kw">impl</span> <span class="ident">ClassRegistry</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="doccomment">/// Create a class definition bound to a Rust type `T`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Class definitions have the same lifetime as the [`State`] because the</span>
-    <span class="doccomment">/// class def owns the `mrb_data_type` for the type, which must be</span>
-    <span class="doccomment">/// long-lived.</span>
+    <span class="doccomment">/// Class definitions have the same lifetime as the</span>
+    <span class="doccomment">/// [`State`](crate::state::State) because the class def owns the</span>
+    <span class="doccomment">/// `mrb_data_type` for the type, which must be long-lived.</span>
     <span class="kw">fn</span> <span class="ident">def_class</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">spec</span>: <span class="ident">class</span>::<span class="ident">Spec</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Any</span>,

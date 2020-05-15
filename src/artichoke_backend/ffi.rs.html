@@ -261,14 +261,14 @@
 <span class="doccomment">/// Extract an [`Artichoke`] interpreter from the user data pointer on a</span>
 <span class="doccomment">/// [`sys::mrb_state`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Calling this function will increase the [`Rc::strong_count`] on the</span>
-<span class="doccomment">/// [`Artichoke`] interpreter by one.</span>
+<span class="doccomment">/// Calling this function will move the [`State`] out of the [`sys::mrb_state`]</span>
+<span class="doccomment">/// into the [`Artichoke`] interpreter.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Safety</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function assumes that the user data pointer was created with</span>
-<span class="doccomment">/// [`Rc::into_raw`] and that the pointer is to a non-free&#39;d</span>
-<span class="doccomment">/// [`Rc`]`&lt;`[`RefCell`]`&lt;`[`State`]`&gt;&gt;`.</span>
+<span class="doccomment">/// [`Box::into_raw`] and that the pointer is to a non-free&#39;d</span>
+<span class="doccomment">/// [`Box`]`&lt;`[`State`]`&gt;`.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_user_data</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">InterpreterExtractError</span><span class="op">&gt;</span> {

@@ -19,8 +19,8 @@ on the interpreter.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="number">100</span>);</pre></div>
 <h3 id="calling-functions-on-ruby-objects" class="section-header"><a href="#calling-functions-on-ruby-objects">Calling Functions on Ruby Objects</a></h3>
 <p><a href="../artichoke_backend/value/struct.Value.html"><code>Value</code></a>s returned by the <code>artichoke-backend</code> interpreter
-implement <a href="crate::core::prelude::Value"><code>Value</code> from <code>artichoke-core</code></a>,
-which enables calling Ruby functions from Rust.</p>
+implement <a href="../artichoke_backend/prelude/core/trait.Value.html"><code>Value</code> from <code>artichoke-core</code></a>, which enables
+calling Ruby functions from Rust.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">prelude</span>::<span class="ident">core</span>::<span class="kw-2">*</span>;
