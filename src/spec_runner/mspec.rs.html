@@ -57,8 +57,11 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
+<span id="60">60</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Embedded `MSpec` framework.</span>
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">prelude</span>::<span class="ident">core</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -91,13 +94,12 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span>,
 {
-    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/src/spec_helper.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;&quot;</span>[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/src/lib/spec_helper.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;&quot;</span>[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
-        <span class="string">&quot;/src/test/spec_runner&quot;</span>,
+        <span class="string">&quot;/src/lib/test/spec_runner&quot;</span>,
         <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;spec_runner.rb&quot;</span>)[..],
     )<span class="question-mark">?</span>;
-    <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;/src/test/spec_runner&#39;&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">eval_file</span>(<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;/src/lib/test/spec_runner&quot;</span>))<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">specs</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">specs</span>.<span class="ident">into_iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>());
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>
         .<span class="ident">top_self</span>()

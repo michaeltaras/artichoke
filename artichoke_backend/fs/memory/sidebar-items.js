@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Memory","Virtual filesystem for sources, extensions, and require metadata."]]});
