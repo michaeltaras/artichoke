@@ -194,7 +194,7 @@
             <span class="ident">interp</span>,
             <span class="string">&quot;input string too long&quot;</span>,
         ))),
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>)),
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>()),
     }
 }
 
@@ -204,7 +204,7 @@
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">captures</span>) <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">captures</span>(<span class="ident">interp</span>)<span class="question-mark">?</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">captures</span>))
     } <span class="kw">else</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>))
+        <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>())
     }
 }
 
@@ -233,7 +233,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">protect</span>::<span class="ident">Range</span> { <span class="ident">start</span>, <span class="ident">len</span> }) <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">is_range</span>(<span class="ident">interp</span>, <span class="ident">rangelen</span>)<span class="question-mark">?</span> {
             <span class="ident">CaptureAt</span>::<span class="ident">StartLen</span>(<span class="ident">start</span>, <span class="ident">len</span>)
         } <span class="kw">else</span> {
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>));
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>());
         }
     };
     <span class="kw">let</span> <span class="ident">matched</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">capture_at</span>(<span class="ident">interp</span>, <span class="ident">at</span>)<span class="question-mark">?</span>;
@@ -251,7 +251,7 @@
             <span class="ident">interp</span>,
             <span class="string">&quot;input string too long&quot;</span>,
         ))),
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>)),
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>()),
     }
 }
 
@@ -345,7 +345,7 @@
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ary</span>) <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">to_a</span>(<span class="ident">interp</span>)<span class="question-mark">?</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">ary</span>))
     } <span class="kw">else</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>))
+        <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>())
     }
 }
 
@@ -356,4 +356,4 @@
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">display</span>))
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../aliases.js"></script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>

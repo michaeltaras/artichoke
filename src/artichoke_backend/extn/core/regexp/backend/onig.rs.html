@@ -938,7 +938,7 @@
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">pos</span> {
                 <span class="ident">pos</span>
             } <span class="kw">else</span> {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>));
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>());
             }
         };
         <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">haystack</span>.<span class="ident">chars</span>().<span class="ident">take</span>(<span class="ident">pos</span>).<span class="ident">map</span>(<span class="ident">char</span>::<span class="ident">len_utf8</span>).<span class="ident">sum</span>();
@@ -948,7 +948,7 @@
             <span class="ident">interp</span>.<span class="ident">unset_global_variable</span>(<span class="ident">regexp</span>::<span class="ident">LAST_MATCH</span>)<span class="question-mark">?</span>;
             <span class="ident">interp</span>.<span class="ident">unset_global_variable</span>(<span class="ident">regexp</span>::<span class="ident">STRING_LEFT_OF_MATCH</span>)<span class="question-mark">?</span>;
             <span class="ident">interp</span>.<span class="ident">unset_global_variable</span>(<span class="ident">regexp</span>::<span class="ident">STRING_RIGHT_OF_MATCH</span>)<span class="question-mark">?</span>;
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>));
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>());
         };
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">captures</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">regex</span>.<span class="ident">captures</span>(<span class="ident">target</span>) {
@@ -982,7 +982,7 @@
             <span class="ident">interp</span>.<span class="ident">unset_global_variable</span>(<span class="ident">regexp</span>::<span class="ident">LAST_MATCH</span>)<span class="question-mark">?</span>;
             <span class="ident">interp</span>.<span class="ident">unset_global_variable</span>(<span class="ident">regexp</span>::<span class="ident">STRING_LEFT_OF_MATCH</span>)<span class="question-mark">?</span>;
             <span class="ident">interp</span>.<span class="ident">unset_global_variable</span>(<span class="ident">regexp</span>::<span class="ident">STRING_RIGHT_OF_MATCH</span>)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>())
         }
     }
 
@@ -1248,4 +1248,4 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../../aliases.js"></script><script src="../../../../../../main.js"></script><script src="../../../../../../source-script.js"></script><script src="../../../../../../source-files.js"></script><script defer src="../../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../../main.js"></script><script src="../../../../../../source-script.js"></script><script src="../../../../../../source-files.js"></script><script defer src="../../../../../../search-index.js"></script></body></html>

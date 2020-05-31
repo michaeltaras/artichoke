@@ -66,7 +66,7 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">Convert</span>, <span class="ident">Globals</span>, <span class="ident">Intern</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">Globals</span>, <span class="ident">Intern</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
@@ -106,7 +106,7 @@
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="ident">sym</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">intern_symbol</span>(<span class="ident">name</span>.<span class="ident">into</span>());
-        <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>);
+        <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">nil</span>();
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
             <span class="ident">sys</span>::<span class="ident">mrb_gv_set</span>(<span class="ident">mrb</span>, <span class="ident">sym</span>, <span class="ident">nil</span>.<span class="ident">inner</span>());
@@ -126,8 +126,8 @@
         <span class="comment">// NOTE: This implementation is not compliant with the spec laid out in</span>
         <span class="comment">// the trait documentation. This implementation always returns `Some(_)`</span>
         <span class="comment">// even if the global is unset.</span>
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">Value</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">value</span>)))
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">value</span>)))
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_backend";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_backend";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

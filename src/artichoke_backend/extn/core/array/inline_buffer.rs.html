@@ -389,8 +389,6 @@
 <span id="389">389</span>
 <span id="390">390</span>
 <span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">smallvec</span>::<span class="ident">SmallVec</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
@@ -457,7 +455,7 @@
     {
         <span class="self">Self</span>(<span class="ident">SmallVec</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> {
             <span class="ident">elem</span>.<span class="ident">as_ref</span>()
-                .<span class="ident">map_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_sys_nil_value</span>() }, <span class="ident">Value</span>::<span class="ident">inner</span>)
+                .<span class="ident">map_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Value</span>::<span class="ident">nil</span>().<span class="ident">inner</span>(), <span class="ident">Value</span>::<span class="ident">inner</span>)
         })))
     }
 }
@@ -469,7 +467,7 @@
     {
         <span class="self">Self</span>(<span class="ident">SmallVec</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> {
             <span class="ident">elem</span>.<span class="ident">as_ref</span>()
-                .<span class="ident">map_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_sys_nil_value</span>() }, <span class="ident">Value</span>::<span class="ident">inner</span>)
+                .<span class="ident">map_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Value</span>::<span class="ident">nil</span>().<span class="ident">inner</span>(), <span class="ident">Value</span>::<span class="ident">inner</span>)
         })))
     }
 }
@@ -489,7 +487,7 @@
 
     <span class="kw">fn</span> <span class="ident">gc_mark</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) {
         <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">copied</span>() {
-            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">elem</span>);
+            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">elem</span>);
             <span class="ident">interp</span>.<span class="ident">mark_value</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>);
         }
     }
@@ -603,11 +601,8 @@
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_vec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">0</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">copied</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">value</span>))
-            .<span class="ident">collect</span>()
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="ident">Value</span>::<span class="ident">from</span>).<span class="ident">collect</span>()
     }
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
@@ -644,8 +639,9 @@
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
         <span class="kw">let</span> <span class="ident">elem</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">get</span>(<span class="ident">index</span>);
-        <span class="prelude-val">Ok</span>(<span class="ident">elem</span>.<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">elem</span>)))
+        <span class="prelude-val">Ok</span>(<span class="ident">elem</span>.<span class="ident">copied</span>().<span class="ident">map</span>(<span class="ident">Value</span>::<span class="ident">from</span>))
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>, <span class="ident">start</span>: <span class="ident">usize</span>, <span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
@@ -668,7 +664,7 @@
             <span class="ident">idx</span> <span class="kw">if</span> <span class="ident">idx</span> <span class="op">&lt;</span> <span class="ident">buflen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="number">0</span>[<span class="ident">index</span>] <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">inner</span>(),
             <span class="ident">idx</span> <span class="kw">if</span> <span class="ident">idx</span> <span class="op">=</span><span class="op">=</span> <span class="ident">buflen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">push</span>(<span class="ident">elem</span>.<span class="ident">inner</span>()),
             <span class="ident">idx</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>).<span class="ident">inner</span>();
+                <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">nil</span>().<span class="ident">inner</span>();
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">reserve</span>(<span class="ident">idx</span> <span class="op">+</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">buflen</span>);
                 <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="ident">buflen</span>..<span class="ident">idx</span> {
                     <span class="self">self</span>.<span class="number">0</span>.<span class="ident">push</span>(<span class="ident">nil</span>);
@@ -691,7 +687,7 @@
         <span class="kw">let</span> <span class="ident">drained</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">buflen</span>.<span class="ident">checked_sub</span>(<span class="ident">start</span>).<span class="ident">unwrap_or_default</span>(), <span class="ident">drain</span>);
         <span class="kw">match</span> <span class="ident">start</span> {
             <span class="ident">idx</span> <span class="kw">if</span> <span class="ident">idx</span> <span class="op">&gt;</span> <span class="ident">buflen</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>).<span class="ident">inner</span>();
+                <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">nil</span>().<span class="ident">inner</span>();
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">reserve</span>(<span class="ident">start</span> <span class="op">+</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">buflen</span>);
                 <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="ident">buflen</span>..<span class="ident">start</span> {
                     <span class="self">self</span>.<span class="number">0</span>.<span class="ident">push</span>(<span class="ident">nil</span>);
@@ -722,7 +718,7 @@
         <span class="kw">let</span> <span class="ident">drained</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">buflen</span>.<span class="ident">checked_sub</span>(<span class="ident">start</span>).<span class="ident">unwrap_or_default</span>(), <span class="ident">drain</span>);
         <span class="kw">match</span> <span class="ident">start</span> {
             <span class="ident">idx</span> <span class="kw">if</span> <span class="ident">idx</span> <span class="op">&gt;</span> <span class="ident">buflen</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>).<span class="ident">inner</span>();
+                <span class="kw">let</span> <span class="ident">nil</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">nil</span>().<span class="ident">inner</span>();
                 <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="ident">buflen</span>..<span class="ident">idx</span> {
                     <span class="self">self</span>.<span class="number">0</span>.<span class="ident">push</span>(<span class="ident">nil</span>);
                 }
@@ -760,7 +756,7 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">pop</span>();
-        <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">value</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">Value</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">value</span>))))
+        <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">value</span>.<span class="ident">map</span>(<span class="ident">Value</span>::<span class="ident">from</span>)))
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span> {
@@ -786,4 +782,4 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../aliases.js"></script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>

@@ -31,6 +31,7 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
+<span id="34">34</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A &quot;prelude&quot; for users of the `extn` module in the `artichoke-backend`</span>
 <span class="doccomment">//! crate.</span>
@@ -48,6 +49,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The prelude may grow over time as additional items see ubiquitous use.</span>
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">block</span>::<span class="ident">Block</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class_registry</span>::<span class="ident">ClassRegistry</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">RustBackedValue</span>;
@@ -60,10 +62,10 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Fp</span>, <span class="ident">Int</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::{<span class="ident">Block</span>, <span class="ident">Value</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 
 <span class="doccomment">/// Type alias for errors returned from `init` functions in</span>
 <span class="doccomment">/// [`extn`](crate::extn).</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">InitializeResult</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Exception</span><span class="op">&gt;</span>;
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
