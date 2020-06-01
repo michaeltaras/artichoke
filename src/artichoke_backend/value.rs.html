@@ -641,14 +641,6 @@
 <span id="641">641</span>
 <span id="642">642</span>
 <span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
-<span id="647">647</span>
-<span id="648">648</span>
-<span id="649">649</span>
-<span id="650">650</span>
-<span id="651">651</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -668,7 +660,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MRB_FUNCALL_ARGC_MAX</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
 
 <span class="doccomment">/// Boxed Ruby value in the [`Artichoke`] interpreter.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Value</span>(<span class="ident">sys</span>::<span class="ident">mrb_value</span>);
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Value</span> {
@@ -691,14 +683,6 @@
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Value</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">value</span>.<span class="ident">unwrap_or_else</span>(<span class="ident">Value</span>::<span class="ident">nil</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Value</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Value&quot;</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ruby_type</span>())
-            .<span class="ident">finish</span>()
     }
 }
 

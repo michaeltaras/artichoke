@@ -482,55 +482,34 @@
 <span id="482">482</span>
 <span id="483">483</span>
 <span id="484">484</span>
-<span id="485">485</span>
-<span id="486">486</span>
-<span id="487">487</span>
-<span id="488">488</span>
-<span id="489">489</span>
-<span id="490">490</span>
-<span id="491">491</span>
-<span id="492">492</span>
-<span id="493">493</span>
-<span id="494">494</span>
-<span id="495">495</span>
-<span id="496">496</span>
-<span id="497">497</span>
-<span id="498">498</span>
-<span id="499">499</span>
-<span id="500">500</span>
-<span id="501">501</span>
-<span id="502">502</span>
-<span id="503">503</span>
-<span id="504">504</span>
-<span id="505">505</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">RustBackedValue</span>, <span class="ident">UnboxRubyError</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>, <span class="ident">TryConvertMut</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">array</span>::{<span class="ident">Array</span>, <span class="ident">InlineBuffer</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">array</span>::<span class="ident">Array</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Int</span>, <span class="ident">Ruby</span>, <span class="ident">Rust</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">Value</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">Value</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from</span>(<span class="ident">value</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from</span>(<span class="ident">value</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from</span>(<span class="ident">value</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from</span>(<span class="ident">value</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">value</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">value</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -538,7 +517,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -546,7 +525,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -554,7 +533,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>.<span class="ident">as_slice</span>()));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -562,7 +541,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>[<span class="ident">u8</span>]], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>[<span class="ident">u8</span>]]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -570,7 +549,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -578,7 +557,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -586,7 +565,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">String</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">String</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>.<span class="ident">as_str</span>()));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -594,7 +573,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -602,7 +581,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -610,7 +589,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">Int</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">Int</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -618,7 +597,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>.<span class="ident">as_deref</span>()));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -626,7 +605,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -634,7 +613,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -642,7 +621,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -650,7 +629,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -658,7 +637,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -666,7 +645,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>], <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -674,7 +653,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -682,7 +661,7 @@
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">item</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">item</span>));
-        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">new</span>(<span class="ident">InlineBuffer</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>));
+        <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_iter</span>(<span class="ident">iter</span>);
         <span class="ident">ary</span>.<span class="ident">try_into_ruby</span>(<span class="self">self</span>, <span class="prelude-val">None</span>).<span class="ident">expect</span>(<span class="string">&quot;Array into Value&quot;</span>)
     }
 }
@@ -694,7 +673,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="prelude-val">Ok</span>(<span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">borrow</span>.<span class="ident">iter</span>().<span class="ident">collect</span>())
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -708,12 +687,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -727,12 +704,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -746,12 +721,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -765,12 +738,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -784,12 +755,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -803,12 +772,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -822,12 +789,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -841,12 +806,10 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">elem</span>))
+                .<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }
@@ -860,12 +823,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() {
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>) }<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">as_vec</span>(<span class="self">self</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
-            <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="ident">array</span> {
-                <span class="ident">buf</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">try_convert</span>(<span class="ident">elem</span>)<span class="question-mark">?</span>);
-            }
-            <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
+            <span class="ident">borrow</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">elem</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">try_convert</span>(<span class="ident">elem</span>)).<span class="ident">collect</span>()
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">Vec</span>)))
         }

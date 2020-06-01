@@ -112,6 +112,23 @@
 <span id="112">112</span>
 <span id="113">113</span>
 <span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">intra_doc_link_resolution_failure</span>)]</span>
 
@@ -122,7 +139,10 @@
 <span class="doccomment">//! with bindgen.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Write</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="self">self</span>, <span class="ident">Ruby</span>};
 
 <span class="kw">mod</span> <span class="ident">args</span>;
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>)]</span>
@@ -147,6 +167,20 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">mrb_value</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident">mrb_sys_nil_value</span>() }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">mrb_value</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">match</span> <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="kw-2">*</span><span class="self">self</span>) {
+            <span class="ident">Ruby</span>::<span class="ident">Nil</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;nil&quot;</span>),
+            <span class="ident">Ruby</span>::<span class="ident">Bool</span> <span class="kw">if</span> <span class="kw">unsafe</span> { <span class="ident">mrb_sys_value_is_true</span>(<span class="kw-2">*</span><span class="self">self</span>) } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;true&quot;</span>),
+            <span class="ident">Ruby</span>::<span class="ident">Bool</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;false&quot;</span>),
+            <span class="ident">Ruby</span>::<span class="ident">Fixnum</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="ident">f</span>, <span class="kw">unsafe</span> { <span class="ident">mrb_sys_fixnum_to_cint</span>(<span class="kw-2">*</span><span class="self">self</span>) })
+                .<span class="ident">map_err</span>(<span class="ident">string</span>::<span class="ident">WriteError</span>::<span class="ident">into_inner</span>),
+            <span class="ident">Ruby</span>::<span class="ident">Float</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="kw">unsafe</span> { <span class="ident">mrb_sys_float_to_cdouble</span>(<span class="kw-2">*</span><span class="self">self</span>) }),
+            <span class="ident">type_tag</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;&lt;{}&gt;&quot;</span>, <span class="ident">type_tag</span>),
+        }
     }
 }
 

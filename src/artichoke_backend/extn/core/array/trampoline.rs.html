@@ -140,21 +140,6 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">array</span>::<span class="ident">Array</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -181,7 +166,8 @@
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">ary</span>) }<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>();
-    <span class="ident">borrow</span>.<span class="ident">element_reference</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>)
+    <span class="kw">let</span> <span class="ident">elem</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">element_reference</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">elem</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">element_assignment</span>(
@@ -220,12 +206,8 @@
     }
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">ary</span>) }<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow_mut</span>();
-    <span class="kw">let</span> <span class="ident">prior_gc_state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">disable_gc</span>();
-    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">pop</span>(<span class="ident">interp</span>);
-    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GcState</span>::<span class="ident">Enabled</span> <span class="op">=</span> <span class="ident">prior_gc_state</span> {
-        <span class="ident">interp</span>.<span class="ident">enable_gc</span>();
-    }
-    <span class="ident">result</span>
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">borrow</span>.<span class="ident">pop</span>();
+    <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">result</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">concat</span>(
@@ -242,11 +224,7 @@
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">other</span>) <span class="op">=</span> <span class="ident">other</span> {
         <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">ary</span>) }<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow_mut</span>();
-        <span class="kw">let</span> <span class="ident">prior_gc_state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">disable_gc</span>();
         <span class="ident">borrow</span>.<span class="ident">concat</span>(<span class="ident">interp</span>, <span class="ident">other</span>)<span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GcState</span>::<span class="ident">Enabled</span> <span class="op">=</span> <span class="ident">prior_gc_state</span> {
-            <span class="ident">interp</span>.<span class="ident">enable_gc</span>();
-        }
     }
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
@@ -259,13 +237,8 @@
         )));
     }
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">ary</span>) }<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow</span>().<span class="ident">len</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow_mut</span>();
-    <span class="kw">let</span> <span class="ident">prior_gc_state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">disable_gc</span>();
-    <span class="ident">borrow</span>.<span class="ident">set</span>(<span class="ident">interp</span>, <span class="ident">idx</span>, <span class="ident">value</span>)<span class="question-mark">?</span>;
-    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GcState</span>::<span class="ident">Enabled</span> <span class="op">=</span> <span class="ident">prior_gc_state</span> {
-        <span class="ident">interp</span>.<span class="ident">enable_gc</span>();
-    }
+    <span class="ident">borrow</span>.<span class="ident">push</span>(<span class="ident">value</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
@@ -278,11 +251,7 @@
     }
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">ary</span>) }<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">borrow_mut</span>();
-    <span class="kw">let</span> <span class="ident">prior_gc_state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">disable_gc</span>();
-    <span class="ident">borrow</span>.<span class="ident">reverse</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
-    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GcState</span>::<span class="ident">Enabled</span> <span class="op">=</span> <span class="ident">prior_gc_state</span> {
-        <span class="ident">interp</span>.<span class="ident">enable_gc</span>();
-    }
+    <span class="ident">borrow</span>.<span class="ident">reverse</span>();
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
@@ -294,12 +263,13 @@
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(
     <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">ary</span>: <span class="ident">Value</span>,
+    <span class="ident">into</span>: <span class="ident">Value</span>,
     <span class="ident">first</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
     <span class="ident">second</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
     <span class="ident">block</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Block</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="ident">Array</span>::<span class="ident">initialize</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>, <span class="ident">block</span>, <span class="ident">ary</span>)
+    <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">initialize</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>, <span class="ident">block</span>)<span class="question-mark">?</span>;
+    <span class="ident">array</span>.<span class="ident">try_into_ruby</span>(<span class="ident">interp</span>, <span class="prelude-val">Some</span>(<span class="ident">into</span>.<span class="ident">inner</span>()))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_copy</span>(
