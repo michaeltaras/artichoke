@@ -360,7 +360,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Parser [`State`] maintains a stack of `Context`s and</span>
 <span class="doccomment">/// [`eval`](crate::eval::Eval) calls XXX to set the `__FILE__` magic constant.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Context</span> {
     <span class="doccomment">/// Value of the `__FILE__` magic constant that also appears in stack</span>
     <span class="doccomment">/// frames.</span>

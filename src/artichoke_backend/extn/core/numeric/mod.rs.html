@@ -164,7 +164,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Numeric</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Outcome</span> {
     <span class="ident">Float</span>(<span class="ident">Fp</span>),
     <span class="ident">Integer</span>(<span class="ident">Int</span>),
@@ -182,7 +182,7 @@
 
 <span class="kw">const</span> <span class="ident">MAX_COERCE_DEPTH</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">15</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Coercion</span> {
     <span class="ident">Float</span>(<span class="ident">Fp</span>, <span class="ident">Fp</span>),
     <span class="ident">Integer</span>(<span class="ident">Int</span>, <span class="ident">Int</span>),

@@ -192,7 +192,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">StructOpt</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">StructOpt</span>)]</span>
 <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;artichoke&quot;</span>, <span class="ident">about</span> <span class="op">=</span> <span class="string">&quot;Artichoke is a Ruby made with Rust.&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">Opt</span> {
     <span class="doccomment">/// print the copyright</span>

@@ -428,10 +428,6 @@
 <span id="428">428</span>
 <span id="429">429</span>
 <span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
-<span id="433">433</span>
-<span id="434">434</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Ruby Exception Hierarchy</span>
 <span class="doccomment">//!</span>
@@ -724,28 +720,24 @@
             }
         }
 
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">use_self</span>)]</span>
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">exception</span>::<span class="ident">Exception</span> {
             <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exception</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">exception</span>::<span class="ident">Exception</span> {
                 <span class="ident">exception</span>::<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">Box</span>::<span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">exception</span>))
             }
         }
 
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">use_self</span>)]</span>
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">exception</span>::<span class="ident">Exception</span> {
             <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exception</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">exception</span>::<span class="ident">Exception</span> {
                 <span class="ident">exception</span>::<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">Box</span>::<span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">exception</span>))
             }
         }
 
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">use_self</span>)]</span>
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
             <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exception</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
                 <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">exception</span>)
             }
         }
 
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">use_self</span>)]</span>
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
             <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exception</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">exception</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span> {
                 <span class="ident">exception</span>
