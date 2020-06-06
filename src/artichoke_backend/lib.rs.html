@@ -157,6 +157,9 @@
 <span id="157">157</span>
 <span id="158">158</span>
 <span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -282,6 +285,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">prng</span>;
 <span class="kw">mod</span> <span class="ident">regexp</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">release_metadata</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">state</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">string</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">sys</span>;
@@ -294,7 +298,8 @@
 <span class="kw">mod</span> <span class="ident">test</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">artichoke</span>::{<span class="ident">Artichoke</span>, <span class="ident">Guard</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::<span class="ident">interpreter</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::{<span class="ident">interpreter</span>, <span class="ident">interpreter_with_config</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">prelude</span> <span class="kw">as</span> <span class="ident">core</span>;
 
 <span class="doccomment">/// A &quot;prelude&quot; for users of the `artichoke-backend` crate.</span>
@@ -314,7 +319,8 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">raise</span>, <span class="ident">Exception</span>, <span class="ident">RubyException</span>};
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="kw-2">*</span>};
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::<span class="ident">interpreter</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::{<span class="ident">interpreter</span>, <span class="ident">interpreter_with_config</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">release_metadata</span>::<span class="ident">ReleaseMetadata</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">Guard</span>};
 }
 </pre></div>

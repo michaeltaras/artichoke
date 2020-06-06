@@ -113,6 +113,32 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -208,7 +234,6 @@
 <span class="ident">doc_comment</span>::<span class="macro">doctest</span><span class="macro">!</span>(<span class="string">&quot;../spec-runner/README.md&quot;</span>);
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_backend</span> <span class="kw">as</span> <span class="ident">backend</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">backend</span>::<span class="ident">prelude</span>::<span class="ident">interpreter</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">backtrace</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
@@ -228,6 +253,33 @@
 <span class="doccomment">/// The prelude may grow over time as additional items see ubiquitous use.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span> {
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>;
+}
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">Exception</span>};
+
+<span class="doccomment">/// Create a new Artichoke Ruby interpreter.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Errors</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If the underlying Artichoke VM backend cannot be initialized, an error is</span>
+<span class="doccomment">/// returned.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If Artichoke Ruby Core or Standard Library cannot be initialized, an error</span>
+<span class="doccomment">/// is returned.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">release</span> <span class="op">=</span> <span class="ident">prelude</span>::<span class="ident">ReleaseMetadata</span>::<span class="ident">new</span>()
+        .<span class="ident">with_ruby_copyright</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_COPYRIGHT&quot;</span>))
+        .<span class="ident">with_ruby_description</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_DESCRIPTION&quot;</span>))
+        .<span class="ident">with_ruby_engine_version</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>))
+        .<span class="ident">with_ruby_patchlevel</span>(<span class="string">&quot;0&quot;</span>)
+        .<span class="ident">with_ruby_platform</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_PLATFORM&quot;</span>))
+        .<span class="ident">with_ruby_release_date</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_RELEASE_DATE&quot;</span>))
+        .<span class="ident">with_ruby_revision</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_REVISION&quot;</span>))
+        .<span class="ident">with_ruby_version</span>(<span class="string">&quot;2.6.3&quot;</span>) <span class="comment">// Artichoke targets MRI Ruby 2.6.3</span>
+        .<span class="ident">with_artichoke_compiler_version</span>(<span class="prelude-val">Some</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;ARTICHOKE_COMPILER_VERSION&quot;</span>)));
+    <span class="ident">artichoke_backend</span>::<span class="ident">interpreter_with_config</span>(<span class="ident">release</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

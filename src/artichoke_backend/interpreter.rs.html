@@ -134,17 +134,32 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">NonNull</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class_registry</span>::<span class="ident">ClassRegistry</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">ConvertMut</span>, <span class="ident">Eval</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">ConvertMut</span>, <span class="ident">Eval</span>, <span class="ident">ReleaseMetadata</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::<span class="ident">Fatal</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::{<span class="ident">MrbGarbageCollection</span>, <span class="ident">State</span> <span class="kw">as</span> <span class="ident">GcState</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">release_metadata</span>::<span class="ident">ReleaseMetadata</span> <span class="kw">as</span> <span class="ident">ArtichokeBackendReleaseMetadata</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">state</span>::<span class="ident">State</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
@@ -155,6 +170,19 @@
 <span class="doccomment">/// initializes an [in memory virtual filesystem](crate::fs), and loads the</span>
 <span class="doccomment">/// [`extn`] extensions to Ruby Core and Stdlib.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="ident">interpreter_with_config</span>(<span class="ident">ArtichokeBackendReleaseMetadata</span>::<span class="ident">default</span>())
+}
+
+<span class="doccomment">/// Create and initialize an [`Artichoke`] interpreter.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This function takes a customizable configuration for embedding metadata</span>
+<span class="doccomment">/// about how Artichoke was built. Otherwise, it behaves identically to the</span>
+<span class="doccomment">/// [`interpreter`] function.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter_with_config</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">config</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">ReleaseMetadata</span>,
+{
     <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_open</span>() };
     <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Try initializing mrb interpreter&quot;</span>);
 
@@ -176,7 +204,7 @@
 
     <span class="comment">// Initialize Artichoke Core and Standard Library runtime</span>
     <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Begin initializing Artichoke Core and Standard Library&quot;</span>);
-    <span class="ident">extn</span>::<span class="ident">init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;mruby&quot;</span>)<span class="question-mark">?</span>;
+    <span class="ident">extn</span>::<span class="ident">init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="ident">config</span>)<span class="question-mark">?</span>;
     <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Succeeded initializing Artichoke Core and Standard Library&quot;</span>);
 
     <span class="comment">// Load mrbgems</span>
