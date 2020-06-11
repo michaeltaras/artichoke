@@ -244,15 +244,6 @@
 <span id="244">244</span>
 <span id="245">245</span>
 <span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="self">self</span>, <span class="ident">Rng</span>, <span class="ident">RngCore</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -311,20 +302,17 @@
     <span class="prelude-val">Ok</span>(<span class="ident">old_seed</span> <span class="kw">as</span> <span class="ident">Int</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">size</span>) {
         <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
         <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">len</span>];
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
             <span class="ident">rng</span>.<span class="ident">try_fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">RuntimeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">err</span>.<span class="ident">to_string</span>()))<span class="question-mark">?</span>;
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">RuntimeError</span>::<span class="ident">from</span>(<span class="ident">err</span>.<span class="ident">to_string</span>()))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
         }
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
-            <span class="ident">interp</span>,
-            <span class="string">&quot;negative string size (or size too big)&quot;</span>,
-        ))),
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>).<span class="ident">into</span>()),
     }
 }
 
@@ -384,10 +372,7 @@
                 <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">bytes</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
             }
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
-                <span class="ident">interp</span>,
-                <span class="string">&quot;negative string size (or size too big)&quot;</span>,
-            ))),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>).<span class="ident">into</span>()),
         }
     }
 
@@ -399,15 +384,12 @@
         <span class="kw">match</span> <span class="ident">max</span> {
             <span class="ident">RandomNumberMax</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="op">!</span><span class="ident">max</span>.<span class="ident">is_finite</span>() <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// NOTE: MRI returns `Errno::EDOM` exception class.</span>
-                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(
-                    <span class="ident">interp</span>,
-                    <span class="string">&quot;Numerical argument out of domain&quot;</span>,
-                )))
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;Numerical argument out of domain&quot;</span>).<span class="ident">into</span>())
             }
             <span class="ident">RandomNumberMax</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span> <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;invalid argument - &quot;</span>.<span class="ident">to_vec</span>();
                 <span class="ident">string</span>::<span class="ident">write_float_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">max</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new_raw</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             }
             <span class="ident">RandomNumberMax</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">=</span><span class="op">=</span> <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">rand_float</span>(<span class="ident">interp</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
@@ -420,7 +402,7 @@
             <span class="ident">RandomNumberMax</span>::<span class="ident">Integer</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span> <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;invalid argument - &quot;</span>);
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">max</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             }
             <span class="ident">RandomNumberMax</span>::<span class="ident">Integer</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">rand_int</span>(<span class="ident">interp</span>, <span class="ident">max</span>)<span class="question-mark">?</span>;
@@ -483,7 +465,7 @@
                     <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">max</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="self">self</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;invalid argument - &quot;</span>.<span class="ident">to_vec</span>();
                         <span class="ident">message</span>.<span class="ident">extend</span>(<span class="ident">max</span>.<span class="ident">inspect</span>(<span class="self">self</span>));
-                        <span class="ident">ArgumentError</span>::<span class="ident">new_raw</span>(<span class="self">self</span>, <span class="ident">message</span>)
+                        <span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>)
                     })<span class="question-mark">?</span>;
                     <span class="prelude-val">Ok</span>(<span class="ident">RandomNumberMax</span>::<span class="ident">Integer</span>(<span class="ident">max</span>))
                 }

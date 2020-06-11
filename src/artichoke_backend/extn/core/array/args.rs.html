@@ -177,8 +177,8 @@
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>) {
         <span class="prelude-val">Ok</span>(<span class="ident">ElementReference</span>::<span class="ident">Index</span>(<span class="ident">index</span>))
     } <span class="kw">else</span> {
-        <span class="kw">let</span> <span class="ident">rangelen</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">ary_len</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Range length exceeds Integer max&quot;</span>))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">rangelen</span> <span class="op">=</span>
+            <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">ary_len</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">from</span>(<span class="string">&quot;Range length exceeds Integer max&quot;</span>))<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">protect</span>::<span class="ident">Range</span> { <span class="ident">start</span>, <span class="ident">len</span> }) <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">is_range</span>(<span class="ident">interp</span>, <span class="ident">rangelen</span>)<span class="question-mark">?</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
                 <span class="prelude-val">Ok</span>(<span class="ident">ElementReference</span>::<span class="ident">StartLen</span>(<span class="ident">start</span>, <span class="ident">len</span>))
@@ -214,7 +214,7 @@
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)));
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
             }
         };
         <span class="kw">let</span> <span class="ident">slice_len</span> <span class="op">=</span> <span class="ident">second</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
@@ -224,7 +224,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;negative length (&quot;</span>);
             <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">slice_len</span>)<span class="question-mark">?</span>;
             <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
-            <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+            <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
         }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">first</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">index</span>) {
@@ -241,12 +241,12 @@
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">index</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             }
         }
     } <span class="kw">else</span> {
-        <span class="kw">let</span> <span class="ident">rangelen</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">len</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="string">&quot;Range length exceeds Integer max&quot;</span>))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">rangelen</span> <span class="op">=</span>
+            <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">len</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Fatal</span>::<span class="ident">from</span>(<span class="string">&quot;Range length exceeds Integer max&quot;</span>))<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">protect</span>::<span class="ident">Range</span> { <span class="ident">start</span>, <span class="ident">len</span> }) <span class="op">=</span> <span class="ident">first</span>.<span class="ident">is_range</span>(<span class="ident">interp</span>, <span class="ident">rangelen</span>)<span class="question-mark">?</span> {
             <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">start</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
                 <span class="macro">unimplemented</span><span class="macro">!</span>(<span class="string">&quot;should throw RangeError (-11..1 out of range)&quot;</span>)
@@ -266,7 +266,7 @@
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;..&quot;</span>);
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">end</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; out of range&quot;</span>);
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">RangeError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)));
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">RangeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
             }
             <span class="kw">match</span> (<span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">start</span>), <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">end</span>)) {
                 (<span class="prelude-val">Ok</span>(<span class="ident">start</span>), <span class="prelude-val">Ok</span>(<span class="ident">end</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">start</span>, <span class="ident">end</span>.<span class="ident">checked_sub</span>(<span class="ident">start</span>), <span class="ident">second</span>)),
@@ -282,7 +282,7 @@
                         <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
                         <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
                         <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
-                        <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                        <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
                     }
                 }
                 (<span class="prelude-val">Ok</span>(<span class="ident">start</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">start</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>)),
@@ -291,7 +291,7 @@
                     <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
                     <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">IndexError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>)))
+                    <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
                 }
             }
         }

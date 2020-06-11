@@ -283,6 +283,13 @@
 <span id="283">283</span>
 <span id="284">284</span>
 <span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -295,7 +302,18 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Radix</span>(<span class="ident">NonZeroU32</span>);
 
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Radix</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">NonZeroU32</span>::<span class="ident">new_unchecked</span>(<span class="number">10</span>) })
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">Radix</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">default</span>()
+    }
+
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_u32</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
@@ -317,9 +335,9 @@
                 }
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;invalid radix &quot;</span>);
                 <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">radix</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">message</span>)))
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">Exception</span>::<span class="ident">from</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="string">&quot;invalid radix&quot;</span>)))
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;invalid radix&quot;</span>).<span class="ident">into</span>())
             }
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
@@ -371,7 +389,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">value</span>.<span class="ident">pretty_name</span>(<span class="self">self</span>));
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Integer&quot;</span>);
-            <span class="ident">TypeError</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">message</span>)
+            <span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>)
         })<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">converted</span>) <span class="op">=</span> <span class="ident">IntegerString</span>::<span class="ident">from_slice</span>(<span class="ident">arg</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">converted</span>)
@@ -379,7 +397,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">r#&quot;invalid value for Integer(): &quot;&quot;#</span>);
             <span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">arg</span>)<span class="question-mark">?</span>;
             <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span>);
-            <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">message</span>).<span class="ident">into</span>())
+            <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
         }
     }
 }
@@ -417,13 +435,13 @@
         <span class="self">Self</span>::<span class="ident">Initial</span>(<span class="ident">arg</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">set_sign</span>(<span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">sign</span>: <span class="ident">Sign</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">set_sign</span>(<span class="self">self</span>, <span class="ident">sign</span>: <span class="ident">Sign</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Sign</span>(<span class="ident">arg</span>, <span class="kw">_</span>) <span class="op">|</span> <span class="self">Self</span>::<span class="ident">Accumulate</span>(<span class="ident">arg</span>, <span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">r#&quot;invalid value for Integer(): &quot;&quot;#</span>);
                 <span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">arg</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span>);
-                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>).<span class="ident">into</span>())
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             }
             <span class="self">Self</span>::<span class="ident">Initial</span>(<span class="ident">arg</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">ParseState</span>::<span class="ident">Sign</span>(<span class="ident">arg</span>, <span class="ident">sign</span>)),
         }
@@ -448,7 +466,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Radix</span><span class="op">&gt;</span>), <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Radix</span><span class="op">&gt;</span>), <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Accumulate</span>(<span class="ident">arg</span>, <span class="ident">sign</span>, <span class="kw-2">mut</span> <span class="ident">digits</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">src</span>, <span class="ident">radix</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">digits</span>.<span class="ident">as_bytes</span>() {
@@ -481,7 +499,7 @@
                             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">r#&quot;invalid value for Integer(): &quot;&quot;#</span>);
                             <span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">arg</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
                             <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span>);
-                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>).<span class="ident">into</span>());
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="string">&#39;0&#39;</span> <span class="op">=</span><span class="op">=</span> <span class="ident">first</span> {
                             <span class="ident">digits</span>.<span class="ident">drain</span>(..<span class="number">1</span>);
                             (<span class="ident">digits</span>, <span class="prelude-val">Some</span>(<span class="ident">Radix</span>(<span class="kw">unsafe</span> { <span class="ident">NonZeroU32</span>::<span class="ident">new_unchecked</span>(<span class="number">8</span>) })))
@@ -500,17 +518,13 @@
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">r#&quot;invalid value for Integer(): &quot;&quot;#</span>);
                 <span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">arg</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span>);
-                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>).<span class="ident">into</span>())
+                <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             }
         }
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">method</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">arg</span>: <span class="ident">IntegerString</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-    <span class="ident">radix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Radix</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">method</span>(<span class="ident">arg</span>: <span class="ident">IntegerString</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">radix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Radix</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">ParseState</span>::<span class="ident">new</span>(<span class="ident">arg</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chars</span> <span class="op">=</span> <span class="ident">arg</span>
         .<span class="ident">inner</span>()
@@ -535,7 +549,7 @@
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">r#&quot;invalid value for Integer(): &quot;&quot;#</span>);
                 <span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">arg</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span>);
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>).<span class="ident">into</span>());
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
             } <span class="kw">else</span> {
                 <span class="ident">prev</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current</span>);
                 <span class="kw">continue</span>;
@@ -543,14 +557,14 @@
         }
 
         <span class="ident">state</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">current</span> {
-            <span class="string">&#39;+&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">state</span>.<span class="ident">set_sign</span>(<span class="ident">interp</span>, <span class="ident">Sign</span>::<span class="ident">Pos</span>)<span class="question-mark">?</span>,
-            <span class="string">&#39;-&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">state</span>.<span class="ident">set_sign</span>(<span class="ident">interp</span>, <span class="ident">Sign</span>::<span class="ident">Neg</span>)<span class="question-mark">?</span>,
+            <span class="string">&#39;+&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">state</span>.<span class="ident">set_sign</span>(<span class="ident">Sign</span>::<span class="ident">Pos</span>)<span class="question-mark">?</span>,
+            <span class="string">&#39;-&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">state</span>.<span class="ident">set_sign</span>(<span class="ident">Sign</span>::<span class="ident">Neg</span>)<span class="question-mark">?</span>,
             <span class="ident">digit</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">state</span>.<span class="ident">collect_digit</span>(<span class="ident">digit</span>),
         };
         <span class="ident">prev</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current</span>);
     }
 
-    <span class="kw">let</span> (<span class="ident">src</span>, <span class="ident">src_radix</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">parse</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> (<span class="ident">src</span>, <span class="ident">src_radix</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">parsed_int</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">radix</span>, <span class="ident">src_radix</span>) {
         (<span class="prelude-val">Some</span>(<span class="ident">x</span>), <span class="prelude-val">Some</span>(<span class="ident">y</span>)) <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">y</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Int</span>::<span class="ident">from_str_radix</span>(<span class="ident">src</span>.<span class="ident">as_str</span>(), <span class="ident">x</span>.<span class="ident">as_u32</span>()).<span class="ident">ok</span>(),
@@ -566,7 +580,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">r#&quot;invalid value for Integer(): &quot;&quot;#</span>);
         <span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">arg</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
         <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span>);
-        <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">new</span>(<span class="ident">interp</span>, <span class="ident">message</span>).<span class="ident">into</span>())
+        <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
     }
 }
 </pre></div>
