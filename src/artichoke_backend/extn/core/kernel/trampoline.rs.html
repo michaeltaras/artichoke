@@ -175,7 +175,7 @@
             <span class="ident">interp</span>.<span class="ident">puts</span>(<span class="ident">display</span>)<span class="question-mark">?</span>;
             <span class="ident">result</span>.<span class="ident">push</span>(<span class="ident">value</span>)
         }
-        <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>))
+        <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">result</span>)
     } <span class="kw">else</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">nil</span>())
     }
