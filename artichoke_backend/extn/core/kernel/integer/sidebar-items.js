@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["method",""]],"struct":[["IntegerString",""],["Radix",""]]});
+initSidebarItems({"enum":[["Utf8Error",""]],"fn":[["method",""]],"struct":[["IntegerString",""],["Radix",""]]});

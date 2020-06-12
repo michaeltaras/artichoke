@@ -194,6 +194,12 @@
 <span id="194">194</span>
 <span id="195">195</span>
 <span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Detect if Ruby code parses successfully.</span>
 <span class="doccomment">//!</span>
@@ -234,6 +240,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">State</span> {
+    <span class="doccomment">/// Construct a new, default `State`.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">default</span>()
+    }
+
     <span class="doccomment">/// Whether this variant indicates a code block is open.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method can be used by a REPL to check whether to buffer code or</span>

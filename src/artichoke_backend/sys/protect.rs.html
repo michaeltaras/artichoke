@@ -372,7 +372,7 @@
 
 <span class="comment">// `IsRange` must be `Copy` because the we may unwind past the frames in which</span>
 <span class="comment">// it is used with `longjmp` which does not allow Rust  to run destructors.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">struct</span> <span class="ident">IsRange</span> {
     <span class="ident">value</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
     <span class="ident">len</span>: <span class="ident">sys</span>::<span class="ident">mrb_int</span>,

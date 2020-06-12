@@ -271,6 +271,27 @@
 <span id="271">271</span>
 <span id="272">272</span>
 <span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Utilities for working with Ruby `String`s.</span>
 <span class="doccomment">//!</span>
@@ -340,7 +361,16 @@
     <span class="ident">W</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>,
     <span class="ident">I</span>: <span class="ident">itoa</span>::<span class="ident">Integer</span>,
 {
-    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="ident">f</span>, <span class="ident">value</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>)<span class="question-mark">?</span>;
+    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="ident">f</span>, <span class="ident">value</span>)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_int_into</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">f</span>: <span class="ident">W</span>, <span class="ident">value</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">IoWriteError</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
+    <span class="ident">I</span>: <span class="ident">itoa</span>::<span class="ident">Integer</span>,
+{
+    <span class="ident">itoa</span>::<span class="ident">write</span>(<span class="ident">f</span>, <span class="ident">value</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
@@ -353,7 +383,7 @@
     <span class="comment">// `format_into_int` above.</span>
     <span class="comment">//</span>
     <span class="comment">// See: https://github.com/dtolnay/dtoa/issues/18</span>
-    <span class="ident">dtoa</span>::<span class="ident">write</span>(<span class="ident">f</span>, <span class="ident">value</span>).<span class="ident">map_err</span>(<span class="ident">IoWriteError</span>)<span class="question-mark">?</span>;
+    <span class="ident">dtoa</span>::<span class="ident">write</span>(<span class="ident">f</span>, <span class="ident">value</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
@@ -362,6 +392,12 @@
 <span class="doccomment">/// This error type wraps a [`fmt::Error`].</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WriteError</span>(<span class="ident">fmt</span>::<span class="ident">Error</span>);
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WriteError</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">fmt</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>(<span class="ident">err</span>)
+    }
+}
 
 <span class="kw">impl</span> <span class="ident">WriteError</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -440,6 +476,12 @@
 <span class="doccomment">/// This error type wraps an [`io::Error`].</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">IoWriteError</span>(<span class="ident">io</span>::<span class="ident">Error</span>);
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">IoWriteError</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>(<span class="ident">err</span>)
+    }
+}
 
 <span class="kw">impl</span> <span class="ident">IoWriteError</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>

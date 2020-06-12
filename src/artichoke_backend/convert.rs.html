@@ -266,7 +266,7 @@
 }
 
 <span class="doccomment">/// Failed to convert from boxed Ruby value to a Rust type.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UnboxRubyError</span> {
     <span class="kw">pub</span> <span class="ident">from</span>: <span class="ident">Ruby</span>,
     <span class="kw">pub</span> <span class="ident">into</span>: <span class="ident">Rust</span>,
@@ -340,7 +340,7 @@
 }
 
 <span class="doccomment">/// Failed to convert from Rust type to a boxed Ruby value.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BoxIntoRubyError</span> {
     <span class="kw">pub</span> <span class="ident">from</span>: <span class="ident">Rust</span>,
     <span class="kw">pub</span> <span class="ident">into</span>: <span class="ident">Ruby</span>,

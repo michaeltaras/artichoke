@@ -142,6 +142,9 @@
 <span id="142">142</span>
 <span id="143">143</span>
 <span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BString</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -182,9 +185,10 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Process</span>;
 
 <span class="kw">impl</span> <span class="ident">Process</span> {
+    <span class="doccomment">/// Constructs a new, default `Process` output strategy.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>
+        <span class="self">Self</span>::<span class="ident">default</span>()
     }
 }
 
@@ -209,6 +213,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Captured</span> {
+    <span class="doccomment">/// Constructs a new, default `Captured` output strategy.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">default</span>()
@@ -266,9 +271,10 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Null</span>;
 
 <span class="kw">impl</span> <span class="ident">Null</span> {
+    <span class="doccomment">/// Constructs a new, default `Null` output strategy.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>
+        <span class="self">Self</span>::<span class="ident">default</span>()
     }
 }
 

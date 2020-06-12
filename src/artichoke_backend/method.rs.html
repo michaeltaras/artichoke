@@ -179,7 +179,7 @@
                 <span class="ident">args</span>,
             })
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">ConstantNameError</span>::<span class="ident">new</span>(<span class="ident">name</span>))
+            <span class="prelude-val">Err</span>(<span class="ident">name</span>.<span class="ident">into</span>())
         }
     }
 
