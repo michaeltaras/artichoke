@@ -52,27 +52,27 @@ fn main() {
     let app = App::new("artichoke");
     let app = app.about("Artichoke is a Ruby made with Rust.");
     let app = app.arg(
-        Arg::with_name("copyright")
+        Arg::new("copyright")
+            .long("copyright")
             .takes_value(false)
             .multiple(false)
-            .help("print the copyright")
-            .long("copyright"),
+            .about("print the copyright"),
     );
     let app = app.arg(
-        Arg::with_name("commands")
+        Arg::new("commands")
+            .short('e')
             .takes_value(true)
             .multiple(true)
-            .help(r"one line of script. Several -e's allowed. Omit [programfile]")
-            .short("e"),
+            .about(r"one line of script. Several -e's allowed. Omit [programfile]"),
     );
     let app = app.arg(
-        Arg::with_name("fixture")
+        Arg::new("fixture")
+            .long("with-fixture")
             .takes_value(true)
             .multiple(false)
-            .help("file whose contents will be read into the `$fixture` global")
-            .long("with-fixture"),
+            .about("file whose contents will be read into the `$fixture` global"),
     );
-    let app = app.arg(Arg::with_name("programfile").takes_value(true).multiple(true));
+    let app = app.arg(Arg::new("programfile").takes_value(true).multiple(true));
     let app = app.version(env!("CARGO_PKG_VERSION"));
     let app = app.setting(AppSettings::TrailingVarArg);
 
