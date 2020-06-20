@@ -52,8 +52,6 @@
 <span id="52">52</span>
 <span id="53">53</span>
 <span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>::{<span class="self">self</span>, <span class="ident">Filesystem</span>};
@@ -65,18 +63,16 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prng</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">regexp</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">type_registry</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">prng</span>::<span class="ident">Prng</span>;
-<span class="kw">use</span> <span class="ident">type_registry</span>::<span class="ident">TypeRegistry</span>;
 
 <span class="doccomment">/// Container for domain-specific interpreter state.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">State</span> {
     <span class="kw">pub</span> <span class="ident">parser</span>: <span class="ident">parser</span>::<span class="ident">State</span>,
-    <span class="kw">pub</span> <span class="ident">classes</span>: <span class="ident">TypeRegistry</span><span class="op">&lt;</span><span class="ident">class</span>::<span class="ident">Spec</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">modules</span>: <span class="ident">TypeRegistry</span><span class="op">&lt;</span><span class="ident">module</span>::<span class="ident">Spec</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>,
+    <span class="kw">pub</span> <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>,
     <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">regexp</span>: <span class="ident">regexp</span>::<span class="ident">State</span>,
     <span class="kw">pub</span> <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>,
@@ -100,8 +96,8 @@
         <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">parser</span>::<span class="ident">State</span>::<span class="ident">new</span>(<span class="ident">mrb</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">Self</span> {
             <span class="ident">parser</span>,
-            <span class="ident">classes</span>: <span class="ident">TypeRegistry</span>::<span class="ident">new</span>(),
-            <span class="ident">modules</span>: <span class="ident">TypeRegistry</span>::<span class="ident">new</span>(),
+            <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
+            <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
             <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">filesystem</span>(),
             <span class="ident">regexp</span>: <span class="ident">regexp</span>::<span class="ident">State</span>::<span class="ident">new</span>(),
             <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>::<span class="ident">new</span>(),
