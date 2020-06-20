@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Config","Config file format for declaring the set of ruby/spec suites to run."],["Suite","The specs to run for a suite or API group."]]});
