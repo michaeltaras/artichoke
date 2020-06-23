@@ -823,10 +823,10 @@
     <span class="doccomment">/// Return whether this object is unreachable by any GC roots.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_dead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-            <span class="ident">sys</span>::<span class="ident">mrb_sys_value_is_dead</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">inner</span>())
-        }
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>();
+        <span class="kw">let</span> <span class="ident">is_dead</span> <span class="op">=</span>
+            <span class="kw">unsafe</span> { <span class="ident">interp</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_value_is_dead</span>(<span class="ident">mrb</span>, <span class="ident">value</span>)) };
+        <span class="ident">is_dead</span>.<span class="ident">unwrap_or_default</span>()
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_range</span>(
@@ -959,7 +959,7 @@
             <span class="ident">args</span>.<span class="ident">len</span>(),
             <span class="kw">if</span> <span class="ident">block</span>.<span class="ident">is_some</span>() { <span class="string">&quot; and block&quot;</span> } <span class="kw">else</span> { <span class="string">&quot;&quot;</span> }
         );
-        <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">intern_symbol</span>(<span class="ident">func</span>.<span class="ident">as_bytes</span>().<span class="ident">to_vec</span>());
+        <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">intern_symbol</span>(<span class="ident">func</span>.<span class="ident">as_bytes</span>().<span class="ident">to_vec</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">arena</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
                 <span class="ident">protect</span>::<span class="ident">funcall</span>(
@@ -998,10 +998,10 @@
     }
 
     <span class="kw">fn</span> <span class="ident">is_frozen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-            <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_frozen</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">inner</span>())
-        }
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>();
+        <span class="kw">let</span> <span class="ident">is_frozen</span> <span class="op">=</span>
+            <span class="kw">unsafe</span> { <span class="ident">interp</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_frozen</span>(<span class="ident">mrb</span>, <span class="ident">value</span>)) };
+        <span class="ident">is_frozen</span>.<span class="ident">unwrap_or_default</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">inspect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {

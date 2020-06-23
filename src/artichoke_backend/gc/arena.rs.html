@@ -93,6 +93,7 @@
 <span id="93">93</span>
 <span id="94">94</span>
 <span id="95">95</span>
+<span id="96">96</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Garbage collection arenas for native code.</span>
 
@@ -183,10 +184,11 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">ArenaIndex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-            <span class="ident">sys</span>::<span class="ident">mrb_sys_gc_arena_restore</span>(<span class="ident">mrb</span>, <span class="self">self</span>.<span class="ident">index</span>);
-        }
+        <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">index</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="self">self</span>.<span class="ident">interp</span>
+                .<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_gc_arena_restore</span>(<span class="ident">mrb</span>, <span class="ident">idx</span>))
+        };
     }
 }
 </pre></div>

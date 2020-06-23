@@ -31,6 +31,15 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Intern [`Symbol`][symbol]s on an interpreter.</span>
 <span class="doccomment">//!</span>
@@ -40,6 +49,7 @@
 <span class="doccomment">//! [symbol]: https://ruby-doc.org/core-2.6.3/Symbol.html</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="doccomment">/// Store and retrieve byte vectors that have the same lifetime as the</span>
 <span class="doccomment">/// interpreter.</span>
@@ -53,10 +63,18 @@
     <span class="doccomment">/// The symbol identifier enables lookups in the underlying storage.</span>
     <span class="kw">type</span> <span class="ident">Symbol</span>: <span class="ident">Copy</span>;
 
+    <span class="doccomment">/// Concrete type for falible operations.</span>
+    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+
     <span class="doccomment">/// Store an immutable byte vector for the life of the interpreter.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns an identifier that enables retrieving the original bytes.</span>
-    <span class="kw">fn</span> <span class="ident">intern_symbol</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">symbol</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Symbol</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the underlying interpreter state is not accessible, an error is</span>
+    <span class="doccomment">/// returned.</span>
+    <span class="kw">fn</span> <span class="ident">intern_symbol</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">symbol</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Symbol</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>;
 

@@ -616,6 +616,22 @@
 <span id="616">616</span>
 <span id="617">617</span>
 <span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -764,10 +780,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The current implemention results in recursive calls to this function</span>
     <span class="doccomment">/// for each enclosing scope.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rclass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">RClass</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function must be called within an [`Artichoke::with_ffi_boundary`]</span>
+    <span class="doccomment">/// closure because the FFI APIs called in this function may require access</span>
+    <span class="doccomment">/// to the Artichoke [`State](crate::state::State).</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">rclass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">RClass</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>),
-            <span class="self">Self</span>::<span class="ident">Module</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>),
+            <span class="self">Self</span>::<span class="ident">Class</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>().<span class="ident">resolve</span>(<span class="ident">mrb</span>),
+            <span class="self">Self</span>::<span class="ident">Module</span> { <span class="ident">spec</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec</span>.<span class="ident">rclass</span>().<span class="ident">resolve</span>(<span class="ident">mrb</span>),
         }
     }
 
@@ -906,6 +928,7 @@
     <span class="ident">EnclosingScope</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
     <span class="ident">Super</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
     <span class="ident">Class</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
+    <span class="ident">Method</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
     <span class="ident">Module</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
     <span class="ident">GlobalConstant</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
     <span class="ident">ClassConstant</span>(<span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>),
@@ -932,6 +955,13 @@
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="self">Self</span>::<span class="ident">Class</span>(<span class="ident">item</span>.<span class="ident">into</span>())
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">method</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">item</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    {
+        <span class="self">Self</span>::<span class="ident">Method</span>(<span class="ident">item</span>.<span class="ident">into</span>())
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">module</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">item</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
@@ -971,6 +1001,7 @@
             <span class="op">|</span> <span class="self">Self</span>::<span class="ident">Module</span>(<span class="kw-2">ref</span> <span class="ident">fqdn</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">fqdn</span>.<span class="ident">as_ref</span>(),
             <span class="self">Self</span>::<span class="ident">GlobalConstant</span>(<span class="kw-2">ref</span> <span class="ident">name</span>)
             <span class="op">|</span> <span class="self">Self</span>::<span class="ident">ClassConstant</span>(<span class="kw-2">ref</span> <span class="ident">name</span>)
+            <span class="op">|</span> <span class="self">Self</span>::<span class="ident">Method</span>(<span class="kw-2">ref</span> <span class="ident">name</span>)
             <span class="op">|</span> <span class="self">Self</span>::<span class="ident">ModuleConstant</span>(<span class="kw-2">ref</span> <span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">name</span>.<span class="ident">as_ref</span>(),
         }
     }
@@ -981,6 +1012,7 @@
             <span class="self">Self</span>::<span class="ident">EnclosingScope</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;enclosing scope&quot;</span>,
             <span class="self">Self</span>::<span class="ident">Super</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;super class&quot;</span>,
             <span class="self">Self</span>::<span class="ident">Class</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;class&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Method</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;method&quot;</span>,
             <span class="self">Self</span>::<span class="ident">Module</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;module&quot;</span>,
             <span class="self">Self</span>::<span class="ident">GlobalConstant</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;global constant&quot;</span>,
             <span class="self">Self</span>::<span class="ident">ClassConstant</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;class constant&quot;</span>,
