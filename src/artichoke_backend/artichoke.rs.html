@@ -218,6 +218,9 @@
 <span id="218">218</span>
 <span id="219">219</span>
 <span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
@@ -238,6 +241,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is an owned reference to the interpreter via a mutable pointer.</span>
     <span class="kw">pub</span> <span class="ident">mrb</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_state</span><span class="op">&gt;</span>,
+
     <span class="doccomment">/// Interpreter state.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This field is an `Option` because the `State` is moved in and out of the</span>
@@ -348,7 +352,9 @@
                     ..
                 } <span class="op">=</span> <span class="kw-2">*</span><span class="ident">state</span>;
 
-                <span class="ident">parser</span>.<span class="ident">close</span>(<span class="ident">mrb</span>);
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">parser</span>) <span class="op">=</span> <span class="ident">parser</span> {
+                    <span class="ident">parser</span>.<span class="ident">close</span>(<span class="ident">mrb</span>);
+                }
                 <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>);
 
                 <span class="ident">drop</span>(<span class="ident">classes</span>);

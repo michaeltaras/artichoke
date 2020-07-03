@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Capture",""],["CaptureAt",""],["CaptureMatch",""]],"mod":[["mruby",""],["trampoline",""]],"struct":[["MatchData",""],["Region",""]]});
+initSidebarItems({"enum":[["Capture",""],["CaptureAt",""],["CaptureExtract",""],["CaptureMatch",""]],"mod":[["mruby",""],["trampoline",""]],"struct":[["MatchData",""],["Region",""]]});

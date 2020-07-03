@@ -347,8 +347,19 @@
     <span class="doccomment">/// Value of the `__FILE__` magic constant that also appears in stack</span>
     <span class="doccomment">/// frames.</span>
     <span class="ident">filename</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span>,
-    <span class="doccomment">/// FFI variant of `filename` field.</span>
-    <span class="ident">filename_cstring</span>: <span class="ident">CString</span>,
+    <span class="doccomment">/// FFI NUL-terminated C string variant of `filename` field.</span>
+    <span class="ident">filename_cstr</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Context</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="comment">// Safety:</span>
+        <span class="comment">//</span>
+        <span class="comment">// - The `TOP_FILENAME` constant is controlled by this module.</span>
+        <span class="comment">// - The `TOP_FILENAME` constant does not contain NUL bytes.</span>
+        <span class="comment">// - This behavior is enforced by a test in this module.</span>
+        <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">new_unchecked</span>(<span class="ident">TOP_FILENAME</span>) }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Context</span> {
@@ -361,7 +372,7 @@
         <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>()).<span class="ident">ok</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Some</span>(<span class="self">Self</span> {
             <span class="ident">filename</span>,
-            <span class="ident">filename_cstring</span>: <span class="ident">cstring</span>,
+            <span class="ident">filename_cstr</span>: <span class="ident">cstring</span>.<span class="ident">into_boxed_c_str</span>(),
         })
     }
 
@@ -379,7 +390,7 @@
         <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">from_vec_unchecked</span>(<span class="ident">filename</span>.<span class="ident">clone</span>().<span class="ident">into_owned</span>());
         <span class="self">Self</span> {
             <span class="ident">filename</span>,
-            <span class="ident">filename_cstring</span>: <span class="ident">cstring</span>,
+            <span class="ident">filename_cstr</span>: <span class="ident">cstring</span>.<span class="ident">into_boxed_c_str</span>(),
         }
     }
 
@@ -402,18 +413,7 @@
     <span class="doccomment">/// This [`CStr`] is valid as long as this `Context` is not dropped.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filename_as_c_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CStr</span> {
-        <span class="self">self</span>.<span class="ident">filename_cstring</span>.<span class="ident">as_c_str</span>()
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Context</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="comment">// Safety:</span>
-        <span class="comment">//</span>
-        <span class="comment">// - The `TOP_FILENAME` constant is controlled by this module.</span>
-        <span class="comment">// - The `TOP_FILENAME` constant does not contain NUL bytes.</span>
-        <span class="comment">// - This behavior is enforced by a test in this module.</span>
-        <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">new_unchecked</span>(<span class="ident">TOP_FILENAME</span>) }
+        <span class="self">self</span>.<span class="ident">filename_cstr</span>.<span class="ident">as_ref</span>()
     }
 }
 

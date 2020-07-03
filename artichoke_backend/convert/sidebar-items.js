@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["BoxIntoRubyError","Failed to convert from Rust type to a boxed Ruby value."],["UnboxRubyError","Failed to convert from boxed Ruby value to a Rust type."],["UnboxedValueGuard",""]],"trait":[["BoxUnboxVmValue",""],["HeapAllocatedData",""]]});
+initSidebarItems({"struct":[["BoxIntoRubyError","Failed to convert from Rust type to a boxed Ruby value."],["Immediate",""],["UnboxRubyError","Failed to convert from boxed Ruby value to a Rust type."],["UnboxedValueGuard",""]],"trait":[["BoxUnboxVmValue",""],["HeapAllocatedData",""]]});

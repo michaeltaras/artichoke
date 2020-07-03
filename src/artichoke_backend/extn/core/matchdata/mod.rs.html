@@ -391,6 +391,17 @@
 <span id="391">391</span>
 <span id="392">392</span>
 <span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! An implementation of [`MatchData`][matchdata] for all [`Regexp`] backends.</span>
 <span class="doccomment">//!</span>
@@ -411,6 +422,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">backend</span>::<span class="ident">NilableString</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Regexp</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">symbol</span>::<span class="ident">Symbol</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">mod</span> <span class="ident">boxing</span>;
@@ -474,15 +486,25 @@
     <span class="ident">GroupName</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Value</span>, <span class="ident">Capture</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CaptureExtract</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">GroupIndex</span>(<span class="ident">Int</span>),
+    <span class="ident">GroupName</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]),
+    <span class="ident">Symbol</span>(<span class="ident">Symbol</span>),
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span>, <span class="ident">CaptureExtract</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">TypeError</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Capture</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">name</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">implicitly_convert_to_string</span>(<span class="self">self</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">Capture</span>::<span class="ident">GroupName</span>(<span class="ident">name</span>))
+    <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CaptureExtract</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Symbol</span>::<span class="ident">unbox_from_value</span>(<span class="ident">value</span>, <span class="self">self</span>) } {
+            <span class="kw">let</span> <span class="ident">sym</span> <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">id</span>();
+            <span class="prelude-val">Ok</span>(<span class="ident">CaptureExtract</span>::<span class="ident">Symbol</span>(<span class="ident">sym</span>.<span class="ident">into</span>()))
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">name</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">implicitly_convert_to_string</span>(<span class="self">self</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">CaptureExtract</span>::<span class="ident">GroupName</span>(<span class="ident">name</span>))
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="ident">Capture</span>::<span class="ident">GroupIndex</span>(<span class="ident">idx</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">CaptureExtract</span>::<span class="ident">GroupIndex</span>(<span class="ident">idx</span>))
         }
     }
 }

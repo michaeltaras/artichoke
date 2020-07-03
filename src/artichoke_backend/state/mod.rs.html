@@ -52,7 +52,21 @@
 <span id="52">52</span>
 <span id="53">53</span>
 <span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">intaglio</span>::<span class="ident">bytes</span>::<span class="ident">SymbolTable</span>;
+
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>::{<span class="self">self</span>, <span class="ident">Filesystem</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">module</span>;
@@ -68,20 +82,21 @@
 <span class="kw">use</span> <span class="ident">prng</span>::<span class="ident">Prng</span>;
 
 <span class="doccomment">/// Container for domain-specific interpreter state.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">State</span> {
-    <span class="kw">pub</span> <span class="ident">parser</span>: <span class="ident">parser</span>::<span class="ident">State</span>,
+    <span class="kw">pub</span> <span class="ident">parser</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">parser</span>::<span class="ident">State</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>,
     <span class="kw">pub</span> <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>,
     <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">regexp</span>: <span class="ident">regexp</span>::<span class="ident">State</span>,
+    <span class="kw">pub</span> <span class="ident">symbols</span>: <span class="ident">SymbolTable</span>,
     <span class="kw">pub</span> <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">prng</span>: <span class="ident">Prng</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">State</span> {
-    <span class="doccomment">/// Create a new [`State`] from a [`sys::mrb_state`].</span>
+    <span class="doccomment">/// Create a new `State`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The state is comprised of several components:</span>
     <span class="doccomment">///</span>
@@ -92,19 +107,28 @@
     <span class="doccomment">/// - [Ruby parser and file context](parser::State).</span>
     <span class="doccomment">/// - [Intepreter-level PRNG](Prng) (behind the `core-random` feature).</span>
     <span class="doccomment">/// - [IO capturing](output::Strategy) strategy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mrb</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">parser</span>::<span class="ident">State</span>::<span class="ident">new</span>(<span class="ident">mrb</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">Self</span> {
-            <span class="ident">parser</span>,
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">parser</span>: <span class="prelude-val">None</span>,
             <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
             <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
             <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">filesystem</span>(),
             <span class="ident">regexp</span>: <span class="ident">regexp</span>::<span class="ident">State</span>::<span class="ident">new</span>(),
+            <span class="ident">symbols</span>: <span class="ident">SymbolTable</span>::<span class="ident">new</span>(),
             <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>::<span class="ident">new</span>(),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
             <span class="ident">prng</span>: <span class="ident">Prng</span>::<span class="ident">new</span>(),
-        };
-        <span class="prelude-val">Some</span>(<span class="ident">state</span>)
+        }
+    }
+
+    <span class="doccomment">/// Create a new [`parser::State`] from a [`sys::mrb_state`].</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_init_parser</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mrb</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">parser</span>) <span class="op">=</span> <span class="ident">parser</span>::<span class="ident">State</span>::<span class="ident">new</span>(<span class="ident">mrb</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">old_parser</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">replace</span>(<span class="ident">parser</span>) {
+                <span class="ident">old_parser</span>.<span class="ident">close</span>(<span class="ident">mrb</span>);
+            }
+        }
     }
 }
 </pre></div>

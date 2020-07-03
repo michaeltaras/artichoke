@@ -235,7 +235,7 @@
     <span class="ident">interp</span>.<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">time</span>::<span class="ident">Time</span><span class="op">&gt;</span>(<span class="ident">spec</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;time.rb&quot;</span>)[..])<span class="question-mark">?</span>;
-    <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Patched Random onto interpreter&quot;</span>);
+    <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Patched Time onto interpreter&quot;</span>);
     <span class="prelude-val">Ok</span>(())
 }
 

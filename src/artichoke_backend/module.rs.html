@@ -331,8 +331,6 @@
 <span id="331">331</span>
 <span id="332">332</span>
 <span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
@@ -344,6 +342,8 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">Intern</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">def</span>::{<span class="ident">ConstantNameError</span>, <span class="ident">EnclosingRubyScope</span>, <span class="ident">Method</span>, <span class="ident">NotDefinedError</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">intern</span>::<span class="ident">Symbol</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">method</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
@@ -457,7 +457,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Rclass</span> {
-    <span class="ident">sym</span>: <span class="ident">sys</span>::<span class="ident">mrb_sym</span>,
+    <span class="ident">sym</span>: <span class="ident">Symbol</span>,
     <span class="ident">name</span>: <span class="ident">CString</span>,
     <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
@@ -465,7 +465,7 @@
 <span class="kw">impl</span> <span class="ident">Rclass</span> {
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">sym</span>: <span class="ident">sys</span>::<span class="ident">mrb_sym</span>,
+        <span class="ident">sym</span>: <span class="ident">Symbol</span>,
         <span class="ident">name</span>: <span class="ident">CString</span>,
         <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
@@ -491,7 +491,7 @@
             <span class="kw">let</span> <span class="ident">is_defined_under</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_const_defined_at</span>(
                 <span class="ident">mrb</span>,
                 <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_value</span>(<span class="ident">scope</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">c_void</span><span class="op">&gt;</span>().<span class="ident">as_mut</span>()),
-                <span class="self">self</span>.<span class="ident">sym</span>,
+                <span class="self">self</span>.<span class="ident">sym</span>.<span class="ident">into</span>(),
             );
             <span class="kw">if</span> <span class="ident">is_defined_under</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="comment">// Enclosing scope exists.</span>
@@ -507,7 +507,7 @@
             <span class="kw">let</span> <span class="ident">is_defined</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_const_defined_at</span>(
                 <span class="ident">mrb</span>,
                 <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_value</span>((<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">object_class</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>),
-                <span class="self">self</span>.<span class="ident">sym</span>,
+                <span class="self">self</span>.<span class="ident">sym</span>.<span class="ident">into</span>(),
             );
             <span class="kw">if</span> <span class="ident">is_defined</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="comment">// Class does not exist in root scope.</span>
@@ -524,7 +524,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Spec</span> {
     <span class="ident">name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
-    <span class="ident">sym</span>: <span class="ident">sys</span>::<span class="ident">mrb_sym</span>,
+    <span class="ident">sym</span>: <span class="ident">Symbol</span>,
     <span class="ident">cstring</span>: <span class="ident">CString</span>,
     <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
@@ -534,28 +534,24 @@
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
         <span class="ident">name</span>: <span class="ident">T</span>,
         <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ConstantNameError</span><span class="op">&gt;</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">into</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">cstring</span>) <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">name</span>.<span class="ident">as_ref</span>()) {
             <span class="kw">let</span> <span class="ident">sym</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">name</span> {
-                <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">intern_symbol</span>(<span class="ident">name</span>.<span class="ident">as_bytes</span>()),
-                <span class="ident">Cow</span>::<span class="ident">Owned</span>(<span class="kw-2">ref</span> <span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">intern_symbol</span>(<span class="ident">name</span>.<span class="ident">clone</span>().<span class="ident">into_bytes</span>()),
+                <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">intern_string</span>(<span class="ident">name</span>)<span class="question-mark">?</span>,
+                <span class="ident">Cow</span>::<span class="ident">Owned</span>(<span class="kw-2">ref</span> <span class="ident">name</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">intern_string</span>(<span class="ident">name</span>.<span class="ident">clone</span>())<span class="question-mark">?</span>,
             };
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">sym</span>) <span class="op">=</span> <span class="ident">sym</span> {
-                <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
-                    <span class="ident">name</span>,
-                    <span class="ident">cstring</span>,
-                    <span class="ident">sym</span>,
-                    <span class="ident">enclosing_scope</span>: <span class="ident">enclosing_scope</span>.<span class="ident">map</span>(<span class="ident">Box</span>::<span class="ident">new</span>),
-                })
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">name</span>.<span class="ident">into</span>())
-            }
+            <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
+                <span class="ident">name</span>,
+                <span class="ident">cstring</span>,
+                <span class="ident">sym</span>,
+                <span class="ident">enclosing_scope</span>: <span class="ident">enclosing_scope</span>.<span class="ident">map</span>(<span class="ident">Box</span>::<span class="ident">new</span>),
+            })
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">name</span>.<span class="ident">into</span>())
+            <span class="prelude-val">Err</span>(<span class="ident">ConstantNameError</span>::<span class="ident">from</span>(<span class="ident">name</span>).<span class="ident">into</span>())
         }
     }
 

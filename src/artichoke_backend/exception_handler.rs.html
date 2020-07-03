@@ -106,6 +106,8 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="kw">_</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">CaughtException</span>, <span class="ident">Exception</span>};
@@ -142,7 +144,9 @@
     <span class="comment">// Uncommenting the folllowing print statement will at least get you</span>
     <span class="comment">// the exception class and message, which should help debugging.</span>
     <span class="comment">//</span>
-    <span class="comment">// println!(&quot;{:?}&quot;, exception);</span>
+    <span class="comment">// let message = exception.funcall(&amp;mut arena, &quot;message&quot;, &amp;[], None)?;</span>
+    <span class="comment">// let message = message.try_into_mut::&lt;String&gt;(&amp;mut arena);</span>
+    <span class="comment">// println!(&quot;{:?}, {:?}&quot;, exception, message);</span>
 
     <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">exception</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>, <span class="string">&quot;class&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">classname</span> <span class="op">=</span> <span class="ident">class</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>, <span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
