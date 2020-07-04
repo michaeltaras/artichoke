@@ -108,6 +108,7 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
+<span id="111">111</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="kw">_</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">CaughtException</span>, <span class="ident">Exception</span>};
@@ -121,7 +122,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function makes funcalls on the interpreter which are fallible.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_error</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">exception</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exception</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>()<span class="question-mark">?</span>;
+
     <span class="comment">// Clear the current exception from the mruby interpreter so subsequent</span>
     <span class="comment">// calls to the mruby VM are not tainted by an error they did not</span>
     <span class="comment">// generate.</span>

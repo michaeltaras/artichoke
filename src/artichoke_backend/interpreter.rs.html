@@ -158,6 +158,7 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
+<span id="161">161</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -220,7 +221,8 @@
     <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Succeeded initializing Artichoke Core and Standard Library&quot;</span>);
 
     <span class="comment">// Load mrbgems</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>()<span class="question-mark">?</span>;
+
     <span class="kw">unsafe</span> {
         <span class="ident">arena</span>
             .<span class="ident">interp</span>()
@@ -236,7 +238,7 @@
     <span class="comment">// mruby lazily initializes some core objects like top_self and generates a</span>
     <span class="comment">// lot of garbage on startup. Eagerly initialize the interpreter to provide</span>
     <span class="comment">// predictable initialization behavior.</span>
-    <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>().<span class="ident">interp</span>().<span class="ident">eval</span>(<span class="kw-2">&amp;</span>[])<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>()<span class="question-mark">?</span>.<span class="ident">interp</span>().<span class="ident">eval</span>(<span class="kw-2">&amp;</span>[])<span class="question-mark">?</span>;
 
     <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GcState</span>::<span class="ident">Enabled</span> <span class="op">=</span> <span class="ident">prior_gc_state</span> {
         <span class="ident">interp</span>.<span class="ident">enable_gc</span>();
