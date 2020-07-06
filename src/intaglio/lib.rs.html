@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/intaglio-1.0.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../intaglio/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/intaglio-1.1.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../intaglio/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -269,10 +269,53 @@
 <span id="269">269</span>
 <span id="270">270</span>
 <span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_truncation</span>)]</span> <span class="comment">// see `_U32_FITS_IN_USIZE_ASSERTION`</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">cargo</span>)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_truncation</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">intra_doc_link_resolution_failure</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_debug_implementations</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_copy_implementations</span>)]</span>
@@ -290,7 +333,7 @@
 <span class="doccomment">//! For more specific details on the API for interning strings into a symbol</span>
 <span class="doccomment">//! table, please see the documentation for the [`SymbolTable`] type.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # Example</span>
+<span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! # use intaglio::SymbolTable;</span>
@@ -302,6 +345,7 @@
 <span class="doccomment">//! assert!(table.is_interned(&quot;abc&quot;));</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
+<span class="doccomment">//! # example().unwrap();</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # String interning</span>
@@ -334,10 +378,21 @@
 <span class="doccomment">//!   interning bytestrings (`Vec&lt;u8&gt;` and `&amp;&#39;static [u8]`). Disabling this</span>
 <span class="doccomment">//!   drops the `bstr` dependency.</span>
 
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/intaglio/1.0.1&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/intaglio/1.1.0&quot;</span>)]</span>
 
+<span class="comment">// Ensure code blocks in README.md compile</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">readme</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>]</span>
+        <span class="kw">mod</span> <span class="ident">readme</span> {}
+    };
+    () <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="macro">readme</span><span class="macro">!</span>(<span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>));
+    };
+}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">doctest</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bytes&quot;</span>))]</span>
-<span class="ident">doc_comment</span>::<span class="macro">doctest</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>);
+<span class="macro">readme</span><span class="macro">!</span>();
 
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -356,8 +411,7 @@
 <span class="comment">//</span>
 <span class="comment">// This const-evaluated expression will fail to compile if this invariant does</span>
 <span class="comment">// not hold.</span>
-<span class="kw">const</span> <span class="ident">_U32_FITS_IN_USIZE_ASSERTION</span>: [(); <span class="number">0</span>] <span class="op">=</span>
-    [(); (<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="ident">usize</span> <span class="op">-</span> <span class="number">1</span>];
+<span class="kw">const</span> <span class="kw">_</span>: () <span class="op">=</span> [()][<span class="op">!</span>(<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="ident">usize</span>];
 
 <span class="doccomment">/// Default capacity for new a [`SymbolTable`].</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DEFAULT_SYMBOL_TABLE_CAPACITY</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4096</span>;
@@ -367,19 +421,9 @@
 <span class="doccomment">/// `SymbolTable` uses `u32` identifiers for symbols to save space. If more than</span>
 <span class="doccomment">/// `u32::MAX` symbols are stored in the table, no more identifiers can be</span>
 <span class="doccomment">/// generated. Any subsequent inserts into the table will fail with this error.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SymbolOverflowError</span> {
-    <span class="ident">max_capacity</span>: <span class="ident">usize</span>,
     <span class="ident">source</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TryFromIntError</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">SymbolOverflowError</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">max_capacity</span>: <span class="ident">u32</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span>,
-            <span class="ident">source</span>: <span class="prelude-val">None</span>,
-        }
-    }
 }
 
 <span class="kw">impl</span> <span class="ident">SymbolOverflowError</span> {
@@ -392,17 +436,15 @@
     <span class="doccomment">/// Return the maximum capacity of the [`SymbolTable`] that returned this</span>
     <span class="doccomment">/// error.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">unused_self</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_capacity</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="self">self</span>.<span class="ident">max_capacity</span>
+        <span class="ident">u32</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TryFromIntError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SymbolOverflowError</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">TryFromIntError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">max_capacity</span>: <span class="ident">u32</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">usize</span>,
-            <span class="ident">source</span>: <span class="prelude-val">Some</span>(<span class="ident">err</span>),
-        }
+        <span class="self">Self</span> { <span class="ident">source</span>: <span class="prelude-val">Some</span>(<span class="ident">err</span>) }
     }
 }
 
@@ -414,11 +456,8 @@
 
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">SymbolOverflowError</span> {
     <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">source</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">source</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
+        <span class="kw">let</span> <span class="ident">source</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>()<span class="question-mark">?</span>;
+        <span class="prelude-val">Some</span>(<span class="ident">source</span>)
     }
 }
 
@@ -515,14 +554,32 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="kw-2">&amp;</span><span class="ident">Symbol</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">sym</span>.<span class="number">0</span>
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">Symbol</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">sym</span>.<span class="number">0</span>.<span class="ident">into</span>()
     }
 }
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="kw-2">&amp;</span><span class="ident">Symbol</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">sym</span>.<span class="number">0</span>.<span class="ident">into</span>()
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">usize</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">Symbol</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">sym</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">usize</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="kw-2">&amp;</span><span class="ident">Symbol</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">sym</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 }
@@ -536,9 +593,36 @@
     <span class="doccomment">/// `Symbol`s are not constrained to the `SymbolTable` which created them.</span>
     <span class="doccomment">/// No runtime checks ensure that [`SymbolTable::get`] is called with a</span>
     <span class="doccomment">/// `Symbol` that the table itself issued.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use intaglio::Symbol;</span>
+    <span class="doccomment">/// let sym = Symbol::new(263);</span>
+    <span class="doccomment">/// assert_eq!(263, sym.id());</span>
+    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sym</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">sym</span>)
+    }
+
+    <span class="doccomment">/// Return the `u32` identifier from this `Symbol`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use intaglio::SymbolTable;</span>
+    <span class="doccomment">/// # fn example() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
+    <span class="doccomment">/// let mut table = SymbolTable::new();</span>
+    <span class="doccomment">/// let sym = table.intern(&quot;intaglio&quot;)?;</span>
+    <span class="doccomment">/// assert_eq!(u32::from(sym), sym.id());</span>
+    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// # example().unwrap();</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+        <span class="self">self</span>.<span class="number">0</span>
     }
 }
 </pre></div>
