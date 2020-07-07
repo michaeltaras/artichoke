@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/work/artichoke/artichoke/target/debug/build/artichoke-backend-ec6942a8e6ec58ef/out/ffi.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ffi.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../light.css" id="themeStyle"><script src="../../../../../../../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.artichokeruby.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../../../../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../../../../../../../artichoke_backend/index.html'><div class='logo-container'><img src='https://www.artichokeruby.org/artichoke-logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../../../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../../../../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../../../../../../../../../settings.html"><img src="../../../../../../../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/work/artichoke/artichoke/target/debug/build/artichoke-backend-1b858ec5a0fc62c7/out/ffi.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ffi.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../../../../../../../../../light.css" id="themeStyle"><script src="../../../../../../../../../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.artichokeruby.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../../../../../../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../../../../../../../../../artichoke_backend/index.html'><div class='logo-container'><img src='https://www.artichokeruby.org/artichoke-logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../../../../../../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../../../../../../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../../../../../../../../../settings.html"><img src="../../../../../../../../../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -6609,7 +6609,7 @@
 <span id="6609">6609</span>
 <span id="6610">6610</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="comment">/* automatically generated by rust-bindgen */</span>
+<span class="comment">/* automatically generated by rust-bindgen 0.54.1 */</span>
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">Ord</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
@@ -8682,7 +8682,7 @@
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_intern_cstr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_sym</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_intern_cstr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_sym</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_intern</span>(
@@ -11305,7 +11305,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_sys_fail</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">mesg</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>);
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_exc_new_str</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">c</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RClass</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_exc_new_str</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">c</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RClass</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_make_exception</span>(
@@ -12600,7 +12600,7 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_index</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
         <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>,
         <span class="ident">len</span>: <span class="ident">mrb_int</span>,
         <span class="ident">offset</span>: <span class="ident">mrb_int</span>,
@@ -12619,24 +12619,24 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_obj_as_string</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">obj</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_resize</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>, <span class="ident">len</span>: <span class="ident">mrb_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_resize</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>, <span class="ident">len</span>: <span class="ident">mrb_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_substr</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
         <span class="ident">beg</span>: <span class="ident">mrb_int</span>,
         <span class="ident">len</span>: <span class="ident">mrb_int</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_ensure_string_type</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_ensure_string_type</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_check_string_type</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_check_string_type</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_type</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_type</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_new_capa</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">capa</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
@@ -12645,25 +12645,25 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_buf_new</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">capa</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_cstr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_cstr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_value_cstr</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_value</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_value_ptr</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_value_len</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_string_value_len</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_dup</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_dup</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_intern</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">self_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
@@ -12671,7 +12671,7 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_inum</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
         <span class="ident">base</span>: <span class="ident">mrb_int</span>,
         <span class="ident">badcheck</span>: <span class="ident">mrb_bool</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
@@ -12685,7 +12685,7 @@
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_dbl</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>, <span class="ident">badcheck</span>: <span class="ident">mrb_bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_dbl</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>, <span class="ident">badcheck</span>: <span class="ident">mrb_bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_cstr_to_dbl</span>(
@@ -12695,7 +12695,7 @@
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_str</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_str</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_equal</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str1</span>: <span class="ident">mrb_value</span>, <span class="ident">str2</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_bool</span>;
@@ -12703,7 +12703,7 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_cat</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
         <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>,
         <span class="ident">len</span>: <span class="ident">usize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
@@ -12711,15 +12711,15 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_cat_cstr</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
         <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_cat_str</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>, <span class="ident">str2</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_cat_str</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>, <span class="ident">str2</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_append</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>, <span class="ident">str2</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_append</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>, <span class="ident">str2</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_cmp</span>(
@@ -12729,19 +12729,19 @@
     ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_cstr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_to_cstr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_pool</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_pool</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_hash</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_hash</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_dump</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_dump</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_inspect</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_inspect</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>, <span class="ident">str_</span>: <span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_beg_len</span>(<span class="ident">str_len</span>: <span class="ident">mrb_int</span>, <span class="ident">begp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_int</span>, <span class="ident">lenp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_bool</span>;
@@ -12749,13 +12749,13 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_str_byte_subseq</span>(
         <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>,
-        <span class="ident">str</span>: <span class="ident">mrb_value</span>,
+        <span class="ident">str_</span>: <span class="ident">mrb_value</span>,
         <span class="ident">beg</span>: <span class="ident">mrb_int</span>,
         <span class="ident">len</span>: <span class="ident">mrb_int</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_value</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_utf8_len</span>(<span class="ident">str</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>, <span class="ident">byte_len</span>: <span class="ident">mrb_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_utf8_len</span>(<span class="ident">str_</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>, <span class="ident">byte_len</span>: <span class="ident">mrb_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">mrb_int</span>;
 }
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">__jmp_buf</span> <span class="op">=</span> [::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_long</span>; <span class="number">8usize</span>];
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
