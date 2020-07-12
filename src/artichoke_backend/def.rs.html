@@ -615,23 +615,6 @@
 <span id="615">615</span>
 <span id="616">616</span>
 <span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -869,7 +852,7 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ConstantNameError</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid constant name contained a NUL byte&quot;</span>)
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Invalid constant name contained a NUL byte&quot;</span>)
     }
 }
 
@@ -1023,7 +1006,11 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">NotDefinedError</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{} &#39;{}&#39; not defined&quot;</span>, <span class="self">self</span>.<span class="ident">item_type</span>(), <span class="self">self</span>.<span class="ident">fqdn</span>())
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">item_type</span>())<span class="question-mark">?</span>;
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot; &#39;&quot;</span>)<span class="question-mark">?</span>;
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">fqdn</span>())<span class="question-mark">?</span>;
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;&#39; not defined&quot;</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
@@ -1163,37 +1150,16 @@
 
             <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">Root</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A&quot;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">root</span>), <span class="string">&quot;artichoke module spec -- A&quot;</span>);
             <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderRoot</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mod_under_root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::B&quot;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">mod_under_root</span>),
-                <span class="string">&quot;artichoke module spec -- A::B&quot;</span>
-            );
             <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderRoot</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_root</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C&quot;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_root</span>),
-                <span class="string">&quot;artichoke class spec -- A::C&quot;</span>
-            );
             <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderModule</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_mod</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::B::D&quot;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_mod</span>),
-                <span class="string">&quot;artichoke class spec -- A::B::D&quot;</span>
-            );
             <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">module_spec</span>::<span class="op">&lt;</span><span class="ident">ModuleUnderClass</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mod_under_cls</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C::E&quot;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">mod_under_cls</span>),
-                <span class="string">&quot;artichoke module spec -- A::C::E&quot;</span>
-            );
             <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">class_spec</span>::<span class="op">&lt;</span><span class="ident">ClassUnderClass</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls_under_cls</span>.<span class="ident">fqname</span>().<span class="ident">as_ref</span>(), <span class="string">&quot;A::C::F&quot;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">cls_under_cls</span>),
-                <span class="string">&quot;artichoke class spec -- A::C::F&quot;</span>
-            );
         }
     }
 
