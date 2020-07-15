@@ -153,10 +153,11 @@
 <span id="153">153</span>
 <span id="154">154</span>
 <span id="155">155</span>
+<span id="156">156</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Ruby and Rust type mappings.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 
 <span class="doccomment">/// Classes of Rust types.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
@@ -231,8 +232,9 @@
     <span class="ident">Float</span>,
     <span class="doccomment">/// Ruby `Hash` type.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Similar to a [`HashMap`](std::collections::HashMap), but with remembered</span>
-    <span class="doccomment">/// insertion order.</span>
+    <span class="doccomment">/// Similar to a [`HashMap`], but iterates by insertion order.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`HashMap`]: https://doc.rust-lang.org/std/collections/struct.HashMap.html</span>
     <span class="ident">Hash</span>,
     <span class="doccomment">/// Internal type for non-heap allocated structs.</span>
     <span class="ident">InlineStruct</span>,
@@ -251,7 +253,7 @@
     <span class="ident">Proc</span>,
     <span class="doccomment">/// Ruby `Range` type.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Similar to a Rust [iterator](std::iter).</span>
+    <span class="doccomment">/// Similar to a Rust [iterator](core::iter).</span>
     <span class="ident">Range</span>,
     <span class="doccomment">/// Internal type for the singleton class of an object.</span>
     <span class="ident">SingletonClass</span>,

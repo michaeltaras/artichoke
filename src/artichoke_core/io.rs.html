@@ -26,17 +26,13 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! I/O read and write APIs.</span>
-
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="doccomment">/// Make I/O external to the interpreter.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Io</span> {
     <span class="doccomment">/// Concrete error type for errors encountered when reading and writing.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Writes the given bytes to the interpreter stdout stream.</span>
     <span class="doccomment">///</span>

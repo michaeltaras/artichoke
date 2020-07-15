@@ -61,18 +61,14 @@
 <span id="61">61</span>
 <span id="62">62</span>
 <span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Convert between Rust and Ruby objects.</span>
-
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="doccomment">/// Infallible conversion between two types.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Implementors may not allocate on the interpreter heap.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See [`std::convert::From`].</span>
+<span class="doccomment">/// See [`core::convert::From`].</span>
 <span class="doccomment">/// See [`ConvertMut`].</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Convert</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Performs the infallible conversion.</span>
@@ -83,12 +79,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Implementors may not allocate on the interpreter heap.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See [`std::convert::TryFrom`].</span>
+<span class="doccomment">/// See [`core::convert::TryFrom`].</span>
 <span class="doccomment">/// See [`TryConvertMut`].</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TryConvert</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Error type for failed conversions.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Performs the fallible conversion.</span>
     <span class="doccomment">///</span>
@@ -103,7 +99,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Implementors may allocate on the interpreter heap.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See [`std::convert::From`].</span>
+<span class="doccomment">/// See [`core::convert::From`].</span>
 <span class="doccomment">/// See [`Convert`].</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
@@ -115,11 +111,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Implementors may allocate on the interpreter heap.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See [`std::convert::TryFrom`].</span>
+<span class="doccomment">/// See [`core::convert::TryFrom`].</span>
 <span class="doccomment">/// See [`TryConvert`].</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Error type for failed conversions.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Performs the fallible conversion.</span>
     <span class="doccomment">///</span>

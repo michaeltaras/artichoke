@@ -35,18 +35,14 @@
 <span id="35">35</span>
 <span id="36">36</span>
 <span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Track `Regexp` global state.</span>
-
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="doccomment">/// Track the state of `Regexp` globals and global interpreter state.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Regexp</span> {
     <span class="doccomment">/// Concrete error type for errors encountered when manipulating `Regexp`</span>
     <span class="doccomment">/// state.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Retrieve the current number of set `Regexp` global variables.</span>
     <span class="doccomment">///</span>

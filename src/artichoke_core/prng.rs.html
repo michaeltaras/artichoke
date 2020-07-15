@@ -68,19 +68,15 @@
 <span id="68">68</span>
 <span id="69">69</span>
 <span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Interpreter global psuedorandom number generator.</span>
-
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="doccomment">/// Interpreter global psuedorandom number generator.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Implementors of this trait back the `Random::DEFAULT` PRNG.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Prng</span> {
     <span class="doccomment">/// Concrete type for PRNG errors.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Cocnrete type representing the internal state of all PRNG backends.</span>
     <span class="kw">type</span> <span class="ident">InternalState</span>;

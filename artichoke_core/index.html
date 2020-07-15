@@ -1,22 +1,53 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `artichoke_core` crate."><meta name="keywords" content="rust, rustlang, rust-lang, artichoke_core"><title>artichoke_core - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="https://www.artichokeruby.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../artichoke_core/index.html'><div class='logo-container'><img src='https://www.artichokeruby.org/artichoke-logo.svg' alt='logo'></div></a><p class='location'>Crate artichoke_core</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all artichoke_core's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'artichoke_core', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/artichoke_core/lib.rs.html#1-95' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>artichoke_core</a></span></h1><div class='docblock'><h1 id="artichoke-core" class="section-header"><a href="#artichoke-core">artichoke-core</a></h1>
-<p><code>artichoke-core</code> crate provides a set of traits that, when implemented,
-provide a complete Ruby interpreter.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `artichoke_core` crate."><meta name="keywords" content="rust, rustlang, rust-lang, artichoke_core"><title>artichoke_core - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="https://www.artichokeruby.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../artichoke_core/index.html'><div class='logo-container'><img src='https://www.artichokeruby.org/artichoke-logo.svg' alt='logo'></div></a><p class='location'>Crate artichoke_core</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all artichoke_core's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'artichoke_core', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/artichoke_core/lib.rs.html#1-139' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>artichoke_core</a></span></h1><div class='docblock'><p>This crate provides a set of traits that, when implemented, comprise a
+complete Ruby interpreter.</p>
+<p><code>artichoke-core</code> is <code>no_std</code> + <code>alloc</code> with an optional (enabled by default)
+<code>std</code> feature.</p>
+<p>Interpreters implement the traits in Artichoke Core to indicate which
+capabilities they offer. Defining interpreters by their capabilities allows
+for interpreter agnostic implementations of Ruby Core and Standard Library.</p>
+<h1 id="interpreter-apis" class="section-header"><a href="#interpreter-apis">Interpreter APIs</a></h1>
+<p>Artichoke Core defines traits for the following interpreter capabilities:</p>
+<ul>
+<li><a href="../artichoke_core/constant/trait.DefineConstant.html"><code>DefineConstant</code></a>: Define global, class, and
+module constants to be arbitrary Ruby <a href="../artichoke_core/value/trait.Value.html"><code>Value</code></a>s.</li>
+<li><a href="../artichoke_core/eval/trait.Eval.html"><code>Eval</code></a>: Execute Ruby source code on an interpreter from
+various sources.</li>
+<li><a href="../artichoke_core/globals/trait.Globals.html"><code>Globals</code></a>: Get, set, and unset interpreter-level
+global variables.</li>
+<li><a href="../artichoke_core/intern/trait.Intern.html"><code>Intern</code></a>: Intern bytestrings to a cheap to copy and
+compare symbol type.</li>
+<li><a href="../artichoke_core/io/trait.Io.html"><code>Io</code></a>: External I/O APIs, such as writing to the standard output
+of the current process.</li>
+<li><a href="../artichoke_core/load/trait.LoadSources.html"><code>LoadSources</code></a>: <a href="https://ruby-doc.org/core-2.6.3/Kernel.html#method-i-require">Require</a> source code
+from interpreter disk or <a href="../artichoke_core/file/trait.File.html"><code>File</code></a> gems.</li>
+<li><a href="../artichoke_core/parser/trait.Parser.html"><code>Parser</code></a>: Manipulate the parser state, e.g. setting the
+current filename.</li>
+<li><a href="../artichoke_core/prng/trait.Prng.html"><code>Prng</code></a>: An interpreter-level psuedorandom number generator
+that is the backend for <a href="https://ruby-doc.org/core-2.6.3/Random.html#DEFAULT"><code>Random::DEFAULT</code></a>.</li>
+<li><a href="../artichoke_core/regexp/trait.Regexp.html"><code>Regexp</code></a>: Manipulate <a href="https://ruby-doc.org/core-2.6.3/Regexp.html#class-Regexp-label-Special+global+variables"><code>Regexp</code></a> global state.</li>
+<li><a href="../artichoke_core/release_metadata/trait.ReleaseMetadata.html"><code>ReleaseMetadata</code></a>: Enable
+interpreters to describe themselves.</li>
+<li><a href="../artichoke_core/top_self/trait.TopSelf.html"><code>TopSelf</code></a>: Access to the root execution context.</li>
+<li><a href="../artichoke_core/warn/trait.Warn.html"><code>Warn</code></a>: Emit warnings.</li>
+</ul>
+<p>Artichoke Core also describes what capabilities a Ruby
+<a href="../artichoke_core/value/trait.Value.html"><code>Value</code></a> must have and how to <a href="../artichoke_core/convert/index.html">convert</a> between Ruby VM and
+Rust types.</p>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p><a href="https://artichoke.github.io/artichoke/artichoke_backend/"><code>artichoke-backend</code></a>
 is one implementation of the <code>artichoke-core</code> traits.</p>
-<h2 id="core-apis" class="section-header"><a href="#core-apis">Core APIs</a></h2>
-<p><code>artichoke-core</code> contains traits for the core set of APIs an interpreter
-must implement. The traits in <code>artichoke-core</code> define:</p>
+<p>To use all of the APIs defined in Artichoke Core, bring the traits into
+scope by importing the prelude:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;</pre></div>
+<h1 id="crate-features" class="section-header"><a href="#crate-features">Crate features</a></h1>
+<p>All features are enabled by default:</p>
 <ul>
-<li>APIs a concrete VM must implement to support the Artichoke runtime and
-frontends.</li>
-<li>How to box polymorphic core types into <a href="../artichoke_core/value/trait.Value.html">Ruby <code>Value</code></a>.</li>
-<li><a href="../artichoke_core/convert/index.html">Interoperability</a> between the VM backend and the
-Rust-implemented core.</li>
+<li><strong>std</strong>: By default, <code>artichoke-core</code> is <code>no_std</code> + <code>alloc</code>. Enabling
+this feature adds several trait methods that depend on <code>OsStr</code> and <code>Path</code>
+as well as several implementations of <code>std::error::Error</code>.</li>
 </ul>
-<p>Some of the core APIs a Ruby implementation must provide are
-<a href="../artichoke_core/eval/trait.Eval.html">evaluating code</a>,
-<a href="../artichoke_core/convert/trait.ConvertMut.html">converting Rust data structures to boxed <code>Value</code>s on the interpreter heap</a>,
-and <a href="../artichoke_core/intern/trait.Intern.html">interning <code>Symbol</code>s</a>.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table><tr class='module-item'><td><a class="mod" href="constant/index.html" title='artichoke_core::constant mod'>constant</a></td><td class='docblock-short'><p>Define constants on an interpreter.</p>
 </td></tr><tr class='module-item'><td><a class="mod" href="convert/index.html" title='artichoke_core::convert mod'>convert</a></td><td class='docblock-short'><p>Convert between Rust and Ruby objects.</p>

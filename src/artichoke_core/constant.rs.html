@@ -68,15 +68,11 @@
 <span id="68">68</span>
 <span id="69">69</span>
 <span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Define constants on an interpreter.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Constants can be an arbitrary Ruby value. Constants can be defined globally,</span>
 <span class="doccomment">//! on a class, or on a module.</span>
-
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 
@@ -90,7 +86,7 @@
     <span class="kw">type</span> <span class="ident">Value</span>: <span class="ident">Value</span>;
 
     <span class="doccomment">/// Concrete error type for fallible operations.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Define a global constant.</span>
     <span class="doccomment">///</span>

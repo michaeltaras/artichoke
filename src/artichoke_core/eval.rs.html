@@ -42,11 +42,21 @@
 <span id="42">42</span>
 <span id="43">43</span>
 <span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Run code on an Artichoke interpreter.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsStr</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
@@ -57,7 +67,7 @@
     <span class="kw">type</span> <span class="ident">Value</span>: <span class="ident">Value</span>;
 
     <span class="doccomment">/// Concrete error type for eval functions.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Eval code on the Artichoke interpreter using the current `Context`.</span>
     <span class="doccomment">///</span>
@@ -69,22 +79,30 @@
     <span class="doccomment">/// Eval code on the Artichoke interpreter using the current `Context` when</span>
     <span class="doccomment">/// given code as an [`OsStr`].</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// This trait method requires activating the `std` feature in</span>
+    <span class="doccomment">/// `artichoke-core`.</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Errors</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If an exception is raised on the interpreter, then an error is returned.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If `code` cannot be converted to a `&amp;[u8]` on the current platform, then</span>
     <span class="doccomment">/// an error is returned.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">eval_os_str</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">code</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Eval code on the Artichoke interpreter using a new file `Context` given</span>
     <span class="doccomment">/// a file path.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This trait method requires activating the `std` feature in</span>
+    <span class="doccomment">/// `artichoke-core`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Errors</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If an exception is raised on the interpreter, then an error is returned.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If `path` does not exist or code cannot be read, an error is returned.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">eval_file</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 }
 </pre></div>

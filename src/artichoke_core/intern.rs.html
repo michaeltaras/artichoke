@@ -91,7 +91,6 @@
 <span id="91">91</span>
 <span id="92">92</span>
 <span id="93">93</span>
-<span id="94">94</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Intern [`Symbol`][symbol]s on an interpreter.</span>
 <span class="doccomment">//!</span>
@@ -100,8 +99,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [symbol]: https://ruby-doc.org/core-2.6.3/Symbol.html</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+<span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
 <span class="doccomment">/// Store and retrieve bytestrings that have the same lifetime as the</span>
 <span class="doccomment">/// interpreter.</span>
@@ -116,7 +114,7 @@
     <span class="kw">type</span> <span class="ident">Symbol</span>: <span class="ident">Copy</span>;
 
     <span class="doccomment">/// Concrete type for errors returned while interning symbols.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Store an immutable bytestring for the life of the interpreter.</span>
     <span class="doccomment">///</span>

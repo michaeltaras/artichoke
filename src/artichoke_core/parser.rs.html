@@ -84,8 +84,7 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse code on an Artichoke interpreter.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 
 <span class="doccomment">/// Manage parser state, active filename context, and line number metadata.</span>
 <span class="doccomment">///</span>
@@ -95,7 +94,7 @@
     <span class="doccomment">/// Concrete type for parser context.</span>
     <span class="kw">type</span> <span class="ident">Context</span>;
     <span class="doccomment">/// Error type for Parser APIs.</span>
-    <span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">error</span>::<span class="ident">Error</span>;
+    <span class="kw">type</span> <span class="ident">Error</span>;
 
     <span class="doccomment">/// Reset parser state to initial values.</span>
     <span class="doccomment">///</span>
@@ -164,6 +163,7 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">IncrementLinenoError</span> {}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">IncrementLinenoError</span> {}
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_core";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
