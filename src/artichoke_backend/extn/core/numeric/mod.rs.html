@@ -140,6 +140,7 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
+<span id="143">143</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">integer</span>::<span class="ident">Integer</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -200,9 +201,9 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # use artichoke_backend::prelude::core::*;</span>
+<span class="doccomment">/// # use artichoke_backend::prelude::*;</span>
 <span class="doccomment">/// # use artichoke_backend::extn::core::numeric::{self, Coercion};</span>
-<span class="doccomment">/// # fn main() -&gt; Result&lt;(), Box&lt;std::error::Error&gt;&gt; {</span>
+<span class="doccomment">/// # fn example() -&gt; Result&lt;(), Box&lt;std::error::Error&gt;&gt; {</span>
 <span class="doccomment">/// # let mut interp = artichoke_backend::interpreter()?;</span>
 <span class="doccomment">/// let x = interp.convert(1_i64);</span>
 <span class="doccomment">/// let y = interp.convert_mut(2.5_f64);</span>
@@ -215,6 +216,7 @@
 <span class="doccomment">/// assert_eq!(Coercion::Integer(1, 2), numeric::coerce(&amp;mut interp, x, y)?);</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
+<span class="doccomment">/// # example().unwrap();</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [numeric]: https://ruby-doc.org/core-2.6.3/Numeric.html#method-i-coerce</span>

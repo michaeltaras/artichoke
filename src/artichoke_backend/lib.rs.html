@@ -196,19 +196,19 @@
 <span class="doccomment">//! ### Evaling Source Code</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The `artichoke-backend` interpreter implements</span>
-<span class="doccomment">//! [`Eval` from `artichoke-core`](crate::prelude::core::Eval).</span>
+<span class="doccomment">//! [`Eval` from `artichoke-core`](crate::core::Eval).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use artichoke_backend::prelude::core::*;</span>
 <span class="doccomment">//! use artichoke_backend::prelude::*;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # fn main() -&gt; Result&lt;(), Exception&gt; {</span>
+<span class="doccomment">//! # fn example() -&gt; Result&lt;(), Exception&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter()?;</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;10 * 10&quot;)?;</span>
 <span class="doccomment">//! let result = result.try_into::&lt;i64&gt;(&amp;interp)?;</span>
 <span class="doccomment">//! assert_eq!(result, 100);</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
+<span class="doccomment">//! # example().unwrap();</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Calling Functions on Ruby Objects</span>
@@ -218,10 +218,9 @@
 <span class="doccomment">//! calling Ruby functions from Rust.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! use artichoke_backend::prelude::core::*;</span>
 <span class="doccomment">//! use artichoke_backend::prelude::*;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # fn main() -&gt; Result&lt;(), Exception&gt; {</span>
+<span class="doccomment">//! # fn example() -&gt; Result&lt;(), Exception&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke_backend::interpreter()?;</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;&#39;ruby funcall&#39;&quot;)?;</span>
 <span class="doccomment">//! let result = result.funcall(&amp;mut interp, &quot;length&quot;, &amp;[], None)?;</span>
@@ -229,6 +228,7 @@
 <span class="doccomment">//! assert_eq!(result, 12);</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
+<span class="doccomment">//! # example().unwrap();</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Virtual Filesystem and `Kernel#require`</span>
@@ -342,7 +342,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The prelude may grow over time as additional items see ubiquitous use.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span> {
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">raise</span>, <span class="ident">Exception</span>, <span class="ident">RubyException</span>};
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="kw-2">*</span>};
