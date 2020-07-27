@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `artichoke-backend/src/artichoke.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>artichoke.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.artichokeruby.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../artichoke_backend/index.html'><div class='logo-container'><img src='https://www.artichokeruby.org/artichoke-logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `artichoke-backend/src/artichoke.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>artichoke.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.artichokeruby.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../artichoke_backend/index.html'><div class='logo-container'><img src='https://www.artichokeruby.org/artichoke-logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -247,13 +247,13 @@
     <span class="doccomment">/// This field is an `Option` because the `State` is moved in and out of the</span>
     <span class="doccomment">/// `Artichoke` struct as the call graph crosses between Rust and C and C to</span>
     <span class="doccomment">/// Rust.</span>
-    <span class="kw">pub</span> <span class="ident">state</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">State</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">State</span><span class="op">&gt;&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Artichoke</span> {
     <span class="doccomment">/// Create a new interpreter from an underlying `mrb` and a `State`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mrb</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_state</span><span class="op">&gt;</span>, <span class="ident">state</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">State</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mrb</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_state</span><span class="op">&gt;</span>, <span class="ident">state</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">State</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>);
         <span class="self">Self</span> { <span class="ident">mrb</span>, <span class="ident">state</span> }
     }
@@ -272,9 +272,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function is only safe to call if the closure only calls FFI</span>
     <span class="doccomment">/// functions that use a raw `*mut sys::mrb_state`.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">with_ffi_boundary</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">func</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">InterpreterExtractError</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">with_ffi_boundary</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">func</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">InterpreterExtractError</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>) <span class="op">-&gt;</span> <span class="ident">T</span>,
     {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">take</span>() {
             <span class="comment">// Ensure we don&#39;t create multiple mutable references by moving the</span>
@@ -333,7 +333,7 @@
     <span class="doccomment">/// do this is to call [`ffi::from_user_data`] with the returned pointer and</span>
     <span class="doccomment">/// then call [`Artichoke::close`].</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="kw-2">mut</span> <span class="ident">interp</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="kw-2">mut</span> <span class="ident">interp</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">guard</span> <span class="op">=</span> <span class="ident">Guard</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>);
         <span class="ident">guard</span>.<span class="ident">interp</span>().<span class="ident">mrb</span>.<span class="ident">as_ptr</span>()
     }
@@ -389,7 +389,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function is most effective when the interpreter is temporarily</span>
     <span class="doccomment">/// reified and stored on the stack.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>(<span class="ident">interp</span>)
     }
 
@@ -398,21 +398,21 @@
     <span class="doccomment">/// The interpreter is also accessible via [`Deref`], [`DerefMut`],</span>
     <span class="doccomment">/// [`AsRef`], and [`AsMut`].</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Artichoke</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Artichoke</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Artichoke</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsMut</span><span class="op">&lt;</span><span class="ident">Artichoke</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span> {
+    <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -421,14 +421,14 @@
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Artichoke</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Target</span> {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Target</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DerefMut</span> <span class="kw">for</span> <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Target</span> {
+    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Target</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -436,7 +436,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">state</span>.<span class="ident">take</span>();
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Dropping Guard with no State&quot;</span>));
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Dropping Guard with no State&quot;</span>));
 
         <span class="kw">unsafe</span> {
             <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Serializing Artichoke State into mrb to prepare for FFI boundary&quot;</span>);
