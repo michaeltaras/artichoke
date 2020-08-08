@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["artichoke_backend"] = [{"text":"impl&lt;'a&gt; <a class=\"trait\" href=\"artichoke_backend/prelude/trait.ReleaseMetadata.html\" title=\"trait artichoke_backend::prelude::ReleaseMetadata\">ReleaseMetadata</a> for <a class=\"struct\" href=\"artichoke_backend/release_metadata/struct.ReleaseMetadata.html\" title=\"struct artichoke_backend::release_metadata::ReleaseMetadata\">ReleaseMetadata</a>&lt;'a&gt;","synthetic":false,"types":["artichoke_backend::release_metadata::ReleaseMetadata"]}];
+implementors["artichoke_backend"] = [{"text":"impl&lt;'a&gt; ReleaseMetadata for ReleaseMetadata&lt;'a&gt;","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

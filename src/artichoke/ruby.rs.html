@@ -228,7 +228,7 @@
 {
     <span class="kw">let</span> <span class="ident">opt</span> <span class="op">=</span> <span class="ident">Opt</span>::<span class="ident">from_args</span>();
     <span class="kw">if</span> <span class="ident">opt</span>.<span class="ident">copyright</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;puts RUBY_COPYRIGHT&quot;</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(()))
     } <span class="kw">else</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">opt</span>.<span class="ident">commands</span>.<span class="ident">is_empty</span>() {
@@ -240,7 +240,7 @@
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">programfile</span>) <span class="op">=</span> <span class="ident">opt</span>.<span class="ident">programfile</span>.<span class="ident">filter</span>(<span class="op">|</span><span class="ident">file</span><span class="op">|</span> <span class="ident">file</span> <span class="op">!=</span> <span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;-&quot;</span>)) {
         <span class="ident">execute_program_file</span>(<span class="ident">error</span>, <span class="ident">programfile</span>.<span class="ident">as_path</span>(), <span class="ident">opt</span>.<span class="ident">fixture</span>.<span class="ident">as_deref</span>())
     } <span class="kw">else</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">program</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         <span class="ident">input</span>
             .<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">program</span>)
@@ -261,7 +261,7 @@
 <span class="kw">where</span>
     <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span> <span class="op">+</span> <span class="ident">WriteColor</span>,
 {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>()<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">pop_context</span>()<span class="question-mark">?</span>;
     <span class="comment">// safety:</span>
     <span class="comment">//</span>
@@ -293,7 +293,7 @@
 <span class="kw">where</span>
     <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span> <span class="op">+</span> <span class="ident">WriteColor</span>,
 {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>()<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>()<span class="question-mark">?</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">fixture</span>) <span class="op">=</span> <span class="ident">fixture</span> {
         <span class="ident">setup_fixture_hack</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="ident">fixture</span>)<span class="question-mark">?</span>;
     }

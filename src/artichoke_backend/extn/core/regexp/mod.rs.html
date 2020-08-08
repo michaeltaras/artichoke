@@ -598,8 +598,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
         <span class="kw-2">mut</span> <span class="ident">pattern</span>: <span class="ident">Value</span>,
-        <span class="ident">options</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">opts</span>::<span class="ident">Options</span><span class="op">&gt;</span>,
-        <span class="ident">encoding</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">enc</span>::<span class="ident">Encoding</span><span class="op">&gt;</span>,
+        <span class="ident">options</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Options</span><span class="op">&gt;</span>,
+        <span class="ident">encoding</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Encoding</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">literal_config</span> <span class="op">=</span>
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">regexp</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pattern</span>, <span class="ident">interp</span>) } {
@@ -839,10 +839,10 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Config</span> {
     <span class="ident">pattern</span>: <span class="ident">BString</span>,
-    <span class="ident">options</span>: <span class="ident">opts</span>::<span class="ident">Options</span>,
+    <span class="ident">options</span>: <span class="ident">Options</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>), (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">opts</span>::<span class="ident">Options</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">enc</span>::<span class="ident">Encoding</span><span class="op">&gt;</span>)<span class="op">&gt;</span>
+<span class="kw">impl</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>), (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Options</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Encoding</span><span class="op">&gt;</span>)<span class="op">&gt;</span>
     <span class="kw">for</span> <span class="ident">Artichoke</span>
 {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Exception</span>;
@@ -850,7 +850,7 @@
     <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">value</span>: (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>),
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">opts</span>::<span class="ident">Options</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">enc</span>::<span class="ident">Encoding</span><span class="op">&gt;</span>), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Options</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Encoding</span><span class="op">&gt;</span>), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">options</span>, <span class="ident">encoding</span>) <span class="op">=</span> <span class="ident">value</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">encoding</span>) <span class="op">=</span> <span class="ident">encoding</span> {
             <span class="kw">let</span> <span class="ident">encoding</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">encoding</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">encoding</span>) {

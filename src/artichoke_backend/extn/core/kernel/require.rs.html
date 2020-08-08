@@ -471,7 +471,7 @@
     <span class="comment">// - Require non-existing file raises and returns `nil`.</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">functional</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="ident">interp</span>
             .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">MockSourceFile</span><span class="op">&gt;</span>(<span class="string">&quot;file.rb&quot;</span>)
             .<span class="ident">unwrap</span>();
@@ -498,7 +498,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">absolute_path</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="ident">interp</span>
             .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/foo/bar/source.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;# a source file&quot;</span>[..])
             .<span class="ident">unwrap</span>();
@@ -510,7 +510,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">relative_with_dotted_path</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="ident">interp</span>
             .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;/foo/bar/source.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;require_relative &#39;../bar.rb&#39;&quot;</span>[..])
             .<span class="ident">unwrap</span>();
@@ -525,7 +525,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">directory_err</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;require &#39;/src&#39;&quot;</span>).<span class="ident">unwrap_err</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="kw-2">&amp;</span><span class="string">b&quot;cannot load such file -- /src&quot;</span>[..],
@@ -537,7 +537,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">path_defined_as_source_then_extension_file</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="ident">interp</span>
             .<span class="ident">def_rb_source_file</span>(<span class="string">&quot;foo.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;module Foo; RUBY = 3; end&quot;</span>[..])
             .<span class="ident">unwrap</span>();
@@ -557,7 +557,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">path_defined_as_extension_file_then_source</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="ident">interp</span>
             .<span class="ident">def_file_for_type</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">MockExtensionAndSourceFile</span><span class="op">&gt;</span>(<span class="string">&quot;foo.rb&quot;</span>)
             .<span class="ident">unwrap</span>();

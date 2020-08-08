@@ -263,7 +263,7 @@
     <span class="ident">T</span>: <span class="ident">RubyException</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span>,
 {
     <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">exception</span>.<span class="ident">as_mrb_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>);
-    <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
+    <span class="kw">let</span> <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span> <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
     <span class="ident">drop</span>(<span class="ident">guard</span>);
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">exc</span>) <span class="op">=</span> <span class="ident">exc</span> {
         <span class="comment">// Any non-`Copy` objects that we haven&#39;t cleaned up at this point will</span>

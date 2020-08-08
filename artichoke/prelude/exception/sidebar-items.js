@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["raise","Raise implementation for `RubyException` boxed trait objects."]],"struct":[["Exception",""]],"trait":[["RubyException","Polymorphic exception type that corresponds to Ruby's `Exception`."]]});
