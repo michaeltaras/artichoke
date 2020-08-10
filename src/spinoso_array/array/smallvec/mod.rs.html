@@ -1712,6 +1712,7 @@
 <span id="1712">1712</span>
 <span id="1713">1713</span>
 <span id="1714">1714</span>
+<span id="1715">1715</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Ruby `Array` based on [`SmallVec`].</span>
 
@@ -1788,6 +1789,7 @@
 <span class="doccomment">/// [`first_n`]: SmallArray::first_n</span>
 <span class="doccomment">/// [`last_n`]: SmallArray::last_n</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SmallArray</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">SmallVec</span><span class="op">&lt;</span>[<span class="ident">T</span>; <span class="ident">INLINE_CAPACITY</span>]<span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">SmallArray</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
