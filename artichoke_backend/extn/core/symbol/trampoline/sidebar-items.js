@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["all_symbols",""],["bytes",""],["equal_equal",""],["inspect",""],["is_empty",""],["length",""]]});
+initSidebarItems({"fn":[["all_symbols",""],["ascii_casecmp",""],["bytes",""],["equal_equal",""],["inspect",""],["is_empty",""],["length",""],["unicode_casecmp",""]]});

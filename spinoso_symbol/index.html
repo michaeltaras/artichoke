@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `spinoso_symbol` crate."><meta name="keywords" content="rust, rustlang, rust-lang, spinoso_symbol"><title>spinoso_symbol - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../spinoso_symbol/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate spinoso_symbol</p><div class='block version'><p>Version 0.1.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all spinoso_symbol's items</p></a><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'spinoso_symbol', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/spinoso_symbol/lib.rs.html#1-384' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>spinoso_symbol</a></span></h1><div class='docblock'><p>Identifier for interned bytestrings and routines for manipulating the
+underlying bytestrings.</p>
+<p><code>Symbol</code> is a <code>Copy</code> type based on <code>u32</code>. <code>Symbol</code> is cheap to copy, store,
+and compare. It is suitable for representing indexes into a string interner.</p>
+<h1 id="artichoke-integration" class="section-header"><a href="#artichoke-integration">Artichoke integration</a></h1>
+<p>This crate has an <code>artichoke</code> Cargo feature. When this feature is active,
+this crate implements <a href="https://ruby-doc.org/core-2.6.3/Symbol.html">the <code>Symbol</code> API from Ruby Core</a>. These APIs require
+resolving the underlying bytes associated with the <code>Symbol</code> via a type that
+implements <code>Intern</code> from <code>artichoke-core</code>.</p>
+<p>APIs that require this feature to be active are highlighted in the
+documentation.</p>
+<p>This crate provides an <code>AllSymbols</code> iterator for walking all symbols stored
+in an <a href="../artichoke_core/intern/trait.Intern.html" title="`Intern`"><code>Intern</code></a>er and an extension trait for constructing it which is
+suitable for implementing <a href="https://ruby-doc.org/core-2.6.3/Symbol.html#method-c-all_symbols"><code>Symbol::all_symbols</code></a> from Ruby Core.</p>
+<p>This crate provides an <code>Inspect</code> iterator for converting <code>Symbol</code> byte
+content to a debug representation suitable for implementing
+<a href="https://ruby-doc.org/core-2.6.3/Symbol.html#method-i-inspect"><code>Symbol#inspect</code></a> from Ruby Core.</p>
+<h1 id="no_std" class="section-header"><a href="#no_std"><code>no_std</code></a></h1>
+<p>This crate is <code>no_std</code> compatible when built without the <code>std</code> feature. This
+crate does not depend on <a href="https://doc.rust-lang.org/alloc/"><code>alloc</code></a>.</p>
+<h1 id="crate-features" class="section-header"><a href="#crate-features">Crate features</a></h1>
+<p>All features are enabled by default.</p>
+<ul>
+<li><strong>artichoke</strong> - Enables additional methods, functions, and types for
+implementing APIs from Ruby Core. Dropping this feature removes the
+<code>artichoke-core</code> and <code>focaccia</code> dependencies. Activating this feature also
+activates the <strong>inspect</strong> feature.</li>
+<li><strong>inspect</strong> - Enables an iterator for generating debug output of a symbol
+bytestring. Dropping this feature removes the <code>bstr</code> dependency.</li>
+<li><strong>std</strong> - Enables a dependency on the Rust Standard Library. Activating
+this feature enables <a href="https://doc.rust-lang.org/std/error/trait.Error.html"><code>std::error::Error</code></a> impls on error types in this
+crate.</li>
+</ul>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.AllSymbols.html" title='spinoso_symbol::AllSymbols struct'>AllSymbols</a></td><td class='docblock-short'><span class="stab portability"><code>feature="artichoke"</code></span><p>An iterator that returns all of the Symbols in an <a href="../artichoke_core/intern/trait.Intern.html">interner</a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Inspect.html" title='spinoso_symbol::Inspect struct'>Inspect</a></td><td class='docblock-short'><span class="stab portability"><code>feature="inspect"</code></span><p>An iterator that yields a debug representation of a <code>Symbol</code> and its byte
+contents as a sequence of <code>char</code>s.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.NoSuchCaseFoldingScheme.html" title='spinoso_symbol::NoSuchCaseFoldingScheme struct'>NoSuchCaseFoldingScheme</a></td><td class='docblock-short'><span class="stab portability"><code>feature="artichoke"</code></span><p>Error type for returned when a folding scheme could not be resolved in a
+<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html" title="`TryFrom`"><code>TryFrom</code></a> implementation.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Symbol.html" title='spinoso_symbol::Symbol struct'>Symbol</a></td><td class='docblock-short'><p>Identifier bound to an interned bytestring.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SymbolOverflowError.html" title='spinoso_symbol::SymbolOverflowError struct'>SymbolOverflowError</a></td><td class='docblock-short'><p>Error returned when a symbol identifier overflows.</p>
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.CaseFold.html" title='spinoso_symbol::CaseFold enum'>CaseFold</a></td><td class='docblock-short'><span class="stab portability"><code>feature="artichoke"</code></span><p>Unicode case folding strategies.</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.InternerAllSymbols.html" title='spinoso_symbol::InternerAllSymbols trait'>InternerAllSymbols</a></td><td class='docblock-short'><span class="stab portability"><code>feature="artichoke"</code></span><p>Extension trait to return an iterator that returns all symbol identifiers
+stored in an <a href="../artichoke_core/intern/trait.Intern.html">interner</a> as <a href="../spinoso_symbol/struct.Symbol.html" title="`Symbol`"><code>Symbol</code></a>s.</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.ascii_casecmp.html" title='spinoso_symbol::ascii_casecmp fn'>ascii_casecmp</a></td><td class='docblock-short'><span class="stab portability"><code>feature="artichoke"</code></span><p>Compare the byte contents of two symbols using ASCII case-insensitive
+comparison.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.unicode_case_eq.html" title='spinoso_symbol::unicode_case_eq fn'>unicode_case_eq</a></td><td class='docblock-short'><span class="stab portability"><code>feature="artichoke"</code></span><p>Compare the byte contents of two symbols using Unicode case-folding
+comparison for equality.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "spinoso_symbol";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

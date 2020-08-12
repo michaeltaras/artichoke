@@ -176,24 +176,7 @@
 <span id="175">175</span>
 <span id="176">176</span>
 <span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">intaglio</span>::<span class="ident">bytes</span>::<span class="ident">AllSymbols</span>;
 <span class="kw">use</span> <span class="ident">intaglio</span>::<span class="ident">SymbolOverflowError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
@@ -206,61 +189,9 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Symbol</span>(<span class="ident">intaglio</span>::<span class="ident">Symbol</span>);
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Symbol</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="ident">sym</span>.<span class="ident">into</span>())
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">intaglio</span>::<span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Symbol</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">intaglio</span>::<span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="ident">sym</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">intaglio</span>::<span class="ident">Symbol</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">sym</span>.<span class="number">0</span>
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">sym</span>.<span class="number">0</span>.<span class="ident">into</span>()
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">sym</span>.<span class="number">0</span>.<span class="ident">into</span>()
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Symbol</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">usize</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">sym</span>: <span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">sym</span>.<span class="number">0</span>.<span class="ident">into</span>()
-    }
-}
-
 <span class="kw">impl</span> <span class="ident">Artichoke</span> {
-    <span class="doccomment">/// Return a type that yields all `Symbol`s in the interpreter.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">all_symbols</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AllSymbols</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">InterpreterExtractError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lookup_symbol_with_trailing_nul</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
-        <span class="comment">// this method cannot be part of the `Intern` impl because `AllSymbols`</span>
-        <span class="comment">// is generic over the lifetime of the symbol table and GATs are not</span>
-        <span class="comment">// stable.</span>
-        <span class="prelude-val">Ok</span>(<span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">all_symbols</span>())
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lookup_symbol_with_trailing_nul</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">symbol</span>: <span class="ident">Symbol</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">symbol</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">checked_sub</span>(<span class="number">1</span>) {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">bytes</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">get</span>(<span class="ident">symbol</span>.<span class="ident">into</span>()) {
                 <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">bytes</span>))
@@ -271,12 +202,47 @@
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         }
     }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intern_bytes_with_trailing_nul</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>,
+    {
+        <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">intern</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">symbol</span>);
+        <span class="comment">// mruby expexts symbols to be non-zero.</span>
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">symbol</span>
+            .<span class="ident">checked_add</span>(<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Intern</span><span class="op">&gt;</span>::<span class="ident">SYMBOL_RANGE_START</span>)
+            .<span class="ident">ok_or_else</span>(<span class="ident">SymbolOverflowError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">symbol</span>)
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_interned_bytes_with_trailing_nul</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">check_interned</span>(<span class="ident">bytes</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="ident">symbol</span> {
+            <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">symbol</span>);
+            <span class="comment">// mruby expexts symbols to be non-zero.</span>
+            <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">symbol</span>
+                .<span class="ident">checked_add</span>(<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Intern</span><span class="op">&gt;</span>::<span class="ident">SYMBOL_RANGE_START</span>)
+                .<span class="ident">ok_or_else</span>(<span class="ident">SymbolOverflowError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">symbol</span>))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+        }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Intern</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
-    <span class="kw">type</span> <span class="ident">Symbol</span> <span class="op">=</span> <span class="ident">Symbol</span>;
+    <span class="kw">type</span> <span class="ident">Symbol</span> <span class="op">=</span> <span class="ident">u32</span>;
 
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Exception</span>;
+
+    <span class="kw">const</span> <span class="ident">SYMBOL_RANGE_START</span>: <span class="self">Self</span>::<span class="ident">Symbol</span> <span class="op">=</span> <span class="number">1</span>;
 
     <span class="kw">fn</span> <span class="ident">intern_bytes</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Symbol</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -284,34 +250,29 @@
     {
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">trailing_byte</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">len</span>().<span class="ident">checked_sub</span>(<span class="number">1</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">idx</span><span class="op">|</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="ident">idx</span>));
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;\0&#39;</span>) <span class="op">=</span> <span class="ident">trailing_byte</span> {
-            <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">intern</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">into_owned</span>();
-            <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="string">b&#39;\0&#39;</span>);
-            <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">intern</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>
-        };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">into_owned</span>();
+        <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="string">b&#39;\0&#39;</span>);
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">intern</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">symbol</span>);
         <span class="comment">// mruby expexts symbols to be non-zero.</span>
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">checked_add</span>(<span class="number">1</span>).<span class="ident">ok_or_else</span>(<span class="ident">SymbolOverflowError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">symbol</span>.<span class="ident">into</span>())
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">symbol</span>
+            .<span class="ident">checked_add</span>(<span class="self">Self</span>::<span class="ident">SYMBOL_RANGE_START</span>)
+            .<span class="ident">ok_or_else</span>(<span class="ident">SymbolOverflowError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">symbol</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">check_interned_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Symbol</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">trailing_byte</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">len</span>().<span class="ident">checked_sub</span>(<span class="number">1</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">idx</span><span class="op">|</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="ident">idx</span>));
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;\0&#39;</span>) <span class="op">=</span> <span class="ident">trailing_byte</span> {
-            <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">check_interned</span>(<span class="ident">bytes</span>)
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">to_vec</span>();
-            <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="string">b&#39;\0&#39;</span>);
-            <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">check_interned</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>)
-        };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">to_vec</span>();
+        <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="string">b&#39;\0&#39;</span>);
+        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">check_interned</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="ident">symbol</span> {
             <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">symbol</span>);
-            <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">checked_add</span>(<span class="number">1</span>).<span class="ident">ok_or_else</span>(<span class="ident">SymbolOverflowError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">symbol</span>.<span class="ident">into</span>()))
+            <span class="comment">// mruby expexts symbols to be non-zero.</span>
+            <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">symbol</span>
+                .<span class="ident">checked_add</span>(<span class="self">Self</span>::<span class="ident">SYMBOL_RANGE_START</span>)
+                .<span class="ident">ok_or_else</span>(<span class="ident">SymbolOverflowError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">symbol</span>))
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         }
@@ -319,8 +280,7 @@
 
     <span class="kw">fn</span> <span class="ident">lookup_symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="self">Self</span>::<span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">symbol</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">checked_sub</span>(<span class="number">1</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">checked_sub</span>(<span class="self">Self</span>::<span class="ident">SYMBOL_RANGE_START</span>) {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">bytes</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">get</span>(<span class="ident">symbol</span>.<span class="ident">into</span>()) {
                 <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
                     <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">bytes</span>))
@@ -332,6 +292,14 @@
             }
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">symbol_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">state</span>.<span class="ident">symbols</span>.<span class="ident">len</span>()
+        } <span class="kw">else</span> {
+            <span class="number">0</span>
         }
     }
 }
