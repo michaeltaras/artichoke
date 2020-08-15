@@ -383,10 +383,25 @@
 <span id="382">382</span>
 <span id="383">383</span>
 <span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">cargo</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">non_ascii_literal</span>))]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unknown_lints</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
@@ -442,7 +457,11 @@
 <span class="doccomment">//!   `artichoke-core` and `focaccia` dependencies. Activating this feature also</span>
 <span class="doccomment">//!   activates the **inspect** feature.</span>
 <span class="doccomment">//! - **inspect** - Enables an iterator for generating debug output of a symbol</span>
-<span class="doccomment">//!   bytestring. Dropping this feature removes the `bstr` dependency.</span>
+<span class="doccomment">//!   bytestring. Activating this feature also activates the **ident-parser**</span>
+<span class="doccomment">//!   feature.</span>
+<span class="doccomment">//! - **ident-parser** - Enables a parser to determing the Ruby identifier type,</span>
+<span class="doccomment">//!   if any, for a bytestring. Dropping this feature removes the `bstr`</span>
+<span class="doccomment">//!   dependency.</span>
 <span class="doccomment">//! - **std** - Enables a dependency on the Rust Standard Library. Activating</span>
 <span class="doccomment">//!   this feature enables [`std::error::Error`] impls on error types in this</span>
 <span class="doccomment">//!   crate.</span>
@@ -456,6 +475,8 @@
 <span class="comment">// `spinoso-symbol` is a `no_std` crate unless the `std` feature is enabled.</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 
+<span class="comment">// Having access to `String` in tests is convenient to collect `Inspect`</span>
+<span class="comment">// iterators for whole content comparisons.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
 
@@ -498,13 +519,20 @@
 <span class="kw">mod</span> <span class="ident">casecmp</span>;
 <span class="kw">mod</span> <span class="ident">convert</span>;
 <span class="kw">mod</span> <span class="ident">eq</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ident-parser&quot;</span>)]</span>
+<span class="kw">mod</span> <span class="ident">ident</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;inspect&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">inspect</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">fixtures</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">all_symbols</span>::{<span class="ident">AllSymbols</span>, <span class="ident">InternerAllSymbols</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">casecmp</span>::{<span class="ident">ascii_casecmp</span>, <span class="ident">unicode_case_eq</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ident-parser&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ident</span>::{<span class="ident">IdentifierType</span>, <span class="ident">ParseIdentifierError</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;inspect&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">inspect</span>::<span class="ident">Inspect</span>;
 
