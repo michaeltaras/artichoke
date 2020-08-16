@@ -397,6 +397,8 @@
 <span id="396">396</span>
 <span id="397">397</span>
 <span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -523,6 +525,8 @@
 <span class="kw">mod</span> <span class="ident">ident</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;inspect&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">inspect</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ident-parser&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;inspect&quot;</span>))]</span>
+<span class="kw">mod</span> <span class="ident">unicode</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">fixtures</span>;
