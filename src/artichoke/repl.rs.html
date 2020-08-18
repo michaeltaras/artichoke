@@ -249,6 +249,15 @@
 <span id="248">248</span>
 <span id="249">249</span>
 <span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A REPL (read–eval–print–loop) for an Artichoke interpreter.</span>
 <span class="doccomment">//!</span>
@@ -283,13 +292,15 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The parser is needed to properly enter and exit multi-line editing mode.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParserAllocError</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParserAllocError</span> {
+    <span class="ident">_private</span>: (),
+}
 
 <span class="kw">impl</span> <span class="ident">ParserAllocError</span> {
     <span class="doccomment">/// Constructs a new, default `ParserAllocError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
@@ -303,13 +314,15 @@
 
 <span class="doccomment">/// Parser processed too many lines of input.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParserLineCountError</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParserLineCountError</span> {
+    <span class="ident">_private</span>: (),
+}
 
 <span class="kw">impl</span> <span class="ident">ParserLineCountError</span> {
     <span class="doccomment">/// Constructs a new, default `ParserLineCountError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
@@ -325,13 +338,15 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is usually an unknown FFI to Rust translation.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParserInternalError</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParserInternalError</span> {
+    <span class="ident">_private</span>: (),
+}
 
 <span class="kw">impl</span> <span class="ident">ParserInternalError</span> {
     <span class="doccomment">/// Constructs a new, default `ParserInternalError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
@@ -432,13 +447,16 @@
     <span class="comment">// - A test asserts that `REPL_FILENAME` has no NUL bytes.</span>
     <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">REPL_FILENAME</span>.<span class="ident">to_vec</span>()) };
     <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="ident">context</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">ParserAllocError</span>)<span class="question-mark">?</span>;
+    <span class="comment">// disable or_fun_call lint until release of:</span>
+    <span class="comment">// https://github.com/rust-lang/rust-clippy/pull/5889</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">or_fun_call</span>)]</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">ok_or</span>(<span class="ident">ParserAllocError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rl</span> <span class="op">=</span> <span class="ident">Editor</span>::<span class="op">&lt;</span>()<span class="op">&gt;</span>::<span class="ident">new</span>();
     <span class="comment">// If a code block is open, accumulate code from multiple readlines in this</span>
     <span class="comment">// mutable `String` buffer.</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">default</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>();
     <span class="kw">loop</span> {
         <span class="comment">// Allow shell users to identify that they have an open code block.</span>
         <span class="kw">let</span> <span class="ident">prompt</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_code_block_open</span>() {
@@ -453,7 +471,7 @@
                 <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">line</span>.<span class="ident">as_str</span>());
                 <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">parser</span>.<span class="ident">parse</span>(<span class="ident">buf</span>.<span class="ident">as_bytes</span>());
                 <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_fatal</span>() {
-                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">ParserInternalError</span>));
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">ParserInternalError</span>::<span class="ident">new</span>()));
                 }
                 <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_code_block_open</span>() {
                     <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
@@ -478,7 +496,7 @@
                     <span class="ident">rl</span>.<span class="ident">add_history_entry</span>(<span class="ident">line</span>);
                     <span class="ident">interp</span>
                         .<span class="ident">add_fetch_lineno</span>(<span class="number">1</span>)
-                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ParserLineCountError</span>)<span class="question-mark">?</span>;
+                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ParserLineCountError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
                 }
                 <span class="comment">// Eval successful, so reset the REPL state for the next</span>
                 <span class="comment">// expression.</span>
@@ -490,7 +508,7 @@
                 <span class="comment">// Reset buffered code</span>
                 <span class="ident">buf</span>.<span class="ident">clear</span>();
                 <span class="comment">// clear parser state</span>
-                <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">default</span>();
+                <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>();
                 <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;^C&quot;</span>)<span class="question-mark">?</span>;
             }
             <span class="comment">// Gracefully exit on CTRL-D EOF</span>

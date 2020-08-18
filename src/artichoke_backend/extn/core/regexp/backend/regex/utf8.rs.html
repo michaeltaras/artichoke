@@ -620,9 +620,9 @@
             <span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;regex crate utf8 backend for Regexp only supports UTF-8 patterns&quot;</span>)
         })<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">RegexBuilder</span>::<span class="ident">new</span>(<span class="ident">pattern</span>);
-        <span class="ident">builder</span>.<span class="ident">case_insensitive</span>(<span class="ident">derived</span>.<span class="ident">options</span>.<span class="ident">ignore_case</span>);
-        <span class="ident">builder</span>.<span class="ident">multi_line</span>(<span class="ident">derived</span>.<span class="ident">options</span>.<span class="ident">multiline</span>);
-        <span class="ident">builder</span>.<span class="ident">ignore_whitespace</span>(<span class="ident">derived</span>.<span class="ident">options</span>.<span class="ident">extended</span>);
+        <span class="ident">builder</span>.<span class="ident">case_insensitive</span>(<span class="ident">derived</span>.<span class="ident">options</span>.<span class="ident">ignore_case</span>.<span class="ident">into</span>());
+        <span class="ident">builder</span>.<span class="ident">multi_line</span>(<span class="ident">derived</span>.<span class="ident">options</span>.<span class="ident">multiline</span>.<span class="ident">into</span>());
+        <span class="ident">builder</span>.<span class="ident">ignore_whitespace</span>(<span class="ident">derived</span>.<span class="ident">options</span>.<span class="ident">extended</span>.<span class="ident">into</span>());
         <span class="kw">let</span> <span class="ident">regex</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">builder</span>.<span class="ident">build</span>() {
             <span class="prelude-val">Ok</span>(<span class="ident">regex</span>) <span class="op">=&gt;</span> <span class="ident">regex</span>,
             <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="kw">if</span> <span class="ident">literal</span>.<span class="ident">options</span>.<span class="ident">literal</span> <span class="op">=&gt;</span> {

@@ -289,13 +289,17 @@
 <span id="288">288</span>
 <span id="289">289</span>
 <span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Regexp pattern parsers.</span>
 
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Options</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::{<span class="ident">Options</span>, <span class="ident">RegexpOption</span>};
 
 <span class="doccomment">/// A Regexp pattern including its derived `Options`.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
@@ -305,9 +309,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Pattern</span> {
+    <span class="doccomment">/// Construct a new, empty pattern.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">pattern</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">options</span>: <span class="ident">Options</span>::<span class="ident">new</span>(),
+        }
     }
 
     <span class="doccomment">/// Return the pattern as a byte slice.</span>
@@ -324,7 +332,7 @@
 
     <span class="doccomment">/// Return the `Options` parsed when constructing this `Pattern`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">options</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Options</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">options</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Options</span> {
         <span class="self">self</span>.<span class="ident">options</span>
     }
 }
@@ -368,11 +376,11 @@
 
     <span class="kw">let</span> <span class="ident">orignal_options</span> <span class="op">=</span> <span class="ident">options</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">options</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">enable_literal_option</span> <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">enable_literal_option</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
 
     <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">token</span>)) <span class="op">=</span> <span class="ident">chars</span>.<span class="ident">next</span>() {
         <span class="kw">match</span> <span class="ident">token</span> {
-            <span class="string">b&#39;-&#39;</span> <span class="op">=&gt;</span> <span class="ident">enable_literal_option</span> <span class="op">=</span> <span class="bool-val">false</span>,
+            <span class="string">b&#39;-&#39;</span> <span class="op">=&gt;</span> <span class="ident">enable_literal_option</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Disabled</span>,
             <span class="string">b&#39;i&#39;</span> <span class="op">=&gt;</span> {
                 <span class="ident">options</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="ident">enable_literal_option</span>;
             }
@@ -424,11 +432,11 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">BString</span>;
 
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Options</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::{<span class="ident">Options</span>, <span class="ident">RegexpOption</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_literal_string_pattern</span>() {
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:foo)&quot;</span>),
@@ -440,10 +448,10 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_options_if_included_and_expand</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
-        <span class="ident">opts</span>.<span class="ident">multiline</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">multiline</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
+        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
+        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;abc&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?mix:abc)&quot;</span>),
@@ -453,8 +461,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_non_included_options_and_embed_expanded_modifiers_prefixed_by_a_minus_sign</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
-        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;abc&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?i-mx:abc)&quot;</span>),
@@ -464,7 +472,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_patterns_with_no_enabled_options_and_expand_with_all_modifiers_excluded</span>() {
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;abc&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:abc)&quot;</span>),
@@ -474,16 +482,16 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">embeds_the_pattern_after_the_options_after_parsing</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
-        <span class="ident">opts</span>.<span class="ident">multiline</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">multiline</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
+        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
+        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;ab+c&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?mix:ab+c)&quot;</span>),
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="ident">parsed</span>.<span class="ident">into_pattern</span>()),
         );
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;xyz&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:xyz)&quot;</span>),
@@ -493,14 +501,14 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_groups_with_options</span>() {
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?ix:foo)(?m:bar)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:(?ix:foo)(?m:bar))&quot;</span>),
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="ident">parsed</span>.<span class="ident">into_pattern</span>()),
         );
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
-        <span class="ident">opts</span>.<span class="ident">multiline</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">multiline</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?ix:foo)bar&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?m-ix:(?ix:foo)bar)&quot;</span>),
@@ -510,7 +518,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_a_single_group_with_options_as_the_main_regexp</span>() {
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?i:nothing outside this group)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?i-mx:nothing outside this group)&quot;</span>),
@@ -520,9 +528,9 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_uncaptured_groups</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
-        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
+        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;whatever(?:0d)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?ix-m:whatever(?:0d))&quot;</span>),
@@ -532,13 +540,13 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_lookahead_groups</span>() {
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?=5)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:(?=5))&quot;</span>),
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="ident">parsed</span>.<span class="ident">into_pattern</span>())
         );
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?!5)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:(?!5))&quot;</span>),
@@ -548,21 +556,21 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_to_fully_expanded_options_inline</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
-        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">ignore_case</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
+        <span class="ident">opts</span>.<span class="ident">extended</span> <span class="op">=</span> <span class="ident">RegexpOption</span>::<span class="ident">Enabled</span>;
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;ab+c&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?ix-m:ab+c)&quot;</span>),
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="ident">parsed</span>.<span class="ident">into_pattern</span>()),
         );
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?i:.)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?i-mx:.)&quot;</span>),
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="ident">parsed</span>.<span class="ident">into_pattern</span>()),
         );
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?:.)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:.)&quot;</span>),
@@ -572,7 +580,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parse_abusive_options_literals</span>() {
-        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">Options</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">parsed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">parse</span>(<span class="string">&quot;(?mmmmix-miiiix:)&quot;</span>, <span class="ident">opts</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">BString</span>::<span class="ident">from</span>(<span class="string">&quot;(?-mix:)&quot;</span>),

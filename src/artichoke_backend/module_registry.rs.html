@@ -83,9 +83,6 @@
 <span id="82">82</span>
 <span id="83">83</span>
 <span id="84">84</span>
-<span id="85">85</span>
-<span id="86">86</span>
-<span id="87">87</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
 
@@ -131,7 +128,7 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Any</span>,
     {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
         <span class="ident">state</span>.<span class="ident">modules</span>.<span class="ident">insert</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">spec</span>));
         <span class="prelude-val">Ok</span>(())
     }
@@ -144,7 +141,7 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Any</span>,
     {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">modules</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>();
         <span class="prelude-val">Ok</span>(<span class="ident">spec</span>)
     }
@@ -153,7 +150,7 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Any</span>,
     {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">modules</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">spec</span>) <span class="op">=</span> <span class="ident">spec</span> {
             <span class="ident">spec</span>
@@ -161,17 +158,14 @@
             <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
         };
         <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">rclass</span>();
-        <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">rclass</span>) <span class="op">=</span> <span class="ident">rclass</span>.<span class="ident">resolve</span>(<span class="ident">mrb</span>) {
-                    <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_module_value</span>(<span class="ident">rclass</span>.<span class="ident">as_mut</span>());
-                    <span class="prelude-val">Some</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">module</span>))
-                } <span class="kw">else</span> {
-                    <span class="prelude-val">None</span>
-                }
-            })<span class="question-mark">?</span>
-        };
-        <span class="prelude-val">Ok</span>(<span class="ident">module</span>)
+        <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">rclass</span>.<span class="ident">resolve</span>(<span class="ident">mrb</span>))<span class="question-mark">?</span> };
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">rclass</span>) <span class="op">=</span> <span class="ident">rclass</span> {
+            <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_sys_module_value</span>(<span class="ident">rclass</span>.<span class="ident">as_mut</span>()) };
+            <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">module</span>);
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">module</span>))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+        }
     }
 }
 </pre></div>

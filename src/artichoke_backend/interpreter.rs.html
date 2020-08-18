@@ -160,6 +160,8 @@
 <span id="159">159</span>
 <span id="160">160</span>
 <span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -184,7 +186,7 @@
 <span class="doccomment">/// initializes an [in memory virtual filesystem](crate::fs), and loads the</span>
 <span class="doccomment">/// [`extn`] extensions to Ruby Core and Stdlib.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="ident">interpreter_with_config</span>(<span class="ident">ArtichokeBackendReleaseMetadata</span>::<span class="ident">default</span>())
+    <span class="ident">interpreter_with_config</span>(<span class="ident">ArtichokeBackendReleaseMetadata</span>::<span class="ident">new</span>())
 }
 
 <span class="doccomment">/// Create and initialize an [`Artichoke`] interpreter with build metadata.</span>
@@ -203,7 +205,7 @@
     <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_open_allocf</span>(<span class="prelude-val">Some</span>(<span class="ident">sys</span>::<span class="ident">mrb_default_allocf</span>), <span class="ident">alloc_ud</span>) };
     <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Try initializing mrb interpreter&quot;</span>);
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">from_user_data</span>(<span class="ident">raw</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">InterpreterAllocError</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">from_user_data</span>(<span class="ident">raw</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">InterpreterAllocError</span>::<span class="ident">new</span>())<span class="question-mark">?</span> };
 
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">state</span>) <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">mrb</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">raw</span>.<span class="ident">as_mut</span>() } {
@@ -251,13 +253,15 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterpreterAllocError</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterpreterAllocError</span> {
+    <span class="ident">_private</span>: (),
+}
 
 <span class="kw">impl</span> <span class="ident">InterpreterAllocError</span> {
     <span class="doccomment">/// Constructs a new, default `InterpreterAllocError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 

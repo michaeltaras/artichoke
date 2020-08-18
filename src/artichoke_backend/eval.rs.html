@@ -227,6 +227,9 @@
 <span id="226">226</span>
 <span id="227">227</span>
 <span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsStr</span>;
@@ -251,8 +254,11 @@
     <span class="kw">fn</span> <span class="ident">eval</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">code</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Attempting eval of Ruby source&quot;</span>);
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">parser</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="ident">state</span>
+                .<span class="ident">parser</span>
+                .<span class="ident">as_mut</span>()
+                .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrbc_context</span> <span class="op">=</span> <span class="ident">parser</span>.<span class="ident">context_mut</span>();
             <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">protect</span>::<span class="ident">eval</span>(<span class="ident">mrb</span>, <span class="ident">context</span>, <span class="ident">code</span>))<span class="question-mark">?</span>
         };

@@ -314,7 +314,7 @@
             <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">extracted</span>.<span class="ident">state</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>)
+            <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())
         }
     }
 

@@ -391,6 +391,21 @@
 <span id="390">390</span>
 <span id="391">391</span>
 <span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -535,7 +550,10 @@
         }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rclass</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>
+                .<span class="ident">state</span>
+                .<span class="ident">as_ref</span>()
+                .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>
                 .<span class="ident">classes</span>
                 .<span class="ident">get</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()
@@ -558,7 +576,10 @@
 
         <span class="comment">// Copy data pointer out of the `mrb_value` box.</span>
         <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>
+            .<span class="ident">state</span>
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>
             .<span class="ident">classes</span>
             .<span class="ident">get</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()
@@ -607,7 +628,10 @@
         <span class="kw">let</span> <span class="ident">prior_gc_state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">disable_gc</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rclass</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>
+                .<span class="ident">state</span>
+                .<span class="ident">as_ref</span>()
+                .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>
                 .<span class="ident">classes</span>
                 .<span class="ident">get</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()
@@ -622,7 +646,10 @@
         <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">data</span>);
 
         <span class="comment">// Allocate a new `mrb_value` and inject the raw data pointer.</span>
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>
+            .<span class="ident">state</span>
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>
             .<span class="ident">classes</span>
             .<span class="ident">get</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()
@@ -651,7 +678,10 @@
         <span class="ident">into</span>: <span class="ident">Value</span>,
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>
+            .<span class="ident">state</span>
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">state</span>
             .<span class="ident">classes</span>
             .<span class="ident">get</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()

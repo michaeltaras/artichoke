@@ -347,6 +347,12 @@
 <span id="346">346</span>
 <span id="347">347</span>
 <span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>};
@@ -475,11 +481,11 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">IntegerString</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Constructs a new, default `IntegerString`.</span>
+    <span class="doccomment">/// Constructs a new, empty `IntegerString`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>(<span class="string">&quot;&quot;</span>)
     }
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
@@ -536,10 +542,16 @@
     <span class="ident">Negative</span>,
 }
 
+<span class="kw">impl</span> <span class="ident">Sign</span> {
+    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">Positive</span>
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Sign</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Positive</span>
+        <span class="self">Self</span>::<span class="ident">new</span>()
     }
 }
 
@@ -573,7 +585,7 @@
             <span class="self">Self</span>::<span class="ident">Initial</span>(<span class="ident">arg</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">digits</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
                 <span class="ident">digits</span>.<span class="ident">push</span>(<span class="ident">digit</span>);
-                <span class="self">Self</span>::<span class="ident">Accumulate</span>(<span class="ident">arg</span>, <span class="ident">Sign</span>::<span class="ident">default</span>(), <span class="ident">digits</span>)
+                <span class="self">Self</span>::<span class="ident">Accumulate</span>(<span class="ident">arg</span>, <span class="ident">Sign</span>::<span class="ident">new</span>(), <span class="ident">digits</span>)
             }
             <span class="self">Self</span>::<span class="ident">Sign</span>(<span class="ident">arg</span>, <span class="ident">sign</span>) <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">digits</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();

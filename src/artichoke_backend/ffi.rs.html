@@ -254,6 +254,10 @@
 <span id="253">253</span>
 <span id="254">254</span>
 <span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Functions for interacting directly with mruby structs from [`sys`].</span>
 <span class="doccomment">//!</span>
@@ -295,7 +299,7 @@
         <span class="ident">mrb</span>
     } <span class="kw">else</span> {
         <span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Attempted to extract Artichoke from null mrb_state&quot;</span>);
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>);
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>());
     };
 
     <span class="kw">let</span> <span class="ident">ud</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">mrb</span>.<span class="ident">as_mut</span>().<span class="ident">ud</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
@@ -307,7 +311,7 @@
             <span class="ident">state</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">State</span><span class="op">&gt;</span>()
         } <span class="kw">else</span> {
             <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Attempted to extract Artichoke from null mrb_state-&gt;ud pointer&quot;</span>);
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>());
         }
     };
 
@@ -321,13 +325,15 @@
 
 <span class="doccomment">/// Failed to extract Artichoke interpreter at an FFI boundary.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterpreterExtractError</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterpreterExtractError</span> {
+    <span class="ident">_private</span>: (),
+}
 
 <span class="kw">impl</span> <span class="ident">InterpreterExtractError</span> {
     <span class="doccomment">/// Constructs a new, default `InterpreterExtractError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
@@ -389,7 +395,7 @@
 <span class="doccomment">/// Unsupported platforms fallback to converting through `str`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes_to_os_str</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="ident">ConvertBytesError</span><span class="op">&gt;</span> {
-    <span class="ident">value</span>.<span class="ident">to_os_str</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConvertBytesError</span>)
+    <span class="ident">value</span>.<span class="ident">to_os_str</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConvertBytesError</span>::<span class="ident">new</span>())
 }
 
 <span class="doccomment">/// Convert a platform-specific [`OsStr`] to a byte slice.</span>
@@ -397,7 +403,7 @@
 <span class="doccomment">/// Unsupported platforms fallback to converting through `str`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">os_str_to_bytes</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ConvertBytesError</span><span class="op">&gt;</span> {
-    <span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>::<span class="ident">from_os_str</span>(<span class="ident">value</span>).<span class="ident">ok_or</span>(<span class="ident">ConvertBytesError</span>)
+    <span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>::<span class="ident">from_os_str</span>(<span class="ident">value</span>).<span class="ident">ok_or</span>(<span class="ident">ConvertBytesError</span>::<span class="ident">new</span>())
 }
 
 <span class="doccomment">/// Convert a platform-specific [`OsString`] to a byte vec.</span>
@@ -405,17 +411,19 @@
 <span class="doccomment">/// Unsupported platforms fallback to converting through `String`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">os_string_to_bytes</span>(<span class="ident">value</span>: <span class="ident">OsString</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">ConvertBytesError</span><span class="op">&gt;</span> {
-    <span class="ident">Vec</span>::<span class="ident">from_os_string</span>(<span class="ident">value</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConvertBytesError</span>)
+    <span class="ident">Vec</span>::<span class="ident">from_os_string</span>(<span class="ident">value</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConvertBytesError</span>::<span class="ident">new</span>())
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConvertBytesError</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConvertBytesError</span> {
+    <span class="ident">_private</span>: (),
+}
 
 <span class="kw">impl</span> <span class="ident">ConvertBytesError</span> {
     <span class="doccomment">/// Constructs a new, default `ConvertBytesError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">default</span>()
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
@@ -485,7 +493,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_user_data_null_pointer</span>() {
         <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">from_user_data</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>()) };
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">err</span>(), <span class="prelude-val">Some</span>(<span class="ident">InterpreterExtractError</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">err</span>(), <span class="prelude-val">Some</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>()));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -497,7 +505,7 @@
             (<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">ud</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>();
             <span class="ident">ffi</span>::<span class="ident">from_user_data</span>(<span class="ident">mrb</span>)
         };
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">err</span>(), <span class="prelude-val">Some</span>(<span class="ident">InterpreterExtractError</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">err</span>(), <span class="prelude-val">Some</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>()));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

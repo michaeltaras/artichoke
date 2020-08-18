@@ -24,16 +24,6 @@
 <span id="23">23</span>
 <span id="24">24</span>
 <span id="25">25</span>
-<span id="26">26</span>
-<span id="27">27</span>
-<span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::<span class="ident">Regexp</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">InterpreterExtractError</span>;
@@ -43,30 +33,20 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InterpreterExtractError</span>;
 
     <span class="kw">fn</span> <span class="ident">active_regexp_globals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">state</span>
-            .<span class="ident">as_ref</span>()
-            .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>
-            .<span class="ident">regexp</span>
-            .<span class="ident">active_regexp_globals</span>();
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">regexp</span>.<span class="ident">active_regexp_globals</span>();
         <span class="prelude-val">Ok</span>(<span class="ident">count</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">set_active_regexp_globals</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">count</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">state</span>
-            .<span class="ident">as_mut</span>()
-            .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>
-            .<span class="ident">regexp</span>
-            .<span class="ident">set_active_regexp_globals</span>(<span class="ident">count</span>);
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
+        <span class="ident">state</span>.<span class="ident">regexp</span>.<span class="ident">set_active_regexp_globals</span>(<span class="ident">count</span>);
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">fn</span> <span class="ident">clear_regexp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">state</span>
-            .<span class="ident">as_mut</span>()
-            .<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>)<span class="question-mark">?</span>
-            .<span class="ident">regexp</span>
-            .<span class="ident">clear</span>();
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
+        <span class="ident">state</span>.<span class="ident">regexp</span>.<span class="ident">clear</span>();
         <span class="prelude-val">Ok</span>(())
     }
 }
