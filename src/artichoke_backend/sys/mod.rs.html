@@ -139,6 +139,9 @@
 <span id="138">138</span>
 <span id="139">139</span>
 <span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unknown_lints</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
@@ -193,6 +196,7 @@
             }
             <span class="ident">Ruby</span>::<span class="ident">Float</span> <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">float</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mrb_sys_float_to_cdouble</span>(<span class="kw-2">*</span><span class="self">self</span>) };
+                <span class="comment">// dtoa can&#39;t write to `fmt::Write` streams.</span>
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">float</span>)
             }
             <span class="ident">type_tag</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;&lt;{}&gt;&quot;</span>, <span class="ident">type_tag</span>),
@@ -203,24 +207,27 @@
 <span class="doccomment">/// Version metadata `String` for embedded mruby.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_sys_mruby_version</span>(<span class="ident">verbose</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
-    <span class="kw">if</span> <span class="ident">verbose</span> {
-        <span class="comment">// Safety:</span>
-        <span class="comment">//</span>
-        <span class="comment">// - `MRUBY_RUBY_ENGINE` is already a `CString` pulled from bindgen.</span>
-        <span class="comment">// - `MRUBY_RUBY_VERSION` is already a `CString` pulled from bindgen.</span>
-        <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">MRUBY_RUBY_ENGINE</span>) };
-        <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">MRUBY_RUBY_VERSION</span>) };
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">engine</span>.<span class="ident">to_str</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;unknown&quot;</span>));
-        <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span>);
-        <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">version</span>.<span class="ident">to_str</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;0.0.0&quot;</span>));
-        <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot; [&quot;</span>);
-        <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>));
-        <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;]&#39;</span>);
-        <span class="ident">out</span>
-    } <span class="kw">else</span> {
-        <span class="ident">String</span>::<span class="ident">from</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>))
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">verbose</span> {
+        <span class="kw">return</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>));
     }
+    <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul</span>(<span class="ident">MRUBY_RUBY_ENGINE</span>);
+    <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="ident">engine</span>
+        .<span class="ident">ok</span>()
+        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> <span class="ident">cstr</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+        .<span class="ident">unwrap_or</span>(<span class="string">&quot;unknown&quot;</span>);
+    <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul</span>(<span class="ident">MRUBY_RUBY_VERSION</span>);
+    <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="ident">version</span>
+        .<span class="ident">ok</span>()
+        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> <span class="ident">cstr</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+        .<span class="ident">unwrap_or</span>(<span class="string">&quot;0.0.0&quot;</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">engine</span>);
+    <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span>);
+    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="ident">version</span>);
+    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="string">&quot; [&quot;</span>);
+    <span class="ident">out</span>.<span class="ident">push_str</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>));
+    <span class="ident">out</span>.<span class="ident">push</span>(<span class="string">&#39;]&#39;</span>);
+    <span class="ident">out</span>
 }
 
 <span class="doccomment">/// Debug representation for [`mrb_state`].</span>
@@ -234,12 +241,16 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function is infallible and guaranteed not to panic.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mrb_sys_state_debug</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">mrb_state</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
-    <span class="comment">// Safety:</span>
-    <span class="comment">//</span>
-    <span class="comment">// - `MRUBY_RUBY_ENGINE` is already a `CString` pulled from bindgen.</span>
-    <span class="comment">// - `MRUBY_RUBY_VERSION` is already a `CString` pulled from bindgen.</span>
-    <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">MRUBY_RUBY_ENGINE</span>) };
-    <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">MRUBY_RUBY_VERSION</span>) };
+    <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul</span>(<span class="ident">MRUBY_RUBY_ENGINE</span>);
+    <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="ident">engine</span>
+        .<span class="ident">ok</span>()
+        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> <span class="ident">cstr</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+        .<span class="ident">unwrap_or</span>(<span class="string">&quot;unknown&quot;</span>);
+    <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul</span>(<span class="ident">MRUBY_RUBY_VERSION</span>);
+    <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="ident">version</span>
+        .<span class="ident">ok</span>()
+        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> <span class="ident">cstr</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>())
+        .<span class="ident">unwrap_or</span>(<span class="string">&quot;0.0.0&quot;</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">debug</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
     <span class="comment">// Explicitly supressed error since we are only generating debug info and</span>
     <span class="comment">// cannot panic.</span>
@@ -250,25 +261,20 @@
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="macro">write</span><span class="macro">!</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">debug</span>,
         <span class="string">&quot;{} {} (v{}.{}.{}) interpreter at {:p}&quot;</span>,
-        <span class="ident">engine</span>.<span class="ident">to_str</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;unknown&quot;</span>),
-        <span class="ident">version</span>.<span class="ident">to_str</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;0.0.0&quot;</span>),
-        <span class="ident">MRUBY_RELEASE_MAJOR</span>,
-        <span class="ident">MRUBY_RELEASE_MINOR</span>,
-        <span class="ident">MRUBY_RELEASE_TEENY</span>,
-        <span class="ident">mrb</span>
+        <span class="ident">engine</span>, <span class="ident">version</span>, <span class="ident">MRUBY_RELEASE_MAJOR</span>, <span class="ident">MRUBY_RELEASE_MINOR</span>, <span class="ident">MRUBY_RELEASE_TEENY</span>, <span class="ident">mrb</span>
     );
     <span class="ident">debug</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">interpreter_debug</span>() {
         <span class="comment">// Since the introduction of Rust symbol table, `mrb_open` cannot be</span>
         <span class="comment">// called without an Artichoke `State`.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
             <span class="kw">let</span> <span class="ident">debug</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_state_debug</span>(<span class="ident">mrb</span>);
