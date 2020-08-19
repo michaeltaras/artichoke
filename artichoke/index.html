@@ -35,20 +35,19 @@ Ruby boxed values and Rust native types:</p>
 <span class="kw">let</span> <span class="ident">codepoint</span> <span class="op">=</span> <span class="ident">codepoint</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>)<span class="question-mark">?</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">128142</span>, <span class="ident">codepoint</span>);</pre></div>
 <h2 id="crate-features" class="section-header"><a href="#crate-features">Crate Features</a></h2>
+<p>All features are enabled by default.</p>
 <ul>
-<li><code>core-env-system</code> - <strong>Enabled</strong> by default. This activates the <code>std::env</code>
-backend for the <a href="https://ruby-doc.org/core-2.6.3/ENV.html"><code>ENV</code> object</a>. When this feature is
-disabled, access to the environ is emulated with an in-memory store.</li>
-<li><code>core-math-extra</code> - <strong>Enabled</strong> by default. This enables additional
-dependencies to implement some functions in the
-<a href="https://ruby-doc.org/core-2.6.3/Math.html"><code>Math</code> module</a>.  When this feature is disabled, these
-functions raise <code>NotImplementedError</code>.</li>
-<li><code>core-random</code> - <strong>Enabled</strong> by default. This includes an implementation of
-the <a href="https://ruby-doc.org/core-2.6.3/Random.html"><code>Random</code> class</a>. This feature includes additional
+<li><strong>core-env-system</strong> - Activates the <a href="https://doc.rust-lang.org/nightly/std/env/index.html"><code>std::env</code></a> backend
+for the <a href="https://ruby-doc.org/core-2.6.3/ENV.html"><code>ENV</code> object</a>. When this feature is disabled,
+access to the environ is emulated with an in-memory store.</li>
+<li><strong>core-math-extra</strong> - Activates additional dependencies to implement some
+functions in the <a href="https://ruby-doc.org/core-2.6.3/Math.html"><code>Math</code> module</a>.  When this feature is
+disabled, these functions raise <code>NotImplementedError</code>.</li>
+<li><strong>core-random</strong> - This includes an implementation of the
+<a href="https://ruby-doc.org/core-2.6.3/Random.html"><code>Random</code> class</a>. This feature includes additional
 dependencies. When this feature is disabled, Artichoke does not have
 support for generating psuedorandom numbers.</li>
-<li><code>stdlib-securerandom</code> - <strong>Enabled</strong> by default. This feature includes an
-implementation of a CSPRNG for the
+<li><strong>stdlib-securerandom</strong> - An implementation of a CSPRNG for the
 <a href="https://ruby-doc.org/stdlib-2.6.3/libdoc/securerandom/rdoc/SecureRandom.html"><code>SecureRandom</code> module</a>. This feature includes
 additional dependencies.  When this feature is disabled, the
 <code>SecureRandom</code> module is not present.</li>
