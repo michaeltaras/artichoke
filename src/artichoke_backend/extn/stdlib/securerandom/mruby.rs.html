@@ -162,17 +162,6 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
-<span id="164">164</span>
-<span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! FFI glue between the Rust trampolines and the mruby C interpreter.</span>
 
@@ -185,7 +174,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SecureRandomFile</span> {
+<span class="kw">struct</span> <span class="ident">SecureRandomFile</span> {
     <span class="comment">// Ensure this type is not constructable</span>
     <span class="ident">_private</span>: (),
 }
@@ -202,31 +191,27 @@
         <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">spec</span>)
             .<span class="ident">add_self_method</span>(
                 <span class="string">&quot;alphanumeric&quot;</span>,
-                <span class="ident">artichoke_securerandom_alphanumeric</span>,
+                <span class="ident">securerandom_alphanumeric</span>,
                 <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>),
             )<span class="question-mark">?</span>
-            .<span class="ident">add_self_method</span>(
-                <span class="string">&quot;base64&quot;</span>,
-                <span class="ident">artichoke_securerandom_base64</span>,
-                <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>),
-            )<span class="question-mark">?</span>
+            .<span class="ident">add_self_method</span>(<span class="string">&quot;base64&quot;</span>, <span class="ident">securerandom_base64</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>))<span class="question-mark">?</span>
             .<span class="ident">add_self_method</span>(
                 <span class="string">&quot;urlsafe_base64&quot;</span>,
-                <span class="ident">artichoke_securerandom_urlsafe_base64</span>,
+                <span class="ident">securerandom_urlsafe_base64</span>,
                 <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">2</span>),
             )<span class="question-mark">?</span>
-            .<span class="ident">add_self_method</span>(<span class="string">&quot;hex&quot;</span>, <span class="ident">artichoke_securerandom_hex</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>))<span class="question-mark">?</span>
+            .<span class="ident">add_self_method</span>(<span class="string">&quot;hex&quot;</span>, <span class="ident">securerandom_hex</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>))<span class="question-mark">?</span>
             .<span class="ident">add_self_method</span>(
                 <span class="string">&quot;random_bytes&quot;</span>,
-                <span class="ident">artichoke_securerandom_random_bytes</span>,
+                <span class="ident">securerandom_random_bytes</span>,
                 <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>),
             )<span class="question-mark">?</span>
             .<span class="ident">add_self_method</span>(
                 <span class="string">&quot;random_number&quot;</span>,
-                <span class="ident">artichoke_securerandom_random_number</span>,
+                <span class="ident">securerandom_random_number</span>,
                 <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>),
             )<span class="question-mark">?</span>
-            .<span class="ident">add_self_method</span>(<span class="string">&quot;uuid&quot;</span>, <span class="ident">artichoke_securerandom_uuid</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
+            .<span class="ident">add_self_method</span>(<span class="string">&quot;uuid&quot;</span>, <span class="ident">securerandom_uuid</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
             .<span class="ident">define</span>()<span class="question-mark">?</span>;
         <span class="ident">interp</span>.<span class="ident">def_module</span>::<span class="op">&lt;</span><span class="ident">securerandom</span>::<span class="ident">SecureRandom</span><span class="op">&gt;</span>(<span class="ident">spec</span>)<span class="question-mark">?</span>;
 
@@ -235,8 +220,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_alphanumeric</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_alphanumeric</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
@@ -251,8 +235,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_base64</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_base64</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
@@ -267,8 +250,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_urlsafe_base64</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_urlsafe_base64</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
@@ -286,8 +268,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_hex</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_hex</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
@@ -302,8 +283,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_random_bytes</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_random_bytes</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
@@ -318,8 +298,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_random_number</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_random_number</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
@@ -334,8 +313,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_securerandom_uuid</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">securerandom_uuid</span>(
     <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
     <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
 ) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {

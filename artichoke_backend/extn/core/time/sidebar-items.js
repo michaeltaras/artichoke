@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["backend",""],["mruby",""],["trampoline",""]],"struct":[["Time",""]]});
+initSidebarItems({"mod":[["backend",""],["mruby","FFI glue between the Rust trampolines and the mruby C interpreter."],["trampoline",""]],"struct":[["Time",""]]});

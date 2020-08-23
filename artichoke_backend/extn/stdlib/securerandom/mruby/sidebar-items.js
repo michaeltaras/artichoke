@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["init",""]],"struct":[["SecureRandomFile",""]]});
+initSidebarItems({"fn":[["init",""]]});
