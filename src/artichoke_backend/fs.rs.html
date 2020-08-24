@@ -348,7 +348,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Component</span>, <span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hybrid</span>;
@@ -370,7 +370,7 @@
 <span class="doccomment">/// This signature is equivalent to the signature for `File::require` as defined</span>
 <span class="doccomment">/// by the `artichoke-backend` implementation of</span>
 <span class="doccomment">/// [`LoadSources`](crate::core::LoadSources).</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ExtensionHook</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Exception</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ExtensionHook</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;native-filesystem-access&quot;</span>, <span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">test</span>, <span class="ident">doctest</span>))))]</span>

@@ -517,7 +517,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">acos</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -532,7 +532,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">acosh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -547,7 +547,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">asin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -562,7 +562,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">asinh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -577,7 +577,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">atan</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -593,7 +593,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">atan2</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>, <span class="ident">other</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -608,7 +608,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">atanh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -623,7 +623,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">cbrt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -638,7 +638,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">cos</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -653,7 +653,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">cosh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -668,7 +668,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">erf</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -683,7 +683,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">erfc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -698,7 +698,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">exp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -717,7 +717,7 @@
     });
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -732,7 +732,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">gamma</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -748,7 +748,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">hypot</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>, <span class="ident">other</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -765,7 +765,7 @@
         <span class="ident">math</span>::<span class="ident">ldexp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">fraction</span>, <span class="ident">exponent</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -784,7 +784,7 @@
     });
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -800,7 +800,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">log</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>, <span class="ident">base</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -815,7 +815,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">log10</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -830,7 +830,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">log2</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -845,7 +845,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">sin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -860,7 +860,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">sinh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -875,7 +875,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -890,7 +890,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">tan</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -905,7 +905,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">math</span>::<span class="ident">tanh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">result</span><span class="op">|</span> <span class="ident">guard</span>.<span class="ident">convert_mut</span>(<span class="ident">result</span>));
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 </pre></div>

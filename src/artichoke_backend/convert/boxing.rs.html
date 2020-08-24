@@ -415,7 +415,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">def</span>::<span class="ident">NotDefinedError</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::<span class="ident">Exception</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::<span class="ident">TypeError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">InterpreterExtractError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::{<span class="ident">MrbGarbageCollection</span>, <span class="ident">State</span> <span class="kw">as</span> <span class="ident">GcState</span>};
@@ -516,15 +516,15 @@
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unbox_from_value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
         <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span>,
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UnboxedValueGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="self">Self</span>::<span class="ident">Guarded</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span>;
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UnboxedValueGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="self">Self</span>::<span class="ident">Guarded</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">alloc_value</span>(<span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">alloc_value</span>(<span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">box_into_value</span>(
         <span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>,
         <span class="ident">into</span>: <span class="ident">Value</span>,
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span>;
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">free</span>(<span class="ident">data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
 }
@@ -541,7 +541,7 @@
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unbox_from_value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
         <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span>,
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UnboxedValueGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="self">Self</span>::<span class="ident">Guarded</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UnboxedValueGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="self">Self</span>::<span class="ident">Guarded</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// Make sure we have a Data otherwise extraction will fail.</span>
         <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() <span class="op">!=</span> <span class="ident">Ruby</span>::<span class="ident">Data</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;uninitialized &quot;</span>);
@@ -600,7 +600,7 @@
         <span class="prelude-val">Ok</span>(<span class="ident">UnboxedValueGuard</span>::<span class="ident">new</span>(<span class="ident">HeapAllocated</span>::<span class="ident">new</span>(<span class="ident">value</span>)))
     }
 
-    <span class="kw">fn</span> <span class="ident">alloc_value</span>(<span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">alloc_value</span>(<span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// Disable the GC to prevent a collection cycle from re-entering into</span>
         <span class="comment">// Rust code while the `State` is moved out of the `mrb`.</span>
         <span class="comment">//</span>
@@ -677,7 +677,7 @@
         <span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>,
         <span class="ident">into</span>: <span class="ident">Value</span>,
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">interp</span>
             .<span class="ident">state</span>
             .<span class="ident">as_ref</span>()

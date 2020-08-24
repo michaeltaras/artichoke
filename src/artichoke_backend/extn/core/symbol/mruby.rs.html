@@ -173,7 +173,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">all_symbols</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -189,7 +189,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">equal_equal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">sym</span>, <span class="ident">other</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -205,7 +205,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">ascii_casecmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">sym</span>, <span class="ident">other</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -221,7 +221,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">unicode_casecmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">sym</span>, <span class="ident">other</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -233,7 +233,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">sym</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -248,7 +248,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">inspect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">value</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -263,7 +263,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">length</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">sym</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 
@@ -275,7 +275,7 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">sym</span>);
     <span class="kw">match</span> <span class="ident">result</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">inner</span>(),
-        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">exception</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=&gt;</span> <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exception</span>),
     }
 }
 </pre></div>

@@ -162,6 +162,7 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
+<span id="164">164</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -170,7 +171,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class_registry</span>::<span class="ident">ClassRegistry</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">ConvertMut</span>, <span class="ident">Eval</span>, <span class="ident">ReleaseMetadata</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception</span>::{<span class="ident">Exception</span>, <span class="ident">RubyException</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::<span class="ident">Fatal</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>;
@@ -185,8 +186,9 @@
 <span class="doccomment">/// This function creates a new [`State`], embeds it in the [`sys::mrb_state`],</span>
 <span class="doccomment">/// initializes an [in memory virtual filesystem](crate::fs), and loads the</span>
 <span class="doccomment">/// [`extn`] extensions to Ruby Core and Stdlib.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="ident">interpreter_with_config</span>(<span class="ident">ArtichokeBackendReleaseMetadata</span>::<span class="ident">new</span>())
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">release_meta</span> <span class="op">=</span> <span class="ident">ArtichokeBackendReleaseMetadata</span>::<span class="ident">new</span>();
+    <span class="ident">interpreter_with_config</span>(<span class="ident">release_meta</span>)
 }
 
 <span class="doccomment">/// Create and initialize an [`Artichoke`] interpreter with build metadata.</span>
@@ -195,7 +197,7 @@
 <span class="doccomment">/// about how Artichoke was built. Otherwise, it behaves identically to the</span>
 <span class="doccomment">/// [`interpreter`] function.</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter_with_config</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">config</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter_with_config</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">config</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">ReleaseMetadata</span>,
 {
@@ -294,13 +296,13 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">InterpreterAllocError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Exception</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">InterpreterAllocError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exception</span>: <span class="ident">InterpreterAllocError</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">Box</span>::<span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">exception</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">InterpreterAllocError</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Exception</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">InterpreterAllocError</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exception</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">InterpreterAllocError</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">Box</span>::<span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RubyException</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">exception</span>))
     }

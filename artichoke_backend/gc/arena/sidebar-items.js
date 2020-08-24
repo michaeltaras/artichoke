@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["ArenaIndex","Interpreter guard that acts as a GC arena savepoint."],["IndexError","Failed to extract Artichoke interpreter at an FFI boundary."]]});
+initSidebarItems({"struct":[["ArenaIndex","Interpreter guard that acts as a GC arena savepoint."],["ArenaSavepointError","Failed to create a new GC arena savepoint."]]});

@@ -135,10 +135,6 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
@@ -146,7 +142,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::{<span class="ident">MrbGarbageCollection</span>, <span class="ident">State</span> <span class="kw">as</span> <span class="ident">GcState</span>};
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
@@ -160,7 +156,7 @@
     <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>,
     <span class="ident">first</span>: <span class="ident">Value</span>,
     <span class="ident">second</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">elem</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">element_reference</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">elem</span>))
@@ -172,7 +168,7 @@
     <span class="ident">first</span>: <span class="ident">Value</span>,
     <span class="ident">second</span>: <span class="ident">Value</span>,
     <span class="ident">third</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
@@ -192,7 +188,7 @@
     <span class="ident">result</span>
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pop</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pop</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
@@ -205,7 +201,7 @@
     <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
     <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>,
     <span class="ident">other</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
@@ -216,7 +212,7 @@
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>, <span class="ident">value</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>, <span class="ident">value</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
@@ -225,7 +221,7 @@
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_bang</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse_bang</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
@@ -234,7 +230,7 @@
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="prelude-val">Ok</span>(<span class="ident">array</span>.<span class="ident">len</span>())
 }
@@ -245,7 +241,7 @@
     <span class="ident">first</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
     <span class="ident">second</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
     <span class="ident">block</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Block</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">initialize</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>, <span class="ident">block</span>)<span class="question-mark">?</span>;
     <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">array</span>, <span class="ident">into</span>, <span class="ident">interp</span>)
 }
@@ -254,17 +250,13 @@
     <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
     <span class="ident">ary</span>: <span class="ident">Value</span>,
     <span class="kw-2">mut</span> <span class="ident">from</span>: <span class="ident">Value</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">from</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">from</span>.<span class="ident">clone</span>();
     <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">result</span>, <span class="ident">ary</span>, <span class="ident">interp</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shift</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>,
-    <span class="ident">count</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shift</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>, <span class="ident">count</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }

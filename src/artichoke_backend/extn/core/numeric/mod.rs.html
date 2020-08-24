@@ -137,11 +137,6 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">integer</span>::<span class="ident">Integer</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -221,13 +216,8 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [numeric]: https://ruby-doc.org/core-2.6.3/Numeric.html#method-i-coerce</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">coerce</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">x</span>: <span class="ident">Value</span>, <span class="ident">y</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Coercion</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">do_coerce</span>(
-        <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-        <span class="ident">x</span>: <span class="ident">Value</span>,
-        <span class="ident">y</span>: <span class="ident">Value</span>,
-        <span class="ident">depth</span>: <span class="ident">u8</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Coercion</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">coerce</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">x</span>: <span class="ident">Value</span>, <span class="ident">y</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Coercion</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">do_coerce</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">x</span>: <span class="ident">Value</span>, <span class="ident">y</span>: <span class="ident">Value</span>, <span class="ident">depth</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Coercion</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">depth</span> <span class="op">&gt;</span> <span class="ident">MAX_COERCE_DEPTH</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">SystemStackError</span>::<span class="ident">from</span>(<span class="string">&quot;stack level too deep&quot;</span>).<span class="ident">into</span>());
         }

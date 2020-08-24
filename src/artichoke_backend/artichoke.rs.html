@@ -381,7 +381,7 @@
 <span class="doccomment">/// pointer before re-entering the FFI boundary. This guard implements [`Drop`]</span>
 <span class="doccomment">/// to reserialize the `State` into the `mrb` once it goes out of scope.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `Guard` is passed directly to [`exception::raise`](crate::exception::raise).</span>
+<span class="doccomment">/// `Guard` is passed directly to [`error::raise`](crate::error::raise).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Artichoke</span>);
 

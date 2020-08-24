@@ -243,20 +243,14 @@
 <span id="242">242</span>
 <span id="243">243</span>
 <span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">arena</span>::<span class="ident">IndexError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">arena</span>;
 
-<span class="kw">use</span> <span class="ident">arena</span>::<span class="ident">ArenaIndex</span>;
+<span class="kw">use</span> <span class="ident">arena</span>::{<span class="ident">ArenaIndex</span>, <span class="ident">ArenaSavepointError</span>};
 
 <span class="doccomment">/// Garbage collection primitives for an mruby interpreter.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">MrbGarbageCollection</span> {
@@ -271,7 +265,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The returned [`ArenaIndex`] implements [`Drop`], so it is sufficient to</span>
     <span class="doccomment">/// let it go out of scope to ensure objects are eventually collected.</span>
-    <span class="kw">fn</span> <span class="ident">create_arena_savepoint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ArenaIndex</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">IndexError</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">create_arena_savepoint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ArenaIndex</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">ArenaSavepointError</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Retrieve the number of live objects on the interpreter heap.</span>
     <span class="doccomment">///</span>
@@ -309,7 +303,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MrbGarbageCollection</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
-    <span class="kw">fn</span> <span class="ident">create_arena_savepoint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ArenaIndex</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">IndexError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">create_arena_savepoint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ArenaIndex</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">ArenaSavepointError</span><span class="op">&gt;</span> {
         <span class="ident">ArenaIndex</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
@@ -328,17 +322,13 @@
 
     <span class="kw">fn</span> <span class="ident">incremental_gc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
-                <span class="ident">sys</span>::<span class="ident">mrb_incremental_gc</span>(<span class="ident">mrb</span>);
-            });
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_incremental_gc</span>(<span class="ident">mrb</span>));
         }
     }
 
     <span class="kw">fn</span> <span class="ident">full_gc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
-                <span class="ident">sys</span>::<span class="ident">mrb_full_gc</span>(<span class="ident">mrb</span>);
-            });
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_full_gc</span>(<span class="ident">mrb</span>));
         }
     }
 

@@ -360,23 +360,19 @@
 <span id="359">359</span>
 <span id="360">360</span>
 <span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
-<span id="365">365</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Time</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
 <span class="comment">// Constructor</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">now</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">now</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Time</span>::<span class="ident">now</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Time</span>::<span class="ident">alloc_value</span>(<span class="ident">now</span>, <span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Value</span><span class="op">&gt;</span>,
 {
@@ -385,7 +381,7 @@
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mkutc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mkutc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Value</span><span class="op">&gt;</span>,
 {
@@ -394,7 +390,7 @@
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mktime</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mktime</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Value</span><span class="op">&gt;</span>,
 {
@@ -405,46 +401,46 @@
 
 <span class="comment">// Core</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_int</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_int</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_float</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_float</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_rational</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_rational</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="comment">// Requires `Rational`</span>
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">other</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eql</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eql</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">other</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">args</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Value</span><span class="op">&gt;</span>,
 {
@@ -454,11 +450,7 @@
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_copy</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">time</span>: <span class="ident">Value</span>,
-    <span class="ident">from</span>: <span class="ident">Value</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_copy</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">from</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="comment">// Time does not support clone. This is what the implementation of this</span>
     <span class="comment">// function should be:</span>
     <span class="comment">//</span>
@@ -478,14 +470,14 @@
     <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
     <span class="ident">time</span>: <span class="ident">Value</span>,
     <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">offset</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mutate_to_utc</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mutate_to_utc</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
@@ -495,14 +487,14 @@
     <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
     <span class="ident">time</span>: <span class="ident">Value</span>,
     <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">offset</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_utc</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_utc</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
@@ -510,19 +502,19 @@
 
 <span class="comment">// Inspect</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asctime</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asctime</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_array</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_array</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
@@ -530,14 +522,14 @@
 
 <span class="comment">// Math</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plus</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plus</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">other</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minus</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minus</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">other</span>;
@@ -546,7 +538,7 @@
 
 <span class="comment">// Coarse math</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">succ</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">succ</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
@@ -556,7 +548,7 @@
     <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
     <span class="ident">time</span>: <span class="ident">Value</span>,
     <span class="ident">num_digits</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">num_digits</span>;
@@ -565,75 +557,75 @@
 
 <span class="comment">// Datetime</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">second</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">second</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">second</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">second</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minute</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minute</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">minute</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">minute</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">minute</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hour</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hour</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">hour</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">hour</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">hour</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">day</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">day</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">day</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">day</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">day</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">month</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">month</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">month</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">month</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">month</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">year</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">year</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">year</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weekday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weekday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">weekday</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">weekday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">weekday</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">year_day</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">year_day</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year_day</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">year_day</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year_day</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_dst</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_dst</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timezone</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timezone</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">utc_offset</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">utc_offset</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
@@ -641,7 +633,7 @@
 
 <span class="comment">// Timezone mode</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_utc</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_utc</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
@@ -649,49 +641,49 @@
 
 <span class="comment">// Day of week</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sunday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sunday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_sunday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_monday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_monday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_monday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_tuesday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_tuesday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_tuesday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_wednesday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_wednesday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_wednesday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_thursday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_thursday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_thursday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_friday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_friday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_friday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_saturday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_saturday</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">is_saturday</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">year</span>);
@@ -700,21 +692,21 @@
 
 <span class="comment">// Unix time value</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">microsecond</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">microsecond</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">microsecond</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">microsecond</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">microsecond</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nanosecond</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nanosecond</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">time</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">nanosecond</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">inner</span>().<span class="ident">nanosecond</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">nanosecond</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subsec</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subsec</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="comment">// Requires `Rational`</span>
@@ -723,7 +715,7 @@
 
 <span class="comment">// Time format</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strftime</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">format</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strftime</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">format</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">format</span>;

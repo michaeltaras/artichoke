@@ -153,7 +153,6 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
-<span id="155">155</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -193,7 +192,7 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! use artichoke::prelude::*;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # fn example() -&gt; Result&lt;(), Exception&gt; {</span>
+<span class="doccomment">//! # fn example() -&gt; Result&lt;(), Error&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke::interpreter()?;</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;2 + 5&quot;)?;</span>
 <span class="doccomment">//! # Ok(())</span>
@@ -207,7 +206,7 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! use artichoke::prelude::*;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # fn example() -&gt; Result&lt;(), Exception&gt; {</span>
+<span class="doccomment">//! # fn example() -&gt; Result&lt;(), Error&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke::interpreter()?;</span>
 <span class="doccomment">//! let s = interp.convert_mut(&quot;💎&quot;);</span>
 <span class="doccomment">//! let codepoint = s.funcall(&amp;mut interp, &quot;ord&quot;, &amp;[] /* args */, None /* block */)?;</span>
@@ -282,11 +281,10 @@
 <span class="doccomment">/// The prelude may grow over time as additional items see ubiquitous use.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span> {
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
-
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>;
 }
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">Exception</span>};
+<span class="kw">use</span> <span class="ident">artichoke_backend</span>::<span class="ident">release_metadata</span>::<span class="ident">ReleaseMetadata</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">artichoke_backend</span>::{<span class="ident">Artichoke</span>, <span class="ident">Error</span>};
 
 <span class="doccomment">/// Create a new Artichoke Ruby interpreter.</span>
 <span class="doccomment">///</span>
@@ -297,8 +295,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If Artichoke Ruby Core or Standard Library cannot be initialized, an error</span>
 <span class="doccomment">/// is returned.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">release</span> <span class="op">=</span> <span class="ident">prelude</span>::<span class="ident">ReleaseMetadata</span>::<span class="ident">new</span>()
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">release</span> <span class="op">=</span> <span class="ident">ReleaseMetadata</span>::<span class="ident">new</span>()
         .<span class="ident">with_ruby_copyright</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_COPYRIGHT&quot;</span>))
         .<span class="ident">with_ruby_description</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_DESCRIPTION&quot;</span>))
         .<span class="ident">with_ruby_engine_version</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>))

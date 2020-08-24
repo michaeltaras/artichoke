@@ -334,14 +334,14 @@
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">srand</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="ident">Seed</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">srand</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="ident">Seed</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">old_seed</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">prng_seed</span>()<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">prng_reseed</span>(<span class="ident">seed</span>.<span class="ident">to_reseed</span>())<span class="question-mark">?</span>;
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_wrap</span>)]</span>
     <span class="prelude-val">Ok</span>(<span class="ident">old_seed</span> <span class="kw">as</span> <span class="ident">Int</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">size</span>) {
         <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
         <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=&gt;</span> {
@@ -388,12 +388,12 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="ident">Seed</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="ident">Seed</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">backend</span>::<span class="ident">rand</span>::<span class="ident">new</span>(<span class="ident">seed</span>.<span class="ident">to_reseed</span>())))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eql</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eql</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">other</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Random</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">other</span>, <span class="ident">interp</span>) } {
             <span class="kw">let</span> <span class="ident">this_seed</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">seed</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">other_seed</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">inner</span>().<span class="ident">seed</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
@@ -403,7 +403,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">size</span>) {
             <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
             <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=&gt;</span> {
@@ -419,7 +419,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
         <span class="ident">max</span>: <span class="ident">RandomNumberMax</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RandomNumber</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RandomNumber</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">max</span> {
             <span class="ident">RandomNumberMax</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="op">!</span><span class="ident">max</span>.<span class="ident">is_finite</span>() <span class="op">=&gt;</span> {
                 <span class="comment">// NOTE: MRI returns `Errno::EDOM` exception class.</span>
@@ -455,7 +455,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Exception</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">seed</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_wrap</span>, <span class="ident">clippy</span>::<span class="ident">cast_sign_loss</span>)]</span>
         <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed</span> <span class="kw">as</span> <span class="ident">Int</span>;
@@ -478,7 +478,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">RandomNumberMax</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Exception</span>;
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
     <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RandomNumberMax</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">optional</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert</span>(<span class="ident">max</span>)<span class="question-mark">?</span>;
@@ -487,7 +487,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TryConvertMut</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, <span class="ident">RandomNumberMax</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Exception</span>;
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
     <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RandomNumberMax</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">max</span>) <span class="op">=</span> <span class="ident">max</span> {
