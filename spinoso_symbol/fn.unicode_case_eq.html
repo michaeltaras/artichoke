@@ -4,8 +4,8 @@ comparison for equality.</p>
 <p>The byteslice associated with each symbol is resolved via the given
 interner. Unresolved symbols are compared as if they resolve to <code>&amp;[]</code>.</p>
 <p>This comparison function attempts to convert each symbol's byte content to a
-UTF-8 <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html" title="`str`"><code>str</code></a>. If both symbols resolve to UTF-8 contents, <a href="https://www.w3.org/International/wiki/Case_folding">Unicode case
-folding</a> is used when comparing the contents and this function returns
+UTF-8 <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html"><code>str</code></a>. If both symbols resolve to UTF-8 contents, <a href="https://www.w3.org/International/wiki/Case_folding">Unicode
+case folding</a> is used when comparing the contents and this function returns
 <code>Ok(Some(bool))</code>. If neither symbol resolves to UTF-8 contents, this
 function falls back to <a href="../spinoso_symbol/fn.ascii_casecmp.html"><code>ascii_casecmp</code></a> and returns <code>Ok(Some(bool))</code>.
 Otherwise, the two symbols have byte contents with different encodings and

@@ -77,8 +77,8 @@
 <span class="doccomment">/// interner. Unresolved symbols are compared as if they resolve to `&amp;[]`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This comparison function attempts to convert each symbol&#39;s byte content to a</span>
-<span class="doccomment">/// UTF-8 [`str`]. If both symbols resolve to UTF-8 contents, [Unicode case</span>
-<span class="doccomment">/// folding] is used when comparing the contents and this function returns</span>
+<span class="doccomment">/// UTF-8 [`str`](prim@str). If both symbols resolve to UTF-8 contents, [Unicode</span>
+<span class="doccomment">/// case folding] is used when comparing the contents and this function returns</span>
 <span class="doccomment">/// `Ok(Some(bool))`. If neither symbol resolves to UTF-8 contents, this</span>
 <span class="doccomment">/// function falls back to [`ascii_casecmp`] and returns `Ok(Some(bool))`.</span>
 <span class="doccomment">/// Otherwise, the two symbols have byte contents with different encodings and</span>
