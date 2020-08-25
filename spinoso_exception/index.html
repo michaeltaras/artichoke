@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `spinoso_exception` crate."><meta name="keywords" content="rust, rustlang, rust-lang, spinoso_exception"><title>spinoso_exception - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../spinoso_exception/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate spinoso_exception</p><div class='block version'><p>Version 0.1.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all spinoso_exception's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'spinoso_exception', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/spinoso_exception/lib.rs.html#1-201' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>spinoso_exception</a></span></h1><div class='docblock'><p>Built in Ruby exception types.</p>
+<p>Descendants of class <a href="https://ruby-doc.org/core-2.6.3/Exception.html"><code>Exception</code></a> are used to communicate between
+<a href="https://ruby-doc.org/core-2.6.3/Kernel.html#method-i-raise"><code>Kernel#raise</code></a> and <code>rescue</code> statements in <code>begin ... end</code> blocks.
+Exception objects carry information about the exception – its type (the
+exception's class name), an optional descriptive string, and optional
+traceback information. <code>Exception</code> subclasses may add additional information
+like <a href="https://ruby-doc.org/core-2.6.3/NameError.html#method-i-name"><code>NameError#name</code></a>.</p>
+<h1 id="ruby-exception-hierarchy" class="section-header"><a href="#ruby-exception-hierarchy">Ruby Exception Hierarchy</a></h1>
+<p>The built-in subclasses of <a href="https://ruby-doc.org/core-2.6.3/Exception.html"><code>Exception</code></a> are:</p>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/NoMemoryError.html"><code>NoMemoryError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/ScriptError.html"><code>ScriptError</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/LoadError.html"><code>LoadError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/NotImplementedError.html"><code>NotImplementedError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/SyntaxError.html"><code>SyntaxError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/SecurityError.html"><code>SecurityError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/SignalException.html"><code>SignalException</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/Interrupt.html"><code>Interrupt</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/StandardError.html"><code>StandardError</code></a> — default for <code>rescue</code>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/ArgumentError.html"><code>ArgumentError</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/UncaughtThrowError.html"><code>UncaughtThrowError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/EncodingError.html"><code>EncodingError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/FiberError.html"><code>FiberError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/IOError.html"><code>IOError</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/EOFError.html"><code>EOFError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/IndexError.html"><code>IndexError</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/KeyError.html"><code>KeyError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/StopIteration.html"><code>StopIteration</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/LocalJumpError.html"><code>LocalJumpError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/NameError.html"><code>NameError</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/NoMethodError.html"><code>NoMethodError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/RangeError.html"><code>RangeError</code></a>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/FloatDomainError.html"><code>FloatDomainError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/RegexpError.html"><code>RegexpError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/RuntimeError.html"><code>RuntimeError</code></a> — default for <code>raise</code>
+<ul>
+<li><a href="https://ruby-doc.org/core-2.6.3/FrozenError.html"><code>FrozenError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/SystemCallError.html"><code>SystemCallError</code></a>
+<ul>
+<li><code>Errno::*</code></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/ThreadError.html"><code>ThreadError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/TypeError.html"><code>TypeError</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/ZeroDivisionError.html"><code>ZeroDivisionError</code></a></li>
+</ul>
+</li>
+<li><a href="https://ruby-doc.org/core-2.6.3/SystemExit.html"><code>SystemExit</code></a></li>
+<li><a href="https://ruby-doc.org/core-2.6.3/SystemStackError.html"><code>SystemStackError</code></a></li>
+<li><code>fatal</code> — impossible to rescue</li>
+</ul>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="core/index.html" title='spinoso_exception::core mod'>core</a></td><td class='docblock-short'><p>Ruby exception class implementations.</p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.ArgumentError.html" title='spinoso_exception::ArgumentError struct'>ArgumentError</a></td><td class='docblock-short'><p>Ruby <code>ArgumentError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.EOFError.html" title='spinoso_exception::EOFError struct'>EOFError</a></td><td class='docblock-short'><p>Ruby <code>EOFError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.EncodingError.html" title='spinoso_exception::EncodingError struct'>EncodingError</a></td><td class='docblock-short'><p>Ruby <code>EncodingError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Exception.html" title='spinoso_exception::Exception struct'>Exception</a></td><td class='docblock-short'><p>Ruby <code>Exception</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Fatal.html" title='spinoso_exception::Fatal struct'>Fatal</a></td><td class='docblock-short'><p>Ruby <code>fatal</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.FiberError.html" title='spinoso_exception::FiberError struct'>FiberError</a></td><td class='docblock-short'><p>Ruby <code>FiberError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.FloatDomainError.html" title='spinoso_exception::FloatDomainError struct'>FloatDomainError</a></td><td class='docblock-short'><p>Ruby <code>FloatDomainError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.FrozenError.html" title='spinoso_exception::FrozenError struct'>FrozenError</a></td><td class='docblock-short'><p>Ruby <code>FrozenError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.IOError.html" title='spinoso_exception::IOError struct'>IOError</a></td><td class='docblock-short'><p>Ruby <code>IOError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.IndexError.html" title='spinoso_exception::IndexError struct'>IndexError</a></td><td class='docblock-short'><p>Ruby <code>IndexError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Interrupt.html" title='spinoso_exception::Interrupt struct'>Interrupt</a></td><td class='docblock-short'><p>Ruby <code>Interrupt</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.KeyError.html" title='spinoso_exception::KeyError struct'>KeyError</a></td><td class='docblock-short'><p>Ruby <code>KeyError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.LoadError.html" title='spinoso_exception::LoadError struct'>LoadError</a></td><td class='docblock-short'><p>Ruby <code>LoadError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.LocalJumpError.html" title='spinoso_exception::LocalJumpError struct'>LocalJumpError</a></td><td class='docblock-short'><p>Ruby <code>LocalJumpError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.NameError.html" title='spinoso_exception::NameError struct'>NameError</a></td><td class='docblock-short'><p>Ruby <code>NameError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.NoMemoryError.html" title='spinoso_exception::NoMemoryError struct'>NoMemoryError</a></td><td class='docblock-short'><p>Ruby <code>NoMemoryError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.NoMethodError.html" title='spinoso_exception::NoMethodError struct'>NoMethodError</a></td><td class='docblock-short'><p>Ruby <code>NoMethodError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.NotImplementedError.html" title='spinoso_exception::NotImplementedError struct'>NotImplementedError</a></td><td class='docblock-short'><p>Ruby <code>NotImplementedError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RangeError.html" title='spinoso_exception::RangeError struct'>RangeError</a></td><td class='docblock-short'><p>Ruby <code>RangeError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RegexpError.html" title='spinoso_exception::RegexpError struct'>RegexpError</a></td><td class='docblock-short'><p>Ruby <code>RegexpError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RuntimeError.html" title='spinoso_exception::RuntimeError struct'>RuntimeError</a></td><td class='docblock-short'><p>Ruby <code>RuntimeError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ScriptError.html" title='spinoso_exception::ScriptError struct'>ScriptError</a></td><td class='docblock-short'><p>Ruby <code>ScriptError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SecurityError.html" title='spinoso_exception::SecurityError struct'>SecurityError</a></td><td class='docblock-short'><p>Ruby <code>SecurityError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SignalException.html" title='spinoso_exception::SignalException struct'>SignalException</a></td><td class='docblock-short'><p>Ruby <code>SignalException</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.StandardError.html" title='spinoso_exception::StandardError struct'>StandardError</a></td><td class='docblock-short'><p>Ruby <code>StandardError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.StopIteration.html" title='spinoso_exception::StopIteration struct'>StopIteration</a></td><td class='docblock-short'><p>Ruby <code>StopIteration</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SyntaxError.html" title='spinoso_exception::SyntaxError struct'>SyntaxError</a></td><td class='docblock-short'><p>Ruby <code>SyntaxError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SystemCallError.html" title='spinoso_exception::SystemCallError struct'>SystemCallError</a></td><td class='docblock-short'><p>Ruby <code>SystemCallError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SystemExit.html" title='spinoso_exception::SystemExit struct'>SystemExit</a></td><td class='docblock-short'><p>Ruby <code>SystemExit</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SystemStackError.html" title='spinoso_exception::SystemStackError struct'>SystemStackError</a></td><td class='docblock-short'><p>Ruby <code>SystemStackError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ThreadError.html" title='spinoso_exception::ThreadError struct'>ThreadError</a></td><td class='docblock-short'><p>Ruby <code>ThreadError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.TypeError.html" title='spinoso_exception::TypeError struct'>TypeError</a></td><td class='docblock-short'><p>Ruby <code>TypeError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.UncaughtThrowError.html" title='spinoso_exception::UncaughtThrowError struct'>UncaughtThrowError</a></td><td class='docblock-short'><p>Ruby <code>UncaughtThrowError</code> error type.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ZeroDivisionError.html" title='spinoso_exception::ZeroDivisionError struct'>ZeroDivisionError</a></td><td class='docblock-short'><p>Ruby <code>ZeroDivisionError</code> error type.</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.RubyException.html" title='spinoso_exception::RubyException trait'>RubyException</a></td><td class='docblock-short'><p>Polymorphic exception type that corresponds to Ruby's <code>Exception</code>.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "spinoso_exception";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
