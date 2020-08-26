@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["serde_yaml"] = [{"text":"impl&lt;'de&gt; Deserializer&lt;'de&gt; for Number","synthetic":false,"types":[]},{"text":"impl&lt;'de, 'a&gt; Deserializer&lt;'de&gt; for &amp;'a Number","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserializer&lt;'de&gt; for Value","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
