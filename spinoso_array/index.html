@@ -66,10 +66,10 @@ panicking, slicing APIs operate until the end of the vector or return <code>&amp
 Mutating APIs extend <code>Array</code>s on out of bounds access.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table><tr class='module-item'><td><a class="struct" href="struct.Array.html" title='spinoso_array::Array struct'>Array</a></td><td class='docblock-short'><p>A contiguous growable array type based on <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html"><code>Vec&lt;T&gt;</code></a>.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.SmallArray.html" title='spinoso_array::SmallArray struct'>SmallArray</a></td><td class='docblock-short'><span class="stab portability"><code>feature="small-array"</code></span><p>A contiguous growable array type based on
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SmallArray.html" title='spinoso_array::SmallArray struct'>SmallArray</a></td><td class='docblock-short'><span class="stab portability" title="This is supported on crate feature `small-array` only"><code>small-array</code></span><p>A contiguous growable array type based on
 <a href="../smallvec/struct.SmallVec.html"><code>SmallVec&lt;[T; INLINE_CAPACITY]&gt;</code></a> that implements the small vector
 optimization.</p>
 </td></tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
-<table><tr class='module-item'><td><a class="constant" href="constant.INLINE_CAPACITY.html" title='spinoso_array::INLINE_CAPACITY constant'>INLINE_CAPACITY</a></td><td class='docblock-short'><span class="stab portability"><code>feature="small-array"</code></span><p>Vectors that implement the small vector optimization can store 8 elements
+<table><tr class='module-item'><td><a class="constant" href="constant.INLINE_CAPACITY.html" title='spinoso_array::INLINE_CAPACITY constant'>INLINE_CAPACITY</a></td><td class='docblock-short'><span class="stab portability" title="This is supported on crate feature `small-array` only"><code>small-array</code></span><p>Vectors that implement the small vector optimization can store 8 elements
 inline without a heap allocation.</p>
 </td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "spinoso_array";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
