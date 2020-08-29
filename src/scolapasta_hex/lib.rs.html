@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `spinoso-securerandom/src/hex.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>hex.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../spinoso_securerandom/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `scolapasta-hex/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../scolapasta_hex/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -774,13 +774,96 @@
 <span id="773">773</span>
 <span id="774">774</span>
 <span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">cargo</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">non_ascii_literal</span>))]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unknown_lints</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_debug_implementations</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">rust_2018_idioms</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">trivial_casts</span>, <span class="ident">trivial_numeric_casts</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">unused_qualifications</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">variant_size_differences</span>)]</span>
+<span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
+<span class="comment">// Enable feature callouts in generated documentation:</span>
+<span class="comment">// https://doc.rust-lang.org/beta/unstable-book/language-features/doc-cfg.html</span>
+<span class="comment">//</span>
+<span class="comment">// This approach is borrowed from tokio.</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">feature</span>(<span class="ident">doc_alias</span>))]</span>
+
 <span class="doccomment">//! Functions for encoding sequences of bytes into base 16 hex encoding.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [Base 16 encoding] is an encoding scheme that uses a 16 character ASCII</span>
 <span class="doccomment">//! alphabet for encoding arbitrary octets.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! This module offers encoders that:</span>
+<span class="doccomment">//! This crate offers encoders that:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! - Allocate and return a [`String`]: [`encode`].</span>
 <span class="doccomment">//! - Encode into an already allocated [`String`]: [`encode_into`].</span>
@@ -792,25 +875,66 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! let data = b&quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">//! let mut buf = String::new();</span>
-<span class="doccomment">//! spinoso_securerandom::hex::encode_into(data, &amp;mut buf);</span>
+<span class="doccomment">//! scolapasta_hex::encode_into(data, &amp;mut buf);</span>
 <span class="doccomment">//! assert_eq!(buf, &quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This module also exposes an iterator:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use spinoso_securerandom::hex::Hex;</span>
+<span class="doccomment">//! # use scolapasta_hex::Hex;</span>
 <span class="doccomment">//! let data = &quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">//! let iter = Hex::from(data);</span>
 <span class="doccomment">//! assert_eq!(iter.collect::&lt;String&gt;(), &quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! # `no_std`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This crate is `no_std` compatible when built without the `std` feature. This</span>
+<span class="doccomment">//! crate optionally depends on [`alloc`] when the `alloc` feature is enabled.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Crate features</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! All features are enabled by default.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - **std** - Enables a dependency on the Rust Standard Library. Activating</span>
+<span class="doccomment">//!   this feature enables APIs that require [`std::io::Write`]. Activating this</span>
+<span class="doccomment">//!   feature also activates the **alloc** feature.</span>
+<span class="doccomment">//! - **alloc** - Enables a dependency on the Rust [`alloc`] crate. Activating</span>
+<span class="doccomment">//!   this feature enables APIs that require [`alloc::string::String`].</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! [Base 16 encoding]: https://tools.ietf.org/html/rfc4648#section-8</span>
 <span class="doccomment">//! [`io::Write`]: https://doc.rust-lang.org/std/io/trait.Write.html</span>
 
+<span class="comment">// `spinoso-symbol` is a `no_std` crate unless the `std` feature is enabled.</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+
+<span class="comment">// Having access to `String` in tests is convenient to collect `Inspect`</span>
+<span class="comment">// iterators for whole content comparisons.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">test</span>, <span class="ident">doctest</span>))]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
+
+<span class="comment">// Ensure code blocks in README.md compile</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">readme</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+        <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>]</span>
+        <span class="kw">mod</span> <span class="ident">readme</span> {}
+    };
+    () <span class="op">=&gt;</span> {
+        <span class="macro">readme</span><span class="macro">!</span>(<span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>));
+    };
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="macro">readme</span><span class="macro">!</span>();
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">string</span>::<span class="ident">String</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>::{<span class="ident">FusedIterator</span>, <span class="ident">Peekable</span>};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">slice</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">str</span>::<span class="ident">Chars</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
 <span class="doccomment">/// Encode arbitrary octets as base16. Returns a [`String`].</span>
@@ -821,10 +945,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// let data = b&quot;Artichoke Ruby&quot;;</span>
-<span class="doccomment">/// let buf = spinoso_securerandom::hex::encode(data);</span>
+<span class="doccomment">/// let buf = scolapasta_hex::encode(data);</span>
 <span class="doccomment">/// assert_eq!(buf, &quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
     <span class="ident">encode_into</span>(<span class="ident">data</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
@@ -843,14 +969,16 @@
 <span class="doccomment">/// # use alloc::string::String;</span>
 <span class="doccomment">/// let data = b&quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">/// let mut buf = String::new();</span>
-<span class="doccomment">/// spinoso_securerandom::hex::encode_into(data, &amp;mut buf);</span>
+<span class="doccomment">/// scolapasta_hex::encode_into(data, &amp;mut buf);</span>
 <span class="doccomment">/// assert_eq!(buf, &quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_into</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">String</span>) {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">as_ref</span>();
     <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">Hex</span>::<span class="ident">from</span>(<span class="ident">data</span>);
-    <span class="ident">buf</span>.<span class="ident">reserve</span>(<span class="ident">iter</span>.<span class="ident">clone</span>().<span class="ident">count</span>());
+    <span class="ident">buf</span>.<span class="ident">reserve</span>(<span class="ident">iter</span>.<span class="ident">len</span>());
     <span class="kw">for</span> <span class="ident">ch</span> <span class="kw">in</span> <span class="ident">iter</span> {
         <span class="ident">buf</span>.<span class="ident">push</span>(<span class="ident">ch</span>);
     }
@@ -868,7 +996,7 @@
 <span class="doccomment">/// # use alloc::string::String;</span>
 <span class="doccomment">/// let data = b&quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">/// let mut buf = String::new();</span>
-<span class="doccomment">/// spinoso_securerandom::hex::format_into(data, &amp;mut buf);</span>
+<span class="doccomment">/// scolapasta_hex::format_into(data, &amp;mut buf);</span>
 <span class="doccomment">/// assert_eq!(buf, &quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
@@ -903,7 +1031,7 @@
 <span class="doccomment">/// # use alloc::vec::Vec;</span>
 <span class="doccomment">/// let data = b&quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">/// let mut buf = Vec::new();</span>
-<span class="doccomment">/// spinoso_securerandom::hex::write_into(data, &amp;mut buf);</span>
+<span class="doccomment">/// scolapasta_hex::write_into(data, &amp;mut buf);</span>
 <span class="doccomment">/// assert_eq!(buf, b&quot;4172746963686f6b652052756279&quot;.to_vec());</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
@@ -911,6 +1039,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the destination returns an error, that error is returned.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_into</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">W</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="kw-2">mut</span> <span class="ident">dest</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
@@ -932,7 +1062,7 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # use spinoso_securerandom::hex::Hex;</span>
+<span class="doccomment">/// # use scolapasta_hex::Hex;</span>
 <span class="doccomment">/// let data = &quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">/// let iter = Hex::from(data);</span>
 <span class="doccomment">/// assert_eq!(iter.collect::&lt;String&gt;(), &quot;4172746963686f6b652052756279&quot;);</span>
@@ -940,7 +1070,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Hex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">iter</span>: <span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;</span>,
-    <span class="ident">next</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="ident">escaped_byte</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Peekable</span><span class="op">&lt;</span><span class="ident">EscapedByte</span><span class="op">&gt;&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Hex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
@@ -949,7 +1079,7 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use spinoso_securerandom::hex::Hex;</span>
+    <span class="doccomment">/// # use scolapasta_hex::Hex;</span>
     <span class="doccomment">/// let iter = Hex::from(&quot;&quot;);</span>
     <span class="doccomment">/// assert_eq!(iter.len(), 0);</span>
     <span class="doccomment">///</span>
@@ -965,11 +1095,11 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">next</span>.<span class="ident">is_some</span>() {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">escaped_byte</span>.<span class="ident">is_some</span>() {
             <span class="kw">let</span> <span class="ident">remaining_bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>();
             <span class="comment">// Every byte expands to two hexadecimal ASCII `char`s.</span>
             <span class="kw">let</span> <span class="ident">remaining_bytes_encoded_len</span> <span class="op">=</span> <span class="ident">remaining_bytes</span>.<span class="ident">saturating_mul</span>(<span class="number">2</span>);
-            <span class="comment">// Add one for the dangling char from the `EncodedByte` iterator.</span>
+            <span class="comment">// Add one for the dangling char from the `EscapedByte` iterator.</span>
             <span class="ident">remaining_bytes_encoded_len</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>)
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">remaining_bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>();
@@ -979,12 +1109,12 @@
         }
     }
 
-    <span class="doccomment">/// Returns `true` if the iterator will yield no more hex encoded characters.</span>
+    <span class="doccomment">/// Returns whether the iterator has no more remaining escape codes.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use spinoso_securerandom::hex::Hex;</span>
+    <span class="doccomment">/// # use scolapasta_hex::Hex;</span>
     <span class="doccomment">/// let iter = Hex::from(&quot;&quot;);</span>
     <span class="doccomment">/// assert!(iter.is_empty());</span>
     <span class="doccomment">///</span>
@@ -1000,7 +1130,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">as_slice</span>().<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">next</span>.<span class="ident">is_none</span>()
+        <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">as_slice</span>().<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">escaped_byte</span>.<span class="ident">is_none</span>()
     }
 }
 
@@ -1016,7 +1146,7 @@
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">iter</span>: <span class="ident">data</span>.<span class="ident">iter</span>(),
-            <span class="ident">next</span>: <span class="prelude-val">None</span>,
+            <span class="ident">escaped_byte</span>: <span class="prelude-val">None</span>,
         }
     }
 }
@@ -1026,16 +1156,20 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">byte</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next</span>.<span class="ident">take</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">char</span>::<span class="ident">from</span>(<span class="ident">byte</span>));
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">escaped</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">escaped_byte</span>.<span class="ident">take</span>() {
+            <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">escaped</span>.<span class="ident">next</span>();
+            <span class="kw">if</span> <span class="ident">escaped</span>.<span class="ident">peek</span>().<span class="ident">is_some</span>() {
+                <span class="self">self</span>.<span class="ident">escaped_byte</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">escaped</span>);
+            }
+            <span class="kw">if</span> <span class="ident">next</span>.<span class="ident">is_some</span>() {
+                <span class="kw">return</span> <span class="ident">next</span>;
+            }
         }
         <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">copied</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">EncodedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>([<span class="ident">current</span>, <span class="ident">next</span>]) <span class="op">=</span> <span class="ident">encoded</span>.<span class="ident">next</span>() {
-            <span class="self">self</span>.<span class="ident">next</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">next</span>);
-            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">char</span>::<span class="ident">from</span>(<span class="ident">current</span>));
-        }
-        <span class="prelude-val">None</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">escaped</span> <span class="op">=</span> <span class="ident">EscapedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
+        <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">escaped</span>.<span class="ident">next</span>()<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="ident">escaped_byte</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">escaped</span>.<span class="ident">peekable</span>());
+        <span class="prelude-val">Some</span>(<span class="ident">next</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1052,11 +1186,8 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">last</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">last</span>().<span class="ident">copied</span>()<span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>([<span class="kw">_</span>, <span class="ident">last</span>]) <span class="op">=</span> <span class="ident">EncodedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>).<span class="ident">last</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">char</span>::<span class="ident">from</span>(<span class="ident">last</span>))
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
+        <span class="kw">let</span> <span class="ident">escaped</span> <span class="op">=</span> <span class="ident">EscapedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
+        <span class="ident">escaped</span>.<span class="ident">last</span>()
     }
 }
 
@@ -1065,383 +1196,376 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span> <span class="kw">for</span> <span class="ident">Hex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;this `EncodedByte` is an `Iterator`, which should be consumed if constructed&quot;</span>]</span>
-<span class="kw">struct</span> <span class="ident">EncodedByte</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="number">2</span>]<span class="op">&gt;</span>);
+<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;this `EscapedByte` is an `Iterator`, which should be consumed if constructed&quot;</span>]</span>
+<span class="kw">struct</span> <span class="ident">EscapedByte</span>(<span class="ident">Chars</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">EncodedByte</span> {
+<span class="kw">impl</span> <span class="ident">EscapedByte</span> {
     <span class="doccomment">/// Map from a `u8` to a hex encoded string literal.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, `00`, `20` or `ff`.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_lines</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;00&quot;</span>,
-            <span class="number">1</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;01&quot;</span>,
-            <span class="number">2</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;02&quot;</span>,
-            <span class="number">3</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;03&quot;</span>,
-            <span class="number">4</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;04&quot;</span>,
-            <span class="number">5</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;05&quot;</span>,
-            <span class="number">6</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;06&quot;</span>,
-            <span class="number">7</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;07&quot;</span>,
-            <span class="number">8</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;08&quot;</span>,
-            <span class="number">9</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;09&quot;</span>,
-            <span class="number">10</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;0a&quot;</span>,
-            <span class="number">11</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;0b&quot;</span>,
-            <span class="number">12</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;0c&quot;</span>,
-            <span class="number">13</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;0d&quot;</span>,
-            <span class="number">14</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;0e&quot;</span>,
-            <span class="number">15</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;0f&quot;</span>,
-            <span class="number">16</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;10&quot;</span>,
-            <span class="number">17</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;11&quot;</span>,
-            <span class="number">18</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;12&quot;</span>,
-            <span class="number">19</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;13&quot;</span>,
-            <span class="number">20</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;14&quot;</span>,
-            <span class="number">21</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;15&quot;</span>,
-            <span class="number">22</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;16&quot;</span>,
-            <span class="number">23</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;17&quot;</span>,
-            <span class="number">24</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;18&quot;</span>,
-            <span class="number">25</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;19&quot;</span>,
-            <span class="number">26</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;1a&quot;</span>,
-            <span class="number">27</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;1b&quot;</span>,
-            <span class="number">28</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;1c&quot;</span>,
-            <span class="number">29</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;1d&quot;</span>,
-            <span class="number">30</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;1e&quot;</span>,
-            <span class="number">31</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;1f&quot;</span>,
-            <span class="number">32</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;20&quot;</span>,
-            <span class="number">33</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;21&quot;</span>,
-            <span class="number">34</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;22&quot;</span>,
-            <span class="number">35</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;23&quot;</span>,
-            <span class="number">36</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;24&quot;</span>,
-            <span class="number">37</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;25&quot;</span>,
-            <span class="number">38</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;26&quot;</span>,
-            <span class="number">39</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;27&quot;</span>,
-            <span class="number">40</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;28&quot;</span>,
-            <span class="number">41</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;29&quot;</span>,
-            <span class="number">42</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;2a&quot;</span>,
-            <span class="number">43</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;2b&quot;</span>,
-            <span class="number">44</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;2c&quot;</span>,
-            <span class="number">45</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;2d&quot;</span>,
-            <span class="number">46</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;2e&quot;</span>,
-            <span class="number">47</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;2f&quot;</span>,
-            <span class="number">48</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;30&quot;</span>,
-            <span class="number">49</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;31&quot;</span>,
-            <span class="number">50</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;32&quot;</span>,
-            <span class="number">51</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;33&quot;</span>,
-            <span class="number">52</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;34&quot;</span>,
-            <span class="number">53</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;35&quot;</span>,
-            <span class="number">54</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;36&quot;</span>,
-            <span class="number">55</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;37&quot;</span>,
-            <span class="number">56</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;38&quot;</span>,
-            <span class="number">57</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;39&quot;</span>,
-            <span class="number">58</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;3a&quot;</span>,
-            <span class="number">59</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;3b&quot;</span>,
-            <span class="number">60</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;3c&quot;</span>,
-            <span class="number">61</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;3d&quot;</span>,
-            <span class="number">62</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;3e&quot;</span>,
-            <span class="number">63</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;3f&quot;</span>,
-            <span class="number">64</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;40&quot;</span>,
-            <span class="number">65</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;41&quot;</span>,
-            <span class="number">66</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;42&quot;</span>,
-            <span class="number">67</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;43&quot;</span>,
-            <span class="number">68</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;44&quot;</span>,
-            <span class="number">69</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;45&quot;</span>,
-            <span class="number">70</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;46&quot;</span>,
-            <span class="number">71</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;47&quot;</span>,
-            <span class="number">72</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;48&quot;</span>,
-            <span class="number">73</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;49&quot;</span>,
-            <span class="number">74</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;4a&quot;</span>,
-            <span class="number">75</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;4b&quot;</span>,
-            <span class="number">76</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;4c&quot;</span>,
-            <span class="number">77</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;4d&quot;</span>,
-            <span class="number">78</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;4e&quot;</span>,
-            <span class="number">79</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;4f&quot;</span>,
-            <span class="number">80</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;50&quot;</span>,
-            <span class="number">81</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;51&quot;</span>,
-            <span class="number">82</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;52&quot;</span>,
-            <span class="number">83</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;53&quot;</span>,
-            <span class="number">84</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;54&quot;</span>,
-            <span class="number">85</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;55&quot;</span>,
-            <span class="number">86</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;56&quot;</span>,
-            <span class="number">87</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;57&quot;</span>,
-            <span class="number">88</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;58&quot;</span>,
-            <span class="number">89</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;59&quot;</span>,
-            <span class="number">90</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;5a&quot;</span>,
-            <span class="number">91</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;5b&quot;</span>,
-            <span class="number">92</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;5c&quot;</span>,
-            <span class="number">93</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;5d&quot;</span>,
-            <span class="number">94</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;5e&quot;</span>,
-            <span class="number">95</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;5f&quot;</span>,
-            <span class="number">96</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;60&quot;</span>,
-            <span class="number">97</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;61&quot;</span>,
-            <span class="number">98</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;62&quot;</span>,
-            <span class="number">99</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;63&quot;</span>,
-            <span class="number">100</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;64&quot;</span>,
-            <span class="number">101</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;65&quot;</span>,
-            <span class="number">102</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;66&quot;</span>,
-            <span class="number">103</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;67&quot;</span>,
-            <span class="number">104</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;68&quot;</span>,
-            <span class="number">105</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;69&quot;</span>,
-            <span class="number">106</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;6a&quot;</span>,
-            <span class="number">107</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;6b&quot;</span>,
-            <span class="number">108</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;6c&quot;</span>,
-            <span class="number">109</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;6d&quot;</span>,
-            <span class="number">110</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;6e&quot;</span>,
-            <span class="number">111</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;6f&quot;</span>,
-            <span class="number">112</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;70&quot;</span>,
-            <span class="number">113</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;71&quot;</span>,
-            <span class="number">114</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;72&quot;</span>,
-            <span class="number">115</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;73&quot;</span>,
-            <span class="number">116</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;74&quot;</span>,
-            <span class="number">117</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;75&quot;</span>,
-            <span class="number">118</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;76&quot;</span>,
-            <span class="number">119</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;77&quot;</span>,
-            <span class="number">120</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;78&quot;</span>,
-            <span class="number">121</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;79&quot;</span>,
-            <span class="number">122</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;7a&quot;</span>,
-            <span class="number">123</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;7b&quot;</span>,
-            <span class="number">124</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;7c&quot;</span>,
-            <span class="number">125</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;7d&quot;</span>,
-            <span class="number">126</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;7e&quot;</span>,
-            <span class="number">127</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;7f&quot;</span>,
-            <span class="number">128</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;80&quot;</span>,
-            <span class="number">129</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;81&quot;</span>,
-            <span class="number">130</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;82&quot;</span>,
-            <span class="number">131</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;83&quot;</span>,
-            <span class="number">132</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;84&quot;</span>,
-            <span class="number">133</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;85&quot;</span>,
-            <span class="number">134</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;86&quot;</span>,
-            <span class="number">135</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;87&quot;</span>,
-            <span class="number">136</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;88&quot;</span>,
-            <span class="number">137</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;89&quot;</span>,
-            <span class="number">138</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;8a&quot;</span>,
-            <span class="number">139</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;8b&quot;</span>,
-            <span class="number">140</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;8c&quot;</span>,
-            <span class="number">141</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;8d&quot;</span>,
-            <span class="number">142</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;8e&quot;</span>,
-            <span class="number">143</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;8f&quot;</span>,
-            <span class="number">144</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;90&quot;</span>,
-            <span class="number">145</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;91&quot;</span>,
-            <span class="number">146</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;92&quot;</span>,
-            <span class="number">147</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;93&quot;</span>,
-            <span class="number">148</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;94&quot;</span>,
-            <span class="number">149</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;95&quot;</span>,
-            <span class="number">150</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;96&quot;</span>,
-            <span class="number">151</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;97&quot;</span>,
-            <span class="number">152</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;98&quot;</span>,
-            <span class="number">153</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;99&quot;</span>,
-            <span class="number">154</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;9a&quot;</span>,
-            <span class="number">155</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;9b&quot;</span>,
-            <span class="number">156</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;9c&quot;</span>,
-            <span class="number">157</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;9d&quot;</span>,
-            <span class="number">158</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;9e&quot;</span>,
-            <span class="number">159</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;9f&quot;</span>,
-            <span class="number">160</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a0&quot;</span>,
-            <span class="number">161</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a1&quot;</span>,
-            <span class="number">162</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a2&quot;</span>,
-            <span class="number">163</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a3&quot;</span>,
-            <span class="number">164</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a4&quot;</span>,
-            <span class="number">165</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a5&quot;</span>,
-            <span class="number">166</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a6&quot;</span>,
-            <span class="number">167</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a7&quot;</span>,
-            <span class="number">168</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a8&quot;</span>,
-            <span class="number">169</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;a9&quot;</span>,
-            <span class="number">170</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;aa&quot;</span>,
-            <span class="number">171</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ab&quot;</span>,
-            <span class="number">172</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ac&quot;</span>,
-            <span class="number">173</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ad&quot;</span>,
-            <span class="number">174</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ae&quot;</span>,
-            <span class="number">175</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;af&quot;</span>,
-            <span class="number">176</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b0&quot;</span>,
-            <span class="number">177</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b1&quot;</span>,
-            <span class="number">178</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b2&quot;</span>,
-            <span class="number">179</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b3&quot;</span>,
-            <span class="number">180</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b4&quot;</span>,
-            <span class="number">181</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b5&quot;</span>,
-            <span class="number">182</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b6&quot;</span>,
-            <span class="number">183</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b7&quot;</span>,
-            <span class="number">184</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b8&quot;</span>,
-            <span class="number">185</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;b9&quot;</span>,
-            <span class="number">186</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ba&quot;</span>,
-            <span class="number">187</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;bb&quot;</span>,
-            <span class="number">188</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;bc&quot;</span>,
-            <span class="number">189</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;bd&quot;</span>,
-            <span class="number">190</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;be&quot;</span>,
-            <span class="number">191</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;bf&quot;</span>,
-            <span class="number">192</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c0&quot;</span>,
-            <span class="number">193</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c1&quot;</span>,
-            <span class="number">194</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c2&quot;</span>,
-            <span class="number">195</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c3&quot;</span>,
-            <span class="number">196</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c4&quot;</span>,
-            <span class="number">197</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c5&quot;</span>,
-            <span class="number">198</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c6&quot;</span>,
-            <span class="number">199</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c7&quot;</span>,
-            <span class="number">200</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c8&quot;</span>,
-            <span class="number">201</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;c9&quot;</span>,
-            <span class="number">202</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ca&quot;</span>,
-            <span class="number">203</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;cb&quot;</span>,
-            <span class="number">204</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;cc&quot;</span>,
-            <span class="number">205</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;cd&quot;</span>,
-            <span class="number">206</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ce&quot;</span>,
-            <span class="number">207</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;cf&quot;</span>,
-            <span class="number">208</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d0&quot;</span>,
-            <span class="number">209</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d1&quot;</span>,
-            <span class="number">210</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d2&quot;</span>,
-            <span class="number">211</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d3&quot;</span>,
-            <span class="number">212</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d4&quot;</span>,
-            <span class="number">213</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d5&quot;</span>,
-            <span class="number">214</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d6&quot;</span>,
-            <span class="number">215</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d7&quot;</span>,
-            <span class="number">216</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d8&quot;</span>,
-            <span class="number">217</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;d9&quot;</span>,
-            <span class="number">218</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;da&quot;</span>,
-            <span class="number">219</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;db&quot;</span>,
-            <span class="number">220</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;dc&quot;</span>,
-            <span class="number">221</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;dd&quot;</span>,
-            <span class="number">222</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;de&quot;</span>,
-            <span class="number">223</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;df&quot;</span>,
-            <span class="number">224</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e0&quot;</span>,
-            <span class="number">225</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e1&quot;</span>,
-            <span class="number">226</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e2&quot;</span>,
-            <span class="number">227</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e3&quot;</span>,
-            <span class="number">228</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e4&quot;</span>,
-            <span class="number">229</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e5&quot;</span>,
-            <span class="number">230</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e6&quot;</span>,
-            <span class="number">231</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e7&quot;</span>,
-            <span class="number">232</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e8&quot;</span>,
-            <span class="number">233</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;e9&quot;</span>,
-            <span class="number">234</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ea&quot;</span>,
-            <span class="number">235</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;eb&quot;</span>,
-            <span class="number">236</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ec&quot;</span>,
-            <span class="number">237</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ed&quot;</span>,
-            <span class="number">238</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ee&quot;</span>,
-            <span class="number">239</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ef&quot;</span>,
-            <span class="number">240</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f0&quot;</span>,
-            <span class="number">241</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f1&quot;</span>,
-            <span class="number">242</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f2&quot;</span>,
-            <span class="number">243</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f3&quot;</span>,
-            <span class="number">244</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f4&quot;</span>,
-            <span class="number">245</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f5&quot;</span>,
-            <span class="number">246</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f6&quot;</span>,
-            <span class="number">247</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f7&quot;</span>,
-            <span class="number">248</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f8&quot;</span>,
-            <span class="number">249</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;f9&quot;</span>,
-            <span class="number">250</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;fa&quot;</span>,
-            <span class="number">251</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;fb&quot;</span>,
-            <span class="number">252</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;fc&quot;</span>,
-            <span class="number">253</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;fd&quot;</span>,
-            <span class="number">254</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;fe&quot;</span>,
-            <span class="number">255</span> <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="string">b&quot;ff&quot;</span>,
-        };
-        <span class="self">Self</span>(<span class="prelude-val">Some</span>(<span class="ident">encoded</span>))
+    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">hex_escape</span>(<span class="ident">value</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+        <span class="kw">match</span> <span class="ident">value</span> {
+            <span class="number">0</span> <span class="op">=&gt;</span> <span class="string">&quot;00&quot;</span>,
+            <span class="number">1</span> <span class="op">=&gt;</span> <span class="string">&quot;01&quot;</span>,
+            <span class="number">2</span> <span class="op">=&gt;</span> <span class="string">&quot;02&quot;</span>,
+            <span class="number">3</span> <span class="op">=&gt;</span> <span class="string">&quot;03&quot;</span>,
+            <span class="number">4</span> <span class="op">=&gt;</span> <span class="string">&quot;04&quot;</span>,
+            <span class="number">5</span> <span class="op">=&gt;</span> <span class="string">&quot;05&quot;</span>,
+            <span class="number">6</span> <span class="op">=&gt;</span> <span class="string">&quot;06&quot;</span>,
+            <span class="number">7</span> <span class="op">=&gt;</span> <span class="string">&quot;07&quot;</span>,
+            <span class="number">8</span> <span class="op">=&gt;</span> <span class="string">&quot;08&quot;</span>,
+            <span class="number">9</span> <span class="op">=&gt;</span> <span class="string">&quot;09&quot;</span>,
+            <span class="number">10</span> <span class="op">=&gt;</span> <span class="string">&quot;0a&quot;</span>,
+            <span class="number">11</span> <span class="op">=&gt;</span> <span class="string">&quot;0b&quot;</span>,
+            <span class="number">12</span> <span class="op">=&gt;</span> <span class="string">&quot;0c&quot;</span>,
+            <span class="number">13</span> <span class="op">=&gt;</span> <span class="string">&quot;0d&quot;</span>,
+            <span class="number">14</span> <span class="op">=&gt;</span> <span class="string">&quot;0e&quot;</span>,
+            <span class="number">15</span> <span class="op">=&gt;</span> <span class="string">&quot;0f&quot;</span>,
+            <span class="number">16</span> <span class="op">=&gt;</span> <span class="string">&quot;10&quot;</span>,
+            <span class="number">17</span> <span class="op">=&gt;</span> <span class="string">&quot;11&quot;</span>,
+            <span class="number">18</span> <span class="op">=&gt;</span> <span class="string">&quot;12&quot;</span>,
+            <span class="number">19</span> <span class="op">=&gt;</span> <span class="string">&quot;13&quot;</span>,
+            <span class="number">20</span> <span class="op">=&gt;</span> <span class="string">&quot;14&quot;</span>,
+            <span class="number">21</span> <span class="op">=&gt;</span> <span class="string">&quot;15&quot;</span>,
+            <span class="number">22</span> <span class="op">=&gt;</span> <span class="string">&quot;16&quot;</span>,
+            <span class="number">23</span> <span class="op">=&gt;</span> <span class="string">&quot;17&quot;</span>,
+            <span class="number">24</span> <span class="op">=&gt;</span> <span class="string">&quot;18&quot;</span>,
+            <span class="number">25</span> <span class="op">=&gt;</span> <span class="string">&quot;19&quot;</span>,
+            <span class="number">26</span> <span class="op">=&gt;</span> <span class="string">&quot;1a&quot;</span>,
+            <span class="number">27</span> <span class="op">=&gt;</span> <span class="string">&quot;1b&quot;</span>,
+            <span class="number">28</span> <span class="op">=&gt;</span> <span class="string">&quot;1c&quot;</span>,
+            <span class="number">29</span> <span class="op">=&gt;</span> <span class="string">&quot;1d&quot;</span>,
+            <span class="number">30</span> <span class="op">=&gt;</span> <span class="string">&quot;1e&quot;</span>,
+            <span class="number">31</span> <span class="op">=&gt;</span> <span class="string">&quot;1f&quot;</span>,
+            <span class="number">32</span> <span class="op">=&gt;</span> <span class="string">&quot;20&quot;</span>,
+            <span class="number">33</span> <span class="op">=&gt;</span> <span class="string">&quot;21&quot;</span>,
+            <span class="number">34</span> <span class="op">=&gt;</span> <span class="string">&quot;22&quot;</span>,
+            <span class="number">35</span> <span class="op">=&gt;</span> <span class="string">&quot;23&quot;</span>,
+            <span class="number">36</span> <span class="op">=&gt;</span> <span class="string">&quot;24&quot;</span>,
+            <span class="number">37</span> <span class="op">=&gt;</span> <span class="string">&quot;25&quot;</span>,
+            <span class="number">38</span> <span class="op">=&gt;</span> <span class="string">&quot;26&quot;</span>,
+            <span class="number">39</span> <span class="op">=&gt;</span> <span class="string">&quot;27&quot;</span>,
+            <span class="number">40</span> <span class="op">=&gt;</span> <span class="string">&quot;28&quot;</span>,
+            <span class="number">41</span> <span class="op">=&gt;</span> <span class="string">&quot;29&quot;</span>,
+            <span class="number">42</span> <span class="op">=&gt;</span> <span class="string">&quot;2a&quot;</span>,
+            <span class="number">43</span> <span class="op">=&gt;</span> <span class="string">&quot;2b&quot;</span>,
+            <span class="number">44</span> <span class="op">=&gt;</span> <span class="string">&quot;2c&quot;</span>,
+            <span class="number">45</span> <span class="op">=&gt;</span> <span class="string">&quot;2d&quot;</span>,
+            <span class="number">46</span> <span class="op">=&gt;</span> <span class="string">&quot;2e&quot;</span>,
+            <span class="number">47</span> <span class="op">=&gt;</span> <span class="string">&quot;2f&quot;</span>,
+            <span class="number">48</span> <span class="op">=&gt;</span> <span class="string">&quot;30&quot;</span>,
+            <span class="number">49</span> <span class="op">=&gt;</span> <span class="string">&quot;31&quot;</span>,
+            <span class="number">50</span> <span class="op">=&gt;</span> <span class="string">&quot;32&quot;</span>,
+            <span class="number">51</span> <span class="op">=&gt;</span> <span class="string">&quot;33&quot;</span>,
+            <span class="number">52</span> <span class="op">=&gt;</span> <span class="string">&quot;34&quot;</span>,
+            <span class="number">53</span> <span class="op">=&gt;</span> <span class="string">&quot;35&quot;</span>,
+            <span class="number">54</span> <span class="op">=&gt;</span> <span class="string">&quot;36&quot;</span>,
+            <span class="number">55</span> <span class="op">=&gt;</span> <span class="string">&quot;37&quot;</span>,
+            <span class="number">56</span> <span class="op">=&gt;</span> <span class="string">&quot;38&quot;</span>,
+            <span class="number">57</span> <span class="op">=&gt;</span> <span class="string">&quot;39&quot;</span>,
+            <span class="number">58</span> <span class="op">=&gt;</span> <span class="string">&quot;3a&quot;</span>,
+            <span class="number">59</span> <span class="op">=&gt;</span> <span class="string">&quot;3b&quot;</span>,
+            <span class="number">60</span> <span class="op">=&gt;</span> <span class="string">&quot;3c&quot;</span>,
+            <span class="number">61</span> <span class="op">=&gt;</span> <span class="string">&quot;3d&quot;</span>,
+            <span class="number">62</span> <span class="op">=&gt;</span> <span class="string">&quot;3e&quot;</span>,
+            <span class="number">63</span> <span class="op">=&gt;</span> <span class="string">&quot;3f&quot;</span>,
+            <span class="number">64</span> <span class="op">=&gt;</span> <span class="string">&quot;40&quot;</span>,
+            <span class="number">65</span> <span class="op">=&gt;</span> <span class="string">&quot;41&quot;</span>,
+            <span class="number">66</span> <span class="op">=&gt;</span> <span class="string">&quot;42&quot;</span>,
+            <span class="number">67</span> <span class="op">=&gt;</span> <span class="string">&quot;43&quot;</span>,
+            <span class="number">68</span> <span class="op">=&gt;</span> <span class="string">&quot;44&quot;</span>,
+            <span class="number">69</span> <span class="op">=&gt;</span> <span class="string">&quot;45&quot;</span>,
+            <span class="number">70</span> <span class="op">=&gt;</span> <span class="string">&quot;46&quot;</span>,
+            <span class="number">71</span> <span class="op">=&gt;</span> <span class="string">&quot;47&quot;</span>,
+            <span class="number">72</span> <span class="op">=&gt;</span> <span class="string">&quot;48&quot;</span>,
+            <span class="number">73</span> <span class="op">=&gt;</span> <span class="string">&quot;49&quot;</span>,
+            <span class="number">74</span> <span class="op">=&gt;</span> <span class="string">&quot;4a&quot;</span>,
+            <span class="number">75</span> <span class="op">=&gt;</span> <span class="string">&quot;4b&quot;</span>,
+            <span class="number">76</span> <span class="op">=&gt;</span> <span class="string">&quot;4c&quot;</span>,
+            <span class="number">77</span> <span class="op">=&gt;</span> <span class="string">&quot;4d&quot;</span>,
+            <span class="number">78</span> <span class="op">=&gt;</span> <span class="string">&quot;4e&quot;</span>,
+            <span class="number">79</span> <span class="op">=&gt;</span> <span class="string">&quot;4f&quot;</span>,
+            <span class="number">80</span> <span class="op">=&gt;</span> <span class="string">&quot;50&quot;</span>,
+            <span class="number">81</span> <span class="op">=&gt;</span> <span class="string">&quot;51&quot;</span>,
+            <span class="number">82</span> <span class="op">=&gt;</span> <span class="string">&quot;52&quot;</span>,
+            <span class="number">83</span> <span class="op">=&gt;</span> <span class="string">&quot;53&quot;</span>,
+            <span class="number">84</span> <span class="op">=&gt;</span> <span class="string">&quot;54&quot;</span>,
+            <span class="number">85</span> <span class="op">=&gt;</span> <span class="string">&quot;55&quot;</span>,
+            <span class="number">86</span> <span class="op">=&gt;</span> <span class="string">&quot;56&quot;</span>,
+            <span class="number">87</span> <span class="op">=&gt;</span> <span class="string">&quot;57&quot;</span>,
+            <span class="number">88</span> <span class="op">=&gt;</span> <span class="string">&quot;58&quot;</span>,
+            <span class="number">89</span> <span class="op">=&gt;</span> <span class="string">&quot;59&quot;</span>,
+            <span class="number">90</span> <span class="op">=&gt;</span> <span class="string">&quot;5a&quot;</span>,
+            <span class="number">91</span> <span class="op">=&gt;</span> <span class="string">&quot;5b&quot;</span>,
+            <span class="number">92</span> <span class="op">=&gt;</span> <span class="string">&quot;5c&quot;</span>,
+            <span class="number">93</span> <span class="op">=&gt;</span> <span class="string">&quot;5d&quot;</span>,
+            <span class="number">94</span> <span class="op">=&gt;</span> <span class="string">&quot;5e&quot;</span>,
+            <span class="number">95</span> <span class="op">=&gt;</span> <span class="string">&quot;5f&quot;</span>,
+            <span class="number">96</span> <span class="op">=&gt;</span> <span class="string">&quot;60&quot;</span>,
+            <span class="number">97</span> <span class="op">=&gt;</span> <span class="string">&quot;61&quot;</span>,
+            <span class="number">98</span> <span class="op">=&gt;</span> <span class="string">&quot;62&quot;</span>,
+            <span class="number">99</span> <span class="op">=&gt;</span> <span class="string">&quot;63&quot;</span>,
+            <span class="number">100</span> <span class="op">=&gt;</span> <span class="string">&quot;64&quot;</span>,
+            <span class="number">101</span> <span class="op">=&gt;</span> <span class="string">&quot;65&quot;</span>,
+            <span class="number">102</span> <span class="op">=&gt;</span> <span class="string">&quot;66&quot;</span>,
+            <span class="number">103</span> <span class="op">=&gt;</span> <span class="string">&quot;67&quot;</span>,
+            <span class="number">104</span> <span class="op">=&gt;</span> <span class="string">&quot;68&quot;</span>,
+            <span class="number">105</span> <span class="op">=&gt;</span> <span class="string">&quot;69&quot;</span>,
+            <span class="number">106</span> <span class="op">=&gt;</span> <span class="string">&quot;6a&quot;</span>,
+            <span class="number">107</span> <span class="op">=&gt;</span> <span class="string">&quot;6b&quot;</span>,
+            <span class="number">108</span> <span class="op">=&gt;</span> <span class="string">&quot;6c&quot;</span>,
+            <span class="number">109</span> <span class="op">=&gt;</span> <span class="string">&quot;6d&quot;</span>,
+            <span class="number">110</span> <span class="op">=&gt;</span> <span class="string">&quot;6e&quot;</span>,
+            <span class="number">111</span> <span class="op">=&gt;</span> <span class="string">&quot;6f&quot;</span>,
+            <span class="number">112</span> <span class="op">=&gt;</span> <span class="string">&quot;70&quot;</span>,
+            <span class="number">113</span> <span class="op">=&gt;</span> <span class="string">&quot;71&quot;</span>,
+            <span class="number">114</span> <span class="op">=&gt;</span> <span class="string">&quot;72&quot;</span>,
+            <span class="number">115</span> <span class="op">=&gt;</span> <span class="string">&quot;73&quot;</span>,
+            <span class="number">116</span> <span class="op">=&gt;</span> <span class="string">&quot;74&quot;</span>,
+            <span class="number">117</span> <span class="op">=&gt;</span> <span class="string">&quot;75&quot;</span>,
+            <span class="number">118</span> <span class="op">=&gt;</span> <span class="string">&quot;76&quot;</span>,
+            <span class="number">119</span> <span class="op">=&gt;</span> <span class="string">&quot;77&quot;</span>,
+            <span class="number">120</span> <span class="op">=&gt;</span> <span class="string">&quot;78&quot;</span>,
+            <span class="number">121</span> <span class="op">=&gt;</span> <span class="string">&quot;79&quot;</span>,
+            <span class="number">122</span> <span class="op">=&gt;</span> <span class="string">&quot;7a&quot;</span>,
+            <span class="number">123</span> <span class="op">=&gt;</span> <span class="string">&quot;7b&quot;</span>,
+            <span class="number">124</span> <span class="op">=&gt;</span> <span class="string">&quot;7c&quot;</span>,
+            <span class="number">125</span> <span class="op">=&gt;</span> <span class="string">&quot;7d&quot;</span>,
+            <span class="number">126</span> <span class="op">=&gt;</span> <span class="string">&quot;7e&quot;</span>,
+            <span class="number">127</span> <span class="op">=&gt;</span> <span class="string">&quot;7f&quot;</span>,
+            <span class="number">128</span> <span class="op">=&gt;</span> <span class="string">&quot;80&quot;</span>,
+            <span class="number">129</span> <span class="op">=&gt;</span> <span class="string">&quot;81&quot;</span>,
+            <span class="number">130</span> <span class="op">=&gt;</span> <span class="string">&quot;82&quot;</span>,
+            <span class="number">131</span> <span class="op">=&gt;</span> <span class="string">&quot;83&quot;</span>,
+            <span class="number">132</span> <span class="op">=&gt;</span> <span class="string">&quot;84&quot;</span>,
+            <span class="number">133</span> <span class="op">=&gt;</span> <span class="string">&quot;85&quot;</span>,
+            <span class="number">134</span> <span class="op">=&gt;</span> <span class="string">&quot;86&quot;</span>,
+            <span class="number">135</span> <span class="op">=&gt;</span> <span class="string">&quot;87&quot;</span>,
+            <span class="number">136</span> <span class="op">=&gt;</span> <span class="string">&quot;88&quot;</span>,
+            <span class="number">137</span> <span class="op">=&gt;</span> <span class="string">&quot;89&quot;</span>,
+            <span class="number">138</span> <span class="op">=&gt;</span> <span class="string">&quot;8a&quot;</span>,
+            <span class="number">139</span> <span class="op">=&gt;</span> <span class="string">&quot;8b&quot;</span>,
+            <span class="number">140</span> <span class="op">=&gt;</span> <span class="string">&quot;8c&quot;</span>,
+            <span class="number">141</span> <span class="op">=&gt;</span> <span class="string">&quot;8d&quot;</span>,
+            <span class="number">142</span> <span class="op">=&gt;</span> <span class="string">&quot;8e&quot;</span>,
+            <span class="number">143</span> <span class="op">=&gt;</span> <span class="string">&quot;8f&quot;</span>,
+            <span class="number">144</span> <span class="op">=&gt;</span> <span class="string">&quot;90&quot;</span>,
+            <span class="number">145</span> <span class="op">=&gt;</span> <span class="string">&quot;91&quot;</span>,
+            <span class="number">146</span> <span class="op">=&gt;</span> <span class="string">&quot;92&quot;</span>,
+            <span class="number">147</span> <span class="op">=&gt;</span> <span class="string">&quot;93&quot;</span>,
+            <span class="number">148</span> <span class="op">=&gt;</span> <span class="string">&quot;94&quot;</span>,
+            <span class="number">149</span> <span class="op">=&gt;</span> <span class="string">&quot;95&quot;</span>,
+            <span class="number">150</span> <span class="op">=&gt;</span> <span class="string">&quot;96&quot;</span>,
+            <span class="number">151</span> <span class="op">=&gt;</span> <span class="string">&quot;97&quot;</span>,
+            <span class="number">152</span> <span class="op">=&gt;</span> <span class="string">&quot;98&quot;</span>,
+            <span class="number">153</span> <span class="op">=&gt;</span> <span class="string">&quot;99&quot;</span>,
+            <span class="number">154</span> <span class="op">=&gt;</span> <span class="string">&quot;9a&quot;</span>,
+            <span class="number">155</span> <span class="op">=&gt;</span> <span class="string">&quot;9b&quot;</span>,
+            <span class="number">156</span> <span class="op">=&gt;</span> <span class="string">&quot;9c&quot;</span>,
+            <span class="number">157</span> <span class="op">=&gt;</span> <span class="string">&quot;9d&quot;</span>,
+            <span class="number">158</span> <span class="op">=&gt;</span> <span class="string">&quot;9e&quot;</span>,
+            <span class="number">159</span> <span class="op">=&gt;</span> <span class="string">&quot;9f&quot;</span>,
+            <span class="number">160</span> <span class="op">=&gt;</span> <span class="string">&quot;a0&quot;</span>,
+            <span class="number">161</span> <span class="op">=&gt;</span> <span class="string">&quot;a1&quot;</span>,
+            <span class="number">162</span> <span class="op">=&gt;</span> <span class="string">&quot;a2&quot;</span>,
+            <span class="number">163</span> <span class="op">=&gt;</span> <span class="string">&quot;a3&quot;</span>,
+            <span class="number">164</span> <span class="op">=&gt;</span> <span class="string">&quot;a4&quot;</span>,
+            <span class="number">165</span> <span class="op">=&gt;</span> <span class="string">&quot;a5&quot;</span>,
+            <span class="number">166</span> <span class="op">=&gt;</span> <span class="string">&quot;a6&quot;</span>,
+            <span class="number">167</span> <span class="op">=&gt;</span> <span class="string">&quot;a7&quot;</span>,
+            <span class="number">168</span> <span class="op">=&gt;</span> <span class="string">&quot;a8&quot;</span>,
+            <span class="number">169</span> <span class="op">=&gt;</span> <span class="string">&quot;a9&quot;</span>,
+            <span class="number">170</span> <span class="op">=&gt;</span> <span class="string">&quot;aa&quot;</span>,
+            <span class="number">171</span> <span class="op">=&gt;</span> <span class="string">&quot;ab&quot;</span>,
+            <span class="number">172</span> <span class="op">=&gt;</span> <span class="string">&quot;ac&quot;</span>,
+            <span class="number">173</span> <span class="op">=&gt;</span> <span class="string">&quot;ad&quot;</span>,
+            <span class="number">174</span> <span class="op">=&gt;</span> <span class="string">&quot;ae&quot;</span>,
+            <span class="number">175</span> <span class="op">=&gt;</span> <span class="string">&quot;af&quot;</span>,
+            <span class="number">176</span> <span class="op">=&gt;</span> <span class="string">&quot;b0&quot;</span>,
+            <span class="number">177</span> <span class="op">=&gt;</span> <span class="string">&quot;b1&quot;</span>,
+            <span class="number">178</span> <span class="op">=&gt;</span> <span class="string">&quot;b2&quot;</span>,
+            <span class="number">179</span> <span class="op">=&gt;</span> <span class="string">&quot;b3&quot;</span>,
+            <span class="number">180</span> <span class="op">=&gt;</span> <span class="string">&quot;b4&quot;</span>,
+            <span class="number">181</span> <span class="op">=&gt;</span> <span class="string">&quot;b5&quot;</span>,
+            <span class="number">182</span> <span class="op">=&gt;</span> <span class="string">&quot;b6&quot;</span>,
+            <span class="number">183</span> <span class="op">=&gt;</span> <span class="string">&quot;b7&quot;</span>,
+            <span class="number">184</span> <span class="op">=&gt;</span> <span class="string">&quot;b8&quot;</span>,
+            <span class="number">185</span> <span class="op">=&gt;</span> <span class="string">&quot;b9&quot;</span>,
+            <span class="number">186</span> <span class="op">=&gt;</span> <span class="string">&quot;ba&quot;</span>,
+            <span class="number">187</span> <span class="op">=&gt;</span> <span class="string">&quot;bb&quot;</span>,
+            <span class="number">188</span> <span class="op">=&gt;</span> <span class="string">&quot;bc&quot;</span>,
+            <span class="number">189</span> <span class="op">=&gt;</span> <span class="string">&quot;bd&quot;</span>,
+            <span class="number">190</span> <span class="op">=&gt;</span> <span class="string">&quot;be&quot;</span>,
+            <span class="number">191</span> <span class="op">=&gt;</span> <span class="string">&quot;bf&quot;</span>,
+            <span class="number">192</span> <span class="op">=&gt;</span> <span class="string">&quot;c0&quot;</span>,
+            <span class="number">193</span> <span class="op">=&gt;</span> <span class="string">&quot;c1&quot;</span>,
+            <span class="number">194</span> <span class="op">=&gt;</span> <span class="string">&quot;c2&quot;</span>,
+            <span class="number">195</span> <span class="op">=&gt;</span> <span class="string">&quot;c3&quot;</span>,
+            <span class="number">196</span> <span class="op">=&gt;</span> <span class="string">&quot;c4&quot;</span>,
+            <span class="number">197</span> <span class="op">=&gt;</span> <span class="string">&quot;c5&quot;</span>,
+            <span class="number">198</span> <span class="op">=&gt;</span> <span class="string">&quot;c6&quot;</span>,
+            <span class="number">199</span> <span class="op">=&gt;</span> <span class="string">&quot;c7&quot;</span>,
+            <span class="number">200</span> <span class="op">=&gt;</span> <span class="string">&quot;c8&quot;</span>,
+            <span class="number">201</span> <span class="op">=&gt;</span> <span class="string">&quot;c9&quot;</span>,
+            <span class="number">202</span> <span class="op">=&gt;</span> <span class="string">&quot;ca&quot;</span>,
+            <span class="number">203</span> <span class="op">=&gt;</span> <span class="string">&quot;cb&quot;</span>,
+            <span class="number">204</span> <span class="op">=&gt;</span> <span class="string">&quot;cc&quot;</span>,
+            <span class="number">205</span> <span class="op">=&gt;</span> <span class="string">&quot;cd&quot;</span>,
+            <span class="number">206</span> <span class="op">=&gt;</span> <span class="string">&quot;ce&quot;</span>,
+            <span class="number">207</span> <span class="op">=&gt;</span> <span class="string">&quot;cf&quot;</span>,
+            <span class="number">208</span> <span class="op">=&gt;</span> <span class="string">&quot;d0&quot;</span>,
+            <span class="number">209</span> <span class="op">=&gt;</span> <span class="string">&quot;d1&quot;</span>,
+            <span class="number">210</span> <span class="op">=&gt;</span> <span class="string">&quot;d2&quot;</span>,
+            <span class="number">211</span> <span class="op">=&gt;</span> <span class="string">&quot;d3&quot;</span>,
+            <span class="number">212</span> <span class="op">=&gt;</span> <span class="string">&quot;d4&quot;</span>,
+            <span class="number">213</span> <span class="op">=&gt;</span> <span class="string">&quot;d5&quot;</span>,
+            <span class="number">214</span> <span class="op">=&gt;</span> <span class="string">&quot;d6&quot;</span>,
+            <span class="number">215</span> <span class="op">=&gt;</span> <span class="string">&quot;d7&quot;</span>,
+            <span class="number">216</span> <span class="op">=&gt;</span> <span class="string">&quot;d8&quot;</span>,
+            <span class="number">217</span> <span class="op">=&gt;</span> <span class="string">&quot;d9&quot;</span>,
+            <span class="number">218</span> <span class="op">=&gt;</span> <span class="string">&quot;da&quot;</span>,
+            <span class="number">219</span> <span class="op">=&gt;</span> <span class="string">&quot;db&quot;</span>,
+            <span class="number">220</span> <span class="op">=&gt;</span> <span class="string">&quot;dc&quot;</span>,
+            <span class="number">221</span> <span class="op">=&gt;</span> <span class="string">&quot;dd&quot;</span>,
+            <span class="number">222</span> <span class="op">=&gt;</span> <span class="string">&quot;de&quot;</span>,
+            <span class="number">223</span> <span class="op">=&gt;</span> <span class="string">&quot;df&quot;</span>,
+            <span class="number">224</span> <span class="op">=&gt;</span> <span class="string">&quot;e0&quot;</span>,
+            <span class="number">225</span> <span class="op">=&gt;</span> <span class="string">&quot;e1&quot;</span>,
+            <span class="number">226</span> <span class="op">=&gt;</span> <span class="string">&quot;e2&quot;</span>,
+            <span class="number">227</span> <span class="op">=&gt;</span> <span class="string">&quot;e3&quot;</span>,
+            <span class="number">228</span> <span class="op">=&gt;</span> <span class="string">&quot;e4&quot;</span>,
+            <span class="number">229</span> <span class="op">=&gt;</span> <span class="string">&quot;e5&quot;</span>,
+            <span class="number">230</span> <span class="op">=&gt;</span> <span class="string">&quot;e6&quot;</span>,
+            <span class="number">231</span> <span class="op">=&gt;</span> <span class="string">&quot;e7&quot;</span>,
+            <span class="number">232</span> <span class="op">=&gt;</span> <span class="string">&quot;e8&quot;</span>,
+            <span class="number">233</span> <span class="op">=&gt;</span> <span class="string">&quot;e9&quot;</span>,
+            <span class="number">234</span> <span class="op">=&gt;</span> <span class="string">&quot;ea&quot;</span>,
+            <span class="number">235</span> <span class="op">=&gt;</span> <span class="string">&quot;eb&quot;</span>,
+            <span class="number">236</span> <span class="op">=&gt;</span> <span class="string">&quot;ec&quot;</span>,
+            <span class="number">237</span> <span class="op">=&gt;</span> <span class="string">&quot;ed&quot;</span>,
+            <span class="number">238</span> <span class="op">=&gt;</span> <span class="string">&quot;ee&quot;</span>,
+            <span class="number">239</span> <span class="op">=&gt;</span> <span class="string">&quot;ef&quot;</span>,
+            <span class="number">240</span> <span class="op">=&gt;</span> <span class="string">&quot;f0&quot;</span>,
+            <span class="number">241</span> <span class="op">=&gt;</span> <span class="string">&quot;f1&quot;</span>,
+            <span class="number">242</span> <span class="op">=&gt;</span> <span class="string">&quot;f2&quot;</span>,
+            <span class="number">243</span> <span class="op">=&gt;</span> <span class="string">&quot;f3&quot;</span>,
+            <span class="number">244</span> <span class="op">=&gt;</span> <span class="string">&quot;f4&quot;</span>,
+            <span class="number">245</span> <span class="op">=&gt;</span> <span class="string">&quot;f5&quot;</span>,
+            <span class="number">246</span> <span class="op">=&gt;</span> <span class="string">&quot;f6&quot;</span>,
+            <span class="number">247</span> <span class="op">=&gt;</span> <span class="string">&quot;f7&quot;</span>,
+            <span class="number">248</span> <span class="op">=&gt;</span> <span class="string">&quot;f8&quot;</span>,
+            <span class="number">249</span> <span class="op">=&gt;</span> <span class="string">&quot;f9&quot;</span>,
+            <span class="number">250</span> <span class="op">=&gt;</span> <span class="string">&quot;fa&quot;</span>,
+            <span class="number">251</span> <span class="op">=&gt;</span> <span class="string">&quot;fb&quot;</span>,
+            <span class="number">252</span> <span class="op">=&gt;</span> <span class="string">&quot;fc&quot;</span>,
+            <span class="number">253</span> <span class="op">=&gt;</span> <span class="string">&quot;fd&quot;</span>,
+            <span class="number">254</span> <span class="op">=&gt;</span> <span class="string">&quot;fe&quot;</span>,
+            <span class="number">255</span> <span class="op">=&gt;</span> <span class="string">&quot;ff&quot;</span>,
+        }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">EncodedByte</span> {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> [<span class="ident">u8</span>; <span class="number">2</span>];
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">EscapedByte</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">escape</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">hex_escape</span>(<span class="ident">byte</span>);
+        <span class="self">Self</span>(<span class="ident">escape</span>.<span class="ident">chars</span>())
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">EscapedByte</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">take</span>()
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
-            <span class="self">self</span>.<span class="number">0</span>.<span class="ident">take</span>()
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">nth</span>(<span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_some</span>() {
-            <span class="number">1</span>
-        } <span class="kw">else</span> {
-            <span class="number">0</span>
-        }
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">count</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_some</span>() { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> };
-        (<span class="ident">size</span>, <span class="prelude-val">Some</span>(<span class="ident">size</span>))
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">size_hint</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">last</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="comment">// For a size == 1 iterator, `next` and `last` are the same operation.</span>
-        <span class="self">self</span>.<span class="ident">next</span>()
+    <span class="kw">fn</span> <span class="ident">last</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">last</span>()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">EncodedByte</span> {
+<span class="kw">impl</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">EscapedByte</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="comment">// For a size == 1 iterator, `next` and `next_back` are the same</span>
-        <span class="comment">// operation.</span>
-        <span class="self">self</span>.<span class="ident">next</span>()
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next_back</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">nth_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="comment">// For a size == 1 iterator, `nth` and `nth_back` are the same</span>
-        <span class="comment">// operation.</span>
-        <span class="self">self</span>.<span class="ident">nth</span>(<span class="ident">n</span>)
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">nth_back</span>(<span class="ident">n</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FusedIterator</span> <span class="kw">for</span> <span class="ident">EncodedByte</span> {}
-
-<span class="kw">impl</span> <span class="ident">ExactSizeIterator</span> <span class="kw">for</span> <span class="ident">EncodedByte</span> {}
+<span class="kw">impl</span> <span class="ident">FusedIterator</span> <span class="kw">for</span> <span class="ident">EscapedByte</span> {}
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">encode</span>, <span class="ident">encode_into</span>, <span class="ident">format_into</span>, <span class="ident">write_into</span>, <span class="ident">EncodedByte</span>, <span class="ident">Hex</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">encode</span>, <span class="ident">encode_into</span>, <span class="ident">format_into</span>, <span class="ident">write_into</span>, <span class="ident">EscapedByte</span>, <span class="ident">Hex</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">literal_exhaustive</span>() {
         <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="number">0</span>..<span class="op">=</span><span class="number">255</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lit</span> <span class="op">=</span> <span class="ident">EncodedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
-            <span class="kw">let</span> [<span class="ident">left</span>, <span class="ident">right</span>] <span class="op">=</span> <span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lit</span> <span class="op">=</span> <span class="ident">EscapedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
+            <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">top</span> <span class="op">=</span> <span class="ident">byte</span> <span class="op">&gt;&gt;</span> <span class="number">4</span>;
             <span class="kw">match</span> <span class="ident">top</span> {
-                <span class="number">0x0</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;0&#39;</span>),
-                <span class="number">0x1</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;1&#39;</span>),
-                <span class="number">0x2</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;2&#39;</span>),
-                <span class="number">0x3</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;3&#39;</span>),
-                <span class="number">0x4</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;4&#39;</span>),
-                <span class="number">0x5</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;5&#39;</span>),
-                <span class="number">0x6</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;6&#39;</span>),
-                <span class="number">0x7</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;7&#39;</span>),
-                <span class="number">0x8</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;8&#39;</span>),
-                <span class="number">0x9</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;9&#39;</span>),
-                <span class="number">0xA</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;a&#39;</span>),
-                <span class="number">0xB</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;b&#39;</span>),
-                <span class="number">0xC</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;c&#39;</span>),
-                <span class="number">0xD</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;d&#39;</span>),
-                <span class="number">0xE</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;e&#39;</span>),
-                <span class="number">0xF</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">b&#39;f&#39;</span>),
+                <span class="number">0x0</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;0&#39;</span>),
+                <span class="number">0x1</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;1&#39;</span>),
+                <span class="number">0x2</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;2&#39;</span>),
+                <span class="number">0x3</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;3&#39;</span>),
+                <span class="number">0x4</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;4&#39;</span>),
+                <span class="number">0x5</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;5&#39;</span>),
+                <span class="number">0x6</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;6&#39;</span>),
+                <span class="number">0x7</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;7&#39;</span>),
+                <span class="number">0x8</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;8&#39;</span>),
+                <span class="number">0x9</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;9&#39;</span>),
+                <span class="number">0xA</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;a&#39;</span>),
+                <span class="number">0xB</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;b&#39;</span>),
+                <span class="number">0xC</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;c&#39;</span>),
+                <span class="number">0xD</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;d&#39;</span>),
+                <span class="number">0xE</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;e&#39;</span>),
+                <span class="number">0xF</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;f&#39;</span>),
                 <span class="ident">tuple</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unknown top 16th: {}, from byte: {}&quot;</span>, <span class="ident">tuple</span>, <span class="ident">byte</span>),
             }
+
+            <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">bottom</span> <span class="op">=</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0xF</span>;
             <span class="kw">match</span> <span class="ident">bottom</span> {
-                <span class="number">0x0</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;0&#39;</span>),
-                <span class="number">0x1</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;1&#39;</span>),
-                <span class="number">0x2</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;2&#39;</span>),
-                <span class="number">0x3</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;3&#39;</span>),
-                <span class="number">0x4</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;4&#39;</span>),
-                <span class="number">0x5</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;5&#39;</span>),
-                <span class="number">0x6</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;6&#39;</span>),
-                <span class="number">0x7</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;7&#39;</span>),
-                <span class="number">0x8</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;8&#39;</span>),
-                <span class="number">0x9</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;9&#39;</span>),
-                <span class="number">0xA</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;a&#39;</span>),
-                <span class="number">0xB</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;b&#39;</span>),
-                <span class="number">0xC</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;c&#39;</span>),
-                <span class="number">0xD</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;d&#39;</span>),
-                <span class="number">0xE</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;e&#39;</span>),
-                <span class="number">0xF</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">b&#39;f&#39;</span>),
+                <span class="number">0x0</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;0&#39;</span>),
+                <span class="number">0x1</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;1&#39;</span>),
+                <span class="number">0x2</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;2&#39;</span>),
+                <span class="number">0x3</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;3&#39;</span>),
+                <span class="number">0x4</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;4&#39;</span>),
+                <span class="number">0x5</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;5&#39;</span>),
+                <span class="number">0x6</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;6&#39;</span>),
+                <span class="number">0x7</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;7&#39;</span>),
+                <span class="number">0x8</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;8&#39;</span>),
+                <span class="number">0x9</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;9&#39;</span>),
+                <span class="number">0xA</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;a&#39;</span>),
+                <span class="number">0xB</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;b&#39;</span>),
+                <span class="number">0xC</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;c&#39;</span>),
+                <span class="number">0xD</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;d&#39;</span>),
+                <span class="number">0xE</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;e&#39;</span>),
+                <span class="number">0xF</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;f&#39;</span>),
                 <span class="ident">tuple</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unknown bottom 16th: {}, from byte: {}&quot;</span>, <span class="ident">tuple</span>, <span class="ident">byte</span>),
             }
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">is_none</span>());
@@ -1551,4 +1675,4 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "spinoso_securerandom";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "scolapasta_hex";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
