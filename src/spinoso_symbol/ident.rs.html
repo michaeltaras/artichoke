@@ -1106,7 +1106,6 @@
 <span id="1105">1105</span>
 <span id="1106">1106</span>
 <span id="1107">1107</span>
-<span id="1108">1108</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parser for classifying bytestrings as Ruby identifiers.</span>
 <span class="doccomment">//!</span>
@@ -1162,8 +1161,7 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
-
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">unicode</span>::{<span class="ident">REPLACEMENT_CHARACTER</span>, <span class="ident">REPLACEMENT_CHARACTER_BYTES</span>};
+<span class="kw">use</span> <span class="ident">scolapasta_string_escape</span>::{<span class="ident">REPLACEMENT_CHARACTER</span>, <span class="ident">REPLACEMENT_CHARACTER_BYTES</span>};
 
 <span class="doccomment">/// Valid types for Ruby identifiers.</span>
 <span class="doccomment">///</span>

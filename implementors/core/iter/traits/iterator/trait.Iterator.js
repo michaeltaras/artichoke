@@ -17,6 +17,7 @@ implementors["regex_syntax"] = [{"text":"impl&lt;'a&gt; Iterator for ClassUnicod
 implementors["rust_embed"] = [{"text":"impl Iterator for Filenames","synthetic":false,"types":[]}];
 implementors["rustyline"] = [{"text":"impl&lt;'a&gt; Iterator for Iter&lt;'a&gt;","synthetic":false,"types":[]}];
 implementors["scolapasta_hex"] = [{"text":"impl&lt;'a&gt; Iterator for Hex&lt;'a&gt;","synthetic":false,"types":[]}];
+implementors["scolapasta_string_escape"] = [{"text":"impl Iterator for Literal","synthetic":false,"types":[]}];
 implementors["serde_yaml"] = [{"text":"impl&lt;'a&gt; Iterator for Iter&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Iterator for IterMut&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl Iterator for IntoIter","synthetic":false,"types":[]}];
 implementors["smallvec"] = [{"text":"impl&lt;'a, T:&nbsp;'a + Array&gt; Iterator for Drain&lt;'a, T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;A:&nbsp;Array&gt; Iterator for IntoIter&lt;A&gt;","synthetic":false,"types":[]}];
 implementors["spinoso_symbol"] = [{"text":"impl Iterator for AllSymbols","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Iterator for Inspect&lt;'a&gt;","synthetic":false,"types":[]}];
