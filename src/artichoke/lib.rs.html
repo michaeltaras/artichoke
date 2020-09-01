@@ -153,6 +153,11 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -227,10 +232,14 @@
 <span class="doccomment">//! - **core-math-extra** - Activates additional dependencies to implement some</span>
 <span class="doccomment">//!   functions in the [`Math` module][core-mod-math].  When this feature is</span>
 <span class="doccomment">//!   disabled, these functions raise `NotImplementedError`.</span>
-<span class="doccomment">//! - **core-random** - This includes an implementation of the</span>
+<span class="doccomment">//! - **core-random** - Include an implementation of the</span>
 <span class="doccomment">//!   [`Random` class][core-class-random]. This feature includes additional</span>
 <span class="doccomment">//!   dependencies. When this feature is disabled, Artichoke does not have</span>
 <span class="doccomment">//!   support for generating psuedorandom numbers.</span>
+<span class="doccomment">//! - **core-time** - Include an implementation of the</span>
+<span class="doccomment">//!   [`Time` class][core-class-time]. This feature includes additional</span>
+<span class="doccomment">//!   dependencies. When this feature is disabled, Artichoke does not have</span>
+<span class="doccomment">//!   datetime support.</span>
 <span class="doccomment">//! - **stdlib-securerandom** - An implementation of a CSPRNG for the</span>
 <span class="doccomment">//!   [`SecureRandom` module][stdlib-mod-securerandom]. This feature includes</span>
 <span class="doccomment">//!   additional dependencies.  When this feature is disabled, the</span>
@@ -241,6 +250,7 @@
 <span class="doccomment">//! [core-obj-env]: https://ruby-doc.org/core-2.6.3/ENV.html</span>
 <span class="doccomment">//! [core-mod-math]: https://ruby-doc.org/core-2.6.3/Math.html</span>
 <span class="doccomment">//! [core-class-random]: https://ruby-doc.org/core-2.6.3/Random.html</span>
+<span class="doccomment">//! [core-class-time]: https://ruby-doc.org/core-2.6.3/Time.html</span>
 <span class="doccomment">//! [stdlib-mod-securerandom]: https://ruby-doc.org/stdlib-2.6.3/libdoc/securerandom/rdoc/SecureRandom.html</span>
 
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/artichoke/0.1.0-pre.0&quot;</span>)]</span>

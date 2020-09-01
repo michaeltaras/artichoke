@@ -1,5 +1,6 @@
 (function() {var implementors = {};
 implementors["chrono"] = [{"text":"impl FromStr for NaiveDate","synthetic":false,"types":[]},{"text":"impl FromStr for NaiveDateTime","synthetic":false,"types":[]},{"text":"impl FromStr for NaiveTime","synthetic":false,"types":[]},{"text":"impl FromStr for DateTime&lt;Utc&gt;","synthetic":false,"types":[]},{"text":"impl FromStr for DateTime&lt;Local&gt;","synthetic":false,"types":[]},{"text":"impl FromStr for DateTime&lt;FixedOffset&gt;","synthetic":false,"types":[]},{"text":"impl FromStr for Weekday","synthetic":false,"types":[]},{"text":"impl FromStr for Month","synthetic":false,"types":[]}];
+implementors["chrono_tz"] = [{"text":"impl FromStr for Tz","synthetic":false,"types":[]}];
 implementors["clap"] = [{"text":"impl FromStr for AppSettings","synthetic":false,"types":[]},{"text":"impl FromStr for ArgSettings","synthetic":false,"types":[]},{"text":"impl FromStr for Shell","synthetic":false,"types":[]}];
 implementors["log"] = [{"text":"impl FromStr for Level","synthetic":false,"types":[]},{"text":"impl FromStr for LevelFilter","synthetic":false,"types":[]}];
 implementors["nix"] = [{"text":"impl FromStr for Signal","synthetic":false,"types":[]}];
