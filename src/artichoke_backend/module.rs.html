@@ -320,6 +320,10 @@
 <span id="319">319</span>
 <span id="320">320</span>
 <span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
@@ -451,7 +455,11 @@
 
 <span class="kw">impl</span> <span class="ident">Rclass</span> {
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sym</span>: <span class="ident">u32</span>, <span class="ident">name</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>, <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(
+        <span class="ident">sym</span>: <span class="ident">u32</span>,
+        <span class="ident">name</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>,
+        <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">sym</span>,
             <span class="ident">name</span>,
