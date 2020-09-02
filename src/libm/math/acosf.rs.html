@@ -103,7 +103,7 @@
 <span class="kw">const</span> <span class="ident">P_S2</span>: <span class="ident">f32</span> <span class="op">=</span> <span class="op">-</span><span class="number">8.6563630030e-03</span>;
 <span class="kw">const</span> <span class="ident">Q_S1</span>: <span class="ident">f32</span> <span class="op">=</span> <span class="op">-</span><span class="number">7.0662963390e-01</span>;
 
-<span class="kw">fn</span> <span class="ident">r</span>(<span class="ident">z</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+<span class="kw">fn</span> <span class="ident">r</span>(<span class="ident">z</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> (<span class="ident">P_S0</span> <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> (<span class="ident">P_S1</span> <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">P_S2</span>));
     <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="number">1.</span> <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">Q_S1</span>;
     <span class="ident">p</span> <span class="op">/</span> <span class="ident">q</span>
@@ -115,7 +115,7 @@
 <span class="doccomment">/// Arguments must be in the range -1 to 1.</span>
 <span class="doccomment">/// Returns values in radians, in the range of 0 to pi.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acosf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acosf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">let</span> <span class="ident">x1p_120</span> <span class="op">=</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="number">0x03800000</span>); <span class="comment">// 0x1p-120 === 2 ^ (-120)</span>
 
     <span class="kw">let</span> <span class="ident">z</span>: <span class="ident">f32</span>;
@@ -125,9 +125,9 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hx</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
     <span class="kw">let</span> <span class="ident">ix</span> <span class="op">=</span> <span class="ident">hx</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
     <span class="comment">/* |x| &gt;= 1 or nan */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x3f800000</span> {
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">==</span> <span class="number">0x3f800000</span> {
-            <span class="kw">if</span> (<span class="ident">hx</span> <span class="op">&gt;&gt;</span> <span class="number">31</span>) <span class="op">!=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x3f800000</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x3f800000</span> {
+            <span class="kw">if</span> (<span class="ident">hx</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="kw">return</span> <span class="number">2.</span> <span class="op">*</span> <span class="ident">PIO2_HI</span> <span class="op">+</span> <span class="ident">x1p_120</span>;
             }
             <span class="kw">return</span> <span class="number">0.</span>;
@@ -136,14 +136,14 @@
     }
     <span class="comment">/* |x| &lt; 0.5 */</span>
     <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x3f000000</span> {
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;=</span> <span class="number">0x32800000</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x32800000</span> {
             <span class="comment">/* |x| &lt; 2**-26 */</span>
             <span class="kw">return</span> <span class="ident">PIO2_HI</span> <span class="op">+</span> <span class="ident">x1p_120</span>;
         }
         <span class="kw">return</span> <span class="ident">PIO2_HI</span> <span class="op">-</span> (<span class="ident">x</span> <span class="op">-</span> (<span class="ident">PIO2_LO</span> <span class="op">-</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">r</span>(<span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>)));
     }
     <span class="comment">/* x &lt; -0.5 */</span>
-    <span class="kw">if</span> (<span class="ident">hx</span> <span class="op">&gt;&gt;</span> <span class="number">31</span>) <span class="op">!=</span> <span class="number">0</span> {
+    <span class="kw">if</span> (<span class="ident">hx</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
         <span class="ident">z</span> <span class="op">=</span> (<span class="number">1.</span> <span class="op">+</span> <span class="ident">x</span>) <span class="op">*</span> <span class="number">0.5</span>;
         <span class="ident">s</span> <span class="op">=</span> <span class="ident">sqrtf</span>(<span class="ident">z</span>);
         <span class="ident">w</span> <span class="op">=</span> <span class="ident">r</span>(<span class="ident">z</span>) <span class="op">*</span> <span class="ident">s</span> <span class="op">-</span> <span class="ident">PIO2_LO</span>;

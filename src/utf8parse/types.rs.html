@@ -154,7 +154,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">State</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">State</span> {
         <span class="ident">State</span>::<span class="ident">Ground</span>
     }
 }
@@ -165,47 +165,47 @@
     <span class="doccomment">/// This takes the current state and input byte into consideration, to determine the next state</span>
     <span class="doccomment">/// and any action that should be taken.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">advance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> (<span class="ident">State</span>, <span class="ident">Action</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">advance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">State</span>, <span class="ident">Action</span>) {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">State</span>::<span class="ident">Ground</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x00</span>..<span class="op">=</span><span class="number">0x7f</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">EmitByte</span>),
-                <span class="number">0xc2</span>..<span class="op">=</span><span class="number">0xdf</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2Top</span>),
-                <span class="number">0xe0</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">U3_2_e0</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
-                <span class="number">0xe1</span>..<span class="op">=</span><span class="number">0xec</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
-                <span class="number">0xed</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">U3_2_ed</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
-                <span class="number">0xee</span>..<span class="op">=</span><span class="number">0xef</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
-                <span class="number">0xf0</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Utf8_4_3_f0</span>, <span class="ident">Action</span>::<span class="ident">SetByte4</span>),
-                <span class="number">0xf1</span>..<span class="op">=</span><span class="number">0xf3</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail3</span>, <span class="ident">Action</span>::<span class="ident">SetByte4</span>),
-                <span class="number">0xf4</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Utf8_4_3_f4</span>, <span class="ident">Action</span>::<span class="ident">SetByte4</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">Ground</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x00</span>..<span class="op">=</span><span class="number">0x7f</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">EmitByte</span>),
+                <span class="number">0xc2</span>..<span class="op">=</span><span class="number">0xdf</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2Top</span>),
+                <span class="number">0xe0</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">U3_2_e0</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
+                <span class="number">0xe1</span>..<span class="op">=</span><span class="number">0xec</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
+                <span class="number">0xed</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">U3_2_ed</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
+                <span class="number">0xee</span>..<span class="op">=</span><span class="number">0xef</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3Top</span>),
+                <span class="number">0xf0</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Utf8_4_3_f0</span>, <span class="ident">Action</span>::<span class="ident">SetByte4</span>),
+                <span class="number">0xf1</span>..<span class="op">=</span><span class="number">0xf3</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail3</span>, <span class="ident">Action</span>::<span class="ident">SetByte4</span>),
+                <span class="number">0xf4</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Utf8_4_3_f4</span>, <span class="ident">Action</span>::<span class="ident">SetByte4</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">U3_2_e0</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0xa0</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">U3_2_e0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0xa0</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">U3_2_ed</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0x9f</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">U3_2_ed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0x9f</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">Utf8_4_3_f0</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x90</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">Utf8_4_3_f0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x90</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">Utf8_4_3_f4</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0x8f</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">Utf8_4_3_f4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0x8f</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">Tail3</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">Tail3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail2</span>, <span class="ident">Action</span>::<span class="ident">SetByte3</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">Tail2</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">Tail2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Tail1</span>, <span class="ident">Action</span>::<span class="ident">SetByte2</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
-            <span class="ident">State</span>::<span class="ident">Tail1</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">SetByte1</span>),
-                <span class="kw">_</span> <span class="op">=&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
+            <span class="ident">State</span>::<span class="ident">Tail1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">byte</span> {
+                <span class="number">0x80</span>..<span class="op">=</span><span class="number">0xbf</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">SetByte1</span>),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">State</span>::<span class="ident">Ground</span>, <span class="ident">Action</span>::<span class="ident">InvalidSequence</span>),
             },
         }
     }

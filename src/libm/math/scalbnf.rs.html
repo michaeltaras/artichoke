@@ -30,33 +30,33 @@
 <span id="29">29</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalbnf</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f32</span>, <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalbnf</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f32</span>, <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">let</span> <span class="ident">x1p127</span> <span class="op">=</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="number">0x7f000000</span>); <span class="comment">// 0x1p127f === 2 ^ 127</span>
     <span class="kw">let</span> <span class="ident">x1p_126</span> <span class="op">=</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="number">0x800000</span>); <span class="comment">// 0x1p-126f === 2 ^ -126</span>
     <span class="kw">let</span> <span class="ident">x1p24</span> <span class="op">=</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="number">0x4b800000</span>); <span class="comment">// 0x1p24f === 2 ^ 24</span>
 
     <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">127</span> {
-        <span class="ident">x</span> <span class="op">*=</span> <span class="ident">x1p127</span>;
-        <span class="ident">n</span> <span class="op">-=</span> <span class="number">127</span>;
+        <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p127</span>;
+        <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">127</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">127</span> {
-            <span class="ident">x</span> <span class="op">*=</span> <span class="ident">x1p127</span>;
-            <span class="ident">n</span> <span class="op">-=</span> <span class="number">127</span>;
+            <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p127</span>;
+            <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">127</span>;
             <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">127</span> {
                 <span class="ident">n</span> <span class="op">=</span> <span class="number">127</span>;
             }
         }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">126</span> {
-        <span class="ident">x</span> <span class="op">*=</span> <span class="ident">x1p_126</span> <span class="op">*</span> <span class="ident">x1p24</span>;
-        <span class="ident">n</span> <span class="op">+=</span> <span class="number">126</span> <span class="op">-</span> <span class="number">24</span>;
+        <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_126</span> <span class="op">*</span> <span class="ident">x1p24</span>;
+        <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">126</span> <span class="op">-</span> <span class="number">24</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">126</span> {
-            <span class="ident">x</span> <span class="op">*=</span> <span class="ident">x1p_126</span> <span class="op">*</span> <span class="ident">x1p24</span>;
-            <span class="ident">n</span> <span class="op">+=</span> <span class="number">126</span> <span class="op">-</span> <span class="number">24</span>;
+            <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_126</span> <span class="op">*</span> <span class="ident">x1p24</span>;
+            <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">126</span> <span class="op">-</span> <span class="number">24</span>;
             <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">126</span> {
                 <span class="ident">n</span> <span class="op">=</span> <span class="op">-</span><span class="number">126</span>;
             }
         }
     }
-    <span class="ident">x</span> <span class="op">*</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(((<span class="number">0x7f</span> <span class="op">+</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">23</span>)
+    <span class="ident">x</span> <span class="op">*</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(((<span class="number">0x7f</span> <span class="op">+</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "libm";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

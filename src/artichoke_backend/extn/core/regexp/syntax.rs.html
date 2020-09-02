@@ -112,7 +112,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The string returned may be safely used as a literal in a regular expression.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">quoted</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
     <span class="ident">escape_into</span>(<span class="ident">text</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">quoted</span>);
     <span class="ident">quoted</span>
@@ -126,11 +126,11 @@
     <span class="ident">buf</span>.<span class="ident">reserve</span>(<span class="ident">text</span>.<span class="ident">len</span>());
     <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="ident">text</span>.<span class="ident">chars</span>() {
         <span class="kw">match</span> <span class="ident">c</span> {
-            <span class="ident">c</span> <span class="kw">if</span> <span class="ident">is_meta_character</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> {
+            <span class="ident">c</span> <span class="kw">if</span> <span class="ident">is_meta_character</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\\&#39;</span>);
                 <span class="ident">buf</span>.<span class="ident">push</span>(<span class="ident">c</span>);
             }
-            <span class="ident">c</span> <span class="kw">if</span> <span class="ident">is_non_printable_character</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> {
+            <span class="ident">c</span> <span class="kw">if</span> <span class="ident">is_non_printable_character</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">escape</span>) <span class="op">=</span> <span class="ident">is_non_supported_non_printable_character</span>(<span class="ident">c</span>) {
                     <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">escape</span>);
                 } <span class="kw">else</span> {
@@ -139,46 +139,46 @@
                     }
                 }
             }
-            <span class="ident">c</span> <span class="op">=&gt;</span> <span class="ident">buf</span>.<span class="ident">push</span>(<span class="ident">c</span>),
+            <span class="ident">c</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">buf</span>.<span class="ident">push</span>(<span class="ident">c</span>),
         }
     }
 }
 
 <span class="doccomment">/// Returns true if the given character has significance in a regex.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_meta_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_meta_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
         <span class="string">&#39;\\&#39;</span> <span class="op">|</span> <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;+&#39;</span> <span class="op">|</span> <span class="string">&#39;*&#39;</span> <span class="op">|</span> <span class="string">&#39;?&#39;</span> <span class="op">|</span> <span class="string">&#39;(&#39;</span> <span class="op">|</span> <span class="string">&#39;)&#39;</span> <span class="op">|</span> <span class="string">&#39;|&#39;</span> <span class="op">|</span> <span class="string">&#39;[&#39;</span> <span class="op">|</span> <span class="string">&#39;]&#39;</span> <span class="op">|</span> <span class="string">&#39;{&#39;</span> <span class="op">|</span> <span class="string">&#39;}&#39;</span> <span class="op">|</span> <span class="string">&#39;^&#39;</span> <span class="op">|</span> <span class="string">&#39;$&#39;</span>
-        <span class="op">|</span> <span class="string">&#39;#&#39;</span> <span class="op">|</span> <span class="string">&#39;&amp;&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span> <span class="string">&#39;~&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+        <span class="op">|</span> <span class="string">&#39;#&#39;</span> <span class="op">|</span> <span class="string">&#39;&amp;&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span> <span class="string">&#39;~&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         <span class="comment">// This match arm differs from `regex-syntax` by including &#39;/&#39;.</span>
         <span class="comment">// Ruby uses &#39;/&#39; to mark `Regexp` literals in source code.</span>
-        <span class="string">&#39;/&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+        <span class="string">&#39;/&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         <span class="comment">// This match arm differs from `regex-syntax` by including &#39; &#39; (an ASCII</span>
         <span class="comment">// space character). Ruby always escapes &#39; &#39; in calls to `Regexp::escape`.</span>
-        <span class="string">&#39; &#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+        <span class="string">&#39; &#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
     }
 }
 
 <span class="doccomment">/// Returns true if the given character is non-printable and needs to be quoted.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
-        <span class="string">&#39;\n&#39;</span> <span class="op">|</span> <span class="string">&#39;\r&#39;</span> <span class="op">|</span> <span class="string">&#39;\t&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+        <span class="string">&#39;\n&#39;</span> <span class="op">|</span> <span class="string">&#39;\r&#39;</span> <span class="op">|</span> <span class="string">&#39;\t&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         <span class="comment">// form feed aka &quot;\f&quot;</span>
-        <span class="string">&#39;\u{C}&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+        <span class="string">&#39;\u{C}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
     }
 }
 
 <span class="doccomment">/// Returns `Some(_)` if the given character is non-printable and Rust does not</span>
 <span class="doccomment">/// support the escape sequence.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_non_supported_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_non_supported_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
         <span class="comment">// form feed aka &quot;\f&quot;</span>
-        <span class="string">&#39;\u{C}&#39;</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="string">r&quot;\f&quot;</span>),
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="string">&#39;\u{C}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="string">r&quot;\f&quot;</span>),
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
     }
 }
 

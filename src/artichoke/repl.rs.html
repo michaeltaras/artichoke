@@ -283,7 +283,7 @@
 <span class="kw">mod</span> <span class="ident">filename_test</span> {
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">repl_filename_does_not_contain_nul_byte</span>() {
-        <span class="kw">let</span> <span class="ident">contains_nul_byte</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">REPL_FILENAME</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="string">b&#39;\0&#39;</span>);
+        <span class="kw">let</span> <span class="ident">contains_nul_byte</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">REPL_FILENAME</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\0&#39;</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">contains_nul_byte</span>);
     }
 }
@@ -299,13 +299,13 @@
 <span class="kw">impl</span> <span class="ident">ParserAllocError</span> {
     <span class="doccomment">/// Constructs a new, default `ParserAllocError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParserAllocError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Failed to initialize Ruby parser&quot;</span>)
     }
 }
@@ -321,13 +321,13 @@
 <span class="kw">impl</span> <span class="ident">ParserLineCountError</span> {
     <span class="doccomment">/// Constructs a new, default `ParserLineCountError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParserLineCountError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;The interpreter has parsed too many lines and must exit&quot;</span>)
     }
 }
@@ -345,13 +345,13 @@
 <span class="kw">impl</span> <span class="ident">ParserInternalError</span> {
     <span class="doccomment">/// Constructs a new, default `ParserInternalError`.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">_private</span>: () }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParserInternalError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;A fatal parsing error occurred&quot;</span>)
     }
 }
@@ -363,13 +363,13 @@
 <span class="kw">struct</span> <span class="ident">UnhandledReadlineError</span>(<span class="ident">ReadlineError</span>);
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">UnhandledReadlineError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unhandled REPL Readline error: {}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">UnhandledReadlineError</span> {
-    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="ident">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
     }
 }
@@ -387,7 +387,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">PromptConfig</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">simple</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;&gt;&gt;&gt; &quot;</span>),
             <span class="ident">continued</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;... &quot;</span>),
@@ -396,7 +396,7 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">preamble</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">preamble</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">description</span> <span class="op">=</span> <span class="ident">interp</span>
         .<span class="ident">eval</span>(<span class="string">b&quot;RUBY_DESCRIPTION&quot;</span>)<span class="question-mark">?</span>
         .<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
@@ -430,7 +430,7 @@
     <span class="kw-2">mut</span> <span class="ident">output</span>: <span class="ident">Wout</span>,
     <span class="kw-2">mut</span> <span class="ident">error</span>: <span class="ident">Werr</span>,
     <span class="ident">config</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PromptConfig</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;&gt;</span>
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">Wout</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
     <span class="ident">Werr</span>: <span class="ident">io</span>::<span class="ident">Write</span> <span class="op">+</span> <span class="ident">WriteColor</span>,
@@ -467,7 +467,7 @@
 
         <span class="kw">let</span> <span class="ident">readline</span> <span class="op">=</span> <span class="ident">rl</span>.<span class="ident">readline</span>(<span class="ident">prompt</span>);
         <span class="kw">match</span> <span class="ident">readline</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">line</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">line</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="ident">line</span>.<span class="ident">as_str</span>());
                 <span class="ident">parser_state</span> <span class="op">=</span> <span class="ident">parser</span>.<span class="ident">parse</span>(<span class="ident">buf</span>.<span class="ident">as_bytes</span>());
                 <span class="kw">if</span> <span class="ident">parser_state</span>.<span class="ident">is_fatal</span>() {
@@ -483,12 +483,12 @@
                     <span class="kw">continue</span>;
                 }
                 <span class="kw">match</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="ident">buf</span>.<span class="ident">as_bytes</span>()) {
-                    <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> {
+                    <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">inspect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>);
                         <span class="ident">output</span>.<span class="ident">write_all</span>(<span class="ident">config</span>.<span class="ident">result_prefix</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
                         <span class="ident">output</span>.<span class="ident">write_all</span>(<span class="ident">result</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>;
                     }
-                    <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">exc</span>) <span class="op">=&gt;</span> {
+                    <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">exc</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">backtrace</span>::<span class="ident">format_repl_trace_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="ident">exc</span>)<span class="question-mark">?</span>
                     }
                 }
@@ -504,7 +504,7 @@
                 <span class="ident">buf</span>.<span class="ident">clear</span>();
             }
             <span class="comment">// Reset the buf and present the user with a fresh prompt</span>
-            <span class="prelude-val">Err</span>(<span class="ident">ReadlineError</span>::<span class="ident">Interrupted</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">ReadlineError</span>::<span class="ident">Interrupted</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// Reset buffered code</span>
                 <span class="ident">buf</span>.<span class="ident">clear</span>();
                 <span class="comment">// clear parser state</span>
@@ -512,8 +512,8 @@
                 <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;^C&quot;</span>)<span class="question-mark">?</span>;
             }
             <span class="comment">// Gracefully exit on CTRL-D EOF</span>
-            <span class="prelude-val">Err</span>(<span class="ident">ReadlineError</span>::<span class="ident">Eof</span>) <span class="op">=&gt;</span> <span class="kw">break</span>,
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">UnhandledReadlineError</span>(<span class="ident">err</span>))),
+            <span class="prelude-val">Err</span>(<span class="ident">ReadlineError</span>::<span class="ident">Eof</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">UnhandledReadlineError</span>(<span class="ident">err</span>))),
         };
     }
     <span class="prelude-val">Ok</span>(())

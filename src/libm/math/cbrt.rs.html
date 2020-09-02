@@ -146,7 +146,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Computes the cube root of the argument.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">x1p54</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x4350000000000000</span>); <span class="comment">// 0x1p54 === 2 ^ 54</span>
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ui</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
@@ -154,9 +154,9 @@
     <span class="kw">let</span> <span class="ident">s</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">w</span>: <span class="ident">f64</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hx</span>: <span class="ident">u32</span> <span class="op">=</span> (<span class="ident">ui</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hx</span>: <span class="ident">u32</span> <span class="op">=</span> (<span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
 
-    <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;=</span> <span class="number">0x7ff00000</span> {
+    <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x7ff00000</span> {
         <span class="comment">/* cbrt(NaN,INF) is itself */</span>
         <span class="kw">return</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">x</span>;
     }
@@ -179,16 +179,16 @@
     <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&lt;</span> <span class="number">0x00100000</span> {
         <span class="comment">/* zero or subnormal? */</span>
         <span class="ident">ui</span> <span class="op">=</span> (<span class="ident">x</span> <span class="op">*</span> <span class="ident">x1p54</span>).<span class="ident">to_bits</span>();
-        <span class="ident">hx</span> <span class="op">=</span> (<span class="ident">ui</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
-        <span class="kw">if</span> <span class="ident">hx</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="ident">hx</span> <span class="op">=</span> (<span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
+        <span class="kw">if</span> <span class="ident">hx</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="ident">x</span>; <span class="comment">/* cbrt(0) is itself */</span>
         }
         <span class="ident">hx</span> <span class="op">=</span> <span class="ident">hx</span> <span class="op">/</span> <span class="number">3</span> <span class="op">+</span> <span class="ident">B2</span>;
     } <span class="kw">else</span> {
         <span class="ident">hx</span> <span class="op">=</span> <span class="ident">hx</span> <span class="op">/</span> <span class="number">3</span> <span class="op">+</span> <span class="ident">B1</span>;
     }
-    <span class="ident">ui</span> <span class="op">&amp;=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">63</span>;
-    <span class="ident">ui</span> <span class="op">|=</span> (<span class="ident">hx</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;&lt;</span> <span class="number">32</span>;
+    <span class="ident">ui</span> <span class="op">&amp;=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">63</span>;
+    <span class="ident">ui</span> <span class="op">|</span><span class="op">=</span> (<span class="ident">hx</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>;
     <span class="ident">t</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">ui</span>);
 
     <span class="comment">/*

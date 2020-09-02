@@ -103,7 +103,7 @@
     <span class="ident">left</span>: <span class="ident">U</span>,
     <span class="ident">right</span>: <span class="ident">U</span>,
     <span class="ident">fold</span>: <span class="ident">CaseFold</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>, <span class="ident">T</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>, <span class="ident">T</span>::<span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Intern</span><span class="op">&lt;</span><span class="ident">Symbol</span> <span class="op">=</span> <span class="ident">U</span><span class="op">&gt;</span>,
     <span class="ident">U</span>: <span class="ident">Copy</span>,
@@ -113,16 +113,16 @@
     <span class="kw">let</span> <span class="ident">cmp</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">left</span>), <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">right</span>)) {
         <span class="comment">// Both slices are UTF-8, compare with the given Unicode case folding</span>
         <span class="comment">// scheme.</span>
-        (<span class="prelude-val">Ok</span>(<span class="ident">left</span>), <span class="prelude-val">Ok</span>(<span class="ident">right</span>)) <span class="op">=&gt;</span> <span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+        (<span class="prelude-val">Ok</span>(<span class="ident">left</span>), <span class="prelude-val">Ok</span>(<span class="ident">right</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">fold</span>.<span class="ident">case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
         <span class="comment">// Both slices are not UTF-8, fallback to ASCII comparator.</span>
-        (<span class="prelude-val">Err</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="ident">focaccia</span>::<span class="ident">ascii_case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+        (<span class="prelude-val">Err</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">focaccia</span>::<span class="ident">ascii_case_eq</span>(<span class="ident">left</span>, <span class="ident">right</span>),
         <span class="comment">// Encoding mismatch, the bytes are not comparable using unicode case</span>
         <span class="comment">// folding.</span>
         <span class="comment">//</span>
         <span class="comment">// &gt; `nil` is returned if the two symbols have incompatible encodings,</span>
         <span class="comment">// &gt; or if `other_symbol` is not a symbol.</span>
         <span class="comment">// &gt; &lt;https://ruby-doc.org/core-2.6.3/Symbol.html#method-i-casecmp-3F&gt;</span>
-        (<span class="prelude-val">Ok</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">|</span> (<span class="prelude-val">Err</span>(<span class="kw">_</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        (<span class="prelude-val">Ok</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">|</span> (<span class="prelude-val">Err</span>(<span class="kw">_</span>), <span class="prelude-val">Ok</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
     };
     <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">cmp</span>))
 }

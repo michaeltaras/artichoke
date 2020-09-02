@@ -34,7 +34,7 @@
 <span id="33">33</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalbn</span>(<span class="ident">x</span>: <span class="ident">f64</span>, <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalbn</span>(<span class="ident">x</span>: <span class="ident">f64</span>, <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">x1p1023</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x7fe0000000000000</span>); <span class="comment">// 0x1p1023 === 2 ^ 1023</span>
     <span class="kw">let</span> <span class="ident">x1p53</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x4340000000000000</span>); <span class="comment">// 0x1p53 === 2 ^ 53</span>
     <span class="kw">let</span> <span class="ident">x1p_1022</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x0010000000000000</span>); <span class="comment">// 0x1p-1022 === 2 ^ (-1022)</span>
@@ -42,11 +42,11 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">y</span> <span class="op">=</span> <span class="ident">x</span>;
 
     <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">1023</span> {
-        <span class="ident">y</span> <span class="op">*=</span> <span class="ident">x1p1023</span>;
-        <span class="ident">n</span> <span class="op">-=</span> <span class="number">1023</span>;
+        <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p1023</span>;
+        <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1023</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">1023</span> {
-            <span class="ident">y</span> <span class="op">*=</span> <span class="ident">x1p1023</span>;
-            <span class="ident">n</span> <span class="op">-=</span> <span class="number">1023</span>;
+            <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p1023</span>;
+            <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1023</span>;
             <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">1023</span> {
                 <span class="ident">n</span> <span class="op">=</span> <span class="number">1023</span>;
             }
@@ -54,17 +54,17 @@
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">1022</span> {
         <span class="comment">/* make sure final n &lt; -53 to avoid double
         rounding in the subnormal range */</span>
-        <span class="ident">y</span> <span class="op">*=</span> <span class="ident">x1p_1022</span> <span class="op">*</span> <span class="ident">x1p53</span>;
-        <span class="ident">n</span> <span class="op">+=</span> <span class="number">1022</span> <span class="op">-</span> <span class="number">53</span>;
+        <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_1022</span> <span class="op">*</span> <span class="ident">x1p53</span>;
+        <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">1022</span> <span class="op">-</span> <span class="number">53</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">1022</span> {
-            <span class="ident">y</span> <span class="op">*=</span> <span class="ident">x1p_1022</span> <span class="op">*</span> <span class="ident">x1p53</span>;
-            <span class="ident">n</span> <span class="op">+=</span> <span class="number">1022</span> <span class="op">-</span> <span class="number">53</span>;
+            <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_1022</span> <span class="op">*</span> <span class="ident">x1p53</span>;
+            <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">1022</span> <span class="op">-</span> <span class="number">53</span>;
             <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">1022</span> {
                 <span class="ident">n</span> <span class="op">=</span> <span class="op">-</span><span class="number">1022</span>;
             }
         }
     }
-    <span class="ident">y</span> <span class="op">*</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(((<span class="number">0x3ff</span> <span class="op">+</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;&lt;</span> <span class="number">52</span>)
+    <span class="ident">y</span> <span class="op">*</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(((<span class="number">0x3ff</span> <span class="op">+</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">52</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "libm";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

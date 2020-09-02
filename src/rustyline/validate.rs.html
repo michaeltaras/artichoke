@@ -151,16 +151,16 @@
 
 <span class="doccomment">/// Give access to user input.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ValidationContext</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
-    <span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Invoke</span>,
+    <span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">Invoke</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">ValidationContext</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Invoke</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">Invoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">ValidationContext</span> { <span class="ident">i</span> }
     }
 
     <span class="doccomment">/// Returns user input.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">input</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">input</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">i</span>.<span class="ident">input</span>()
     }
 
@@ -189,7 +189,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// For auto-correction like a missing closing quote or to reject invalid</span>
     <span class="doccomment">/// char while typing, the input will be mutable (TODO).</span>
-    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ValidationContext</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidationResult</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ValidationContext</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidationResult</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ctx</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">ValidationResult</span>::<span class="ident">Valid</span>(<span class="prelude-val">None</span>))
     }
@@ -199,7 +199,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Default is `false`.</span>
     <span class="comment">// TODO we can implement this later.</span>
-    <span class="kw">fn</span> <span class="ident">validate_while_typing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">validate_while_typing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="bool-val">false</span>
     }
 }
@@ -207,11 +207,11 @@
 <span class="kw">impl</span> <span class="ident">Validator</span> <span class="kw">for</span> () {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="ident">V</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Validator</span><span class="op">&gt;</span> <span class="ident">Validator</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;v</span> <span class="ident">V</span> {
-    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ValidationContext</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidationResult</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ValidationContext</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidationResult</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">validate</span>(<span class="ident">ctx</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">validate_while_typing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">validate_while_typing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">validate_while_typing</span>()
     }
 }
@@ -224,38 +224,38 @@
 
 <span class="kw">impl</span> <span class="ident">MatchingBracketValidator</span> {
     <span class="doccomment">/// Constructor</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">_priv</span>: () }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Validator</span> <span class="kw">for</span> <span class="ident">MatchingBracketValidator</span> {
-    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ValidationContext</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidationResult</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ValidationContext</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ValidationResult</span><span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">validate_brackets</span>(<span class="ident">ctx</span>.<span class="ident">input</span>()))
     }
 }
 
-<span class="kw">fn</span> <span class="ident">validate_brackets</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">ValidationResult</span> {
+<span class="kw">fn</span> <span class="ident">validate_brackets</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ValidationResult</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stack</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
     <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="ident">input</span>.<span class="ident">chars</span>() {
         <span class="kw">match</span> <span class="ident">c</span> {
-            <span class="string">&#39;(&#39;</span> <span class="op">|</span> <span class="string">&#39;[&#39;</span> <span class="op">|</span> <span class="string">&#39;{&#39;</span> <span class="op">=&gt;</span> <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">c</span>),
-            <span class="string">&#39;)&#39;</span> <span class="op">|</span> <span class="string">&#39;]&#39;</span> <span class="op">|</span> <span class="string">&#39;}&#39;</span> <span class="op">=&gt;</span> <span class="kw">match</span> (<span class="ident">stack</span>.<span class="ident">pop</span>(), <span class="ident">c</span>) {
-                (<span class="prelude-val">Some</span>(<span class="string">&#39;(&#39;</span>), <span class="string">&#39;)&#39;</span>) <span class="op">|</span> (<span class="prelude-val">Some</span>(<span class="string">&#39;[&#39;</span>), <span class="string">&#39;]&#39;</span>) <span class="op">|</span> (<span class="prelude-val">Some</span>(<span class="string">&#39;{&#39;</span>), <span class="string">&#39;}&#39;</span>) <span class="op">=&gt;</span> {}
-                (<span class="prelude-val">Some</span>(<span class="ident">wanted</span>), <span class="kw">_</span>) <span class="op">=&gt;</span> {
+            <span class="string">&#39;(&#39;</span> <span class="op">|</span> <span class="string">&#39;[&#39;</span> <span class="op">|</span> <span class="string">&#39;{&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">stack</span>.<span class="ident">push</span>(<span class="ident">c</span>),
+            <span class="string">&#39;)&#39;</span> <span class="op">|</span> <span class="string">&#39;]&#39;</span> <span class="op">|</span> <span class="string">&#39;}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> (<span class="ident">stack</span>.<span class="ident">pop</span>(), <span class="ident">c</span>) {
+                (<span class="prelude-val">Some</span>(<span class="string">&#39;(&#39;</span>), <span class="string">&#39;)&#39;</span>) <span class="op">|</span> (<span class="prelude-val">Some</span>(<span class="string">&#39;[&#39;</span>), <span class="string">&#39;]&#39;</span>) <span class="op">|</span> (<span class="prelude-val">Some</span>(<span class="string">&#39;{&#39;</span>), <span class="string">&#39;}&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> {}
+                (<span class="prelude-val">Some</span>(<span class="ident">wanted</span>), <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">return</span> <span class="ident">ValidationResult</span>::<span class="ident">Invalid</span>(<span class="prelude-val">Some</span>(<span class="macro">format</span><span class="macro">!</span>(
                         <span class="string">&quot;Mismatched brackets: {:?} is not properly closed&quot;</span>,
                         <span class="ident">wanted</span>
                     )))
                 }
-                (<span class="prelude-val">None</span>, <span class="ident">c</span>) <span class="op">=&gt;</span> {
+                (<span class="prelude-val">None</span>, <span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">return</span> <span class="ident">ValidationResult</span>::<span class="ident">Invalid</span>(<span class="prelude-val">Some</span>(<span class="macro">format</span><span class="macro">!</span>(
                         <span class="string">&quot;Mismatched brackets: {:?} is unpaired&quot;</span>,
                         <span class="ident">c</span>
                     )))
                 }
             },
-            <span class="kw">_</span> <span class="op">=&gt;</span> {}
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
         }
     }
     <span class="kw">if</span> <span class="ident">stack</span>.<span class="ident">is_empty</span>() {

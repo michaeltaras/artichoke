@@ -238,7 +238,7 @@
 <span class="doccomment">/// Calculate the exponential of `x`, that is, *e* raised to the power `x`</span>
 <span class="doccomment">/// (where *e* is the base of the natural system of logarithms, approximately 2.71828).</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">x1p1023</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x7fe0000000000000</span>); <span class="comment">// 0x1p1023 === 2 ^ 1023</span>
     <span class="kw">let</span> <span class="ident">x1p_149</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x36a0000000000000</span>); <span class="comment">// 0x1p-149 === 2 ^ -149</span>
 
@@ -251,19 +251,19 @@
     <span class="kw">let</span> <span class="ident">sign</span>: <span class="ident">i32</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hx</span>: <span class="ident">u32</span>;
 
-    <span class="ident">hx</span> <span class="op">=</span> (<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">hx</span> <span class="op">&gt;&gt;</span> <span class="number">31</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+    <span class="ident">hx</span> <span class="op">=</span> (<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">hx</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="kw">as</span> <span class="ident">i32</span>;
     <span class="ident">hx</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>; <span class="comment">/* high word of |x| */</span>
 
     <span class="comment">/* special cases */</span>
-    <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;=</span> <span class="number">0x4086232b</span> {
+    <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x4086232b</span> {
         <span class="comment">/* if |x| &gt;= 708.39... */</span>
         <span class="kw">if</span> <span class="ident">x</span>.<span class="ident">is_nan</span>() {
             <span class="kw">return</span> <span class="ident">x</span>;
         }
         <span class="kw">if</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">709.782712893383973096</span> {
             <span class="comment">/* overflow if x!=inf */</span>
-            <span class="ident">x</span> <span class="op">*=</span> <span class="ident">x1p1023</span>;
+            <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p1023</span>;
             <span class="kw">return</span> <span class="ident">x</span>;
         }
         <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">708.39641853226410622</span> {
@@ -278,7 +278,7 @@
     <span class="comment">/* argument reduction */</span>
     <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span> <span class="number">0x3fd62e42</span> {
         <span class="comment">/* if |x| &gt; 0.5 ln2 */</span>
-        <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;=</span> <span class="number">0x3ff0a2b2</span> {
+        <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x3ff0a2b2</span> {
             <span class="comment">/* if |x| &gt;= 1.5 ln2 */</span>
             <span class="ident">k</span> <span class="op">=</span> (<span class="ident">INVLN2</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">HALF</span>[<span class="ident">sign</span> <span class="kw">as</span> <span class="ident">usize</span>]) <span class="kw">as</span> <span class="ident">i32</span>;
         } <span class="kw">else</span> {
@@ -302,7 +302,7 @@
     <span class="ident">xx</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
     <span class="ident">c</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P1</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P2</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P3</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P4</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> <span class="ident">P5</span>))));
     <span class="ident">y</span> <span class="op">=</span> <span class="number">1.</span> <span class="op">+</span> (<span class="ident">x</span> <span class="op">*</span> <span class="ident">c</span> <span class="op">/</span> (<span class="number">2.</span> <span class="op">-</span> <span class="ident">c</span>) <span class="op">-</span> <span class="ident">lo</span> <span class="op">+</span> <span class="ident">hi</span>);
-    <span class="kw">if</span> <span class="ident">k</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">k</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
         <span class="ident">y</span>
     } <span class="kw">else</span> {
         <span class="ident">scalbn</span>(<span class="ident">y</span>, <span class="ident">k</span>)

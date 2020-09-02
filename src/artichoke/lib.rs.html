@@ -260,11 +260,11 @@
 <span class="comment">// Ensure code blocks in README.md compile</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">readme</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>]</span>
         <span class="kw">mod</span> <span class="ident">readme</span> {}
     };
-    () <span class="op">=&gt;</span> {
+    () <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">readme</span><span class="macro">!</span>(<span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>));
     };
 }
@@ -305,7 +305,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If Artichoke Ruby Core or Standard Library cannot be initialized, an error</span>
 <span class="doccomment">/// is returned.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpreter</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Artichoke</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">release</span> <span class="op">=</span> <span class="ident">ReleaseMetadata</span>::<span class="ident">new</span>()
         .<span class="ident">with_ruby_copyright</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_COPYRIGHT&quot;</span>))
         .<span class="ident">with_ruby_description</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;RUBY_DESCRIPTION&quot;</span>))

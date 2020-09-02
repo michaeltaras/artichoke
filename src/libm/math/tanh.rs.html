@@ -60,7 +60,7 @@
  *         = (1 - exp(-2*x))/(exp(-2*x) - 1 + 2)
  */</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uf</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="ident">x</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ui</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">to_bits</span>(<span class="ident">uf</span>);
 
@@ -69,11 +69,11 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span>: <span class="ident">f64</span>;
 
     <span class="comment">/* x = |x| */</span>
-    <span class="ident">sign</span> <span class="op">=</span> <span class="ident">ui</span> <span class="op">&gt;&gt;</span> <span class="number">63</span> <span class="op">!=</span> <span class="number">0</span>;
+    <span class="ident">sign</span> <span class="op">=</span> <span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
     <span class="ident">ui</span> <span class="op">&amp;=</span> <span class="op">!</span><span class="number">1</span> <span class="op">/</span> <span class="number">2</span>;
     <span class="ident">uf</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">ui</span>);
     <span class="ident">x</span> <span class="op">=</span> <span class="ident">uf</span>;
-    <span class="ident">w</span> <span class="op">=</span> (<span class="ident">ui</span> <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="ident">w</span> <span class="op">=</span> (<span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
 
     <span class="kw">if</span> <span class="ident">w</span> <span class="op">&gt;</span> <span class="number">0x3fe193ea</span> {
         <span class="comment">/* |x| &gt; log(3)/2 ~= 0.5493 or nan */</span>
@@ -89,7 +89,7 @@
         <span class="comment">/* |x| &gt; log(5/3)/2 ~= 0.2554 */</span>
         <span class="ident">t</span> <span class="op">=</span> <span class="ident">expm1</span>(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">x</span>);
         <span class="ident">t</span> <span class="op">=</span> <span class="ident">t</span> <span class="op">/</span> (<span class="ident">t</span> <span class="op">+</span> <span class="number">2.0</span>);
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">w</span> <span class="op">&gt;=</span> <span class="number">0x00100000</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">w</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x00100000</span> {
         <span class="comment">/* |x| &gt;= 0x1p-1022, up to 2ulp error in [0.1,0.2554] */</span>
         <span class="ident">t</span> <span class="op">=</span> <span class="ident">expm1</span>(<span class="op">-</span><span class="number">2.0</span> <span class="op">*</span> <span class="ident">x</span>);
         <span class="ident">t</span> <span class="op">=</span> <span class="op">-</span><span class="ident">t</span> <span class="op">/</span> (<span class="ident">t</span> <span class="op">+</span> <span class="number">2.0</span>);

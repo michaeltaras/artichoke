@@ -1645,26 +1645,26 @@
         <span class="ident">to</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCodePoint</span>,
         <span class="ident">to_len</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
 <span class="op">&gt;</span>;
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OnigEncodingTypeST</span> {
     <span class="kw">pub</span> <span class="ident">mbc_enc_len</span>:
-        ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
+        ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>,
     <span class="kw">pub</span> <span class="ident">max_enc_len</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="kw">pub</span> <span class="ident">min_enc_len</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="kw">pub</span> <span class="ident">is_mbc_newline</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">mbc_to_code</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> <span class="ident">OnigCodePoint</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigCodePoint</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">code_to_mbclen</span>:
-        ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">code</span>: <span class="ident">OnigCodePoint</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
+        ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">code</span>: <span class="ident">OnigCodePoint</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">code_to_mbc</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">code</span>: <span class="ident">OnigCodePoint</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">code</span>: <span class="ident">OnigCodePoint</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">mbc_case_fold</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -1672,14 +1672,14 @@
             <span class="ident">pp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
             <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
             <span class="ident">to</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>,
-        ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">apply_all_case_fold</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
             <span class="ident">flag</span>: <span class="ident">OnigCaseFoldType</span>,
             <span class="ident">f</span>: <span class="ident">OnigApplyAllCaseFoldFunc</span>,
             <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-        ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">get_case_fold_codes_by_str</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -1687,35 +1687,35 @@
             <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
             <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
             <span class="ident">acs</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCaseFoldCodeItem</span>,
-        ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">property_name_to_ctype</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
             <span class="ident">enc</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigEncodingTypeST</span>,
             <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>,
             <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>,
-        ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">is_code_ctype</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">code</span>: <span class="ident">OnigCodePoint</span>, <span class="ident">ctype</span>: <span class="ident">OnigCtype</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">code</span>: <span class="ident">OnigCodePoint</span>, <span class="ident">ctype</span>: <span class="ident">OnigCtype</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">get_ctype_code_range</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
             <span class="ident">ctype</span>: <span class="ident">OnigCtype</span>,
             <span class="ident">sb_out</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCodePoint</span>,
             <span class="ident">ranges</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigCodePoint</span>,
-        ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">left_adjust_char_head</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">is_allowed_reverse_match</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">init</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">is_initialized</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">init</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">is_initialized</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">is_valid_mbc_string</span>: ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>, <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
     <span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">flag</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>,
     <span class="kw">pub</span> <span class="ident">sb_range</span>: <span class="ident">OnigCodePoint</span>,
@@ -1838,19 +1838,19 @@
         <span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_init</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_init</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_initialize_encoding</span>(<span class="ident">enc</span>: <span class="ident">OnigEncoding</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_initialize_encoding</span>(<span class="ident">enc</span>: <span class="ident">OnigEncoding</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_set_default_encoding</span>(<span class="ident">enc</span>: <span class="ident">OnigEncoding</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_set_default_encoding</span>(<span class="ident">enc</span>: <span class="ident">OnigEncoding</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_get_default_encoding</span>() <span class="op">-&gt;</span> <span class="ident">OnigEncoding</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_get_default_encoding</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigEncoding</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_set_default_caseconv_table</span>(<span class="ident">table</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>);
@@ -1861,58 +1861,58 @@
         <span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">prev</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_get_prev_char_head</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_get_left_adjust_char_head</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_get_right_adjust_char_head</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">start</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_strlen</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_strlen_null</span>(<span class="ident">enc</span>: <span class="ident">OnigEncoding</span>, <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_strlen_null</span>(<span class="ident">enc</span>: <span class="ident">OnigEncoding</span>, <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_str_bytelen_null</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_is_valid_mbc_string</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onigenc_strdup</span>(
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">OnigOptionType</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
@@ -2048,7 +2048,7 @@
     <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OnigCalloutResult_ONIG_CALLOUT_FAIL</span>: <span class="ident">OnigCalloutResult</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OnigCalloutResult_ONIG_CALLOUT_SUCCESS</span>: <span class="ident">OnigCalloutResult</span> <span class="op">=</span> <span class="number">0</span>;
@@ -2086,20 +2086,20 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_initialize</span>(
         <span class="ident">encodings</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigEncoding</span>,
         <span class="ident">number_of_encodings</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_init</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_init</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_error_code_to_str</span>(
         <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>,
         <span class="ident">err_code</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         ...
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_is_error_code_needs_param</span>(<span class="ident">code</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_is_error_code_needs_param</span>(<span class="ident">code</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_warn_func</span>(<span class="ident">f</span>: <span class="ident">OnigWarnFunc</span>);
@@ -2116,7 +2116,7 @@
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>,
         <span class="ident">einfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigErrorInfo</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_reg_init</span>(
@@ -2125,7 +2125,7 @@
         <span class="ident">case_fold_flag</span>: <span class="ident">OnigCaseFoldType</span>,
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_new_without_alloc</span>(
@@ -2136,7 +2136,7 @@
         <span class="ident">enc</span>: <span class="ident">OnigEncoding</span>,
         <span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>,
         <span class="ident">einfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigErrorInfo</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_new_deluxe</span>(
@@ -2145,7 +2145,7 @@
         <span class="ident">pattern_end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">ci</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCompileInfo</span>,
         <span class="ident">einfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigErrorInfo</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_free</span>(<span class="ident">arg1</span>: <span class="ident">OnigRegex</span>);
@@ -2166,10 +2166,10 @@
                 <span class="ident">arg2</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
                 <span class="ident">arg3</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
                 <span class="ident">arg4</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-            ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="op">&gt;</span>,
         <span class="ident">callback_arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_search</span>(
@@ -2180,7 +2180,7 @@
         <span class="ident">range</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
         <span class="ident">option</span>: <span class="ident">OnigOptionType</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_search_with_param</span>(
@@ -2192,7 +2192,7 @@
         <span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
         <span class="ident">option</span>: <span class="ident">OnigOptionType</span>,
         <span class="ident">mp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_match</span>(
@@ -2202,7 +2202,7 @@
         <span class="ident">at</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
         <span class="ident">option</span>: <span class="ident">OnigOptionType</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_match_with_param</span>(
@@ -2213,39 +2213,39 @@
         <span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
         <span class="ident">option</span>: <span class="ident">OnigOptionType</span>,
         <span class="ident">mp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_new</span>(
         <span class="ident">rset</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>,
         <span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">regs</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">regex_t</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_add</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>, <span class="ident">reg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">regex_t</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_add</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>, <span class="ident">reg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">regex_t</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_replace</span>(
         <span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>,
         <span class="ident">at</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">reg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">regex_t</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_free</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>);
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_number_of_regex</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_number_of_regex</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_get_regex</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>, <span class="ident">at</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">regex_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_get_regex</span>(<span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>, <span class="ident">at</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">regex_t</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_get_region</span>(
         <span class="ident">set</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegSet</span>,
         <span class="ident">at</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_search</span>(
@@ -2257,7 +2257,7 @@
         <span class="ident">lead</span>: <span class="ident">OnigRegSetLead</span>,
         <span class="ident">option</span>: <span class="ident">OnigOptionType</span>,
         <span class="ident">rmatch_pos</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_regset_search_with_param</span>(
@@ -2270,10 +2270,10 @@
         <span class="ident">option</span>: <span class="ident">OnigOptionType</span>,
         <span class="ident">mps</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">rmatch_pos</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_region_new</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_region_new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_region_init</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>);
@@ -2291,7 +2291,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_region_resize</span>(
         <span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
         <span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_region_set</span>(
@@ -2299,7 +2299,7 @@
         <span class="ident">at</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">beg</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">end</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_name_to_group_numbers</span>(
@@ -2307,7 +2307,7 @@
         <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">name_end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">nums</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_name_to_backref_number</span>(
@@ -2315,7 +2315,7 @@
         <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">name_end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_foreach_name</span>(
@@ -2328,22 +2328,22 @@
                 <span class="ident">arg4</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
                 <span class="ident">arg5</span>: <span class="ident">OnigRegex</span>,
                 <span class="ident">arg6</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-            ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="op">&gt;</span>,
         <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_number_of_names</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_number_of_names</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_number_of_captures</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_number_of_captures</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_number_of_capture_histories</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_number_of_capture_histories</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_capture_tree</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCaptureTreeNode</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_capture_tree</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigRegion</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCaptureTreeNode</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_capture_tree_traverse</span>(
@@ -2357,43 +2357,43 @@
                 <span class="ident">arg4</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
                 <span class="ident">arg5</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
                 <span class="ident">arg6</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-            ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="op">&gt;</span>,
         <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_noname_group_capture_is_active</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_noname_group_capture_is_active</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_encoding</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> <span class="ident">OnigEncoding</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_encoding</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigEncoding</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_options</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> <span class="ident">OnigOptionType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_options</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigOptionType</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_case_fold_flag</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> <span class="ident">OnigCaseFoldType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_case_fold_flag</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigCaseFoldType</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax</span>(<span class="ident">reg</span>: <span class="ident">OnigRegex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_default_syntax</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_default_syntax</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_copy_syntax</span>(<span class="ident">to</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>, <span class="ident">from</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>);
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_op</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_op</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_op2</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_op2</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_behavior</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_behavior</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_options</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-&gt;</span> <span class="ident">OnigOptionType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_syntax_options</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigOptionType</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_syntax_op</span>(<span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>, <span class="ident">op</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>);
@@ -2412,71 +2412,71 @@
         <span class="ident">syntax</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigSyntaxType</span>,
         <span class="ident">what</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>,
         <span class="ident">code</span>: <span class="ident">OnigCodePoint</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_copy_encoding</span>(<span class="ident">to</span>: <span class="ident">OnigEncoding</span>, <span class="ident">from</span>: <span class="ident">OnigEncoding</span>);
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_default_case_fold_flag</span>() <span class="op">-&gt;</span> <span class="ident">OnigCaseFoldType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_default_case_fold_flag</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigCaseFoldType</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_default_case_fold_flag</span>(
         <span class="ident">case_fold_flag</span>: <span class="ident">OnigCaseFoldType</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_match_stack_limit_size</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_match_stack_limit_size</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_match_stack_limit_size</span>(<span class="ident">size</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_match_stack_limit_size</span>(<span class="ident">size</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retry_limit_in_match</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retry_limit_in_match</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retry_limit_in_match</span>(<span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retry_limit_in_match</span>(<span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retry_limit_in_search</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retry_limit_in_search</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retry_limit_in_search</span>(<span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retry_limit_in_search</span>(<span class="ident">n</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_parse_depth_limit</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_parse_depth_limit</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_capture_num_limit</span>(<span class="ident">num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_capture_num_limit</span>(<span class="ident">num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_parse_depth_limit</span>(<span class="ident">depth</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_parse_depth_limit</span>(<span class="ident">depth</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_subexp_call_max_nest_level</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_subexp_call_max_nest_level</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_subexp_call_max_nest_level</span>(
         <span class="ident">level</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_unicode_define_user_property</span>(
         <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>,
         <span class="ident">ranges</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCodePoint</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_end</span>() <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_end</span>() <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_version</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_version</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_copyright</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_copyright</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_new_match_param</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_new_match_param</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_free_match_param</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>);
@@ -2485,55 +2485,55 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_free_match_param_content</span>(<span class="ident">p</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>);
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_initialize_match_param</span>(<span class="ident">mp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_initialize_match_param</span>(<span class="ident">mp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_match_stack_limit_size_of_match_param</span>(
         <span class="ident">param</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">limit</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retry_limit_in_match_of_match_param</span>(
         <span class="ident">param</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">limit</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retry_limit_in_search_of_match_param</span>(
         <span class="ident">param</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">limit</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_progress_callout_of_match_param</span>(
         <span class="ident">param</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">f</span>: <span class="ident">OnigCalloutFunc</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retraction_callout_of_match_param</span>(
         <span class="ident">param</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">f</span>: <span class="ident">OnigCalloutFunc</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_callout_user_data_of_match_param</span>(
         <span class="ident">param</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigMatchParam</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_progress_callout</span>() <span class="op">-&gt;</span> <span class="ident">OnigCalloutFunc</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_progress_callout</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigCalloutFunc</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_progress_callout</span>(<span class="ident">f</span>: <span class="ident">OnigCalloutFunc</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_progress_callout</span>(<span class="ident">f</span>: <span class="ident">OnigCalloutFunc</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retraction_callout</span>() <span class="op">-&gt;</span> <span class="ident">OnigCalloutFunc</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retraction_callout</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigCalloutFunc</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retraction_callout</span>(<span class="ident">f</span>: <span class="ident">OnigCalloutFunc</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_retraction_callout</span>(<span class="ident">f</span>: <span class="ident">OnigCalloutFunc</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_callout_of_name</span>(
@@ -2548,17 +2548,17 @@
         <span class="ident">arg_types</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_uint</span>,
         <span class="ident">optional_arg_num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">opt_defaults</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_name_by_name_id</span>(<span class="ident">id</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_name_by_name_id</span>(<span class="ident">id</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_num_by_tag</span>(
         <span class="ident">reg</span>: <span class="ident">OnigRegex</span>,
         <span class="ident">tag</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
         <span class="ident">tag_end</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_data_by_tag</span>(
@@ -2569,7 +2569,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_callout_data_by_tag</span>(
@@ -2580,32 +2580,32 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_num_by_callout_args</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_in_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="ident">OnigCalloutIn</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_in_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigCalloutIn</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_name_id_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_name_id_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_contents_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_contents_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_contents_end_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_contents_end_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_args_num_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_args_num_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_passed_args_num_by_callout_args</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_arg_by_callout_args</span>(
@@ -2613,48 +2613,48 @@
         <span class="ident">index</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_string_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_string_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_string_end_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_string_end_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_start_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_start_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_right_range_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_right_range_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_current_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_current_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_regex_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-&gt;</span> <span class="ident">OnigRegex</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_regex_by_callout_args</span>(<span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OnigRegex</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_retry_counter_by_callout_args</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_ulong</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_callout_tag_is_exist_at_callout_num</span>(
         <span class="ident">reg</span>: <span class="ident">OnigRegex</span>,
         <span class="ident">callout_num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_tag_start</span>(
         <span class="ident">reg</span>: <span class="ident">OnigRegex</span>,
         <span class="ident">callout_num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_tag_end</span>(
         <span class="ident">reg</span>: <span class="ident">OnigRegex</span>,
         <span class="ident">callout_num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">OnigUChar</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_data_dont_clear_old</span>(
@@ -2664,7 +2664,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_data_by_callout_args_self_dont_clear_old</span>(
@@ -2672,7 +2672,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_data</span>(
@@ -2682,7 +2682,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_data_by_callout_args</span>(
@@ -2691,7 +2691,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_callout_data_by_callout_args_self</span>(
@@ -2699,7 +2699,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_callout_data</span>(
@@ -2709,7 +2709,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_callout_data_by_callout_args</span>(
@@ -2718,7 +2718,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_set_callout_data_by_callout_args_self</span>(
@@ -2726,7 +2726,7 @@
         <span class="ident">slot</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">type_</span>: <span class="ident">OnigType</span>,
         <span class="ident">val</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigValue</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_capture_range_in_callout</span>(
@@ -2734,61 +2734,61 @@
         <span class="ident">mem_num</span>: ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">begin</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">end</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_get_used_stack_size_in_callout</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">used_num</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
         <span class="ident">used_bytes</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_fail</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_mismatch</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_error</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_count</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_total_count</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_max</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_builtin_cmp</span>(
         <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">OnigCalloutArgs</span>,
         <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">onig_setup_builtin_monitors_by_ascii_encoded_name</span>(
         <span class="ident">fp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "onig_sys";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

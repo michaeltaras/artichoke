@@ -152,9 +152,9 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">time</span>::<span class="ident">chrono</span>::{<span class="ident">Offset</span>, <span class="ident">Time</span>};
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">Offset</span>::<span class="ident">Utc</span>;
         <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp</span>();
         <span class="kw">let</span> <span class="ident">sub_second_nanos</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp_subsec_nanos</span>();
@@ -166,9 +166,9 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Local</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Local</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Local</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Local</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">Offset</span>::<span class="ident">Local</span>;
         <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp</span>();
         <span class="kw">let</span> <span class="ident">sub_second_nanos</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp_subsec_nanos</span>();
@@ -180,9 +180,9 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">Tz</span>::<span class="ident">from_offset</span>(<span class="ident">time</span>.<span class="ident">offset</span>()).<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp</span>();
         <span class="kw">let</span> <span class="ident">sub_second_nanos</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp_subsec_nanos</span>();
@@ -194,9 +194,9 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Time</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">FixedOffset</span>::<span class="ident">from_offset</span>(<span class="ident">time</span>.<span class="ident">offset</span>()).<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp</span>();
         <span class="kw">let</span> <span class="ident">sub_second_nanos</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">timestamp_subsec_nanos</span>();
@@ -210,28 +210,28 @@
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NaiveDateTime</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">NaiveDateTime</span>::<span class="ident">from_timestamp</span>(<span class="ident">time</span>.<span class="ident">timestamp</span>, <span class="ident">time</span>.<span class="ident">sub_second_nanos</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Utc</span>.<span class="ident">timestamp</span>(<span class="ident">time</span>.<span class="ident">timestamp</span>, <span class="ident">time</span>.<span class="ident">sub_second_nanos</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Local</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Local</span>.<span class="ident">timestamp</span>(<span class="ident">time</span>.<span class="ident">timestamp</span>, <span class="ident">time</span>.<span class="ident">sub_second_nanos</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Duration</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">time</span>: <span class="ident">Time</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">epoch</span> <span class="op">=</span> <span class="ident">Utc</span>.<span class="ident">timestamp</span>(<span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">utc</span> <span class="op">=</span> <span class="ident">DateTime</span>::<span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">time</span>);
         <span class="ident">utc</span>.<span class="ident">signed_duration_since</span>(<span class="ident">epoch</span>)
@@ -245,7 +245,7 @@
 
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">time</span>::<span class="ident">chrono</span>::{<span class="ident">Offset</span>, <span class="ident">Time</span>};
 
-    <span class="kw">fn</span> <span class="ident">date</span>() <span class="op">-&gt;</span> <span class="ident">NaiveDateTime</span> {
+    <span class="kw">fn</span> <span class="ident">date</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NaiveDateTime</span> {
         <span class="comment">// Artichoke&#39;s birthday, 2019-04-07T01:30Z + .2s</span>
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">NaiveDateTime</span>::<span class="ident">from_timestamp</span>(<span class="number">1_554_600_621</span>, <span class="number">0</span>);
         <span class="ident">time</span>.<span class="ident">with_nanosecond</span>(<span class="number">200_000_000</span>).<span class="ident">unwrap</span>()

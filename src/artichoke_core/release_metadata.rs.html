@@ -107,7 +107,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &gt; Copyright (c) 2019-2020 Ryan Lopopolo &lt;rjl@hyperbo.la&gt;</span>
-    <span class="kw">fn</span> <span class="ident">ruby_copyright</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_copyright</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// A description of the current build.</span>
     <span class="doccomment">///</span>
@@ -116,7 +116,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &gt; artichoke 0.1.0 (2020-06-05) [x86_64-darwin]</span>
-    <span class="kw">fn</span> <span class="ident">ruby_description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The engine, or VM, used in the current build.</span>
     <span class="doccomment">///</span>
@@ -125,7 +125,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &gt; artichoke-mruby</span>
-    <span class="kw">fn</span> <span class="ident">ruby_engine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_engine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The version of the engine, or VM, used in the current build.</span>
     <span class="doccomment">///</span>
@@ -134,12 +134,12 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &gt; 0.1.0</span>
-    <span class="kw">fn</span> <span class="ident">ruby_engine_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_engine_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The patch level the current build.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This value will populate the `RUBY_PATCHLEVEL` constant.</span>
-    <span class="kw">fn</span> <span class="ident">ruby_patchlevel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_patchlevel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The target triple of the platform this build targets.</span>
     <span class="doccomment">///</span>
@@ -148,17 +148,17 @@
     <span class="doccomment">/// This value will populate the `RUBY_PLATFORM` constant.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [triple]: https://forge.rust-lang.org/release/platform-support.html</span>
-    <span class="kw">fn</span> <span class="ident">ruby_platform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_platform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The build date of this release.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This value will populate the `RUBY_RELEASE_DATE` constant.</span>
-    <span class="kw">fn</span> <span class="ident">ruby_release_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_release_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The revision count of the Artichoke git repo used for this build.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This value will populate the `RUBY_REVISION` constant.</span>
-    <span class="kw">fn</span> <span class="ident">ruby_revision</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_revision</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// The target MRI Ruby version for this build.</span>
     <span class="doccomment">///</span>
@@ -167,7 +167,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &gt; 2.6.3</span>
-    <span class="kw">fn</span> <span class="ident">ruby_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
+    <span class="kw">fn</span> <span class="ident">ruby_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>;
 
     <span class="doccomment">/// A description of the compiler used to build Artichoke.</span>
     <span class="doccomment">///</span>
@@ -176,7 +176,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &gt; rustc 1.44.0 (49cae5576 2020-06-01)</span>
-    <span class="kw">fn</span> <span class="ident">artichoke_compiler_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">artichoke_compiler_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_core";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

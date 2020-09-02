@@ -34,16 +34,16 @@
 <span class="doccomment">/// Calculates the inverse hyperbolic cosine of `x`.</span>
 <span class="doccomment">/// Is defined as `log(x + sqrt(x*x-1))`.</span>
 <span class="doccomment">/// `x` must be a number greater than or equal to 1.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acoshf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acoshf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">u</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
 
-    <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> <span class="op">+</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">23</span>) {
+    <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> <span class="op">+</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>) {
         <span class="comment">/* |x| &lt; 2, invalid if x &lt; 1 or nan */</span>
         <span class="comment">/* up to 2ulp error in [1,1.125] */</span>
         <span class="kw">return</span> <span class="ident">log1pf</span>(<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span> <span class="op">+</span> <span class="ident">sqrtf</span>((<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>) <span class="op">*</span> (<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>) <span class="op">+</span> <span class="number">2.0</span> <span class="op">*</span> (<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>)));
     }
-    <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> <span class="op">+</span> (<span class="number">12</span> <span class="op">&lt;&lt;</span> <span class="number">23</span>) {
+    <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> <span class="op">+</span> (<span class="number">12</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>) {
         <span class="comment">/* |x| &lt; 0x1p12 */</span>
         <span class="kw">return</span> <span class="ident">logf</span>(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span> <span class="op">/</span> (<span class="ident">x</span> <span class="op">+</span> <span class="ident">sqrtf</span>(<span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>)));
     }

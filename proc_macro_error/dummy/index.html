@@ -17,7 +17,7 @@ compilation process looking for other errors to report.</p>
 <span class="comment">// this proc macro is supposed to generate MyTrait impl</span>
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">MyTrait</span>)]</span>
 <span class="attribute">#[<span class="ident">proc_macro_error</span>]</span>
-<span class="kw">fn</span> <span class="ident">example</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
+<span class="kw">fn</span> <span class="ident">example</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="comment">// somewhere deep inside</span>
     <span class="macro">abort</span><span class="macro">!</span>(<span class="ident">span</span>, <span class="string">&quot;something&#39;s wrong&quot;</span>);
 
@@ -73,7 +73,7 @@ omit <code>impl MyTrait for #name</code> and fill functions bodies with <code>un
  <span class="comment">// this proc macro is supposed to generate MyTrait impl</span>
  <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">MyTrait</span>)]</span>
  <span class="attribute">#[<span class="ident">proc_macro_error</span>]</span>
- <span class="kw">fn</span> <span class="ident">example</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
+ <span class="kw">fn</span> <span class="ident">example</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
      <span class="comment">// first of all - we set a dummy impl which will be appended to</span>
      <span class="comment">// `compile_error!` invocations in case a trigger does happen</span>
      <span class="ident">set_dummy</span>(<span class="macro">quote</span><span class="macro">!</span> {

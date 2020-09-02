@@ -258,25 +258,25 @@
 <span class="doccomment">/// Terminal state</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RawMode</span>: <span class="ident">Sized</span> {
     <span class="doccomment">/// Disable RAW mode for the terminal.</span>
-    <span class="kw">fn</span> <span class="ident">disable_raw_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">disable_raw_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Translate bytes read from stdin to keys.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RawReader</span> {
     <span class="doccomment">/// Blocking read of key pressed.</span>
-    <span class="kw">fn</span> <span class="ident">next_key</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">single_esc_abort</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">KeyPress</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">next_key</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">single_esc_abort</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">KeyPress</span><span class="op">&gt;</span>;
     <span class="doccomment">/// For CTRL-V support</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">next_char</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">next_char</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>;
     <span class="doccomment">/// Bracketed paste</span>
-    <span class="kw">fn</span> <span class="ident">read_pasted_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">read_pasted_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Display prompt, line and cursor in terminal output</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Renderer</span> {
     <span class="kw">type</span> <span class="ident">Reader</span>: <span class="ident">RawReader</span>;
 
-    <span class="kw">fn</span> <span class="ident">move_cursor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">old</span>: <span class="ident">Position</span>, <span class="ident">new</span>: <span class="ident">Position</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">move_cursor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">old</span>: <span class="ident">Position</span>, <span class="ident">new</span>: <span class="ident">Position</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Display `prompt`, line and cursor in terminal output</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_arguments</span>)]</span>
@@ -287,8 +287,8 @@
         <span class="ident">hint</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">old_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
         <span class="ident">new_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
-        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Compute layout for rendering prompt + line + some info (either hint,</span>
     <span class="doccomment">/// validation msg, ...). on the screen. Depending on screen width, line</span>
@@ -299,12 +299,12 @@
         <span class="ident">default_prompt</span>: <span class="ident">bool</span>,
         <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">LineBuffer</span>,
         <span class="ident">info</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Layout</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Layout</span> {
         <span class="comment">// calculate the desired position of the cursor</span>
         <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">pos</span>();
         <span class="kw">let</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">calculate_position</span>(<span class="kw-2">&amp;</span><span class="ident">line</span>[..<span class="ident">pos</span>], <span class="ident">prompt_size</span>);
         <span class="comment">// calculate the position of the end of the input line</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">pos</span> <span class="op">==</span> <span class="ident">line</span>.<span class="ident">len</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="ident">line</span>.<span class="ident">len</span>() {
             <span class="ident">cursor</span>
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">calculate_position</span>(<span class="kw-2">&amp;</span><span class="ident">line</span>[<span class="ident">pos</span>..], <span class="ident">cursor</span>)
@@ -319,43 +319,43 @@
             <span class="ident">cursor</span>,
             <span class="ident">end</span>,
         };
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">new_layout</span>.<span class="ident">prompt_size</span> <span class="op">&lt;=</span> <span class="ident">new_layout</span>.<span class="ident">cursor</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">new_layout</span>.<span class="ident">cursor</span> <span class="op">&lt;=</span> <span class="ident">new_layout</span>.<span class="ident">end</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">new_layout</span>.<span class="ident">prompt_size</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">new_layout</span>.<span class="ident">cursor</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">new_layout</span>.<span class="ident">cursor</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">new_layout</span>.<span class="ident">end</span>);
         <span class="ident">new_layout</span>
     }
 
     <span class="doccomment">/// Calculate the number of columns and rows used to display `s` on a</span>
     <span class="doccomment">/// `cols` width terminal starting at `orig`.</span>
-    <span class="kw">fn</span> <span class="ident">calculate_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">orig</span>: <span class="ident">Position</span>) <span class="op">-&gt;</span> <span class="ident">Position</span>;
+    <span class="kw">fn</span> <span class="ident">calculate_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">orig</span>: <span class="ident">Position</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span>;
 
-    <span class="kw">fn</span> <span class="ident">write_and_flush</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">write_and_flush</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Beep, used for completion when there is nothing to complete or when all</span>
     <span class="doccomment">/// the choices were already shown.</span>
-    <span class="kw">fn</span> <span class="ident">beep</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">beep</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Clear the screen. Used to handle ctrl+l</span>
-    <span class="kw">fn</span> <span class="ident">clear_screen</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">clear_screen</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Check if a SIGWINCH signal has been received</span>
-    <span class="kw">fn</span> <span class="ident">sigwinch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">sigwinch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
     <span class="doccomment">/// Update the number of columns/rows in the current terminal.</span>
     <span class="kw">fn</span> <span class="ident">update_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>);
     <span class="doccomment">/// Get the number of columns in the current terminal.</span>
-    <span class="kw">fn</span> <span class="ident">get_columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">fn</span> <span class="ident">get_columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
     <span class="doccomment">/// Get the number of rows in the current terminal.</span>
-    <span class="kw">fn</span> <span class="ident">get_rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">fn</span> <span class="ident">get_rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
     <span class="doccomment">/// Check if output supports colors.</span>
-    <span class="kw">fn</span> <span class="ident">colors_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">colors_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Make sure prompt is at the leftmost edge of the screen</span>
-    <span class="kw">fn</span> <span class="ident">move_cursor_at_leftmost</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Reader</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">move_cursor_at_leftmost</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Reader</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">R</span>: <span class="ident">Renderer</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">Renderer</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span> {
     <span class="kw">type</span> <span class="ident">Reader</span> <span class="op">=</span> <span class="ident">R</span>::<span class="ident">Reader</span>;
 
-    <span class="kw">fn</span> <span class="ident">move_cursor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">old</span>: <span class="ident">Position</span>, <span class="ident">new</span>: <span class="ident">Position</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">move_cursor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">old</span>: <span class="ident">Position</span>, <span class="ident">new</span>: <span class="ident">Position</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">move_cursor</span>(<span class="ident">old</span>, <span class="ident">new</span>)
     }
 
@@ -366,28 +366,28 @@
         <span class="ident">hint</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">old_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
         <span class="ident">new_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
-        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">refresh_line</span>(<span class="ident">prompt</span>, <span class="ident">line</span>, <span class="ident">hint</span>, <span class="ident">old_layout</span>, <span class="ident">new_layout</span>, <span class="ident">highlighter</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">calculate_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">orig</span>: <span class="ident">Position</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
+    <span class="kw">fn</span> <span class="ident">calculate_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">orig</span>: <span class="ident">Position</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">calculate_position</span>(<span class="ident">s</span>, <span class="ident">orig</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">write_and_flush</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">write_and_flush</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">write_and_flush</span>(<span class="ident">buf</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">beep</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">beep</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">beep</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">clear_screen</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">clear_screen</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">clear_screen</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">sigwinch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">sigwinch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">sigwinch</span>()
     }
 
@@ -395,27 +395,27 @@
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">update_size</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">get_columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">get_columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">get_columns</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">get_rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">get_rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">get_rows</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">colors_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">colors_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">colors_enabled</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">move_cursor_at_leftmost</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>::<span class="ident">Reader</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">move_cursor_at_leftmost</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rdr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>::<span class="ident">Reader</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">move_cursor_at_leftmost</span>(<span class="ident">rdr</span>)
     }
 }
 
 <span class="comment">// ignore ANSI escape sequence</span>
-<span class="kw">fn</span> <span class="ident">width</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">esc_seq</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">==</span> <span class="number">1</span> {
-        <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;[&quot;</span> {
+<span class="kw">fn</span> <span class="ident">width</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">esc_seq</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+        <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;[&quot;</span> {
             <span class="comment">// CSI</span>
             <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">=</span> <span class="number">2</span>;
         } <span class="kw">else</span> {
@@ -423,8 +423,8 @@
             <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">=</span> <span class="number">0</span>;
         }
         <span class="number">0</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">==</span> <span class="number">2</span> {
-        <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;;&quot;</span> <span class="op">||</span> (<span class="ident">s</span>.<span class="ident">as_bytes</span>()[<span class="number">0</span>] <span class="op">&gt;=</span> <span class="string">b&#39;0&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">s</span>.<span class="ident">as_bytes</span>()[<span class="number">0</span>] <span class="op">&lt;=</span> <span class="string">b&#39;9&#39;</span>) {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">=</span><span class="op">=</span> <span class="number">2</span> {
+        <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;;&quot;</span> <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span>.<span class="ident">as_bytes</span>()[<span class="number">0</span>] <span class="op">&gt;</span><span class="op">=</span> <span class="string">b&#39;0&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">s</span>.<span class="ident">as_bytes</span>()[<span class="number">0</span>] <span class="op">&lt;</span><span class="op">=</span> <span class="string">b&#39;9&#39;</span>) {
             <span class="comment">/*} else if s == &quot;m&quot; {
             // last
              *esc_seq = 0;*/</span>
@@ -433,10 +433,10 @@
             <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">=</span> <span class="number">0</span>;
         }
         <span class="number">0</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;\x1b&quot;</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;\x1b&quot;</span> {
         <span class="kw-2">*</span><span class="ident">esc_seq</span> <span class="op">=</span> <span class="number">1</span>;
         <span class="number">0</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;\n&quot;</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;\n&quot;</span> {
         <span class="number">0</span>
     } <span class="kw">else</span> {
         <span class="ident">s</span>.<span class="ident">width</span>()
@@ -454,20 +454,20 @@
         <span class="ident">stream</span>: <span class="ident">OutputStreamType</span>,
         <span class="ident">tab_stop</span>: <span class="ident">usize</span>,
         <span class="ident">bell_style</span>: <span class="ident">BellStyle</span>,
-    ) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
     <span class="doccomment">/// Check if current terminal can provide a rich line-editing user</span>
     <span class="doccomment">/// interface.</span>
-    <span class="kw">fn</span> <span class="ident">is_unsupported</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_unsupported</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
     <span class="doccomment">/// check if stdin is connected to a terminal.</span>
-    <span class="kw">fn</span> <span class="ident">is_stdin_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_stdin_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
     <span class="doccomment">/// check if output stream is connected to a terminal.</span>
-    <span class="kw">fn</span> <span class="ident">is_output_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_output_tty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
     <span class="doccomment">/// Enable RAW mode for the terminal.</span>
-    <span class="kw">fn</span> <span class="ident">enable_raw_mode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Mode</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">enable_raw_mode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Mode</span><span class="op">&gt;</span>;
     <span class="doccomment">/// Create a RAW reader</span>
-    <span class="kw">fn</span> <span class="ident">create_reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">config</span>: <span class="kw-2">&amp;</span><span class="ident">Config</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Reader</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">create_reader</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">config</span>: <span class="kw-2">&amp;</span><span class="ident">Config</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Reader</span><span class="op">&gt;</span>;
     <span class="doccomment">/// Create a writer</span>
-    <span class="kw">fn</span> <span class="ident">create_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Writer</span>;
+    <span class="kw">fn</span> <span class="ident">create_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Writer</span>;
 }
 
 <span class="comment">// If on Windows platform import Windows TTY module</span>

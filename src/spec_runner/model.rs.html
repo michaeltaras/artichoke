@@ -85,23 +85,23 @@
     <span class="doccomment">/// Specs for core language features.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, `Regexp` literal support.</span>
-    <span class="kw">pub</span> <span class="ident">language</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Suite</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">language</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Suite</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Specs for the core objects and their API compatibility.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, the behavior of `Comparable#==` when called with `self` as</span>
     <span class="doccomment">/// the argument.</span>
-    <span class="kw">pub</span> <span class="ident">core</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Suite</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">core</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Suite</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Specs for the packages in the standard library and their API</span>
     <span class="doccomment">/// compatibility.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, the behavior of `StringScanner` when dealing with invalid</span>
     <span class="doccomment">/// UTF-8 `String`s.</span>
-    <span class="kw">pub</span> <span class="ident">library</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Suite</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">library</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Suite</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Config</span> {
     <span class="doccomment">/// Construct a new, empty `Config`.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">language</span>: <span class="prelude-val">None</span>,
             <span class="ident">core</span>: <span class="prelude-val">None</span>,
@@ -110,12 +110,12 @@
     }
 
     <span class="doccomment">/// Lookup a suite.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">suites_for_family</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">family</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">Suite</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">suites_for_family</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">family</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">Suite</span>]<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">family</span>.<span class="ident">to_str</span>()<span class="question-mark">?</span> {
-            <span class="string">&quot;lanugage&quot;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">language</span>.<span class="ident">as_deref</span>(),
-            <span class="string">&quot;core&quot;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">as_deref</span>(),
-            <span class="string">&quot;library&quot;</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">library</span>.<span class="ident">as_deref</span>(),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="string">&quot;lanugage&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">language</span>.<span class="ident">as_deref</span>(),
+            <span class="string">&quot;core&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">core</span>.<span class="ident">as_deref</span>(),
+            <span class="string">&quot;library&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">library</span>.<span class="ident">as_deref</span>(),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -130,17 +130,17 @@
     <span class="doccomment">/// List of specs. Specs correspond to individual mspec files in `ruby/spec`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, `any`, `append`, and `assoc` for `array`.</span>
-    <span class="kw">pub</span> <span class="ident">specs</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">specs</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// List of specs to always skip because they are known to fail.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Specs in this list will override an explicit include in the `specs`</span>
     <span class="doccomment">/// field.</span>
-    <span class="kw">pub</span> <span class="ident">skip</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">skip</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Suite</span> {
     <span class="doccomment">/// Construct a new, empty `Suite`.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">suite</span>: <span class="ident">String</span>::<span class="ident">new</span>(),
             <span class="ident">specs</span>: <span class="prelude-val">None</span>,

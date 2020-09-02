@@ -51,7 +51,7 @@ attribute must be placed <em>before</em> (above) it, like this:</p>
 <span class="attribute">#[<span class="ident">proc_macro_error</span>]</span>
 <span class="attribute">#[<span class="ident">proc_macro_hack</span>]</span>
 <span class="attribute">#[<span class="ident">proc_macro</span>]</span>
-<span class="kw">fn</span> <span class="ident">my_macro</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
+<span class="kw">fn</span> <span class="ident">my_macro</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="macro">unimplemented</span><span class="macro">!</span>()
 }</pre></div>
 <p>If, for some reason, you can't place it like that you can use
@@ -198,13 +198,13 @@ on it but rather use it directly:</p>
                                            <span class="comment">// to Diagnostic::help,</span>
                                            <span class="comment">// anything else is Diagnostic::note</span>
 
-    <span class="ident">wow</span> <span class="op">=</span> <span class="ident">note_span</span> <span class="op">=&gt;</span> <span class="string">&quot;custom span&quot;</span>; <span class="comment">// &lt;--- attachments can have their own span</span>
+    <span class="ident">wow</span> <span class="op">=</span> <span class="ident">note_span</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;custom span&quot;</span>; <span class="comment">// &lt;--- attachments can have their own span</span>
                                       <span class="comment">//      it takes effect only on nightly though</span>
 
     <span class="ident">hint</span> <span class="op">=</span><span class="question-mark">?</span> <span class="ident">opt_help</span>; <span class="comment">// &lt;-- &quot;optional&quot; attachment, get displayed only if `Some`</span>
                       <span class="comment">//     must be single `Option` expression</span>
 
-    <span class="ident">note</span> <span class="op">=</span><span class="question-mark">?</span> <span class="ident">note_span</span> <span class="op">=&gt;</span> <span class="ident">opt_help</span> <span class="comment">// &lt;-- optional attachments can have custom spans too</span>
+    <span class="ident">note</span> <span class="op">=</span><span class="question-mark">?</span> <span class="ident">note_span</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">opt_help</span> <span class="comment">// &lt;-- optional attachments can have custom spans too</span>
 );</pre></div>
 <h3 id="diagnostic-type" class="section-header"><a href="#diagnostic-type">Diagnostic type</a></h3>
 <p><a href="struct.Diagnostic.html"><code>Diagnostic</code></a> type is intentionally designed to be API compatible with <a href="https://doc.rust-lang.org/proc_macro/struct.Diagnostic.html"><code>proc_macro::Diagnostic</code></a>.

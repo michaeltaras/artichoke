@@ -27,8 +27,8 @@ be a valid combination of the defined flags.</p>
 <p>An example showing some of the basic operations for interacting with the control flags:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="ident">termios</span>.<span class="ident">control_flags</span> <span class="op">&amp;</span> <span class="ident">ControlFlags</span>::<span class="ident">CSIZE</span> <span class="op">==</span> <span class="ident">ControlFlags</span>::<span class="ident">CS5</span>;
-<span class="ident">termios</span>.<span class="ident">control_flags</span> <span class="op">|=</span> <span class="ident">ControlFlags</span>::<span class="ident">CS5</span>;</pre></div>
+<span class="ident">termios</span>.<span class="ident">control_flags</span> <span class="op">&amp;</span> <span class="ident">ControlFlags</span>::<span class="ident">CSIZE</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ControlFlags</span>::<span class="ident">CS5</span>;
+<span class="ident">termios</span>.<span class="ident">control_flags</span> <span class="op">|</span><span class="op">=</span> <span class="ident">ControlFlags</span>::<span class="ident">CS5</span>;</pre></div>
 <h1 id="baud-rates" class="section-header"><a href="#baud-rates">Baud rates</a></h1>
 <p>This API is not consistent across platforms when it comes to <code>BaudRate</code>: Android and Linux both
 only support the rates specified by the <code>BaudRate</code> enum through their termios API while the BSDs

@@ -299,7 +299,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, you can implement</span>
     <span class="doccomment">/// [blink-matching-paren](https://www.gnu.org/software/bash/manual/html_node/Readline-Init-File-Syntax.html).</span>
-    <span class="kw">fn</span> <span class="ident">highlight</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;l</span> <span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">highlight</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;l</span> <span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">pos</span>;
         <span class="ident">Borrowed</span>(<span class="ident">line</span>)
     }
@@ -309,13 +309,13 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;s</span> <span class="self">self</span>,
         <span class="ident">prompt</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>,
         <span class="ident">default</span>: <span class="ident">bool</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">default</span>;
         <span class="ident">Borrowed</span>(<span class="ident">prompt</span>)
     }
     <span class="doccomment">/// Takes the `hint` and</span>
     <span class="doccomment">/// returns the highlighted version (with ANSI color).</span>
-    <span class="kw">fn</span> <span class="ident">highlight_hint</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hint</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;h</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">highlight_hint</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hint</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;h</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="ident">Borrowed</span>(<span class="ident">hint</span>)
     }
     <span class="doccomment">/// Takes the completion `candidate` and</span>
@@ -326,7 +326,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">candidate</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span>,
         <span class="ident">completion</span>: <span class="ident">CompletionType</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">completion</span>;
         <span class="ident">Borrowed</span>(<span class="ident">candidate</span>)
     }
@@ -335,7 +335,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Used to optimize refresh when a character is inserted or the cursor is</span>
     <span class="doccomment">/// moved.</span>
-    <span class="kw">fn</span> <span class="ident">highlight_char</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">highlight_char</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> (<span class="ident">line</span>, <span class="ident">pos</span>);
         <span class="bool-val">false</span>
     }
@@ -344,7 +344,7 @@
 <span class="kw">impl</span> <span class="ident">Highlighter</span> <span class="kw">for</span> () {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="ident">H</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Highlighter</span><span class="op">&gt;</span> <span class="ident">Highlighter</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">H</span> {
-    <span class="kw">fn</span> <span class="ident">highlight</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;l</span> <span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">highlight</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;l</span> <span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">highlight</span>(<span class="ident">line</span>, <span class="ident">pos</span>)
     }
 
@@ -352,11 +352,11 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;s</span> <span class="self">self</span>,
         <span class="ident">prompt</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>,
         <span class="ident">default</span>: <span class="ident">bool</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">highlight_prompt</span>(<span class="ident">prompt</span>, <span class="ident">default</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">highlight_hint</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hint</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;h</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">highlight_hint</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hint</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;h</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">highlight_hint</span>(<span class="ident">hint</span>)
     }
 
@@ -364,11 +364,11 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">candidate</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span>,
         <span class="ident">completion</span>: <span class="ident">CompletionType</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">highlight_candidate</span>(<span class="ident">candidate</span>, <span class="ident">completion</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">highlight_char</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">highlight_char</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">highlight_char</span>(<span class="ident">line</span>, <span class="ident">pos</span>)
     }
 }
@@ -379,12 +379,12 @@
 <span class="doccomment">/// Highlight matching bracket when typed or cursor moved on.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MatchingBracketHighlighter</span> {
-    <span class="ident">bracket</span>: <span class="ident">Cell</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;&gt;</span>, <span class="comment">// memorize the character to search...</span>
+    <span class="ident">bracket</span>: <span class="ident">Cell</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span><span class="op">&gt;</span>, <span class="comment">// memorize the character to search...</span>
 }
 
 <span class="kw">impl</span> <span class="ident">MatchingBracketHighlighter</span> {
     <span class="doccomment">/// Constructor</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">bracket</span>: <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="prelude-val">None</span>),
         }
@@ -392,8 +392,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Highlighter</span> <span class="kw">for</span> <span class="ident">MatchingBracketHighlighter</span> {
-    <span class="kw">fn</span> <span class="ident">highlight</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;l</span> <span class="ident">str</span>, <span class="ident">_pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="number">1</span> {
+    <span class="kw">fn</span> <span class="ident">highlight</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;l</span> <span class="ident">str</span>, <span class="ident">_pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> {
             <span class="kw">return</span> <span class="ident">Borrowed</span>(<span class="ident">line</span>);
         }
         <span class="comment">// highlight matching brace/bracket/parenthesis if it exists</span>
@@ -407,14 +407,14 @@
         <span class="ident">Borrowed</span>(<span class="ident">line</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">highlight_char</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">highlight_char</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="comment">// will highlight matching brace/bracket/parenthesis if it exists</span>
         <span class="self">self</span>.<span class="ident">bracket</span>.<span class="ident">set</span>(<span class="ident">check_bracket</span>(<span class="ident">line</span>, <span class="ident">pos</span>));
         <span class="self">self</span>.<span class="ident">bracket</span>.<span class="ident">get</span>().<span class="ident">is_some</span>()
     }
 }
 
-<span class="kw">fn</span> <span class="ident">find_matching_bracket</span>(<span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>, <span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">find_matching_bracket</span>(<span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>, <span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">matching</span> <span class="op">=</span> <span class="ident">matching_bracket</span>(<span class="ident">bracket</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">unmatched</span> <span class="op">=</span> <span class="number">1</span>;
@@ -423,16 +423,16 @@
         <span class="ident">idx</span> <span class="op">=</span> <span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">line</span>.<span class="ident">as_bytes</span>()[<span class="ident">idx</span>..];
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="ident">bytes</span> {
-            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="ident">matching</span> {
-                <span class="ident">unmatched</span> <span class="op">-=</span> <span class="number">1</span>;
-                <span class="kw">if</span> <span class="ident">unmatched</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">matching</span> {
+                <span class="ident">unmatched</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">if</span> <span class="ident">unmatched</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">matching</span>, <span class="ident">line</span>.<span class="ident">as_bytes</span>()[<span class="ident">idx</span>]);
                     <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">matching</span>, <span class="ident">idx</span>));
                 }
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="ident">bracket</span> {
-                <span class="ident">unmatched</span> <span class="op">+=</span> <span class="number">1</span>;
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">bracket</span> {
+                <span class="ident">unmatched</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
-            <span class="ident">idx</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">idx</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>, <span class="ident">line</span>.<span class="ident">len</span>());
     } <span class="kw">else</span> {
@@ -440,16 +440,16 @@
         <span class="ident">idx</span> <span class="op">=</span> <span class="ident">pos</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">line</span>.<span class="ident">as_bytes</span>()[..<span class="ident">idx</span>];
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="ident">bytes</span>.<span class="ident">iter</span>().<span class="ident">rev</span>() {
-            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="ident">matching</span> {
-                <span class="ident">unmatched</span> <span class="op">-=</span> <span class="number">1</span>;
-                <span class="kw">if</span> <span class="ident">unmatched</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">matching</span> {
+                <span class="ident">unmatched</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">if</span> <span class="ident">unmatched</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">matching</span>, <span class="ident">line</span>.<span class="ident">as_bytes</span>()[<span class="ident">idx</span> <span class="op">-</span> <span class="number">1</span>]);
                     <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">matching</span>, <span class="ident">idx</span> <span class="op">-</span> <span class="number">1</span>));
                 }
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="ident">bracket</span> {
-                <span class="ident">unmatched</span> <span class="op">+=</span> <span class="number">1</span>;
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">bracket</span> {
+                <span class="ident">unmatched</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
-            <span class="ident">idx</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">idx</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">idx</span>, <span class="number">0</span>);
     }
@@ -457,12 +457,12 @@
 }
 
 <span class="comment">// check under or before the cursor</span>
-<span class="kw">fn</span> <span class="ident">check_bracket</span>(<span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">check_bracket</span>(<span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">line</span>.<span class="ident">is_empty</span>() {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">pos</span>;
-    <span class="kw">if</span> <span class="ident">pos</span> <span class="op">&gt;=</span> <span class="ident">line</span>.<span class="ident">len</span>() {
+    <span class="kw">if</span> <span class="ident">pos</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">line</span>.<span class="ident">len</span>() {
         <span class="ident">pos</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>; <span class="comment">// before cursor</span>
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">as_bytes</span>()[<span class="ident">pos</span>]; <span class="comment">// previous byte</span>
         <span class="kw">if</span> <span class="ident">is_close_bracket</span>(<span class="ident">b</span>) {
@@ -475,20 +475,20 @@
         <span class="kw">loop</span> {
             <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">as_bytes</span>()[<span class="ident">pos</span>];
             <span class="kw">if</span> <span class="ident">is_close_bracket</span>(<span class="ident">b</span>) {
-                <span class="kw">if</span> <span class="ident">pos</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="kw">return</span> <span class="prelude-val">None</span>;
                 } <span class="kw">else</span> {
                     <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">b</span>, <span class="ident">pos</span>));
                 }
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">is_open_bracket</span>(<span class="ident">b</span>) {
-                <span class="kw">if</span> <span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span> <span class="op">==</span> <span class="ident">line</span>.<span class="ident">len</span>() {
+                <span class="kw">if</span> <span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">line</span>.<span class="ident">len</span>() {
                     <span class="kw">return</span> <span class="prelude-val">None</span>;
                 } <span class="kw">else</span> {
                     <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">b</span>, <span class="ident">pos</span>));
                 }
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">under_cursor</span> <span class="op">&amp;&amp;</span> <span class="ident">pos</span> <span class="op">&gt;</span> <span class="number">0</span> {
                 <span class="ident">under_cursor</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                <span class="ident">pos</span> <span class="op">-=</span> <span class="number">1</span>; <span class="comment">// or before cursor</span>
+                <span class="ident">pos</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>; <span class="comment">// or before cursor</span>
             } <span class="kw">else</span> {
                 <span class="kw">return</span> <span class="prelude-val">None</span>;
             }
@@ -496,21 +496,21 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">matching_bracket</span>(<span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">u8</span> {
+<span class="kw">fn</span> <span class="ident">matching_bracket</span>(<span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
     <span class="kw">match</span> <span class="ident">bracket</span> {
-        <span class="string">b&#39;{&#39;</span> <span class="op">=&gt;</span> <span class="string">b&#39;}&#39;</span>,
-        <span class="string">b&#39;}&#39;</span> <span class="op">=&gt;</span> <span class="string">b&#39;{&#39;</span>,
-        <span class="string">b&#39;[&#39;</span> <span class="op">=&gt;</span> <span class="string">b&#39;]&#39;</span>,
-        <span class="string">b&#39;]&#39;</span> <span class="op">=&gt;</span> <span class="string">b&#39;[&#39;</span>,
-        <span class="string">b&#39;(&#39;</span> <span class="op">=&gt;</span> <span class="string">b&#39;)&#39;</span>,
-        <span class="string">b&#39;)&#39;</span> <span class="op">=&gt;</span> <span class="string">b&#39;(&#39;</span>,
-        <span class="ident">b</span> <span class="op">=&gt;</span> <span class="ident">b</span>,
+        <span class="string">b&#39;{&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">b&#39;}&#39;</span>,
+        <span class="string">b&#39;}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">b&#39;{&#39;</span>,
+        <span class="string">b&#39;[&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">b&#39;]&#39;</span>,
+        <span class="string">b&#39;]&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">b&#39;[&#39;</span>,
+        <span class="string">b&#39;(&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">b&#39;)&#39;</span>,
+        <span class="string">b&#39;)&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">b&#39;(&#39;</span>,
+        <span class="ident">b</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">b</span>,
     }
 }
-<span class="kw">fn</span> <span class="ident">is_open_bracket</span>(<span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">is_open_bracket</span>(<span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="ident">memchr</span>(<span class="ident">bracket</span>, <span class="ident">OPENS</span>).<span class="ident">is_some</span>()
 }
-<span class="kw">fn</span> <span class="ident">is_close_bracket</span>(<span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">is_close_bracket</span>(<span class="ident">bracket</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="ident">memchr</span>(<span class="ident">bracket</span>, <span class="ident">CLOSES</span>).<span class="ident">is_some</span>()
 }
 

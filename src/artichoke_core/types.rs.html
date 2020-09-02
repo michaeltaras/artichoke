@@ -190,18 +190,18 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Rust</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Rust &quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Bool</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;bool&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Bytes</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Vec&lt;u8&gt;&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Float</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;f64&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Map</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;HashMap&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Object</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Heap-allocated object&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">SignedInt</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;i64&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">String</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;String&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">UnsignedInt</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;u64&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Vec</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Vec&lt;Value&gt;&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Bool</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;bool&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Bytes</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Vec&lt;u8&gt;&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Float</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;f64&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Map</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;HashMap&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Object</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Heap-allocated object&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">SignedInt</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;i64&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">String</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;String&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">UnsignedInt</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;u64&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Vec</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Vec&lt;Value&gt;&quot;</span>),
         }
     }
 }
@@ -278,35 +278,35 @@
 <span class="kw">impl</span> <span class="ident">Ruby</span> {
     <span class="doccomment">/// Ruby `Class` name for VM type.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">class_name</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">class_name</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Array</span> <span class="op">=&gt;</span> <span class="string">&quot;Array&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Bool</span> <span class="op">=&gt;</span> <span class="string">&quot;Boolean&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Class</span> <span class="op">=&gt;</span> <span class="string">&quot;Class&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">CPointer</span> <span class="op">=&gt;</span> <span class="string">&quot;C Pointer&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Data</span> <span class="op">=&gt;</span> <span class="string">&quot;Rust-backed Ruby instance&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Exception</span> <span class="op">=&gt;</span> <span class="string">&quot;Exception&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Fiber</span> <span class="op">=&gt;</span> <span class="string">&quot;Fiber&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Fixnum</span> <span class="op">=&gt;</span> <span class="string">&quot;Fixnum&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Float</span> <span class="op">=&gt;</span> <span class="string">&quot;Float&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Hash</span> <span class="op">=&gt;</span> <span class="string">&quot;Hash&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">InlineStruct</span> <span class="op">=&gt;</span> <span class="string">&quot;Inline Struct&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Module</span> <span class="op">=&gt;</span> <span class="string">&quot;Module&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Nil</span> <span class="op">=&gt;</span> <span class="string">&quot;NilClass&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Object</span> <span class="op">=&gt;</span> <span class="string">&quot;Object&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Proc</span> <span class="op">=&gt;</span> <span class="string">&quot;Proc&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Range</span> <span class="op">=&gt;</span> <span class="string">&quot;Range&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">SingletonClass</span> <span class="op">=&gt;</span> <span class="string">&quot;Singleton (anonymous) class&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">String</span> <span class="op">=&gt;</span> <span class="string">&quot;String&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Symbol</span> <span class="op">=&gt;</span> <span class="string">&quot;Symbol&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">Unreachable</span> <span class="op">=&gt;</span> <span class="string">&quot;internal and unreachable&quot;</span>,
-            <span class="self">Self</span>::<span class="ident">RecursiveSelfOwnership</span> <span class="op">=&gt;</span> <span class="string">&quot;recursive self ownership&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Array</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Array&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Bool</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Boolean&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Class</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Class&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">CPointer</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;C Pointer&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Data</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Rust-backed Ruby instance&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Exception</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Exception&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Fiber</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Fiber&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Fixnum</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Fixnum&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Float</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Float&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Hash</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Hash&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">InlineStruct</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Inline Struct&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Module</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Module&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Nil</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;NilClass&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Object</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Object&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Proc</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Proc&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Range</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Range&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">SingletonClass</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Singleton (anonymous) class&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">String</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;String&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Symbol</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Symbol&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Unreachable</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;internal and unreachable&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">RecursiveSelfOwnership</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;recursive self ownership&quot;</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Ruby</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Ruby &quot;</span>)<span class="question-mark">?</span>;
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">class_name</span>())<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())

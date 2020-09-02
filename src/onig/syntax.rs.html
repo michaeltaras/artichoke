@@ -230,78 +230,78 @@
 
 <span class="kw">impl</span> <span class="ident">Syntax</span> {
     <span class="doccomment">/// Plain text syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asis</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">asis</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxASIS</span>) }
     }
 
     <span class="doccomment">/// POSIX Basic RE syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">posix_basic</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">posix_basic</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxPosixBasic</span>) }
     }
 
     <span class="doccomment">/// POSIX Extended RE syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">posix_extended</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">posix_extended</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxPosixExtended</span>) }
     }
 
     <span class="doccomment">/// Emacs syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">emacs</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">emacs</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxEmacs</span>) }
     }
 
     <span class="doccomment">/// Grep syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">grep</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">grep</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxGrep</span>) }
     }
 
     <span class="doccomment">/// GNU regex syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gnu_regex</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gnu_regex</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxGnuRegex</span>) }
     }
 
     <span class="doccomment">/// Java (Sun java.util.regex) syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">java</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">java</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxJava</span>) }
     }
 
     <span class="doccomment">/// Perl syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perl</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perl</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxPerl</span>) }
     }
 
     <span class="doccomment">/// Perl + named group syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perl_ng</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perl_ng</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxPerl_NG</span>) }
     }
 
     <span class="doccomment">/// Ruby syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ruby</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ruby</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxRuby</span>) }
     }
 
     <span class="doccomment">/// Oniguruma Syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">oniguruma</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">oniguruma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxOniguruma</span>) }
     }
 
     <span class="doccomment">/// Default syntax (Ruby syntax)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Syntax</span> {
         <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="ident">onig_sys</span>::<span class="ident">OnigDefaultSyntax</span>) }
     }
 
     <span class="doccomment">/// Retrieve the operators for this syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">operators</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SyntaxOperator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">operators</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SyntaxOperator</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">onig_sys</span>::<span class="ident">onig_get_syntax_op</span>(<span class="self">self</span>.<span class="ident">raw_mut</span>());
             <span class="kw">let</span> <span class="ident">op2</span> <span class="op">=</span> <span class="ident">onig_sys</span>::<span class="ident">onig_get_syntax_op2</span>(<span class="self">self</span>.<span class="ident">raw_mut</span>());
-            <span class="ident">SyntaxOperator</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">op</span>) <span class="op">+</span> (<span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">op2</span>) <span class="op">&lt;&lt;</span> <span class="number">32</span>))
+            <span class="ident">SyntaxOperator</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">op</span>) <span class="op">+</span> (<span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">op2</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>))
         }
     }
 
     <span class="doccomment">/// Replace the operators for this syntax</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_operators</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">operators</span>: <span class="ident">SyntaxOperator</span>) {
         <span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">operators</span>.<span class="ident">bits</span>() <span class="kw">as</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxOp</span>;
-        <span class="kw">let</span> <span class="ident">op2</span> <span class="op">=</span> (<span class="ident">operators</span>.<span class="ident">bits</span>() <span class="op">&gt;&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxOp2</span>;
+        <span class="kw">let</span> <span class="ident">op2</span> <span class="op">=</span> (<span class="ident">operators</span>.<span class="ident">bits</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxOp2</span>;
         <span class="kw">unsafe</span> {
             <span class="ident">onig_sys</span>::<span class="ident">onig_set_syntax_op</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">raw</span>, <span class="ident">op</span>);
             <span class="ident">onig_sys</span>::<span class="ident">onig_set_syntax_op2</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">raw</span>, <span class="ident">op2</span>)
@@ -327,7 +327,7 @@
     }
 
     <span class="doccomment">/// Retrieves the syntax behaviours</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">behavior</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SyntaxBehavior</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">behavior</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SyntaxBehavior</span> {
         <span class="ident">SyntaxBehavior</span>::<span class="ident">from_bits_truncate</span>(<span class="kw">unsafe</span> {
             <span class="ident">onig_sys</span>::<span class="ident">onig_get_syntax_behavior</span>(<span class="self">self</span>.<span class="ident">raw_mut</span>())
         })
@@ -354,7 +354,7 @@
     }
 
     <span class="doccomment">/// Retireve the syntax options for this syntax</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">options</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RegexOptions</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">options</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RegexOptions</span> {
         <span class="ident">RegexOptions</span>::<span class="ident">from_bits_truncate</span>(<span class="kw">unsafe</span> {
             <span class="ident">onig_sys</span>::<span class="ident">onig_get_syntax_options</span>(<span class="self">self</span>.<span class="ident">raw_mut</span>())
         })
@@ -376,15 +376,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_meta_char</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">what</span>: <span class="ident">MetaCharType</span>, <span class="ident">meta</span>: <span class="ident">MetaChar</span>) {
         <span class="kw">let</span> <span class="ident">what</span> <span class="op">=</span> <span class="ident">what</span>.<span class="ident">bits</span>();
         <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">meta</span> {
-            <span class="ident">MetaChar</span>::<span class="ident">Ineffective</span> <span class="op">=&gt;</span> <span class="ident">onig_sys</span>::<span class="ident">ONIG_INEFFECTIVE_META_CHAR</span>,
-            <span class="ident">MetaChar</span>::<span class="ident">Character</span>(<span class="ident">char</span>) <span class="op">=&gt;</span> <span class="ident">char</span> <span class="kw">as</span> <span class="ident">u32</span>,
+            <span class="ident">MetaChar</span>::<span class="ident">Ineffective</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">onig_sys</span>::<span class="ident">ONIG_INEFFECTIVE_META_CHAR</span>,
+            <span class="ident">MetaChar</span>::<span class="ident">Character</span>(<span class="ident">char</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char</span> <span class="kw">as</span> <span class="ident">u32</span>,
         };
         <span class="kw">unsafe</span> {
             <span class="ident">onig_sys</span>::<span class="ident">onig_set_meta_char</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">raw</span>, <span class="ident">what</span>, <span class="ident">code</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">raw_mut</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxType</span> {
+    <span class="kw">fn</span> <span class="ident">raw_mut</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxType</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxType</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">onig_sys</span>::<span class="ident">OnigSyntaxType</span>
     }
 }

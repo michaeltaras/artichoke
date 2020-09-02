@@ -940,11 +940,11 @@
 <span class="comment">// Ensure code blocks in README.md compile</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">readme</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>]</span>
         <span class="kw">mod</span> <span class="ident">readme</span> {}
     };
-    () <span class="op">=&gt;</span> {
+    () <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">readme</span><span class="macro">!</span>(<span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>));
     };
 }
@@ -974,7 +974,7 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
     <span class="ident">encode_into</span>(<span class="ident">data</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
     <span class="ident">buf</span>
@@ -998,7 +998,7 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_into</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">String</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_into</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">String</span>) {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">as_ref</span>();
     <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">Hex</span>::<span class="ident">from</span>(<span class="ident">data</span>);
     <span class="ident">buf</span>.<span class="ident">reserve</span>(<span class="ident">iter</span>.<span class="ident">len</span>());
@@ -1027,7 +1027,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the formatter returns an error, that error is returned.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_into</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">W</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_into</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">W</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
     <span class="ident">W</span>: <span class="ident">fmt</span>::<span class="ident">Write</span>,
@@ -1064,7 +1064,7 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_into</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">W</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="kw-2">mut</span> <span class="ident">dest</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_into</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">W</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">T</span>, <span class="kw-2">mut</span> <span class="ident">dest</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
     <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
@@ -1117,7 +1117,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">escaped_byte</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">escaped_byte</span> {
             <span class="kw">let</span> <span class="ident">remaining_bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">as_slice</span>().<span class="ident">len</span>();
             <span class="comment">// Every byte expands to two hexadecimal ASCII `char`s.</span>
@@ -1152,7 +1152,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">escaped_byte</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">escaped_byte</span> {
             <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">as_slice</span>().<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">escaped_byte</span>.<span class="ident">is_empty</span>()
         } <span class="kw">else</span> {
@@ -1163,14 +1163,14 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">data</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">iter</span>: <span class="ident">data</span>.<span class="ident">iter</span>(),
             <span class="ident">escaped_byte</span>: <span class="prelude-val">None</span>,
@@ -1182,7 +1182,7 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">escaped</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">escaped_byte</span> {
             <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">escaped</span>.<span class="ident">next</span>();
             <span class="kw">if</span> <span class="ident">next</span>.<span class="ident">is_some</span>() {
@@ -1197,18 +1197,18 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">len</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>();
         (<span class="ident">size</span>, <span class="prelude-val">Some</span>(<span class="ident">size</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">last</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">last</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">last</span>().<span class="ident">copied</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">escaped</span> <span class="op">=</span> <span class="ident">EscapedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
         <span class="ident">escaped</span>.<span class="ident">last</span>()
@@ -1230,19 +1230,19 @@
     <span class="doccomment">/// while this exists.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_str</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">as_str</span>().<span class="ident">len</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">as_str</span>().<span class="ident">is_empty</span>()
     }
 
@@ -1250,271 +1250,271 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// For example, `00`, `20` or `ff`.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_lines</span>)]</span>
-    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">hex_escape</span>(<span class="ident">value</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">hex_escape</span>(<span class="ident">value</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="string">&quot;00&quot;</span>,
-            <span class="number">1</span> <span class="op">=&gt;</span> <span class="string">&quot;01&quot;</span>,
-            <span class="number">2</span> <span class="op">=&gt;</span> <span class="string">&quot;02&quot;</span>,
-            <span class="number">3</span> <span class="op">=&gt;</span> <span class="string">&quot;03&quot;</span>,
-            <span class="number">4</span> <span class="op">=&gt;</span> <span class="string">&quot;04&quot;</span>,
-            <span class="number">5</span> <span class="op">=&gt;</span> <span class="string">&quot;05&quot;</span>,
-            <span class="number">6</span> <span class="op">=&gt;</span> <span class="string">&quot;06&quot;</span>,
-            <span class="number">7</span> <span class="op">=&gt;</span> <span class="string">&quot;07&quot;</span>,
-            <span class="number">8</span> <span class="op">=&gt;</span> <span class="string">&quot;08&quot;</span>,
-            <span class="number">9</span> <span class="op">=&gt;</span> <span class="string">&quot;09&quot;</span>,
-            <span class="number">10</span> <span class="op">=&gt;</span> <span class="string">&quot;0a&quot;</span>,
-            <span class="number">11</span> <span class="op">=&gt;</span> <span class="string">&quot;0b&quot;</span>,
-            <span class="number">12</span> <span class="op">=&gt;</span> <span class="string">&quot;0c&quot;</span>,
-            <span class="number">13</span> <span class="op">=&gt;</span> <span class="string">&quot;0d&quot;</span>,
-            <span class="number">14</span> <span class="op">=&gt;</span> <span class="string">&quot;0e&quot;</span>,
-            <span class="number">15</span> <span class="op">=&gt;</span> <span class="string">&quot;0f&quot;</span>,
-            <span class="number">16</span> <span class="op">=&gt;</span> <span class="string">&quot;10&quot;</span>,
-            <span class="number">17</span> <span class="op">=&gt;</span> <span class="string">&quot;11&quot;</span>,
-            <span class="number">18</span> <span class="op">=&gt;</span> <span class="string">&quot;12&quot;</span>,
-            <span class="number">19</span> <span class="op">=&gt;</span> <span class="string">&quot;13&quot;</span>,
-            <span class="number">20</span> <span class="op">=&gt;</span> <span class="string">&quot;14&quot;</span>,
-            <span class="number">21</span> <span class="op">=&gt;</span> <span class="string">&quot;15&quot;</span>,
-            <span class="number">22</span> <span class="op">=&gt;</span> <span class="string">&quot;16&quot;</span>,
-            <span class="number">23</span> <span class="op">=&gt;</span> <span class="string">&quot;17&quot;</span>,
-            <span class="number">24</span> <span class="op">=&gt;</span> <span class="string">&quot;18&quot;</span>,
-            <span class="number">25</span> <span class="op">=&gt;</span> <span class="string">&quot;19&quot;</span>,
-            <span class="number">26</span> <span class="op">=&gt;</span> <span class="string">&quot;1a&quot;</span>,
-            <span class="number">27</span> <span class="op">=&gt;</span> <span class="string">&quot;1b&quot;</span>,
-            <span class="number">28</span> <span class="op">=&gt;</span> <span class="string">&quot;1c&quot;</span>,
-            <span class="number">29</span> <span class="op">=&gt;</span> <span class="string">&quot;1d&quot;</span>,
-            <span class="number">30</span> <span class="op">=&gt;</span> <span class="string">&quot;1e&quot;</span>,
-            <span class="number">31</span> <span class="op">=&gt;</span> <span class="string">&quot;1f&quot;</span>,
-            <span class="number">32</span> <span class="op">=&gt;</span> <span class="string">&quot;20&quot;</span>,
-            <span class="number">33</span> <span class="op">=&gt;</span> <span class="string">&quot;21&quot;</span>,
-            <span class="number">34</span> <span class="op">=&gt;</span> <span class="string">&quot;22&quot;</span>,
-            <span class="number">35</span> <span class="op">=&gt;</span> <span class="string">&quot;23&quot;</span>,
-            <span class="number">36</span> <span class="op">=&gt;</span> <span class="string">&quot;24&quot;</span>,
-            <span class="number">37</span> <span class="op">=&gt;</span> <span class="string">&quot;25&quot;</span>,
-            <span class="number">38</span> <span class="op">=&gt;</span> <span class="string">&quot;26&quot;</span>,
-            <span class="number">39</span> <span class="op">=&gt;</span> <span class="string">&quot;27&quot;</span>,
-            <span class="number">40</span> <span class="op">=&gt;</span> <span class="string">&quot;28&quot;</span>,
-            <span class="number">41</span> <span class="op">=&gt;</span> <span class="string">&quot;29&quot;</span>,
-            <span class="number">42</span> <span class="op">=&gt;</span> <span class="string">&quot;2a&quot;</span>,
-            <span class="number">43</span> <span class="op">=&gt;</span> <span class="string">&quot;2b&quot;</span>,
-            <span class="number">44</span> <span class="op">=&gt;</span> <span class="string">&quot;2c&quot;</span>,
-            <span class="number">45</span> <span class="op">=&gt;</span> <span class="string">&quot;2d&quot;</span>,
-            <span class="number">46</span> <span class="op">=&gt;</span> <span class="string">&quot;2e&quot;</span>,
-            <span class="number">47</span> <span class="op">=&gt;</span> <span class="string">&quot;2f&quot;</span>,
-            <span class="number">48</span> <span class="op">=&gt;</span> <span class="string">&quot;30&quot;</span>,
-            <span class="number">49</span> <span class="op">=&gt;</span> <span class="string">&quot;31&quot;</span>,
-            <span class="number">50</span> <span class="op">=&gt;</span> <span class="string">&quot;32&quot;</span>,
-            <span class="number">51</span> <span class="op">=&gt;</span> <span class="string">&quot;33&quot;</span>,
-            <span class="number">52</span> <span class="op">=&gt;</span> <span class="string">&quot;34&quot;</span>,
-            <span class="number">53</span> <span class="op">=&gt;</span> <span class="string">&quot;35&quot;</span>,
-            <span class="number">54</span> <span class="op">=&gt;</span> <span class="string">&quot;36&quot;</span>,
-            <span class="number">55</span> <span class="op">=&gt;</span> <span class="string">&quot;37&quot;</span>,
-            <span class="number">56</span> <span class="op">=&gt;</span> <span class="string">&quot;38&quot;</span>,
-            <span class="number">57</span> <span class="op">=&gt;</span> <span class="string">&quot;39&quot;</span>,
-            <span class="number">58</span> <span class="op">=&gt;</span> <span class="string">&quot;3a&quot;</span>,
-            <span class="number">59</span> <span class="op">=&gt;</span> <span class="string">&quot;3b&quot;</span>,
-            <span class="number">60</span> <span class="op">=&gt;</span> <span class="string">&quot;3c&quot;</span>,
-            <span class="number">61</span> <span class="op">=&gt;</span> <span class="string">&quot;3d&quot;</span>,
-            <span class="number">62</span> <span class="op">=&gt;</span> <span class="string">&quot;3e&quot;</span>,
-            <span class="number">63</span> <span class="op">=&gt;</span> <span class="string">&quot;3f&quot;</span>,
-            <span class="number">64</span> <span class="op">=&gt;</span> <span class="string">&quot;40&quot;</span>,
-            <span class="number">65</span> <span class="op">=&gt;</span> <span class="string">&quot;41&quot;</span>,
-            <span class="number">66</span> <span class="op">=&gt;</span> <span class="string">&quot;42&quot;</span>,
-            <span class="number">67</span> <span class="op">=&gt;</span> <span class="string">&quot;43&quot;</span>,
-            <span class="number">68</span> <span class="op">=&gt;</span> <span class="string">&quot;44&quot;</span>,
-            <span class="number">69</span> <span class="op">=&gt;</span> <span class="string">&quot;45&quot;</span>,
-            <span class="number">70</span> <span class="op">=&gt;</span> <span class="string">&quot;46&quot;</span>,
-            <span class="number">71</span> <span class="op">=&gt;</span> <span class="string">&quot;47&quot;</span>,
-            <span class="number">72</span> <span class="op">=&gt;</span> <span class="string">&quot;48&quot;</span>,
-            <span class="number">73</span> <span class="op">=&gt;</span> <span class="string">&quot;49&quot;</span>,
-            <span class="number">74</span> <span class="op">=&gt;</span> <span class="string">&quot;4a&quot;</span>,
-            <span class="number">75</span> <span class="op">=&gt;</span> <span class="string">&quot;4b&quot;</span>,
-            <span class="number">76</span> <span class="op">=&gt;</span> <span class="string">&quot;4c&quot;</span>,
-            <span class="number">77</span> <span class="op">=&gt;</span> <span class="string">&quot;4d&quot;</span>,
-            <span class="number">78</span> <span class="op">=&gt;</span> <span class="string">&quot;4e&quot;</span>,
-            <span class="number">79</span> <span class="op">=&gt;</span> <span class="string">&quot;4f&quot;</span>,
-            <span class="number">80</span> <span class="op">=&gt;</span> <span class="string">&quot;50&quot;</span>,
-            <span class="number">81</span> <span class="op">=&gt;</span> <span class="string">&quot;51&quot;</span>,
-            <span class="number">82</span> <span class="op">=&gt;</span> <span class="string">&quot;52&quot;</span>,
-            <span class="number">83</span> <span class="op">=&gt;</span> <span class="string">&quot;53&quot;</span>,
-            <span class="number">84</span> <span class="op">=&gt;</span> <span class="string">&quot;54&quot;</span>,
-            <span class="number">85</span> <span class="op">=&gt;</span> <span class="string">&quot;55&quot;</span>,
-            <span class="number">86</span> <span class="op">=&gt;</span> <span class="string">&quot;56&quot;</span>,
-            <span class="number">87</span> <span class="op">=&gt;</span> <span class="string">&quot;57&quot;</span>,
-            <span class="number">88</span> <span class="op">=&gt;</span> <span class="string">&quot;58&quot;</span>,
-            <span class="number">89</span> <span class="op">=&gt;</span> <span class="string">&quot;59&quot;</span>,
-            <span class="number">90</span> <span class="op">=&gt;</span> <span class="string">&quot;5a&quot;</span>,
-            <span class="number">91</span> <span class="op">=&gt;</span> <span class="string">&quot;5b&quot;</span>,
-            <span class="number">92</span> <span class="op">=&gt;</span> <span class="string">&quot;5c&quot;</span>,
-            <span class="number">93</span> <span class="op">=&gt;</span> <span class="string">&quot;5d&quot;</span>,
-            <span class="number">94</span> <span class="op">=&gt;</span> <span class="string">&quot;5e&quot;</span>,
-            <span class="number">95</span> <span class="op">=&gt;</span> <span class="string">&quot;5f&quot;</span>,
-            <span class="number">96</span> <span class="op">=&gt;</span> <span class="string">&quot;60&quot;</span>,
-            <span class="number">97</span> <span class="op">=&gt;</span> <span class="string">&quot;61&quot;</span>,
-            <span class="number">98</span> <span class="op">=&gt;</span> <span class="string">&quot;62&quot;</span>,
-            <span class="number">99</span> <span class="op">=&gt;</span> <span class="string">&quot;63&quot;</span>,
-            <span class="number">100</span> <span class="op">=&gt;</span> <span class="string">&quot;64&quot;</span>,
-            <span class="number">101</span> <span class="op">=&gt;</span> <span class="string">&quot;65&quot;</span>,
-            <span class="number">102</span> <span class="op">=&gt;</span> <span class="string">&quot;66&quot;</span>,
-            <span class="number">103</span> <span class="op">=&gt;</span> <span class="string">&quot;67&quot;</span>,
-            <span class="number">104</span> <span class="op">=&gt;</span> <span class="string">&quot;68&quot;</span>,
-            <span class="number">105</span> <span class="op">=&gt;</span> <span class="string">&quot;69&quot;</span>,
-            <span class="number">106</span> <span class="op">=&gt;</span> <span class="string">&quot;6a&quot;</span>,
-            <span class="number">107</span> <span class="op">=&gt;</span> <span class="string">&quot;6b&quot;</span>,
-            <span class="number">108</span> <span class="op">=&gt;</span> <span class="string">&quot;6c&quot;</span>,
-            <span class="number">109</span> <span class="op">=&gt;</span> <span class="string">&quot;6d&quot;</span>,
-            <span class="number">110</span> <span class="op">=&gt;</span> <span class="string">&quot;6e&quot;</span>,
-            <span class="number">111</span> <span class="op">=&gt;</span> <span class="string">&quot;6f&quot;</span>,
-            <span class="number">112</span> <span class="op">=&gt;</span> <span class="string">&quot;70&quot;</span>,
-            <span class="number">113</span> <span class="op">=&gt;</span> <span class="string">&quot;71&quot;</span>,
-            <span class="number">114</span> <span class="op">=&gt;</span> <span class="string">&quot;72&quot;</span>,
-            <span class="number">115</span> <span class="op">=&gt;</span> <span class="string">&quot;73&quot;</span>,
-            <span class="number">116</span> <span class="op">=&gt;</span> <span class="string">&quot;74&quot;</span>,
-            <span class="number">117</span> <span class="op">=&gt;</span> <span class="string">&quot;75&quot;</span>,
-            <span class="number">118</span> <span class="op">=&gt;</span> <span class="string">&quot;76&quot;</span>,
-            <span class="number">119</span> <span class="op">=&gt;</span> <span class="string">&quot;77&quot;</span>,
-            <span class="number">120</span> <span class="op">=&gt;</span> <span class="string">&quot;78&quot;</span>,
-            <span class="number">121</span> <span class="op">=&gt;</span> <span class="string">&quot;79&quot;</span>,
-            <span class="number">122</span> <span class="op">=&gt;</span> <span class="string">&quot;7a&quot;</span>,
-            <span class="number">123</span> <span class="op">=&gt;</span> <span class="string">&quot;7b&quot;</span>,
-            <span class="number">124</span> <span class="op">=&gt;</span> <span class="string">&quot;7c&quot;</span>,
-            <span class="number">125</span> <span class="op">=&gt;</span> <span class="string">&quot;7d&quot;</span>,
-            <span class="number">126</span> <span class="op">=&gt;</span> <span class="string">&quot;7e&quot;</span>,
-            <span class="number">127</span> <span class="op">=&gt;</span> <span class="string">&quot;7f&quot;</span>,
-            <span class="number">128</span> <span class="op">=&gt;</span> <span class="string">&quot;80&quot;</span>,
-            <span class="number">129</span> <span class="op">=&gt;</span> <span class="string">&quot;81&quot;</span>,
-            <span class="number">130</span> <span class="op">=&gt;</span> <span class="string">&quot;82&quot;</span>,
-            <span class="number">131</span> <span class="op">=&gt;</span> <span class="string">&quot;83&quot;</span>,
-            <span class="number">132</span> <span class="op">=&gt;</span> <span class="string">&quot;84&quot;</span>,
-            <span class="number">133</span> <span class="op">=&gt;</span> <span class="string">&quot;85&quot;</span>,
-            <span class="number">134</span> <span class="op">=&gt;</span> <span class="string">&quot;86&quot;</span>,
-            <span class="number">135</span> <span class="op">=&gt;</span> <span class="string">&quot;87&quot;</span>,
-            <span class="number">136</span> <span class="op">=&gt;</span> <span class="string">&quot;88&quot;</span>,
-            <span class="number">137</span> <span class="op">=&gt;</span> <span class="string">&quot;89&quot;</span>,
-            <span class="number">138</span> <span class="op">=&gt;</span> <span class="string">&quot;8a&quot;</span>,
-            <span class="number">139</span> <span class="op">=&gt;</span> <span class="string">&quot;8b&quot;</span>,
-            <span class="number">140</span> <span class="op">=&gt;</span> <span class="string">&quot;8c&quot;</span>,
-            <span class="number">141</span> <span class="op">=&gt;</span> <span class="string">&quot;8d&quot;</span>,
-            <span class="number">142</span> <span class="op">=&gt;</span> <span class="string">&quot;8e&quot;</span>,
-            <span class="number">143</span> <span class="op">=&gt;</span> <span class="string">&quot;8f&quot;</span>,
-            <span class="number">144</span> <span class="op">=&gt;</span> <span class="string">&quot;90&quot;</span>,
-            <span class="number">145</span> <span class="op">=&gt;</span> <span class="string">&quot;91&quot;</span>,
-            <span class="number">146</span> <span class="op">=&gt;</span> <span class="string">&quot;92&quot;</span>,
-            <span class="number">147</span> <span class="op">=&gt;</span> <span class="string">&quot;93&quot;</span>,
-            <span class="number">148</span> <span class="op">=&gt;</span> <span class="string">&quot;94&quot;</span>,
-            <span class="number">149</span> <span class="op">=&gt;</span> <span class="string">&quot;95&quot;</span>,
-            <span class="number">150</span> <span class="op">=&gt;</span> <span class="string">&quot;96&quot;</span>,
-            <span class="number">151</span> <span class="op">=&gt;</span> <span class="string">&quot;97&quot;</span>,
-            <span class="number">152</span> <span class="op">=&gt;</span> <span class="string">&quot;98&quot;</span>,
-            <span class="number">153</span> <span class="op">=&gt;</span> <span class="string">&quot;99&quot;</span>,
-            <span class="number">154</span> <span class="op">=&gt;</span> <span class="string">&quot;9a&quot;</span>,
-            <span class="number">155</span> <span class="op">=&gt;</span> <span class="string">&quot;9b&quot;</span>,
-            <span class="number">156</span> <span class="op">=&gt;</span> <span class="string">&quot;9c&quot;</span>,
-            <span class="number">157</span> <span class="op">=&gt;</span> <span class="string">&quot;9d&quot;</span>,
-            <span class="number">158</span> <span class="op">=&gt;</span> <span class="string">&quot;9e&quot;</span>,
-            <span class="number">159</span> <span class="op">=&gt;</span> <span class="string">&quot;9f&quot;</span>,
-            <span class="number">160</span> <span class="op">=&gt;</span> <span class="string">&quot;a0&quot;</span>,
-            <span class="number">161</span> <span class="op">=&gt;</span> <span class="string">&quot;a1&quot;</span>,
-            <span class="number">162</span> <span class="op">=&gt;</span> <span class="string">&quot;a2&quot;</span>,
-            <span class="number">163</span> <span class="op">=&gt;</span> <span class="string">&quot;a3&quot;</span>,
-            <span class="number">164</span> <span class="op">=&gt;</span> <span class="string">&quot;a4&quot;</span>,
-            <span class="number">165</span> <span class="op">=&gt;</span> <span class="string">&quot;a5&quot;</span>,
-            <span class="number">166</span> <span class="op">=&gt;</span> <span class="string">&quot;a6&quot;</span>,
-            <span class="number">167</span> <span class="op">=&gt;</span> <span class="string">&quot;a7&quot;</span>,
-            <span class="number">168</span> <span class="op">=&gt;</span> <span class="string">&quot;a8&quot;</span>,
-            <span class="number">169</span> <span class="op">=&gt;</span> <span class="string">&quot;a9&quot;</span>,
-            <span class="number">170</span> <span class="op">=&gt;</span> <span class="string">&quot;aa&quot;</span>,
-            <span class="number">171</span> <span class="op">=&gt;</span> <span class="string">&quot;ab&quot;</span>,
-            <span class="number">172</span> <span class="op">=&gt;</span> <span class="string">&quot;ac&quot;</span>,
-            <span class="number">173</span> <span class="op">=&gt;</span> <span class="string">&quot;ad&quot;</span>,
-            <span class="number">174</span> <span class="op">=&gt;</span> <span class="string">&quot;ae&quot;</span>,
-            <span class="number">175</span> <span class="op">=&gt;</span> <span class="string">&quot;af&quot;</span>,
-            <span class="number">176</span> <span class="op">=&gt;</span> <span class="string">&quot;b0&quot;</span>,
-            <span class="number">177</span> <span class="op">=&gt;</span> <span class="string">&quot;b1&quot;</span>,
-            <span class="number">178</span> <span class="op">=&gt;</span> <span class="string">&quot;b2&quot;</span>,
-            <span class="number">179</span> <span class="op">=&gt;</span> <span class="string">&quot;b3&quot;</span>,
-            <span class="number">180</span> <span class="op">=&gt;</span> <span class="string">&quot;b4&quot;</span>,
-            <span class="number">181</span> <span class="op">=&gt;</span> <span class="string">&quot;b5&quot;</span>,
-            <span class="number">182</span> <span class="op">=&gt;</span> <span class="string">&quot;b6&quot;</span>,
-            <span class="number">183</span> <span class="op">=&gt;</span> <span class="string">&quot;b7&quot;</span>,
-            <span class="number">184</span> <span class="op">=&gt;</span> <span class="string">&quot;b8&quot;</span>,
-            <span class="number">185</span> <span class="op">=&gt;</span> <span class="string">&quot;b9&quot;</span>,
-            <span class="number">186</span> <span class="op">=&gt;</span> <span class="string">&quot;ba&quot;</span>,
-            <span class="number">187</span> <span class="op">=&gt;</span> <span class="string">&quot;bb&quot;</span>,
-            <span class="number">188</span> <span class="op">=&gt;</span> <span class="string">&quot;bc&quot;</span>,
-            <span class="number">189</span> <span class="op">=&gt;</span> <span class="string">&quot;bd&quot;</span>,
-            <span class="number">190</span> <span class="op">=&gt;</span> <span class="string">&quot;be&quot;</span>,
-            <span class="number">191</span> <span class="op">=&gt;</span> <span class="string">&quot;bf&quot;</span>,
-            <span class="number">192</span> <span class="op">=&gt;</span> <span class="string">&quot;c0&quot;</span>,
-            <span class="number">193</span> <span class="op">=&gt;</span> <span class="string">&quot;c1&quot;</span>,
-            <span class="number">194</span> <span class="op">=&gt;</span> <span class="string">&quot;c2&quot;</span>,
-            <span class="number">195</span> <span class="op">=&gt;</span> <span class="string">&quot;c3&quot;</span>,
-            <span class="number">196</span> <span class="op">=&gt;</span> <span class="string">&quot;c4&quot;</span>,
-            <span class="number">197</span> <span class="op">=&gt;</span> <span class="string">&quot;c5&quot;</span>,
-            <span class="number">198</span> <span class="op">=&gt;</span> <span class="string">&quot;c6&quot;</span>,
-            <span class="number">199</span> <span class="op">=&gt;</span> <span class="string">&quot;c7&quot;</span>,
-            <span class="number">200</span> <span class="op">=&gt;</span> <span class="string">&quot;c8&quot;</span>,
-            <span class="number">201</span> <span class="op">=&gt;</span> <span class="string">&quot;c9&quot;</span>,
-            <span class="number">202</span> <span class="op">=&gt;</span> <span class="string">&quot;ca&quot;</span>,
-            <span class="number">203</span> <span class="op">=&gt;</span> <span class="string">&quot;cb&quot;</span>,
-            <span class="number">204</span> <span class="op">=&gt;</span> <span class="string">&quot;cc&quot;</span>,
-            <span class="number">205</span> <span class="op">=&gt;</span> <span class="string">&quot;cd&quot;</span>,
-            <span class="number">206</span> <span class="op">=&gt;</span> <span class="string">&quot;ce&quot;</span>,
-            <span class="number">207</span> <span class="op">=&gt;</span> <span class="string">&quot;cf&quot;</span>,
-            <span class="number">208</span> <span class="op">=&gt;</span> <span class="string">&quot;d0&quot;</span>,
-            <span class="number">209</span> <span class="op">=&gt;</span> <span class="string">&quot;d1&quot;</span>,
-            <span class="number">210</span> <span class="op">=&gt;</span> <span class="string">&quot;d2&quot;</span>,
-            <span class="number">211</span> <span class="op">=&gt;</span> <span class="string">&quot;d3&quot;</span>,
-            <span class="number">212</span> <span class="op">=&gt;</span> <span class="string">&quot;d4&quot;</span>,
-            <span class="number">213</span> <span class="op">=&gt;</span> <span class="string">&quot;d5&quot;</span>,
-            <span class="number">214</span> <span class="op">=&gt;</span> <span class="string">&quot;d6&quot;</span>,
-            <span class="number">215</span> <span class="op">=&gt;</span> <span class="string">&quot;d7&quot;</span>,
-            <span class="number">216</span> <span class="op">=&gt;</span> <span class="string">&quot;d8&quot;</span>,
-            <span class="number">217</span> <span class="op">=&gt;</span> <span class="string">&quot;d9&quot;</span>,
-            <span class="number">218</span> <span class="op">=&gt;</span> <span class="string">&quot;da&quot;</span>,
-            <span class="number">219</span> <span class="op">=&gt;</span> <span class="string">&quot;db&quot;</span>,
-            <span class="number">220</span> <span class="op">=&gt;</span> <span class="string">&quot;dc&quot;</span>,
-            <span class="number">221</span> <span class="op">=&gt;</span> <span class="string">&quot;dd&quot;</span>,
-            <span class="number">222</span> <span class="op">=&gt;</span> <span class="string">&quot;de&quot;</span>,
-            <span class="number">223</span> <span class="op">=&gt;</span> <span class="string">&quot;df&quot;</span>,
-            <span class="number">224</span> <span class="op">=&gt;</span> <span class="string">&quot;e0&quot;</span>,
-            <span class="number">225</span> <span class="op">=&gt;</span> <span class="string">&quot;e1&quot;</span>,
-            <span class="number">226</span> <span class="op">=&gt;</span> <span class="string">&quot;e2&quot;</span>,
-            <span class="number">227</span> <span class="op">=&gt;</span> <span class="string">&quot;e3&quot;</span>,
-            <span class="number">228</span> <span class="op">=&gt;</span> <span class="string">&quot;e4&quot;</span>,
-            <span class="number">229</span> <span class="op">=&gt;</span> <span class="string">&quot;e5&quot;</span>,
-            <span class="number">230</span> <span class="op">=&gt;</span> <span class="string">&quot;e6&quot;</span>,
-            <span class="number">231</span> <span class="op">=&gt;</span> <span class="string">&quot;e7&quot;</span>,
-            <span class="number">232</span> <span class="op">=&gt;</span> <span class="string">&quot;e8&quot;</span>,
-            <span class="number">233</span> <span class="op">=&gt;</span> <span class="string">&quot;e9&quot;</span>,
-            <span class="number">234</span> <span class="op">=&gt;</span> <span class="string">&quot;ea&quot;</span>,
-            <span class="number">235</span> <span class="op">=&gt;</span> <span class="string">&quot;eb&quot;</span>,
-            <span class="number">236</span> <span class="op">=&gt;</span> <span class="string">&quot;ec&quot;</span>,
-            <span class="number">237</span> <span class="op">=&gt;</span> <span class="string">&quot;ed&quot;</span>,
-            <span class="number">238</span> <span class="op">=&gt;</span> <span class="string">&quot;ee&quot;</span>,
-            <span class="number">239</span> <span class="op">=&gt;</span> <span class="string">&quot;ef&quot;</span>,
-            <span class="number">240</span> <span class="op">=&gt;</span> <span class="string">&quot;f0&quot;</span>,
-            <span class="number">241</span> <span class="op">=&gt;</span> <span class="string">&quot;f1&quot;</span>,
-            <span class="number">242</span> <span class="op">=&gt;</span> <span class="string">&quot;f2&quot;</span>,
-            <span class="number">243</span> <span class="op">=&gt;</span> <span class="string">&quot;f3&quot;</span>,
-            <span class="number">244</span> <span class="op">=&gt;</span> <span class="string">&quot;f4&quot;</span>,
-            <span class="number">245</span> <span class="op">=&gt;</span> <span class="string">&quot;f5&quot;</span>,
-            <span class="number">246</span> <span class="op">=&gt;</span> <span class="string">&quot;f6&quot;</span>,
-            <span class="number">247</span> <span class="op">=&gt;</span> <span class="string">&quot;f7&quot;</span>,
-            <span class="number">248</span> <span class="op">=&gt;</span> <span class="string">&quot;f8&quot;</span>,
-            <span class="number">249</span> <span class="op">=&gt;</span> <span class="string">&quot;f9&quot;</span>,
-            <span class="number">250</span> <span class="op">=&gt;</span> <span class="string">&quot;fa&quot;</span>,
-            <span class="number">251</span> <span class="op">=&gt;</span> <span class="string">&quot;fb&quot;</span>,
-            <span class="number">252</span> <span class="op">=&gt;</span> <span class="string">&quot;fc&quot;</span>,
-            <span class="number">253</span> <span class="op">=&gt;</span> <span class="string">&quot;fd&quot;</span>,
-            <span class="number">254</span> <span class="op">=&gt;</span> <span class="string">&quot;fe&quot;</span>,
-            <span class="number">255</span> <span class="op">=&gt;</span> <span class="string">&quot;ff&quot;</span>,
+            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;00&quot;</span>,
+            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;01&quot;</span>,
+            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;02&quot;</span>,
+            <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;03&quot;</span>,
+            <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;04&quot;</span>,
+            <span class="number">5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;05&quot;</span>,
+            <span class="number">6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;06&quot;</span>,
+            <span class="number">7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;07&quot;</span>,
+            <span class="number">8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;08&quot;</span>,
+            <span class="number">9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;09&quot;</span>,
+            <span class="number">10</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;0a&quot;</span>,
+            <span class="number">11</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;0b&quot;</span>,
+            <span class="number">12</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;0c&quot;</span>,
+            <span class="number">13</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;0d&quot;</span>,
+            <span class="number">14</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;0e&quot;</span>,
+            <span class="number">15</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;0f&quot;</span>,
+            <span class="number">16</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;10&quot;</span>,
+            <span class="number">17</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;11&quot;</span>,
+            <span class="number">18</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;12&quot;</span>,
+            <span class="number">19</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;13&quot;</span>,
+            <span class="number">20</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;14&quot;</span>,
+            <span class="number">21</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;15&quot;</span>,
+            <span class="number">22</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;16&quot;</span>,
+            <span class="number">23</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;17&quot;</span>,
+            <span class="number">24</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;18&quot;</span>,
+            <span class="number">25</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;19&quot;</span>,
+            <span class="number">26</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1a&quot;</span>,
+            <span class="number">27</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1b&quot;</span>,
+            <span class="number">28</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1c&quot;</span>,
+            <span class="number">29</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1d&quot;</span>,
+            <span class="number">30</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1e&quot;</span>,
+            <span class="number">31</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1f&quot;</span>,
+            <span class="number">32</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;20&quot;</span>,
+            <span class="number">33</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;21&quot;</span>,
+            <span class="number">34</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;22&quot;</span>,
+            <span class="number">35</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;23&quot;</span>,
+            <span class="number">36</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;24&quot;</span>,
+            <span class="number">37</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;25&quot;</span>,
+            <span class="number">38</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;26&quot;</span>,
+            <span class="number">39</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;27&quot;</span>,
+            <span class="number">40</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;28&quot;</span>,
+            <span class="number">41</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;29&quot;</span>,
+            <span class="number">42</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;2a&quot;</span>,
+            <span class="number">43</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;2b&quot;</span>,
+            <span class="number">44</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;2c&quot;</span>,
+            <span class="number">45</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;2d&quot;</span>,
+            <span class="number">46</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;2e&quot;</span>,
+            <span class="number">47</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;2f&quot;</span>,
+            <span class="number">48</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;30&quot;</span>,
+            <span class="number">49</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;31&quot;</span>,
+            <span class="number">50</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;32&quot;</span>,
+            <span class="number">51</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;33&quot;</span>,
+            <span class="number">52</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;34&quot;</span>,
+            <span class="number">53</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;35&quot;</span>,
+            <span class="number">54</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;36&quot;</span>,
+            <span class="number">55</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;37&quot;</span>,
+            <span class="number">56</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;38&quot;</span>,
+            <span class="number">57</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;39&quot;</span>,
+            <span class="number">58</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;3a&quot;</span>,
+            <span class="number">59</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;3b&quot;</span>,
+            <span class="number">60</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;3c&quot;</span>,
+            <span class="number">61</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;3d&quot;</span>,
+            <span class="number">62</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;3e&quot;</span>,
+            <span class="number">63</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;3f&quot;</span>,
+            <span class="number">64</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;40&quot;</span>,
+            <span class="number">65</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;41&quot;</span>,
+            <span class="number">66</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;42&quot;</span>,
+            <span class="number">67</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;43&quot;</span>,
+            <span class="number">68</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;44&quot;</span>,
+            <span class="number">69</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;45&quot;</span>,
+            <span class="number">70</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;46&quot;</span>,
+            <span class="number">71</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;47&quot;</span>,
+            <span class="number">72</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;48&quot;</span>,
+            <span class="number">73</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;49&quot;</span>,
+            <span class="number">74</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;4a&quot;</span>,
+            <span class="number">75</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;4b&quot;</span>,
+            <span class="number">76</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;4c&quot;</span>,
+            <span class="number">77</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;4d&quot;</span>,
+            <span class="number">78</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;4e&quot;</span>,
+            <span class="number">79</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;4f&quot;</span>,
+            <span class="number">80</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;50&quot;</span>,
+            <span class="number">81</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;51&quot;</span>,
+            <span class="number">82</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;52&quot;</span>,
+            <span class="number">83</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;53&quot;</span>,
+            <span class="number">84</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;54&quot;</span>,
+            <span class="number">85</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;55&quot;</span>,
+            <span class="number">86</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;56&quot;</span>,
+            <span class="number">87</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;57&quot;</span>,
+            <span class="number">88</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;58&quot;</span>,
+            <span class="number">89</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;59&quot;</span>,
+            <span class="number">90</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5a&quot;</span>,
+            <span class="number">91</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5b&quot;</span>,
+            <span class="number">92</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5c&quot;</span>,
+            <span class="number">93</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5d&quot;</span>,
+            <span class="number">94</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5e&quot;</span>,
+            <span class="number">95</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5f&quot;</span>,
+            <span class="number">96</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;60&quot;</span>,
+            <span class="number">97</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;61&quot;</span>,
+            <span class="number">98</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;62&quot;</span>,
+            <span class="number">99</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;63&quot;</span>,
+            <span class="number">100</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;64&quot;</span>,
+            <span class="number">101</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;65&quot;</span>,
+            <span class="number">102</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;66&quot;</span>,
+            <span class="number">103</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;67&quot;</span>,
+            <span class="number">104</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;68&quot;</span>,
+            <span class="number">105</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;69&quot;</span>,
+            <span class="number">106</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;6a&quot;</span>,
+            <span class="number">107</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;6b&quot;</span>,
+            <span class="number">108</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;6c&quot;</span>,
+            <span class="number">109</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;6d&quot;</span>,
+            <span class="number">110</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;6e&quot;</span>,
+            <span class="number">111</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;6f&quot;</span>,
+            <span class="number">112</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;70&quot;</span>,
+            <span class="number">113</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;71&quot;</span>,
+            <span class="number">114</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;72&quot;</span>,
+            <span class="number">115</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;73&quot;</span>,
+            <span class="number">116</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;74&quot;</span>,
+            <span class="number">117</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;75&quot;</span>,
+            <span class="number">118</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;76&quot;</span>,
+            <span class="number">119</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;77&quot;</span>,
+            <span class="number">120</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;78&quot;</span>,
+            <span class="number">121</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;79&quot;</span>,
+            <span class="number">122</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;7a&quot;</span>,
+            <span class="number">123</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;7b&quot;</span>,
+            <span class="number">124</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;7c&quot;</span>,
+            <span class="number">125</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;7d&quot;</span>,
+            <span class="number">126</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;7e&quot;</span>,
+            <span class="number">127</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;7f&quot;</span>,
+            <span class="number">128</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;80&quot;</span>,
+            <span class="number">129</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;81&quot;</span>,
+            <span class="number">130</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;82&quot;</span>,
+            <span class="number">131</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;83&quot;</span>,
+            <span class="number">132</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;84&quot;</span>,
+            <span class="number">133</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;85&quot;</span>,
+            <span class="number">134</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;86&quot;</span>,
+            <span class="number">135</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;87&quot;</span>,
+            <span class="number">136</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;88&quot;</span>,
+            <span class="number">137</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;89&quot;</span>,
+            <span class="number">138</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;8a&quot;</span>,
+            <span class="number">139</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;8b&quot;</span>,
+            <span class="number">140</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;8c&quot;</span>,
+            <span class="number">141</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;8d&quot;</span>,
+            <span class="number">142</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;8e&quot;</span>,
+            <span class="number">143</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;8f&quot;</span>,
+            <span class="number">144</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;90&quot;</span>,
+            <span class="number">145</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;91&quot;</span>,
+            <span class="number">146</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;92&quot;</span>,
+            <span class="number">147</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;93&quot;</span>,
+            <span class="number">148</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;94&quot;</span>,
+            <span class="number">149</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;95&quot;</span>,
+            <span class="number">150</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;96&quot;</span>,
+            <span class="number">151</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;97&quot;</span>,
+            <span class="number">152</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;98&quot;</span>,
+            <span class="number">153</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;99&quot;</span>,
+            <span class="number">154</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;9a&quot;</span>,
+            <span class="number">155</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;9b&quot;</span>,
+            <span class="number">156</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;9c&quot;</span>,
+            <span class="number">157</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;9d&quot;</span>,
+            <span class="number">158</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;9e&quot;</span>,
+            <span class="number">159</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;9f&quot;</span>,
+            <span class="number">160</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a0&quot;</span>,
+            <span class="number">161</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a1&quot;</span>,
+            <span class="number">162</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a2&quot;</span>,
+            <span class="number">163</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a3&quot;</span>,
+            <span class="number">164</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a4&quot;</span>,
+            <span class="number">165</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a5&quot;</span>,
+            <span class="number">166</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a6&quot;</span>,
+            <span class="number">167</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a7&quot;</span>,
+            <span class="number">168</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a8&quot;</span>,
+            <span class="number">169</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a9&quot;</span>,
+            <span class="number">170</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;aa&quot;</span>,
+            <span class="number">171</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ab&quot;</span>,
+            <span class="number">172</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ac&quot;</span>,
+            <span class="number">173</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ad&quot;</span>,
+            <span class="number">174</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ae&quot;</span>,
+            <span class="number">175</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;af&quot;</span>,
+            <span class="number">176</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b0&quot;</span>,
+            <span class="number">177</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b1&quot;</span>,
+            <span class="number">178</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b2&quot;</span>,
+            <span class="number">179</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b3&quot;</span>,
+            <span class="number">180</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b4&quot;</span>,
+            <span class="number">181</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b5&quot;</span>,
+            <span class="number">182</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b6&quot;</span>,
+            <span class="number">183</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b7&quot;</span>,
+            <span class="number">184</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b8&quot;</span>,
+            <span class="number">185</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;b9&quot;</span>,
+            <span class="number">186</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ba&quot;</span>,
+            <span class="number">187</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bb&quot;</span>,
+            <span class="number">188</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bc&quot;</span>,
+            <span class="number">189</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bd&quot;</span>,
+            <span class="number">190</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;be&quot;</span>,
+            <span class="number">191</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bf&quot;</span>,
+            <span class="number">192</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c0&quot;</span>,
+            <span class="number">193</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c1&quot;</span>,
+            <span class="number">194</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c2&quot;</span>,
+            <span class="number">195</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c3&quot;</span>,
+            <span class="number">196</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c4&quot;</span>,
+            <span class="number">197</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c5&quot;</span>,
+            <span class="number">198</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c6&quot;</span>,
+            <span class="number">199</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c7&quot;</span>,
+            <span class="number">200</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c8&quot;</span>,
+            <span class="number">201</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;c9&quot;</span>,
+            <span class="number">202</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ca&quot;</span>,
+            <span class="number">203</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;cb&quot;</span>,
+            <span class="number">204</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;cc&quot;</span>,
+            <span class="number">205</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;cd&quot;</span>,
+            <span class="number">206</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ce&quot;</span>,
+            <span class="number">207</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;cf&quot;</span>,
+            <span class="number">208</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d0&quot;</span>,
+            <span class="number">209</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d1&quot;</span>,
+            <span class="number">210</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d2&quot;</span>,
+            <span class="number">211</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d3&quot;</span>,
+            <span class="number">212</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d4&quot;</span>,
+            <span class="number">213</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d5&quot;</span>,
+            <span class="number">214</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d6&quot;</span>,
+            <span class="number">215</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d7&quot;</span>,
+            <span class="number">216</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d8&quot;</span>,
+            <span class="number">217</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;d9&quot;</span>,
+            <span class="number">218</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;da&quot;</span>,
+            <span class="number">219</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;db&quot;</span>,
+            <span class="number">220</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;dc&quot;</span>,
+            <span class="number">221</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;dd&quot;</span>,
+            <span class="number">222</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;de&quot;</span>,
+            <span class="number">223</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;df&quot;</span>,
+            <span class="number">224</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e0&quot;</span>,
+            <span class="number">225</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e1&quot;</span>,
+            <span class="number">226</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e2&quot;</span>,
+            <span class="number">227</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e3&quot;</span>,
+            <span class="number">228</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e4&quot;</span>,
+            <span class="number">229</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e5&quot;</span>,
+            <span class="number">230</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e6&quot;</span>,
+            <span class="number">231</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e7&quot;</span>,
+            <span class="number">232</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e8&quot;</span>,
+            <span class="number">233</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;e9&quot;</span>,
+            <span class="number">234</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ea&quot;</span>,
+            <span class="number">235</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;eb&quot;</span>,
+            <span class="number">236</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ec&quot;</span>,
+            <span class="number">237</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ed&quot;</span>,
+            <span class="number">238</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ee&quot;</span>,
+            <span class="number">239</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ef&quot;</span>,
+            <span class="number">240</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f0&quot;</span>,
+            <span class="number">241</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f1&quot;</span>,
+            <span class="number">242</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f2&quot;</span>,
+            <span class="number">243</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f3&quot;</span>,
+            <span class="number">244</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f4&quot;</span>,
+            <span class="number">245</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f5&quot;</span>,
+            <span class="number">246</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f6&quot;</span>,
+            <span class="number">247</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f7&quot;</span>,
+            <span class="number">248</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f8&quot;</span>,
+            <span class="number">249</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;f9&quot;</span>,
+            <span class="number">250</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;fa&quot;</span>,
+            <span class="number">251</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;fb&quot;</span>,
+            <span class="number">252</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;fc&quot;</span>,
+            <span class="number">253</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;fd&quot;</span>,
+            <span class="number">254</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;fe&quot;</span>,
+            <span class="number">255</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ff&quot;</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">EscapedByte</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">escape</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">hex_escape</span>(<span class="ident">byte</span>);
         <span class="self">Self</span>(<span class="ident">escape</span>.<span class="ident">chars</span>())
     }
@@ -1524,39 +1524,39 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">nth</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">nth</span>(<span class="ident">n</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">count</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">size_hint</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">last</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">last</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">last</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">EscapedByte</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next_back</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">nth_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">nth_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">nth_back</span>(<span class="ident">n</span>)
     }
 }
@@ -1572,47 +1572,47 @@
         <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="number">0</span>..<span class="op">=</span><span class="number">255</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lit</span> <span class="op">=</span> <span class="ident">EscapedByte</span>::<span class="ident">from</span>(<span class="ident">byte</span>);
             <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">top</span> <span class="op">=</span> <span class="ident">byte</span> <span class="op">&gt;&gt;</span> <span class="number">4</span>;
+            <span class="kw">let</span> <span class="ident">top</span> <span class="op">=</span> <span class="ident">byte</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">4</span>;
             <span class="kw">match</span> <span class="ident">top</span> {
-                <span class="number">0x0</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;0&#39;</span>),
-                <span class="number">0x1</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;1&#39;</span>),
-                <span class="number">0x2</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;2&#39;</span>),
-                <span class="number">0x3</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;3&#39;</span>),
-                <span class="number">0x4</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;4&#39;</span>),
-                <span class="number">0x5</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;5&#39;</span>),
-                <span class="number">0x6</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;6&#39;</span>),
-                <span class="number">0x7</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;7&#39;</span>),
-                <span class="number">0x8</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;8&#39;</span>),
-                <span class="number">0x9</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;9&#39;</span>),
-                <span class="number">0xA</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;a&#39;</span>),
-                <span class="number">0xB</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;b&#39;</span>),
-                <span class="number">0xC</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;c&#39;</span>),
-                <span class="number">0xD</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;d&#39;</span>),
-                <span class="number">0xE</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;e&#39;</span>),
-                <span class="number">0xF</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;f&#39;</span>),
-                <span class="ident">tuple</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unknown top 16th: {}, from byte: {}&quot;</span>, <span class="ident">tuple</span>, <span class="ident">byte</span>),
+                <span class="number">0x0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;0&#39;</span>),
+                <span class="number">0x1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;1&#39;</span>),
+                <span class="number">0x2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;2&#39;</span>),
+                <span class="number">0x3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;3&#39;</span>),
+                <span class="number">0x4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;4&#39;</span>),
+                <span class="number">0x5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;5&#39;</span>),
+                <span class="number">0x6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;6&#39;</span>),
+                <span class="number">0x7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;7&#39;</span>),
+                <span class="number">0x8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;8&#39;</span>),
+                <span class="number">0x9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;9&#39;</span>),
+                <span class="number">0xA</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;a&#39;</span>),
+                <span class="number">0xB</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;b&#39;</span>),
+                <span class="number">0xC</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;c&#39;</span>),
+                <span class="number">0xD</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;d&#39;</span>),
+                <span class="number">0xE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;e&#39;</span>),
+                <span class="number">0xF</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">left</span>, <span class="string">&#39;f&#39;</span>),
+                <span class="ident">tuple</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unknown top 16th: {}, from byte: {}&quot;</span>, <span class="ident">tuple</span>, <span class="ident">byte</span>),
             }
 
             <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">bottom</span> <span class="op">=</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0xF</span>;
             <span class="kw">match</span> <span class="ident">bottom</span> {
-                <span class="number">0x0</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;0&#39;</span>),
-                <span class="number">0x1</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;1&#39;</span>),
-                <span class="number">0x2</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;2&#39;</span>),
-                <span class="number">0x3</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;3&#39;</span>),
-                <span class="number">0x4</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;4&#39;</span>),
-                <span class="number">0x5</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;5&#39;</span>),
-                <span class="number">0x6</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;6&#39;</span>),
-                <span class="number">0x7</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;7&#39;</span>),
-                <span class="number">0x8</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;8&#39;</span>),
-                <span class="number">0x9</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;9&#39;</span>),
-                <span class="number">0xA</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;a&#39;</span>),
-                <span class="number">0xB</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;b&#39;</span>),
-                <span class="number">0xC</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;c&#39;</span>),
-                <span class="number">0xD</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;d&#39;</span>),
-                <span class="number">0xE</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;e&#39;</span>),
-                <span class="number">0xF</span> <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;f&#39;</span>),
-                <span class="ident">tuple</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unknown bottom 16th: {}, from byte: {}&quot;</span>, <span class="ident">tuple</span>, <span class="ident">byte</span>),
+                <span class="number">0x0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;0&#39;</span>),
+                <span class="number">0x1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;1&#39;</span>),
+                <span class="number">0x2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;2&#39;</span>),
+                <span class="number">0x3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;3&#39;</span>),
+                <span class="number">0x4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;4&#39;</span>),
+                <span class="number">0x5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;5&#39;</span>),
+                <span class="number">0x6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;6&#39;</span>),
+                <span class="number">0x7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;7&#39;</span>),
+                <span class="number">0x8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;8&#39;</span>),
+                <span class="number">0x9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;9&#39;</span>),
+                <span class="number">0xA</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;a&#39;</span>),
+                <span class="number">0xB</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;b&#39;</span>),
+                <span class="number">0xC</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;c&#39;</span>),
+                <span class="number">0xD</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;d&#39;</span>),
+                <span class="number">0xE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;e&#39;</span>),
+                <span class="number">0xF</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">right</span>, <span class="string">&#39;f&#39;</span>),
+                <span class="ident">tuple</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unknown bottom 16th: {}, from byte: {}&quot;</span>, <span class="ident">tuple</span>, <span class="ident">byte</span>),
             }
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">lit</span>.<span class="ident">next</span>().<span class="ident">is_none</span>());
         }
@@ -1641,7 +1641,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">encode_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;66&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">2</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">2</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">format_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;66&quot;</span>);
@@ -1655,7 +1655,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">encode_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">4</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">4</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">format_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f&quot;</span>);
@@ -1669,7 +1669,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">encode_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">6</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">6</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">format_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f&quot;</span>);
@@ -1683,7 +1683,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">encode_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f62&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">8</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">8</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">format_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f62&quot;</span>);
@@ -1697,7 +1697,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">encode_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f6261&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">10</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">10</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">format_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f6261&quot;</span>);
@@ -1711,7 +1711,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">encode_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f626172&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">12</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">12</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">format_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f626172&quot;</span>);

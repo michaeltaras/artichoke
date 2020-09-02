@@ -8,9 +8,9 @@
 <span class="kw">let</span> <span class="ident">regex</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="string">&quot;e(l+)&quot;</span>).<span class="ident">unwrap</span>();
 <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">pos</span>) <span class="kw">in</span> <span class="ident">regex</span>.<span class="ident">captures</span>(<span class="string">&quot;hello&quot;</span>).<span class="ident">unwrap</span>().<span class="ident">iter_pos</span>().<span class="ident">enumerate</span>() {
     <span class="kw">match</span> <span class="ident">pos</span> {
-         <span class="prelude-val">Some</span>((<span class="ident">beg</span>, <span class="ident">end</span>)) <span class="op">=&gt;</span>
+         <span class="prelude-val">Some</span>((<span class="ident">beg</span>, <span class="ident">end</span>)) <span class="op">=</span><span class="op">&gt;</span>
              <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Group {} captured in position {}:{}&quot;</span>, <span class="ident">i</span>, <span class="ident">beg</span>, <span class="ident">end</span>),
-         <span class="prelude-val">None</span> <span class="op">=&gt;</span>
+         <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span>
              <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Group {} is not captured&quot;</span>, <span class="ident">i</span>)
     }
 }</pre></div>

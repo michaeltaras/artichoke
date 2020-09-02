@@ -199,25 +199,25 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This should point to the first character in the buffer,</span>
     <span class="doccomment">/// encoded as an `onig_sys` character.</span>
-    <span class="kw">fn</span> <span class="ident">start_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span>;
+    <span class="kw">fn</span> <span class="ident">start_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span>;
 
     <span class="doccomment">/// Pointer to the limit of the pattern buffer</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This should point just past the final character in the buffer,</span>
     <span class="doccomment">/// encoded as an `onig_sys` character.</span>
-    <span class="kw">fn</span> <span class="ident">limit_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span>;
+    <span class="kw">fn</span> <span class="ident">limit_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span>;
 
     <span class="doccomment">/// The encoding of the contents of the buffer</span>
-    <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">onig_sys</span>::<span class="ident">OnigEncoding</span> {
+    <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">onig_sys</span>::<span class="ident">OnigEncoding</span> {
         <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">onig_sys</span>::<span class="ident">OnigEncodingUTF8</span> }
     }
 
     <span class="doccomment">/// The length of this buffer</span>
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
 
     <span class="doccomment">/// Is the buffer empty?</span>
-    <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
     }
 }
 
@@ -226,16 +226,16 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">start_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
+    <span class="kw">fn</span> <span class="ident">start_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>().<span class="ident">as_ptr</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">limit_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
+    <span class="kw">fn</span> <span class="ident">limit_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>();
         <span class="ident">bytes</span>[<span class="ident">bytes</span>.<span class="ident">len</span>()..].<span class="ident">as_ptr</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>()
     }
 }
@@ -259,7 +259,7 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// A new buffer instance</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_parts</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">enc</span>: <span class="ident">onig_sys</span>::<span class="ident">OnigEncoding</span>) <span class="op">-&gt;</span> <span class="ident">EncodedBytes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_parts</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">enc</span>: <span class="ident">onig_sys</span>::<span class="ident">OnigEncoding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EncodedBytes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">EncodedBytes</span> { <span class="ident">bytes</span>, <span class="ident">enc</span> }
     }
 
@@ -272,7 +272,7 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// A new buffer instance</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ascii</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">EncodedBytes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ascii</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EncodedBytes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">EncodedBytes</span> {
             <span class="ident">bytes</span>,
             <span class="ident">enc</span>: <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">onig_sys</span>::<span class="ident">OnigEncodingASCII</span> },
@@ -281,19 +281,19 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">EncodedChars</span> <span class="kw">for</span> <span class="ident">EncodedBytes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">start_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
+    <span class="kw">fn</span> <span class="ident">start_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
         <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">as_ptr</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">limit_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
+    <span class="kw">fn</span> <span class="ident">limit_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">onig_sys</span>::<span class="ident">OnigUChar</span> {
         <span class="self">self</span>.<span class="ident">bytes</span>[<span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">len</span>()..].<span class="ident">as_ptr</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">onig_sys</span>::<span class="ident">OnigEncoding</span> {
+    <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">onig_sys</span>::<span class="ident">OnigEncoding</span> {
         <span class="self">self</span>.<span class="ident">enc</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">len</span>()
     }
 }

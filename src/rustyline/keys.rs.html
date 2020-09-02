@@ -193,45 +193,45 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">windows</span>, <span class="ident">unix</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">char_to_key_press</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">KeyPress</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">char_to_key_press</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">KeyPress</span> {
     <span class="kw">if</span> <span class="op">!</span><span class="ident">c</span>.<span class="ident">is_control</span>() {
         <span class="kw">return</span> <span class="ident">KeyPress</span>::<span class="ident">Char</span>(<span class="ident">c</span>);
     }
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">match_same_arms</span>)]</span>
     <span class="kw">match</span> <span class="ident">c</span> {
-        <span class="string">&#39;\x00&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39; &#39;</span>),
-        <span class="string">&#39;\x01&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;A&#39;</span>),
-        <span class="string">&#39;\x02&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;B&#39;</span>),
-        <span class="string">&#39;\x03&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;C&#39;</span>),
-        <span class="string">&#39;\x04&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;D&#39;</span>),
-        <span class="string">&#39;\x05&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;E&#39;</span>),
-        <span class="string">&#39;\x06&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;F&#39;</span>),
-        <span class="string">&#39;\x07&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;G&#39;</span>),
-        <span class="string">&#39;\x08&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Backspace</span>, <span class="comment">// &#39;\b&#39;</span>
-        <span class="string">&#39;\x09&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Tab</span>,       <span class="comment">// &#39;\t&#39;</span>
-        <span class="string">&#39;\x0a&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;J&#39;</span>), <span class="comment">// &#39;\n&#39; (10)</span>
-        <span class="string">&#39;\x0b&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;K&#39;</span>),
-        <span class="string">&#39;\x0c&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;L&#39;</span>),
-        <span class="string">&#39;\x0d&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Enter</span>, <span class="comment">// &#39;\r&#39; (13)</span>
-        <span class="string">&#39;\x0e&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;N&#39;</span>),
-        <span class="string">&#39;\x0f&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;O&#39;</span>),
-        <span class="string">&#39;\x10&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;P&#39;</span>),
-        <span class="string">&#39;\x12&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;R&#39;</span>),
-        <span class="string">&#39;\x13&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;S&#39;</span>),
-        <span class="string">&#39;\x14&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;T&#39;</span>),
-        <span class="string">&#39;\x15&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;U&#39;</span>),
-        <span class="string">&#39;\x16&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;V&#39;</span>),
-        <span class="string">&#39;\x17&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;W&#39;</span>),
-        <span class="string">&#39;\x18&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;X&#39;</span>),
-        <span class="string">&#39;\x19&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;Y&#39;</span>),
-        <span class="string">&#39;\x1a&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;Z&#39;</span>),
-        <span class="string">&#39;\x1b&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Esc</span>, <span class="comment">// Ctrl-[</span>
-        <span class="string">&#39;\x1c&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;\\&#39;</span>),
-        <span class="string">&#39;\x1d&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;]&#39;</span>),
-        <span class="string">&#39;\x1e&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;^&#39;</span>),
-        <span class="string">&#39;\x1f&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;_&#39;</span>),
-        <span class="string">&#39;\x7f&#39;</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Backspace</span>, <span class="comment">// Rubout</span>
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Null</span>,
+        <span class="string">&#39;\x00&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39; &#39;</span>),
+        <span class="string">&#39;\x01&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;A&#39;</span>),
+        <span class="string">&#39;\x02&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;B&#39;</span>),
+        <span class="string">&#39;\x03&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;C&#39;</span>),
+        <span class="string">&#39;\x04&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;D&#39;</span>),
+        <span class="string">&#39;\x05&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;E&#39;</span>),
+        <span class="string">&#39;\x06&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;F&#39;</span>),
+        <span class="string">&#39;\x07&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;G&#39;</span>),
+        <span class="string">&#39;\x08&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Backspace</span>, <span class="comment">// &#39;\b&#39;</span>
+        <span class="string">&#39;\x09&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Tab</span>,       <span class="comment">// &#39;\t&#39;</span>
+        <span class="string">&#39;\x0a&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;J&#39;</span>), <span class="comment">// &#39;\n&#39; (10)</span>
+        <span class="string">&#39;\x0b&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;K&#39;</span>),
+        <span class="string">&#39;\x0c&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;L&#39;</span>),
+        <span class="string">&#39;\x0d&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Enter</span>, <span class="comment">// &#39;\r&#39; (13)</span>
+        <span class="string">&#39;\x0e&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;N&#39;</span>),
+        <span class="string">&#39;\x0f&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;O&#39;</span>),
+        <span class="string">&#39;\x10&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;P&#39;</span>),
+        <span class="string">&#39;\x12&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;R&#39;</span>),
+        <span class="string">&#39;\x13&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;S&#39;</span>),
+        <span class="string">&#39;\x14&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;T&#39;</span>),
+        <span class="string">&#39;\x15&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;U&#39;</span>),
+        <span class="string">&#39;\x16&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;V&#39;</span>),
+        <span class="string">&#39;\x17&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;W&#39;</span>),
+        <span class="string">&#39;\x18&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;X&#39;</span>),
+        <span class="string">&#39;\x19&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;Y&#39;</span>),
+        <span class="string">&#39;\x1a&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;Z&#39;</span>),
+        <span class="string">&#39;\x1b&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Esc</span>, <span class="comment">// Ctrl-[</span>
+        <span class="string">&#39;\x1c&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;\\&#39;</span>),
+        <span class="string">&#39;\x1d&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;]&#39;</span>),
+        <span class="string">&#39;\x1e&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;^&#39;</span>),
+        <span class="string">&#39;\x1f&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Ctrl</span>(<span class="string">&#39;_&#39;</span>),
+        <span class="string">&#39;\x7f&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Backspace</span>, <span class="comment">// Rubout</span>
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">KeyPress</span>::<span class="ident">Null</span>,
     }
 }
 

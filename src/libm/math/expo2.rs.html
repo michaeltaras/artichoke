@@ -18,13 +18,13 @@
 
 <span class="comment">/* exp(x)/2 for x &gt;= log(DBL_MAX), slightly better than 0.5*exp(x/2)*exp(x/2) */</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">expo2</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">expo2</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="comment">/* k is such that k*ln2 has minimal relative error and x - kln2 &gt; log(DBL_MIN) */</span>
     <span class="kw">const</span> <span class="ident">K</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="number">2043</span>;
     <span class="kw">let</span> <span class="ident">kln2</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="number">0x40962066151add8b</span>);
 
     <span class="comment">/* note that k is odd and scale*scale overflows */</span>
-    <span class="kw">let</span> <span class="ident">scale</span> <span class="op">=</span> <span class="ident">combine_words</span>(((<span class="number">0x3ff</span> <span class="op">+</span> <span class="ident">K</span> <span class="op">/</span> <span class="number">2</span>) <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">20</span>, <span class="number">0</span>);
+    <span class="kw">let</span> <span class="ident">scale</span> <span class="op">=</span> <span class="ident">combine_words</span>(((<span class="number">0x3ff</span> <span class="op">+</span> <span class="ident">K</span> <span class="op">/</span> <span class="number">2</span>) <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">20</span>, <span class="number">0</span>);
     <span class="comment">/* exp(x - k ln2) * 2**(k-1) */</span>
     <span class="ident">exp</span>(<span class="ident">x</span> <span class="op">-</span> <span class="ident">kln2</span>) <span class="op">*</span> <span class="ident">scale</span> <span class="op">*</span> <span class="ident">scale</span>
 }

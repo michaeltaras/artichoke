@@ -105,16 +105,16 @@
 <span class="kw">const</span> <span class="ident">T4_PIO2</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">4.</span> <span class="op">*</span> <span class="ident">FRAC_PI_2</span>; <span class="comment">/* 0x401921FB, 0x54442D18 */</span>
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic</span>::<span class="ident">no_panic</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tanf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tanf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">let</span> <span class="ident">x64</span> <span class="op">=</span> <span class="ident">x</span> <span class="kw">as</span> <span class="ident">f64</span>;
 
     <span class="kw">let</span> <span class="ident">x1p120</span> <span class="op">=</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="number">0x7b800000</span>); <span class="comment">// 0x1p120f === 2 ^ 120</span>
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">ix</span> <span class="op">&gt;&gt;</span> <span class="number">31</span>) <span class="op">!=</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
     <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
 
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;=</span> <span class="number">0x3f490fda</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x3f490fda</span> {
         <span class="comment">/* |x| ~&lt;= pi/4 */</span>
         <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x39800000</span> {
             <span class="comment">/* |x| &lt; 2**-12 */</span>
@@ -128,18 +128,18 @@
         }
         <span class="kw">return</span> <span class="ident">k_tanf</span>(<span class="ident">x64</span>, <span class="bool-val">false</span>);
     }
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;=</span> <span class="number">0x407b53d1</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x407b53d1</span> {
         <span class="comment">/* |x| ~&lt;= 5*pi/4 */</span>
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;=</span> <span class="number">0x4016cbe3</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x4016cbe3</span> {
             <span class="comment">/* |x| ~&lt;= 3pi/4 */</span>
             <span class="kw">return</span> <span class="ident">k_tanf</span>(<span class="kw">if</span> <span class="ident">sign</span> { <span class="ident">x64</span> <span class="op">+</span> <span class="ident">T1_PIO2</span> } <span class="kw">else</span> { <span class="ident">x64</span> <span class="op">-</span> <span class="ident">T1_PIO2</span> }, <span class="bool-val">true</span>);
         } <span class="kw">else</span> {
             <span class="kw">return</span> <span class="ident">k_tanf</span>(<span class="kw">if</span> <span class="ident">sign</span> { <span class="ident">x64</span> <span class="op">+</span> <span class="ident">T2_PIO2</span> } <span class="kw">else</span> { <span class="ident">x64</span> <span class="op">-</span> <span class="ident">T2_PIO2</span> }, <span class="bool-val">false</span>);
         }
     }
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;=</span> <span class="number">0x40e231d5</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x40e231d5</span> {
         <span class="comment">/* |x| ~&lt;= 9*pi/4 */</span>
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;=</span> <span class="number">0x40afeddf</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x40afeddf</span> {
             <span class="comment">/* |x| ~&lt;= 7*pi/4 */</span>
             <span class="kw">return</span> <span class="ident">k_tanf</span>(<span class="kw">if</span> <span class="ident">sign</span> { <span class="ident">x64</span> <span class="op">+</span> <span class="ident">T3_PIO2</span> } <span class="kw">else</span> { <span class="ident">x64</span> <span class="op">-</span> <span class="ident">T3_PIO2</span> }, <span class="bool-val">true</span>);
         } <span class="kw">else</span> {
@@ -148,13 +148,13 @@
     }
 
     <span class="comment">/* tan(Inf or NaN) is NaN */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x7f800000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x7f800000</span> {
         <span class="kw">return</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">x</span>;
     }
 
     <span class="comment">/* argument reduction */</span>
     <span class="kw">let</span> (<span class="ident">n</span>, <span class="ident">y</span>) <span class="op">=</span> <span class="ident">rem_pio2f</span>(<span class="ident">x</span>);
-    <span class="ident">k_tanf</span>(<span class="ident">y</span>, <span class="ident">n</span> <span class="op">&amp;</span> <span class="number">1</span> <span class="op">!=</span> <span class="number">0</span>)
+    <span class="ident">k_tanf</span>(<span class="ident">y</span>, <span class="ident">n</span> <span class="op">&amp;</span> <span class="number">1</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "libm";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
