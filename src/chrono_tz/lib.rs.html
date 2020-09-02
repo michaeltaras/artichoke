@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-tz-0.5.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../chrono_tz/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-tz-0.5.3/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../chrono_tz/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -401,6 +401,27 @@
 <span id="400">400</span>
 <span id="401">401</span>
 <span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Chrono-TZ 0.4.1</span>
 <span class="doccomment">//!</span>
@@ -548,26 +569,38 @@
 <span class="doccomment">//! assert_eq!(utc.to_string(), &quot;2016-10-21 23:00:00 UTC&quot;);</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! If you need to iterate over all variants you can use the TZ_VARIANTS array</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use chrono_tz::{TZ_VARIANTS, Tz};</span>
+<span class="doccomment">//! assert!(TZ_VARIANTS.iter().any(|v| *v == Tz::UTC));</span>
+<span class="doccomment">//! ```</span>
+
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span> <span class="kw">as</span> <span class="ident">core</span>;
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">chrono</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">serde</span>;
 
-<span class="kw">mod</span> <span class="ident">timezone_impl</span>;
 <span class="kw">mod</span> <span class="ident">binary_search</span>;
-<span class="kw">mod</span> <span class="ident">timezones</span>;
 <span class="kw">mod</span> <span class="ident">directory</span>;
+<span class="kw">mod</span> <span class="ident">timezone_impl</span>;
+<span class="kw">mod</span> <span class="ident">timezones</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">directory</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">timezone_impl</span>::{<span class="ident">OffsetComponents</span>, <span class="ident">OffsetName</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">timezones</span>::<span class="ident">Tz</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">timezones</span>::<span class="ident">TZ_VARIANTS</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">America</span>::<span class="ident">Danmarkshavn</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Asia</span>::<span class="ident">Dhaka</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Australia</span>::<span class="ident">Adelaide</span>;
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">UTC</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Europe</span>::<span class="ident">Amsterdam</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Europe</span>::<span class="ident">Berlin</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Europe</span>::<span class="ident">London</span>;
@@ -577,9 +610,10 @@
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Pacific</span>::<span class="ident">Apia</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Pacific</span>::<span class="ident">Noumea</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Pacific</span>::<span class="ident">Tahiti</span>;
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">US</span>::<span class="ident">Eastern</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Tz</span>;
-    <span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">TimeZone</span>, <span class="ident">Duration</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">US</span>::<span class="ident">Eastern</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">UTC</span>;
+    <span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">Duration</span>, <span class="ident">TimeZone</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">london_to_berlin</span>() {
@@ -600,15 +634,15 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_addition_across_tzs</span>() {
+    <span class="kw">fn</span> <span class="ident">test_addition_across_dst_boundary</span>() {
         <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">TimeZone</span>;
-        <span class="kw">let</span> <span class="ident">three_hours</span> <span class="op">=</span> <span class="ident">Duration</span>::<span class="ident">hours</span>(<span class="number">2</span>);
+        <span class="kw">let</span> <span class="ident">two_hours</span> <span class="op">=</span> <span class="ident">Duration</span>::<span class="ident">hours</span>(<span class="number">2</span>);
         <span class="kw">let</span> <span class="ident">edt</span> <span class="op">=</span> <span class="ident">Eastern</span>.<span class="ident">ymd</span>(<span class="number">2019</span>, <span class="number">11</span>, <span class="number">3</span>).<span class="ident">and_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
-        <span class="kw">let</span> <span class="ident">est</span> <span class="op">=</span> <span class="ident">edt</span> <span class="op">+</span> <span class="ident">three_hours</span>;
+        <span class="kw">let</span> <span class="ident">est</span> <span class="op">=</span> <span class="ident">edt</span> <span class="op">+</span> <span class="ident">two_hours</span>;
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">edt</span>.<span class="ident">to_string</span>(), <span class="string">&quot;2019-11-03 00:00:00 EDT&quot;</span>.<span class="ident">to_string</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">est</span>.<span class="ident">to_string</span>(), <span class="string">&quot;2019-11-03 01:00:00 EST&quot;</span>.<span class="ident">to_string</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">est</span>.<span class="ident">timestamp</span>(), <span class="ident">edt</span>.<span class="ident">timestamp</span>() <span class="op">+</span> <span class="ident">three_hours</span>.<span class="ident">num_seconds</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">est</span>.<span class="ident">timestamp</span>(), <span class="ident">edt</span>.<span class="ident">timestamp</span>() <span class="op">+</span> <span class="ident">two_hours</span>.<span class="ident">num_seconds</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -795,6 +829,14 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Tz</span>::<span class="ident">Africa__Abidjan</span>.<span class="ident">name</span>(), <span class="string">&quot;Africa/Abidjan&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Tz</span>::<span class="ident">UTC</span>.<span class="ident">name</span>(), <span class="string">&quot;UTC&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Tz</span>::<span class="ident">Zulu</span>.<span class="ident">name</span>(), <span class="string">&quot;Zulu&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_display</span>() {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">London</span>), <span class="string">&quot;Europe/London&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Tz</span>::<span class="ident">Africa__Abidjan</span>), <span class="string">&quot;Africa/Abidjan&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Tz</span>::<span class="ident">UTC</span>), <span class="string">&quot;UTC&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Tz</span>::<span class="ident">Zulu</span>), <span class="string">&quot;Zulu&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
