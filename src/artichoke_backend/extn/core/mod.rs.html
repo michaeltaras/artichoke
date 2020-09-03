@@ -69,6 +69,8 @@
 <span id="68">68</span>
 <span id="69">69</span>
 <span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_lines</span>)]</span>
 
@@ -79,6 +81,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">comparable</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">enumerable</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">enumerator</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-env&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">env</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">exception</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">float</span>;
@@ -117,6 +120,7 @@
     <span class="ident">symbol</span>::<span class="ident">mruby</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">artichoke</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">enumerator</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-env&quot;</span>)]</span>
     <span class="ident">env</span>::<span class="ident">mruby</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">hash</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">numeric</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;

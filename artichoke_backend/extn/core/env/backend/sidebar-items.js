@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["memory",""],["system",""]],"struct":[["EnvArgumentError",""]],"trait":[["EnvType",""]]});
