@@ -582,8 +582,7 @@
 
 <span class="kw">type</span> <span class="ident">Bytes</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>;
 
-<span class="doccomment">/// ENV is a hash-like accessor for environment variables using the platform</span>
-<span class="doccomment">/// APIs for accessing the environment.</span>
+<span class="doccomment">/// A hash-like accessor for environment variables using platform APIs.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// `System` is an accessor to the host system&#39;s environment variables using the</span>
 <span class="doccomment">/// functions provided by the [Rust Standard Library] in the</span>
@@ -617,6 +616,7 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [Rust Standard Library]: std</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;system-env&quot;</span>)))]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">System</span> {
     <span class="ident">_private</span>: (),
