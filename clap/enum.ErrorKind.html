@@ -228,11 +228,11 @@ The message will be sent to <code>stdout</code>.</p>
     .<span class="ident">get_matches_from_safe</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;prog&quot;</span>, <span class="string">&quot;--version&quot;</span>]);
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_err</span>());
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">unwrap_err</span>().<span class="ident">kind</span>, <span class="ident">ErrorKind</span>::<span class="ident">VersionDisplayed</span>);</pre></div>
-</div><div id="variant.ArgumentNotFound" class="variant small-section-header"><a href="#variant.ArgumentNotFound" class="anchor field"></a><code>ArgumentNotFound</code></div><div class='docblock'><p>Occurs when using the <a href="../clap/macro.value_t.html" title="`value_t!`"><code>value_t!</code></a> and <a href="../clap/macro.values_t.html" title="`values_t!`"><code>values_t!</code></a> macros to convert an argument value
+</div><div id="variant.ArgumentNotFound" class="variant small-section-header"><a href="#variant.ArgumentNotFound" class="anchor field"></a><code>ArgumentNotFound</code></div><div class='docblock'><p>Occurs when using the <a href="../clap/macro.value_t.html" title="value_t!"><code>value_t!</code></a> and <a href="../clap/macro.values_t.html" title="values_t!"><code>values_t!</code></a> macros to convert an argument value
 into type <code>T</code>, but the argument you requested wasn't used. I.e. you asked for an argument
 with name <code>config</code> to be converted, but <code>config</code> wasn't used by the user.
-<a href="../clap/macro.value_t.html" title="`value_t!`"><code>value_t!</code></a>: ./macro.value_t!.html
-<a href="../clap/macro.values_t.html" title="`values_t!`"><code>values_t!</code></a>: ./macro.values_t!.html</p>
+<a href="../clap/macro.value_t.html" title="value_t!"><code>value_t!</code></a>: ./macro.value_t!.html
+<a href="../clap/macro.values_t.html" title="values_t!"><code>values_t!</code></a>: ./macro.values_t!.html</p>
 </div><div id="variant.Io" class="variant small-section-header"><a href="#variant.Io" class="anchor field"></a><code>Io</code></div><div class='docblock'><p>Represents an [I/O error].
 Can occur when writing to <code>stderr</code> or <code>stdout</code> or reading a configuration file.
 [I/O error]: https://doc.rust-lang.org/std/io/struct.Error.html</p>

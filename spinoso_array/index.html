@@ -9,14 +9,14 @@ structures that comprise the Ruby Core and Standard Library implementation
 for <a href="https://www.artichokeruby.org/">Artichoke Ruby</a>.</p>
 <h1 id="array-types" class="section-header"><a href="#array-types">Array types</a></h1>
 <ul>
-<li><a href="../spinoso_array/struct.Array.html" title="`Array`"><code>Array</code></a> is based on <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html"><code>Vec</code></a> from the Rust <code>alloc</code> crate and standard
+<li><a href="../spinoso_array/struct.Array.html" title="Array"><code>Array</code></a> is based on <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html"><code>Vec</code></a> from the Rust <code>alloc</code> crate and standard
 library. This Spinoso array type is enabled by default.</li>
-<li><a href="../spinoso_array/struct.SmallArray.html" title="`SmallArray`"><code>SmallArray</code></a> is based on <a href="../smallvec/struct.SmallVec.html"><code>SmallVec</code></a> and implements the small vector
+<li><a href="../spinoso_array/struct.SmallArray.html" title="SmallArray"><code>SmallArray</code></a> is based on <a href="../smallvec/struct.SmallVec.html"><code>SmallVec</code></a> and implements the small vector
 optimization – small arrays are stored inline without a heap allocation.
 This Spinoso array type requires the <code>small-array</code> Cargo feature.</li>
 </ul>
 <h1 id="no_std" class="section-header"><a href="#no_std"><code>no_std</code></a></h1>
-<p>This crate is <code>no_std</code> with a required dependency on the <a href="https://doc.rust-lang.org/nightly/alloc/index.html" title="`alloc`"><code>alloc</code></a> crate.</p>
+<p>This crate is <code>no_std</code> with a required dependency on the <a href="https://doc.rust-lang.org/nightly/alloc/index.html" title="alloc"><code>alloc</code></a> crate.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>You can create an <a href="../spinoso_array/struct.Array.html"><code>Array&lt;T&gt;</code></a> with <a href="../spinoso_array/struct.Array.html#method.new"><code>new</code></a>:</p>
 

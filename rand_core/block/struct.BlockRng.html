@@ -2,8 +2,8 @@
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/rand_core/block.rs.html#114-119' title='goto source code'>[src]</a></span><span class='in-band'>Struct <a href='../index.html'>rand_core</a>::<wbr><a href='index.html'>block</a>::<wbr><a class="struct" href=''>BlockRng</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class='rust struct'>pub struct BlockRng&lt;R:&nbsp;<a class="trait" href="../../rand_core/block/trait.BlockRngCore.html" title="trait rand_core::block::BlockRngCore">BlockRngCore</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; {
     pub core: R,
     // some fields omitted
-}</pre></div><div class='docblock'><p>A wrapper type implementing <a href="../../rand_core/trait.RngCore.html" title="`RngCore`"><code>RngCore</code></a> for some type implementing
-<a href="../../rand_core/block/trait.BlockRngCore.html" title="`BlockRngCore`"><code>BlockRngCore</code></a> with <code>u32</code> array buffer; i.e. this can be used to implement
+}</pre></div><div class='docblock'><p>A wrapper type implementing <a href="../../rand_core/trait.RngCore.html" title="RngCore"><code>RngCore</code></a> for some type implementing
+<a href="../../rand_core/block/trait.BlockRngCore.html" title="BlockRngCore"><code>BlockRngCore</code></a> with <code>u32</code> array buffer; i.e. this can be used to implement
 a full RNG from just a <code>generate</code> function.</p>
 <p>The <code>core</code> field may be accessed directly but the results buffer may not.
 PRNG implementations can simply use a type alias
@@ -12,9 +12,9 @@ wrapper type (<code>pub struct MyRng(BlockRng&lt;MyRngCore&gt;);</code>); the la
 re-implement <code>RngCore</code> but hides the implementation details and allows
 extra functionality to be defined on the RNG
 (e.g. <code>impl MyRng { fn set_stream(...){...} }</code>).</p>
-<p><code>BlockRng</code> has heavily optimized implementations of the <a href="../../rand_core/trait.RngCore.html" title="`RngCore`"><code>RngCore</code></a> methods
+<p><code>BlockRng</code> has heavily optimized implementations of the <a href="../../rand_core/trait.RngCore.html" title="RngCore"><code>RngCore</code></a> methods
 reading values from the results buffer, as well as
-calling <a href="../../rand_core/block/trait.BlockRngCore.html#tymethod.generate" title="`BlockRngCore::generate`"><code>BlockRngCore::generate</code></a> directly on the output array when
+calling <a href="../../rand_core/block/trait.BlockRngCore.html#tymethod.generate" title="BlockRngCore::generate"><code>BlockRngCore::generate</code></a> directly on the output array when
 <a href="../../rand_core/trait.RngCore.html#tymethod.fill_bytes"><code>fill_bytes</code></a> / <a href="../../rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>try_fill_bytes</code></a> is called on a large array. These methods
 also handle the bookkeeping of when to generate a new batch of values.</p>
 <p>No whole generated <code>u32</code> values are thown away and all values are consumed
@@ -24,9 +24,9 @@ significant first. <a href="../../rand_core/trait.RngCore.html#tymethod.fill_byt
 number of <code>u32</code> values, converting each <code>u32</code> to a byte slice in
 little-endian order. If the requested byte length is not a multiple of 4,
 some bytes will be discarded.</p>
-<p>See also <a href="../../rand_core/block/struct.BlockRng64.html" title="`BlockRng64`"><code>BlockRng64</code></a> which uses <code>u64</code> array buffers. Currently there is
+<p>See also <a href="../../rand_core/block/struct.BlockRng64.html" title="BlockRng64"><code>BlockRng64</code></a> which uses <code>u64</code> array buffers. Currently there is
 no direct support for other buffer types.</p>
-<p>For easy initialization <code>BlockRng</code> also implements <a href="../../rand_core/trait.SeedableRng.html" title="`SeedableRng`"><code>SeedableRng</code></a>.</p>
+<p>For easy initialization <code>BlockRng</code> also implements <a href="../../rand_core/trait.SeedableRng.html" title="SeedableRng"><code>SeedableRng</code></a>.</p>
 </div><h2 id='fields' class='fields small-section-header'>
                        Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.core" class="structfield small-section-header"><a href="#structfield.core" class="anchor field"></a><code>core: R</code></span><div class='docblock'><p>The <em>core</em> part of the RNG, implementing the <code>generate</code> function.</p>
 </div><h2 id='implementations' class='small-section-header'>Implementations<a href='#implementations' class='anchor'></a></h2><h3 id='impl' class='impl'><code class='in-band'>impl&lt;R:&nbsp;<a class="trait" href="../../rand_core/block/trait.BlockRngCore.html" title="trait rand_core::block::BlockRngCore">BlockRngCore</a>&gt; <a class="struct" href="../../rand_core/block/struct.BlockRng.html" title="struct rand_core::block::BlockRng">BlockRng</a>&lt;R&gt;</code><a href='#impl' class='anchor'></a><a class='srclink' href='../../src/rand_core/block.rs.html#132-170' title='goto source code'>[src]</a></h3><div class='impl-items'><h4 id='method.new' class="method"><code>pub fn <a href='#method.new' class='fnname'>new</a>(core: R) -&gt; <a class="struct" href="../../rand_core/block/struct.BlockRng.html" title="struct rand_core::block::BlockRng">BlockRng</a>&lt;R&gt;</code><a class='srclink' href='../../src/rand_core/block.rs.html#136-143' title='goto source code'>[src]</a></h4><div class='docblock'><p>Create a new <code>BlockRng</code> from an existing RNG implementing

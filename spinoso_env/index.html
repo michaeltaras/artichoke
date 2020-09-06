@@ -13,10 +13,10 @@ ENV['PS1'] = 'artichoke&gt; '
 </code></pre>
 <p>There are two <code>ENV</code> implementations in this crate:</p>
 <ul>
-<li><a href="../spinoso_env/struct.Memory.html" title="`Memory`"><code>Memory</code></a>, enabled by default, implements an <code>ENV</code> store and accessor on
+<li><a href="../spinoso_env/struct.Memory.html" title="Memory"><code>Memory</code></a>, enabled by default, implements an <code>ENV</code> store and accessor on
 top of a Rust <a href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html"><code>HashMap</code></a>. This backend does not query or modify the host
 system.</li>
-<li><a href="../spinoso_env/struct.System.html" title="`System`"><code>System</code></a>, enabled when the <strong>system-env</strong> feature is activated, is a
+<li><a href="../spinoso_env/struct.System.html" title="System"><code>System</code></a>, enabled when the <strong>system-env</strong> feature is activated, is a
 proxy for the system environment and uses platform-specific APIs defined
 in the <a href="https://doc.rust-lang.org/nightly/std/index.html">Rust Standard Library</a>.</li>
 </ul>
@@ -37,7 +37,7 @@ process:</p>
 <span class="ident">ENV</span>.<span class="ident">put</span>(<span class="string">b&quot;RUBY&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">b&quot;Artichoke&quot;</span>))<span class="question-mark">?</span>;
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">ENV</span>.<span class="ident">get</span>(<span class="string">b&quot;PATH&quot;</span>)<span class="question-mark">?</span>.<span class="ident">is_some</span>());</pre></div>
 <h1 id="crate-features" class="section-header"><a href="#crate-features">Crate features</a></h1>
-<p>This crate requires <a href="https://doc.rust-lang.org/nightly/std/index.html" title="`std`"><code>std</code></a>, the Rust Standard Library.</p>
+<p>This crate requires <a href="https://doc.rust-lang.org/nightly/std/index.html" title="std"><code>std</code></a>, the Rust Standard Library.</p>
 <p>All features are enabled by default:</p>
 <ul>
 <li><strong>system-env</strong> - Enable an <code>ENV</code> backend that accesses the host system's

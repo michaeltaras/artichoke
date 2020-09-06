@@ -2,10 +2,10 @@
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/rand_core/block.rs.html#287-293' title='goto source code'>[src]</a></span><span class='in-band'>Struct <a href='../index.html'>rand_core</a>::<wbr><a href='index.html'>block</a>::<wbr><a class="struct" href=''>BlockRng64</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class='rust struct'>pub struct BlockRng64&lt;R:&nbsp;<a class="trait" href="../../rand_core/block/trait.BlockRngCore.html" title="trait rand_core::block::BlockRngCore">BlockRngCore</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; {
     pub core: R,
     // some fields omitted
-}</pre></div><div class='docblock'><p>A wrapper type implementing <a href="../../rand_core/trait.RngCore.html" title="`RngCore`"><code>RngCore</code></a> for some type implementing
-<a href="../../rand_core/block/trait.BlockRngCore.html" title="`BlockRngCore`"><code>BlockRngCore</code></a> with <code>u64</code> array buffer; i.e. this can be used to implement
+}</pre></div><div class='docblock'><p>A wrapper type implementing <a href="../../rand_core/trait.RngCore.html" title="RngCore"><code>RngCore</code></a> for some type implementing
+<a href="../../rand_core/block/trait.BlockRngCore.html" title="BlockRngCore"><code>BlockRngCore</code></a> with <code>u64</code> array buffer; i.e. this can be used to implement
 a full RNG from just a <code>generate</code> function.</p>
-<p>This is similar to <a href="../../rand_core/block/struct.BlockRng.html" title="`BlockRng`"><code>BlockRng</code></a>, but specialized for algorithms that operate
+<p>This is similar to <a href="../../rand_core/block/struct.BlockRng.html" title="BlockRng"><code>BlockRng</code></a>, but specialized for algorithms that operate
 on <code>u64</code> values.</p>
 <p>No whole generated <code>u64</code> values are thrown away and all values are consumed
 in-order. <a href="../../rand_core/trait.RngCore.html#tymethod.next_u64"><code>next_u64</code></a> simply takes the next available <code>u64</code> value.

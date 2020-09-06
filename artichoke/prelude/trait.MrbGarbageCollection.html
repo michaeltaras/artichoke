@@ -14,11 +14,11 @@ C API.</p>
 <p>Normally objects created via the C API are marked as permanently alive
 (&quot;white&quot; GC color) with a call to
 <a href="../../artichoke_backend/sys/ffi/fn.mrb_gc_protect.html"><code>mrb_gc_protect</code></a>.</p>
-<p>The returned <a href="../../artichoke_backend/gc/arena/struct.ArenaIndex.html" title="`ArenaIndex`"><code>ArenaIndex</code></a> implements <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="`Drop`"><code>Drop</code></a>, so it is sufficient to
+<p>The returned <a href="../../artichoke_backend/gc/arena/struct.ArenaIndex.html" title="ArenaIndex"><code>ArenaIndex</code></a> implements <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="Drop"><code>Drop</code></a>, so it is sufficient to
 let it go out of scope to ensure objects are eventually collected.</p>
 </div><h3 id='tymethod.live_object_count' class='method'><code>fn <a href='#tymethod.live_object_count' class='fnname'>live_object_count</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></h3><div class='docblock'><p>Retrieve the number of live objects on the interpreter heap.</p>
 <p>A live object is reachable via top self, the stack, or the arena.</p>
-</div><h3 id='tymethod.mark_value' class='method'><code>fn <a href='#tymethod.mark_value' class='fnname'>mark_value</a>(&amp;mut self, value: &amp;<a class="struct" href="../../artichoke_backend/value/struct.Value.html" title="struct artichoke_backend::value::Value">Value</a>)</code></h3><div class='docblock'><p>Mark a <a href="../../artichoke_backend/value/struct.Value.html" title="`Value`"><code>Value</code></a> as reachable in the mruby garbage collector.</p>
+</div><h3 id='tymethod.mark_value' class='method'><code>fn <a href='#tymethod.mark_value' class='fnname'>mark_value</a>(&amp;mut self, value: &amp;<a class="struct" href="../../artichoke_backend/value/struct.Value.html" title="struct artichoke_backend::value::Value">Value</a>)</code></h3><div class='docblock'><p>Mark a <a href="../../artichoke_backend/value/struct.Value.html" title="Value"><code>Value</code></a> as reachable in the mruby garbage collector.</p>
 </div><h3 id='tymethod.incremental_gc' class='method'><code>fn <a href='#tymethod.incremental_gc' class='fnname'>incremental_gc</a>(&amp;mut self)</code></h3><div class='docblock'><p>Perform an incremental garbage collection.</p>
 <p>An incremental GC is less computationally expensive than a
 <a href="../../artichoke/prelude/trait.MrbGarbageCollection.html#tymethod.full_gc">full GC</a>, but does not guarantee that
