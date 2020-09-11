@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["CoerceToNumeric","Coerce Ruby values to native numerics (floats and integers)."]]});

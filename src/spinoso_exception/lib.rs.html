@@ -197,6 +197,19 @@
 <span id="196">196</span>
 <span id="197">197</span>
 <span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -265,6 +278,19 @@
 <span class="doccomment">//! - [`SystemExit`]</span>
 <span class="doccomment">//! - [`SystemStackError`]</span>
 <span class="doccomment">//! - `fatal` — impossible to rescue</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # `no_std`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This crate is `no_std` compatible when built without the `std` feature. This</span>
+<span class="doccomment">//! crate has a required dependency on [`alloc`].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Crate features</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! All features are enabled by default.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - **std** - Enables a dependency on the Rust Standard Library. Activating</span>
+<span class="doccomment">//!   this feature enables [`std::error::Error`] impls on error types in this</span>
+<span class="doccomment">//!   crate.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`Exception`]: https://ruby-doc.org/core-2.6.3/Exception.html</span>
 <span class="doccomment">//! [`Kernel#raise`]: https://ruby-doc.org/core-2.6.3/Kernel.html#method-i-raise</span>

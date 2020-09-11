@@ -71,6 +71,8 @@
 <span id="70">70</span>
 <span id="71">71</span>
 <span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_lines</span>)]</span>
 
@@ -89,6 +91,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">integer</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">kernel</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">matchdata</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-math&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">math</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">method</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">module</span>;
@@ -128,6 +131,7 @@
     <span class="ident">float</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">kernel</span>::<span class="ident">mruby</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">matchdata</span>::<span class="ident">mruby</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-math&quot;</span>)]</span>
     <span class="ident">math</span>::<span class="ident">mruby</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">method</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">module</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;

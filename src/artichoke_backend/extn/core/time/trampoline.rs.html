@@ -369,8 +369,12 @@
 <span id="368">368</span>
 <span id="369">369</span>
 <span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Glue between mruby FFI and `Time` Rust implementation.</span>
+
+<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">pretty_name</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">time</span>::<span class="ident">Time</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -438,7 +442,7 @@
         <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">cmp</span> <span class="kw">as</span> <span class="ident">i32</span>))
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;comparison of Time with &quot;</span>);
-        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">other</span>.<span class="ident">pretty_name</span>(<span class="ident">interp</span>));
+        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">other</span>, <span class="ident">interp</span>));
         <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; failed&quot;</span>);
         <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
     }
