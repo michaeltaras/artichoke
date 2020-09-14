@@ -66,24 +66,49 @@
 <span id="65">65</span>
 <span id="66">66</span>
 <span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">intaglio</span>::<span class="ident">bytes</span>::<span class="ident">SymbolTable</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">random</span>::<span class="ident">Random</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>::{<span class="self">self</span>, <span class="ident">Filesystem</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::<span class="ident">InterpreterAllocError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">module</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">output</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prng</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">regexp</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">prng</span>::<span class="ident">Prng</span>;
-
-<span class="doccomment">/// Container for domain-specific interpreter state.</span>
+<span class="doccomment">/// Container for interpreter global state.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A Ruby interpreter requires various pieces of state to execute Ruby code. It</span>
+<span class="doccomment">/// needs an object heap, type registry, symbol table, psuedorandom number</span>
+<span class="doccomment">/// generator, and more.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This struct stores all of these components and allows them to be passed</span>
+<span class="doccomment">/// around as one bundle. This is useful in FFI contexts because this `State`</span>
+<span class="doccomment">/// can be [`Box`]ed and stored in a user data pointer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">State</span> {
     <span class="kw">pub</span> <span class="ident">parser</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">parser</span>::<span class="ident">State</span><span class="op">&gt;</span>,
@@ -94,7 +119,7 @@
     <span class="kw">pub</span> <span class="ident">symbols</span>: <span class="ident">SymbolTable</span>,
     <span class="kw">pub</span> <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">prng</span>: <span class="ident">Prng</span>,
+    <span class="kw">pub</span> <span class="ident">prng</span>: <span class="ident">Random</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">State</span> {
@@ -102,16 +127,29 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The state is comprised of several components:</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// - [`Class`](crate::class_registry::ClassRegistry) and</span>
-    <span class="doccomment">///   [`Module`](crate::module_registry::ModuleRegistry) registries.</span>
-    <span class="doccomment">/// - `Regexp` [global state](regexp::State).</span>
-    <span class="doccomment">/// - [In-memory virtual filesystem](fs).</span>
-    <span class="doccomment">/// - [Ruby parser and file context](parser::State).</span>
-    <span class="doccomment">/// - [Intepreter-level PRNG](Prng) (behind the `core-random` feature).</span>
-    <span class="doccomment">/// - [IO capturing](output::Strategy) strategy.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
+    <span class="doccomment">/// - [`Class`] and [`Module`] registries.</span>
+    <span class="doccomment">/// - `Regexp` [global state][regexp-state].</span>
+    <span class="doccomment">/// - [In-memory virtual filesystem].</span>
+    <span class="doccomment">/// - [Ruby parser and file context].</span>
+    <span class="doccomment">/// - [Intepreter-level PRNG] (requires activating the `core-random`</span>
+    <span class="doccomment">///   feature).</span>
+    <span class="doccomment">/// - [IO capturing] strategy.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the `core-random` feature is enabled, this function may return an</span>
+    <span class="doccomment">/// error if the interpreter-global psuedorandom number generator fails</span>
+    <span class="doccomment">/// to initialize using the paltform source of randomness.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`Class`]: crate::class_registry::ClassRegistry</span>
+    <span class="doccomment">/// [`Module`]: crate::module_registry::ModuleRegistry</span>
+    <span class="doccomment">/// [regexp-state]: regexp::State</span>
+    <span class="doccomment">/// [In-memory virtual filesystem]: fs</span>
+    <span class="doccomment">/// [Ruby parser and file context]: parser::State</span>
+    <span class="doccomment">/// [Intepreter-level PRNG]: Random</span>
+    <span class="doccomment">/// [IO capturing]: output::Strategy</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InterpreterAllocError</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
             <span class="ident">parser</span>: <span class="prelude-val">None</span>,
             <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
             <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
@@ -120,8 +158,8 @@
             <span class="ident">symbols</span>: <span class="ident">SymbolTable</span>::<span class="ident">new</span>(),
             <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>::<span class="ident">new</span>(),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
-            <span class="ident">prng</span>: <span class="ident">Prng</span>::<span class="ident">new</span>(),
-        }
+            <span class="ident">prng</span>: <span class="ident">Random</span>::<span class="ident">new</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">InterpreterAllocError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>,
+        })
     }
 
     <span class="doccomment">/// Create a new [`parser::State`] from a [`sys::mrb_state`].</span>

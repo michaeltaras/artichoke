@@ -55,8 +55,23 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">random</span>::{<span class="self">self</span>, <span class="ident">Random</span>};
+<span class="doccomment">//! Glue between mruby FFI and `ENV` Rust implementation.</span>
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Random</span>, <span class="ident">Rng</span>, <span class="ident">Seed</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(
@@ -64,52 +79,63 @@
     <span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
     <span class="ident">into</span>: <span class="ident">Value</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">seed</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">rand</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">initialize</span>(<span class="ident">interp</span>, <span class="ident">seed</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">rand</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">box_into_value</span>(<span class="ident">rand</span>, <span class="ident">into</span>, <span class="ident">interp</span>)<span class="question-mark">?</span>;
-    <span class="prelude-val">Ok</span>(<span class="ident">rand</span>)
+    <span class="kw">let</span> <span class="ident">seed</span>: <span class="ident">Seed</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">seed</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">with_array_seed</span>(<span class="ident">seed</span>.<span class="ident">to_mt_seed</span>())<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="ident">Rng</span>::<span class="ident">Value</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">random</span>));
+    <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="ident">Rng</span>::<span class="ident">box_into_value</span>(<span class="ident">random</span>, <span class="ident">into</span>, <span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(<span class="ident">random</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">equal</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">rand</span>: <span class="ident">Value</span>, <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">rand</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Random</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
-    <span class="kw">let</span> <span class="ident">eql</span> <span class="op">=</span> <span class="ident">rand</span>.<span class="ident">eql</span>(<span class="ident">interp</span>, <span class="ident">other</span>)<span class="question-mark">?</span>;
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">equal</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">rand</span>: <span class="ident">Value</span>, <span class="kw-2">mut</span> <span class="ident">other</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Rng</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="ident">other</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Rng</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">other</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="ident">eql</span> <span class="op">=</span> <span class="ident">random</span>.<span class="ident">as_ref</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">as_ref</span>();
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">eql</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">rand</span>: <span class="ident">Value</span>, <span class="ident">size</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rand</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Random</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">random</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Rng</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">rand</span>.<span class="ident">bytes</span>(<span class="ident">interp</span>, <span class="ident">size</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">random</span>.<span class="ident">as_mut</span>() {
+        <span class="ident">Rng</span>::<span class="ident">Global</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">prng_mut</span>()<span class="question-mark">?</span>.<span class="ident">bytes</span>(<span class="ident">size</span>)<span class="question-mark">?</span>,
+        <span class="ident">Rng</span>::<span class="ident">Value</span>(<span class="ident">random</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">random</span>.<span class="ident">bytes</span>(<span class="ident">size</span>)<span class="question-mark">?</span>,
+    };
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">buf</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rand</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">rand</span>: <span class="ident">Value</span>, <span class="ident">max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rand</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Random</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">random</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Rng</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">max</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span> <span class="ident">rand</span>.<span class="ident">rand</span>(<span class="ident">interp</span>, <span class="ident">max</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">num</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">random</span>.<span class="ident">as_mut</span>() {
+        <span class="ident">Rng</span>::<span class="ident">Global</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">prng_mut</span>()<span class="question-mark">?</span>.<span class="ident">rand</span>(<span class="ident">max</span>)<span class="question-mark">?</span>,
+        <span class="ident">Rng</span>::<span class="ident">Value</span>(<span class="ident">random</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">random</span>.<span class="ident">rand</span>(<span class="ident">max</span>)<span class="question-mark">?</span>,
+    };
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">num</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seed</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">rand</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">rand</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Random</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
-    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">rand</span>.<span class="ident">seed</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Rng</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rand</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">random</span>.<span class="ident">as_ref</span>() {
+        <span class="ident">Rng</span>::<span class="ident">Global</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">interp</span>.<span class="ident">prng</span>()<span class="question-mark">?</span>.<span class="ident">seed</span>(),
+        <span class="ident">Rng</span>::<span class="ident">Value</span>(<span class="ident">random</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">random</span>.<span class="ident">seed</span>(),
+    };
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">seed</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_seed</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">new_seed</span>();
+    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">new_seed</span>()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">seed</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">srand</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">seed</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">old_seed</span> <span class="op">=</span> <span class="ident">random</span>::<span class="ident">srand</span>(<span class="ident">interp</span>, <span class="ident">seed</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">old_seed</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">srand</span>(<span class="ident">interp</span>, <span class="ident">seed</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">old_seed</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">size</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">random</span>::<span class="ident">urandom</span>(<span class="ident">size</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">urandom</span>(<span class="ident">size</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">buf</span>))
 }
 </pre></div>

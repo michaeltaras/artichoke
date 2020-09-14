@@ -27,48 +27,6 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
-<span id="41">41</span>
-<span id="42">42</span>
-<span id="43">43</span>
-<span id="44">44</span>
-<span id="45">45</span>
-<span id="46">46</span>
-<span id="47">47</span>
-<span id="48">48</span>
-<span id="49">49</span>
-<span id="50">50</span>
-<span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Interpreter global psuedorandom number generator.</span>
 
@@ -79,66 +37,24 @@
     <span class="doccomment">/// Concrete type for PRNG errors.</span>
     <span class="kw">type</span> <span class="ident">Error</span>;
 
-    <span class="doccomment">/// Cocnrete type representing the internal state of all PRNG backends.</span>
-    <span class="kw">type</span> <span class="ident">InternalState</span>;
+    <span class="doccomment">/// Conrete type for the interpreter psuedorandom number generator.</span>
+    <span class="kw">type</span> <span class="ident">Prng</span>;
 
-    <span class="doccomment">/// Conrete type for integer input and output.</span>
-    <span class="kw">type</span> <span class="ident">Int</span>;
-
-    <span class="doccomment">/// Concrete type for floating point input and output.</span>
-    <span class="kw">type</span> <span class="ident">Float</span>;
-
-    <span class="doccomment">/// Completely fill a buffer with random bytes.</span>
+    <span class="doccomment">/// Return a shared reference to the interpreter psuedorandom number</span>
+    <span class="doccomment">/// generator.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Errors</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the PRNG is inaccessible, an error is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG encounters an error, an error is returned.</span>
-    <span class="kw">fn</span> <span class="ident">prng_fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">prng</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Prng</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Return the value this PRNG was seeded with.</span>
+    <span class="doccomment">/// Return a mutable reference to the interpreter psuedorandom number</span>
+    <span class="doccomment">/// generator.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Errors</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the PRNG is inaccessible, an error is returned.</span>
-    <span class="kw">fn</span> <span class="ident">prng_seed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u64</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Reseed the PRNG with a new seed.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG is inaccessible, an error is returned.</span>
-    <span class="kw">fn</span> <span class="ident">prng_reseed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Return true if this and `other` would return the same sequence of random</span>
-    <span class="doccomment">/// data.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG is inaccessible, an error is returned.</span>
-    <span class="kw">fn</span> <span class="ident">prng_internal_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">InternalState</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Return a random `Integer` between 0 and `max` -- `[0, max)`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG is inaccessible, an error is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG encounters an error, an error is returned.</span>
-    <span class="kw">fn</span> <span class="ident">rand_int</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max</span>: <span class="self">Self</span>::<span class="ident">Int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Int</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Return a random `Float` between 0 and `max` -- `[0, max)`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If `max` is `None`, return a random `Float between 0 and 1.0 --</span>
-    <span class="doccomment">/// `[0, 1.0)`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG is inaccessible, an error is returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the PRNG encounters an error, an error is returned.</span>
-    <span class="kw">fn</span> <span class="ident">rand_float</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Float</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Float</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">prng_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Prng</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "artichoke_core";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

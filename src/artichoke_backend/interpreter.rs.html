@@ -201,7 +201,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">ReleaseMetadata</span>,
 {
-    <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>();
+    <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">state</span>);
     <span class="kw">let</span> <span class="ident">alloc_ud</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">state</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
     <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">sys</span>::<span class="ident">mrb_open_allocf</span>(<span class="prelude-val">Some</span>(<span class="ident">sys</span>::<span class="ident">mrb_default_allocf</span>), <span class="ident">alloc_ud</span>) };
