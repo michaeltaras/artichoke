@@ -837,7 +837,6 @@
 <span id="836">836</span>
 <span id="837">837</span>
 <span id="838">838</span>
-<span id="839">839</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -897,16 +896,16 @@
 <span class="doccomment">//! maximum:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! # use spinoso_securerandom::{Max, RandomNumber};</span>
-<span class="doccomment">//! # fn example() -&gt; Result&lt;(), spinoso_securerandom::DomainError&gt; {</span>
+<span class="doccomment">//! # use spinoso_securerandom::{DomainError, Max, Rand};</span>
+<span class="doccomment">//! # fn example() -&gt; Result&lt;(), DomainError&gt; {</span>
 <span class="doccomment">//! let rand = spinoso_securerandom::random_number(Max::None)?;</span>
-<span class="doccomment">//! assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">//! assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let rand = spinoso_securerandom::random_number(Max::Integer(57))?;</span>
-<span class="doccomment">//! assert!(matches!(rand, RandomNumber::Integer(_)));</span>
+<span class="doccomment">//! assert!(matches!(rand, Rand::Integer(_)));</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let rand = spinoso_securerandom::random_number(Max::Float(57.0))?;</span>
-<span class="doccomment">//! assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">//! assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! # example().unwrap()</span>
@@ -968,13 +967,29 @@
     <span class="ident">RandomBytes</span>(<span class="ident">RandomBytesError</span>),
 }
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ArgumentError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">ArgumentError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">Argument</span>(<span class="ident">err</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">RandomBytesError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">RandomBytesError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">RandomBytes</span>(<span class="ident">err</span>)
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;SecureRandom error&quot;</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="ident">dyn</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Argument</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>),
@@ -1005,18 +1020,21 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ArgumentError</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>);
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ArgumentError</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">message</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">with_message</span>(<span class="ident">message</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ArgumentError</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ArgumentError</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">message</span>())
     }
@@ -1084,6 +1102,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">RandomBytesError</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">message</span>())
     }
@@ -1134,6 +1153,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">DomainError</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">message</span>())
     }
@@ -1231,17 +1251,14 @@
 <span class="doccomment">/// [`RandomBytesError`].</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_bytes</span>(<span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
-        <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
-            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
-            <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">len</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ArgumentError</span>::<span class="ident">with_message</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>);
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="ident">err</span>));
-            }
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">len</span>.<span class="ident">map</span>(<span class="ident">usize</span>::<span class="ident">try_from</span>) {
+        <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="number">0</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
+        <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">len</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">len</span>,
+        <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ArgumentError</span>::<span class="ident">with_message</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="ident">err</span>));
         }
-    } <span class="kw">else</span> {
-        <span class="ident">DEFAULT_REQUESTED_BYTES</span>
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">DEFAULT_REQUESTED_BYTES</span>,
     };
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">len</span>];
@@ -1284,7 +1301,7 @@
 <span class="doccomment">/// The numeric contents of this enum will never be negative and will always be</span>
 <span class="doccomment">/// finite.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">RandomNumber</span> {
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Rand</span> {
     <span class="doccomment">/// A random float that is greater than or equal to zero.</span>
     <span class="ident">Float</span>(<span class="ident">f64</span>),
     <span class="doccomment">/// A random signed integer that is greater than or equal to zero.</span>
@@ -1307,28 +1324,28 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use spinoso_securerandom::{Max, RandomNumber};</span>
+<span class="doccomment">/// # use spinoso_securerandom::{Max, Rand};</span>
 <span class="doccomment">/// # fn example() -&gt; Result&lt;(), spinoso_securerandom::DomainError&gt; {</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::None)?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::Integer(57))?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Integer(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Integer(_)));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::Integer(-20))?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::Integer(0))?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::Float(57.0))?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::Float(-20.0))?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rand = spinoso_securerandom::random_number(Max::Float(0.0))?;</span>
-<span class="doccomment">/// assert!(matches!(rand, RandomNumber::Float(_)));</span>
+<span class="doccomment">/// assert!(matches!(rand, Rand::Float(_)));</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// # example().unwrap()</span>
@@ -1339,7 +1356,7 @@
 <span class="doccomment">/// If the float given in a [`Max::Float`] variant is [`NaN`](f64::NAN) or</span>
 <span class="doccomment">/// infinite, a [`DomainError`] is returned.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_number</span>(<span class="ident">max</span>: <span class="ident">Max</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RandomNumber</span>, <span class="ident">DomainError</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">random_number</span>(<span class="ident">max</span>: <span class="ident">Max</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rand</span>, <span class="ident">DomainError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
     <span class="kw">match</span> <span class="ident">max</span> {
         <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="op">!</span><span class="ident">max</span>.<span class="ident">is_finite</span>() <span class="op">=</span><span class="op">&gt;</span> {
@@ -1348,23 +1365,23 @@
         }
         <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="ident">max</span>);
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="op">!</span><span class="ident">max</span>.<span class="ident">is_positive</span>() <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">max</span>);
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Integer</span>(<span class="ident">number</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">1.0</span>);
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
         }
     }
 }
@@ -1489,18 +1506,15 @@
 <span class="doccomment">/// If the underlying source of randomness returns an error, return a</span>
 <span class="doccomment">/// [`RandomBytesError`].</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">alphanumeric</span>(<span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
-        <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">len</span>) {
-            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">String</span>::<span class="ident">new</span>()),
-            <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">len</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ArgumentError</span>::<span class="ident">with_message</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>);
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="ident">err</span>));
-            }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">alphanumeric</span>(<span class="ident">len</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ArgumentError</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">len</span>.<span class="ident">map</span>(<span class="ident">usize</span>::<span class="ident">try_from</span>) {
+        <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="number">0</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">String</span>::<span class="ident">new</span>()),
+        <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">len</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">len</span>,
+        <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ArgumentError</span>::<span class="ident">with_message</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>);
         }
-    } <span class="kw">else</span> {
-        <span class="ident">DEFAULT_REQUESTED_BYTES</span>
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">DEFAULT_REQUESTED_BYTES</span>,
     };
     <span class="kw">let</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
     <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">sample_iter</span>(<span class="ident">Alphanumeric</span>).<span class="ident">take</span>(<span class="ident">len</span>).<span class="ident">collect</span>();
@@ -1532,8 +1546,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{
-        <span class="ident">alphanumeric</span>, <span class="ident">base64</span>, <span class="ident">hex</span>, <span class="ident">random_bytes</span>, <span class="ident">random_number</span>, <span class="ident">uuid</span>, <span class="ident">DomainError</span>, <span class="ident">Error</span>, <span class="ident">Max</span>,
-        <span class="ident">RandomNumber</span>,
+        <span class="ident">alphanumeric</span>, <span class="ident">base64</span>, <span class="ident">hex</span>, <span class="ident">random_bytes</span>, <span class="ident">random_number</span>, <span class="ident">uuid</span>, <span class="ident">DomainError</span>, <span class="ident">Error</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>,
     };
     <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">CryptoRng</span>;
 
@@ -1549,7 +1562,7 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_bytes</span>(<span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">1</span>)), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">base64</span>(<span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">1</span>)), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">hex</span>(<span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">1</span>)), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="kw">_</span>))));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">alphanumeric</span>(<span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">1</span>)), <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Argument</span>(<span class="kw">_</span>))));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">alphanumeric</span>(<span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">1</span>)).<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1597,33 +1610,21 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">random_number_in_float_out_float</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="prelude-val">None</span>),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">0.5</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">1.0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="prelude-val">None</span>), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">0.5</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">1.0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">9000.63</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
         ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">0.0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">0.0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="op">-</span><span class="number">0.0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
         ));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="op">-</span><span class="number">1.0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
         ));
     }
 
@@ -1631,31 +1632,28 @@
     <span class="kw">fn</span> <span class="ident">random_number_in_neg_integer_out_float</span>() {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="op">-</span><span class="number">1</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
         ));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">random_number_in_zero_integer_out_float</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">random_number_in_pos_integer_out_integer</span>() {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">1</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
         ));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">9000</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
         ));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
             <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">i64</span>::<span class="ident">MAX</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">RandomNumber</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
+            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
         ));
     }
 

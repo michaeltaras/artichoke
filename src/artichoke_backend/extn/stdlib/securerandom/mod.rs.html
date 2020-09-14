@@ -131,7 +131,7 @@
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">spinoso_securerandom</span>::{
     <span class="ident">alphanumeric</span>, <span class="ident">base64</span>, <span class="ident">hex</span>, <span class="ident">random_bytes</span>, <span class="ident">random_number</span>, <span class="ident">urlsafe_base64</span>, <span class="ident">uuid</span>, <span class="ident">ArgumentError</span>,
-    <span class="ident">DomainError</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SecureRandomError</span>, <span class="ident">Max</span>, <span class="ident">RandomBytesError</span>, <span class="ident">RandomNumber</span>, <span class="ident">SecureRandom</span>,
+    <span class="ident">DomainError</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SecureRandomError</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>, <span class="ident">RandomBytesError</span>, <span class="ident">SecureRandom</span>,
 };
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">SecureRandomError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
@@ -200,11 +200,11 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">RandomNumber</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
-    <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">from</span>: <span class="ident">RandomNumber</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
+<span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Rand</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
+    <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">from</span>: <span class="ident">Rand</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">match</span> <span class="ident">from</span> {
-            <span class="ident">RandomNumber</span>::<span class="ident">Integer</span>(<span class="ident">num</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">convert</span>(<span class="ident">num</span>),
-            <span class="ident">RandomNumber</span>::<span class="ident">Float</span>(<span class="ident">num</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">num</span>),
+            <span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="ident">num</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">convert</span>(<span class="ident">num</span>),
+            <span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">num</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">num</span>),
         }
     }
 }
