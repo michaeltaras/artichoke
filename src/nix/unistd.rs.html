@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.17.0/src/unistd.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>unistd.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../nix/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.18.0/src/unistd.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>unistd.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../nix/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -2730,22 +2730,92 @@
 <span id="2729">2729</span>
 <span id="2730">2730</span>
 <span id="2731">2731</span>
+<span id="2732">2732</span>
+<span id="2733">2733</span>
+<span id="2734">2734</span>
+<span id="2735">2735</span>
+<span id="2736">2736</span>
+<span id="2737">2737</span>
+<span id="2738">2738</span>
+<span id="2739">2739</span>
+<span id="2740">2740</span>
+<span id="2741">2741</span>
+<span id="2742">2742</span>
+<span id="2743">2743</span>
+<span id="2744">2744</span>
+<span id="2745">2745</span>
+<span id="2746">2746</span>
+<span id="2747">2747</span>
+<span id="2748">2748</span>
+<span id="2749">2749</span>
+<span id="2750">2750</span>
+<span id="2751">2751</span>
+<span id="2752">2752</span>
+<span id="2753">2753</span>
+<span id="2754">2754</span>
+<span id="2755">2755</span>
+<span id="2756">2756</span>
+<span id="2757">2757</span>
+<span id="2758">2758</span>
+<span id="2759">2759</span>
+<span id="2760">2760</span>
+<span id="2761">2761</span>
+<span id="2762">2762</span>
+<span id="2763">2763</span>
+<span id="2764">2764</span>
+<span id="2765">2765</span>
+<span id="2766">2766</span>
+<span id="2767">2767</span>
+<span id="2768">2768</span>
+<span id="2769">2769</span>
+<span id="2770">2770</span>
+<span id="2771">2771</span>
+<span id="2772">2772</span>
+<span id="2773">2773</span>
+<span id="2774">2774</span>
+<span id="2775">2775</span>
+<span id="2776">2776</span>
+<span id="2777">2777</span>
+<span id="2778">2778</span>
+<span id="2779">2779</span>
+<span id="2780">2780</span>
+<span id="2781">2781</span>
+<span id="2782">2782</span>
+<span id="2783">2783</span>
+<span id="2784">2784</span>
+<span id="2785">2785</span>
+<span id="2786">2786</span>
+<span id="2787">2787</span>
+<span id="2788">2788</span>
+<span id="2789">2789</span>
+<span id="2790">2790</span>
+<span id="2791">2791</span>
+<span id="2792">2792</span>
+<span id="2793">2793</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Safe wrappers around functions found in libc &quot;unistd.h&quot; header</span>
 
-<span class="kw">use</span> <span class="ident">errno</span>::{<span class="self">self</span>, <span class="ident">Errno</span>};
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
-<span class="kw">use</span> <span class="ident">fcntl</span>::{<span class="ident">AtFlags</span>, <span class="ident">at_rawfd</span>, <span class="ident">fcntl</span>, <span class="ident">FdFlag</span>, <span class="ident">OFlag</span>};
-<span class="kw">use</span> <span class="ident">fcntl</span>::<span class="ident">FcntlArg</span>::<span class="ident">F_SETFD</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
+<span class="kw">use</span> <span class="ident">cfg_if</span>::<span class="ident">cfg_if</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::{<span class="self">self</span>, <span class="ident">Errno</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fcntl</span>::{<span class="ident">AtFlags</span>, <span class="ident">at_rawfd</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fcntl</span>::{<span class="ident">FdFlag</span>, <span class="ident">OFlag</span>, <span class="ident">fcntl</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fcntl</span>::<span class="ident">FcntlArg</span>::<span class="ident">F_SETFD</span>;
 <span class="kw">use</span> <span class="ident">libc</span>::{<span class="self">self</span>, <span class="ident">c_char</span>, <span class="ident">c_void</span>, <span class="ident">c_int</span>, <span class="ident">c_long</span>, <span class="ident">c_uint</span>, <span class="ident">size_t</span>, <span class="ident">pid_t</span>, <span class="ident">off_t</span>,
            <span class="ident">uid_t</span>, <span class="ident">gid_t</span>, <span class="ident">mode_t</span>, <span class="ident">PATH_MAX</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>, <span class="ident">ptr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CString</span>, <span class="ident">CStr</span>, <span class="ident">OsString</span>, <span class="ident">OsStr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">ffi</span>::{<span class="ident">OsStringExt</span>, <span class="ident">OsStrExt</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Infallible</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">OsString</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CString</span>, <span class="ident">OsStr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">ffi</span>::<span class="ident">OsStringExt</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">ffi</span>::<span class="ident">OsStrExt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
-<span class="kw">use</span> <span class="ident">void</span>::<span class="ident">Void</span>;
-<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">stat</span>::<span class="ident">Mode</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">stat</span>::<span class="ident">Mode</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pivot_root</span>::<span class="kw-2">*</span>;
@@ -2848,7 +2918,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Newtype pattern around `pid_t` (which is just alias). It prevents bugs caused by accidentally</span>
 <span class="doccomment">/// passing wrong value.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pid</span>(<span class="ident">pid_t</span>);
 
 <span class="kw">impl</span> <span class="ident">Pid</span> {
@@ -3018,6 +3088,7 @@
 <span class="doccomment">/// Obtain the process group ID of the process that is the session leader of the process specified</span>
 <span class="doccomment">/// by pid. If pid is zero, it specifies the calling process.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getsid</span>(<span class="ident">pid</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Pid</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Pid</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">getsid</span>(<span class="ident">pid</span>.<span class="ident">unwrap_or</span>(<span class="ident">Pid</span>(<span class="number">0</span>)).<span class="ident">into</span>()) };
     <span class="ident">Errno</span>::<span class="ident">result</span>(<span class="ident">res</span>).<span class="ident">map</span>(<span class="ident">Pid</span>)
@@ -3169,9 +3240,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// extern crate tempfile;</span>
-<span class="doccomment">/// extern crate nix;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use nix::unistd;</span>
 <span class="doccomment">/// use nix::sys::stat;</span>
 <span class="doccomment">/// use tempfile::tempdir;</span>
@@ -3212,9 +3280,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// extern crate tempfile;</span>
-<span class="doccomment">/// extern crate nix;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use nix::unistd;</span>
 <span class="doccomment">/// use nix::sys::stat;</span>
 <span class="doccomment">/// use tempfile::tempdir;</span>
@@ -3231,6 +3296,7 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support fifo yet</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mkfifo</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">mode</span>: <span class="ident">Mode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">with_nix_path</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> {
         <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">mkfifo</span>(<span class="ident">cstr</span>.<span class="ident">as_ptr</span>(), <span class="ident">mode</span>.<span class="ident">bits</span>() <span class="kw">as</span> <span class="ident">mode_t</span>) }
@@ -3240,17 +3306,19 @@
 }
 
 <span class="doccomment">/// Creates new fifo special file (named pipe) with path `path` and access rights `mode`.</span>
-<span class="doccomment">/// </span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// If `dirfd` has a value, then `path` is relative to directory associated with the file descriptor.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// If `dirfd` is `None`, then `path` is relative to the current working directory. </span>
-<span class="doccomment">/// </span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If `dirfd` is `None`, then `path` is relative to the current working directory.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// # References</span>
-<span class="doccomment">/// </span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// [mkfifoat(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/mkfifoat.html).</span>
 <span class="comment">// mkfifoat is not implemented in OSX or android</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(
+    <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
+    <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mkfifoat</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(<span class="ident">dirfd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">mode</span>: <span class="ident">Mode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">with_nix_path</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> <span class="kw">unsafe</span> {
         <span class="ident">libc</span>::<span class="ident">mkfifoat</span>(<span class="ident">at_rawfd</span>(<span class="ident">dirfd</span>), <span class="ident">cstr</span>.<span class="ident">as_ptr</span>(), <span class="ident">mode</span>.<span class="ident">bits</span>() <span class="kw">as</span> <span class="ident">mode_t</span>)
@@ -3268,6 +3336,7 @@
 <span class="doccomment">/// directory. This is identical to `libc::symlink(path1, path2)`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See also [symlinkat(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/symlinkat.html).</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symlinkat</span><span class="op">&lt;</span><span class="ident">P1</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span>, <span class="ident">P2</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(
     <span class="ident">path1</span>: <span class="kw-2">&amp;</span><span class="ident">P1</span>,
     <span class="ident">dirfd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>,
@@ -3292,7 +3361,7 @@
 <span class="kw">fn</span> <span class="ident">reserve_double_buffer_size</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">limit</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>;
 
-    <span class="kw">if</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">limit</span> {
+    <span class="kw">if</span> <span class="ident">buf</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">limit</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Sys</span>(<span class="ident">Errno</span>::<span class="ident">ERANGE</span>))
     }
 
@@ -3310,8 +3379,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// extern crate nix;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use nix::unistd;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
@@ -3379,6 +3446,20 @@
     <span class="ident">Errno</span>::<span class="ident">result</span>(<span class="ident">res</span>).<span class="ident">map</span>(<span class="ident">drop</span>)
 }
 
+<span class="doccomment">/// Change the ownership of the file referred to by the open file descriptor `fd` to be owned by</span>
+<span class="doccomment">/// the specified `owner` (user) and `group` (see</span>
+<span class="doccomment">/// [fchown(2)](https://pubs.opengroup.org/onlinepubs/9699919799/functions/fchown.html)).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The owner/group for the provided file will not be modified if `None` is</span>
+<span class="doccomment">/// provided for that argument.  Ownership change will be attempted for the path</span>
+<span class="doccomment">/// only if `Some` owner/group is provided.</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fchown</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>, <span class="ident">owner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Uid</span><span class="op">&gt;</span>, <span class="ident">group</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Gid</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> (<span class="ident">uid</span>, <span class="ident">gid</span>) <span class="op">=</span> <span class="ident">chown_raw_ids</span>(<span class="ident">owner</span>, <span class="ident">group</span>);
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">fchown</span>(<span class="ident">fd</span>, <span class="ident">uid</span>, <span class="ident">gid</span>) };
+    <span class="ident">Errno</span>::<span class="ident">result</span>(<span class="ident">res</span>).<span class="ident">map</span>(<span class="ident">drop</span>)
+}
+
 <span class="doccomment">/// Flags for `fchownat` function.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FchownatFlags</span> {
@@ -3407,6 +3488,7 @@
 <span class="doccomment">/// # References</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [fchownat(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/fchownat.html).</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fchownat</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(
     <span class="ident">dirfd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>,
     <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
@@ -3440,7 +3522,7 @@
 <span class="doccomment">/// performs the same action but does not allow for customization of the</span>
 <span class="doccomment">/// environment for the new process.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execv</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">argv</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Void</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execv</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">argv</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">args_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">argv</span>);
 
     <span class="kw">unsafe</span> {
@@ -3464,7 +3546,7 @@
 <span class="doccomment">/// in the `args` list is an argument to the new process. Each element in the</span>
 <span class="doccomment">/// `env` list should be a string in the form &quot;key=value&quot;.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execve</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Void</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execve</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">args_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">args</span>);
     <span class="kw">let</span> <span class="ident">env_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">env</span>);
 
@@ -3485,7 +3567,7 @@
 <span class="doccomment">/// would not work if &quot;bash&quot; was specified for the path argument, but `execvp`</span>
 <span class="doccomment">/// would assuming that a bash executable was on the system `PATH`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execvp</span>(<span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Void</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execvp</span>(<span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">args_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">args</span>);
 
     <span class="kw">unsafe</span> {
@@ -3505,7 +3587,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;haiku&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execvpe</span>(<span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Void</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execvpe</span>(<span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">args_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">args</span>);
     <span class="kw">let</span> <span class="ident">env_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">env</span>);
 
@@ -3533,7 +3615,7 @@
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fexecve</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Void</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fexecve</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">args_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">args</span>);
     <span class="kw">let</span> <span class="ident">env_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">env</span>);
 
@@ -3557,7 +3639,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execveat</span>(<span class="ident">dirfd</span>: <span class="ident">RawFd</span>, <span class="ident">pathname</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>],
-                <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">flags</span>: <span class="kw">super</span>::<span class="ident">fcntl</span>::<span class="ident">AtFlags</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Void</span><span class="op">&gt;</span> {
+                <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">CStr</span>], <span class="ident">flags</span>: <span class="kw">super</span>::<span class="ident">fcntl</span>::<span class="ident">AtFlags</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">args_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">args</span>);
     <span class="kw">let</span> <span class="ident">env_p</span> <span class="op">=</span> <span class="ident">to_exec_array</span>(<span class="ident">env</span>);
 
@@ -3594,11 +3676,12 @@
 <span class="doccomment">///   descriptors will remain identical after daemonizing.</span>
 <span class="doccomment">/// * `noclose = false`: The process&#39; stdin, stdout, and stderr will point to</span>
 <span class="doccomment">///   `/dev/null` after daemonizing.</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>), <span class="ident">deprecated</span>(
-    <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.14.0&quot;</span>,
-    <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Deprecated in MacOSX 10.5&quot;</span>
-))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>), <span class="ident">allow</span>(<span class="ident">deprecated</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>,
+          <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>,
+          <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
+          <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>,
+          <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>,
+          <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">daemon</span>(<span class="ident">nochdir</span>: <span class="ident">bool</span>, <span class="ident">noclose</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">daemon</span>(<span class="ident">nochdir</span> <span class="kw">as</span> <span class="ident">c_int</span>, <span class="ident">noclose</span> <span class="kw">as</span> <span class="ident">c_int</span>) };
     <span class="ident">Errno</span>::<span class="ident">result</span>(<span class="ident">res</span>).<span class="ident">map</span>(<span class="ident">drop</span>)
@@ -3611,6 +3694,7 @@
 <span class="doccomment">/// On some systems, the host name is limited to as few as 64 bytes.  An error</span>
 <span class="doccomment">/// will be return if the name is not valid or the current process does not have</span>
 <span class="doccomment">/// permissions to update the host name.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sethostname</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">OsStr</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="comment">// Handle some differences in type of the len arg across platforms.</span>
     <span class="macro">cfg_if</span><span class="macro">!</span> {
@@ -3672,9 +3756,6 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```no_run</span>
-<span class="doccomment">/// extern crate tempfile;</span>
-<span class="doccomment">/// extern crate nix;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use std::os::unix::io::AsRawFd;</span>
 <span class="doccomment">/// use nix::unistd::close;</span>
 <span class="doccomment">///</span>
@@ -3685,9 +3766,6 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// extern crate tempfile;</span>
-<span class="doccomment">/// extern crate nix;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use std::os::unix::io::IntoRawFd;</span>
 <span class="doccomment">/// use nix::unistd::close;</span>
 <span class="doccomment">///</span>
@@ -3788,7 +3866,9 @@
 <span class="doccomment">/// The following flags are supported, and will be set atomically as the pipe is</span>
 <span class="doccomment">/// created:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `O_CLOEXEC`:    Set the close-on-exec flag for the new file descriptors.</span>
+<span class="doccomment">/// `O_CLOEXEC`:    Set the close-on-exec flag for the new file descriptors.  </span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;`O_DIRECT`: Create a pipe that performs I/O in \&quot;packet\&quot; mode.  &quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;`O_NOSIGPIPE`: Return `EPIPE` instead of raising `SIGPIPE`.  &quot;</span>)]</span>
 <span class="doccomment">/// `O_NONBLOCK`:   Set the non-blocking flag for the ends of the pipe.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See also [pipe(2)](http://man7.org/linux/man-pages/man2/pipe.2.html)</span>
@@ -3797,6 +3877,7 @@
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;emscripten&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>,
+          <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pipe2</span>(<span class="ident">flags</span>: <span class="ident">OFlag</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">RawFd</span>, <span class="ident">RawFd</span>)<span class="op">&gt;</span> {
@@ -3811,64 +3892,11 @@
     <span class="kw">unsafe</span> { <span class="prelude-val">Ok</span>((<span class="ident">fds</span>.<span class="ident">assume_init</span>()[<span class="number">0</span>], <span class="ident">fds</span>.<span class="ident">assume_init</span>()[<span class="number">1</span>])) }
 }
 
-<span class="doccomment">/// Like `pipe`, but allows setting certain file descriptor flags.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The following flags are supported, and will be set after the pipe is</span>
-<span class="doccomment">/// created:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// `O_CLOEXEC`:    Set the close-on-exec flag for the new file descriptors.</span>
-<span class="doccomment">/// `O_NONBLOCK`:   Set the non-blocking flag for the ends of the pipe.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">deprecated</span>(
-    <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.10.0&quot;</span>,
-    <span class="ident">note</span><span class="op">=</span><span class="string">&quot;pipe2(2) is not actually atomic on these platforms.  Use pipe(2) and fcntl(2) instead&quot;</span>
-)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pipe2</span>(<span class="ident">flags</span>: <span class="ident">OFlag</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">RawFd</span>, <span class="ident">RawFd</span>)<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fds</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">MaybeUninit</span>::<span class="op">&lt;</span>[<span class="ident">c_int</span>; <span class="number">2</span>]<span class="op">&gt;</span>::<span class="ident">uninit</span>();
-
-    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">pipe</span>(<span class="ident">fds</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>) };
-
-    <span class="ident">Errno</span>::<span class="ident">result</span>(<span class="ident">res</span>)<span class="question-mark">?</span>;
-
-    <span class="kw">unsafe</span> {
-        <span class="ident">pipe2_setflags</span>(<span class="ident">fds</span>.<span class="ident">assume_init</span>()[<span class="number">0</span>], <span class="ident">fds</span>.<span class="ident">assume_init</span>()[<span class="number">1</span>], <span class="ident">flags</span>)<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>((<span class="ident">fds</span>.<span class="ident">assume_init</span>()[<span class="number">0</span>], <span class="ident">fds</span>.<span class="ident">assume_init</span>()[<span class="number">1</span>]))
-    }
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span>
-<span class="kw">fn</span> <span class="ident">pipe2_setflags</span>(<span class="ident">fd1</span>: <span class="ident">RawFd</span>, <span class="ident">fd2</span>: <span class="ident">RawFd</span>, <span class="ident">flags</span>: <span class="ident">OFlag</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">use</span> <span class="ident">fcntl</span>::<span class="ident">FcntlArg</span>::<span class="ident">F_SETFL</span>;
-
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="prelude-val">Ok</span>(<span class="number">0</span>);
-
-    <span class="kw">if</span> <span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">OFlag</span>::<span class="ident">O_CLOEXEC</span>) {
-        <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span>
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">fcntl</span>(<span class="ident">fd1</span>, <span class="ident">F_SETFD</span>(<span class="ident">FdFlag</span>::<span class="ident">FD_CLOEXEC</span>)))
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">fcntl</span>(<span class="ident">fd2</span>, <span class="ident">F_SETFD</span>(<span class="ident">FdFlag</span>::<span class="ident">FD_CLOEXEC</span>)));
-    }
-
-    <span class="kw">if</span> <span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">OFlag</span>::<span class="ident">O_NONBLOCK</span>) {
-        <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span>
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">fcntl</span>(<span class="ident">fd1</span>, <span class="ident">F_SETFL</span>(<span class="ident">OFlag</span>::<span class="ident">O_NONBLOCK</span>)))
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">fcntl</span>(<span class="ident">fd2</span>, <span class="ident">F_SETFL</span>(<span class="ident">OFlag</span>::<span class="ident">O_NONBLOCK</span>)));
-    }
-
-    <span class="kw">match</span> <span class="ident">res</span> {
-        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
-        <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">close</span>(<span class="ident">fd1</span>);
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">close</span>(<span class="ident">fd2</span>);
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>)
-        }
-    }
-}
-
 <span class="doccomment">/// Truncate a file to a specified length</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See also</span>
 <span class="doccomment">/// [truncate(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/truncate.html)</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">len</span>: <span class="ident">off_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">with_nix_path</span>(<span class="op">|</span><span class="ident">cstr</span><span class="op">|</span> {
         <span class="kw">unsafe</span> {
@@ -3922,6 +3950,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # References</span>
 <span class="doccomment">/// See also [linkat(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/linkat.html)</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support symlinks yet</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">linkat</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(
     <span class="ident">olddirfd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>,
     <span class="ident">oldpath</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
@@ -3983,6 +4012,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # References</span>
 <span class="doccomment">/// See also [unlinkat(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/unlinkat.html)</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unlinkat</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(
     <span class="ident">dirfd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>,
     <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
@@ -4131,6 +4161,28 @@
     <span class="ident">Errno</span>::<span class="ident">result</span>(<span class="ident">res</span>).<span class="ident">map</span>(<span class="ident">drop</span>)
 }
 
+<span class="doccomment">/// Set the user identity used for filesystem checks per-thread.</span>
+<span class="doccomment">/// On both success and failure, this call returns the previous filesystem user</span>
+<span class="doccomment">/// ID of the caller.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See also [setfsuid(2)](http://man7.org/linux/man-pages/man2/setfsuid.2.html)</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>))]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setfsuid</span>(<span class="ident">uid</span>: <span class="ident">Uid</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Uid</span> {
+    <span class="kw">let</span> <span class="ident">prev_fsuid</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">setfsuid</span>(<span class="ident">uid</span>.<span class="ident">into</span>()) };
+    <span class="ident">Uid</span>::<span class="ident">from_raw</span>(<span class="ident">prev_fsuid</span> <span class="kw">as</span> <span class="ident">uid_t</span>)
+}
+
+<span class="doccomment">/// Set the group identity used for filesystem checks per-thread.</span>
+<span class="doccomment">/// On both success and failure, this call returns the previous filesystem group</span>
+<span class="doccomment">/// ID of the caller.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See also [setfsgid(2)](http://man7.org/linux/man-pages/man2/setfsgid.2.html)</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>))]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setfsgid</span>(<span class="ident">gid</span>: <span class="ident">Gid</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Gid</span> {
+    <span class="kw">let</span> <span class="ident">prev_fsgid</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">setfsgid</span>(<span class="ident">gid</span>.<span class="ident">into</span>()) };
+    <span class="ident">Gid</span>::<span class="ident">from_raw</span>(<span class="ident">prev_fsgid</span> <span class="kw">as</span> <span class="ident">gid_t</span>)
+}
+
 <span class="doccomment">/// Get the list of supplementary group IDs of the calling process.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [Further reading](http://pubs.opengroup.org/onlinepubs/009695399/functions/getgroups.html)</span>
@@ -4208,11 +4260,9 @@
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
-<span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #     try_main().unwrap();</span>
-<span class="doccomment">/// # }</span>
+<span class="doccomment">/// # try_main().unwrap();</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setgroups</span>(<span class="ident">groups</span>: <span class="kw-2">&amp;</span>[<span class="ident">Gid</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="macro">cfg_if</span><span class="macro">!</span> {
         <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>,
@@ -4256,7 +4306,7 @@
 <span class="doccomment">/// and `setgroups()`. Additionally, while some implementations will return a</span>
 <span class="doccomment">/// partial list of groups when `NGROUPS_MAX` is exceeded, this implementation</span>
 <span class="doccomment">/// will only ever return the complete list or else an error.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">getgrouplist</span>(<span class="ident">user</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">group</span>: <span class="ident">Gid</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Gid</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">ngroups_max</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">sysconf</span>(<span class="ident">SysconfVar</span>::<span class="ident">NGROUPS_MAX</span>) {
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">n</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">c_int</span>,
@@ -4332,11 +4382,9 @@
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
-<span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #     try_main().unwrap();</span>
-<span class="doccomment">/// # }</span>
+<span class="doccomment">/// # try_main().unwrap();</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initgroups</span>(<span class="ident">user</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>, <span class="ident">group</span>: <span class="ident">Gid</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="macro">cfg_if</span><span class="macro">!</span> {
         <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span> {
@@ -4355,6 +4403,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// See also [pause(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/pause.html).</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pause</span>() {
     <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">pause</span>() };
 }
@@ -4410,8 +4459,6 @@
     <span class="doccomment">//!</span>
     <span class="doccomment">//! See also [alarm(2)](http://pubs.opengroup.org/onlinepubs/9699919799/functions/alarm.html).</span>
 
-    <span class="kw">use</span> <span class="ident">libc</span>;
-
     <span class="doccomment">/// Schedule an alarm signal.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This will cause the system to generate a `SIGALRM` signal for the</span>
@@ -4447,10 +4494,10 @@
     <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">sleep</span>(<span class="ident">seconds</span>) }
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">acct</span> {
-    <span class="kw">use</span> <span class="ident">libc</span>;
-    <span class="kw">use</span> {<span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
-    <span class="kw">use</span> <span class="ident">errno</span>::<span class="ident">Errno</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::<span class="ident">Errno</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 
     <span class="doccomment">/// Enable process accounting</span>
@@ -4528,7 +4575,7 @@
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PathconfVar</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Minimum number of bits needed to represent, as a signed integer value,</span>
     <span class="doccomment">/// the maximum size of a regular file allowed in the specified directory.</span>
     <span class="ident">FILESIZEBITS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_FILESIZEBITS</span>,
@@ -4552,11 +4599,11 @@
     <span class="doccomment">/// a pipe.</span>
     <span class="ident">PIPE_BUF</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_PIPE_BUF</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Symbolic links can be created.</span>
     <span class="ident">POSIX2_SYMLINKS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_2_SYMLINKS</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Minimum number of bytes of storage actually allocated for any portion of</span>
     <span class="doccomment">/// a file.</span>
     <span class="ident">POSIX_ALLOC_SIZE_MIN</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_ALLOC_SIZE_MIN</span>,
@@ -4566,19 +4613,20 @@
     <span class="doccomment">/// `POSIX_REC_MIN_XFER_SIZE` and `POSIX_REC_MAX_XFER_SIZE` values.</span>
     <span class="ident">POSIX_REC_INCR_XFER_SIZE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_REC_INCR_XFER_SIZE</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Maximum recommended file transfer size.</span>
     <span class="ident">POSIX_REC_MAX_XFER_SIZE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_REC_MAX_XFER_SIZE</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Minimum recommended file transfer size.</span>
     <span class="ident">POSIX_REC_MIN_XFER_SIZE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_REC_MIN_XFER_SIZE</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">///  Recommended file transfer buffer alignment.</span>
     <span class="ident">POSIX_REC_XFER_ALIGN</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_REC_XFER_ALIGN</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>,
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Maximum number of bytes in a symbolic link.</span>
     <span class="ident">SYMLINK_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_SYMLINK_MAX</span>,
     <span class="doccomment">/// The use of `chown` and `fchown` is restricted to a process with</span>
@@ -4592,17 +4640,18 @@
     <span class="doccomment">/// disable terminal special character handling.</span>
     <span class="ident">_POSIX_VDISABLE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_VDISABLE</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Asynchronous input or output operations may be performed for the</span>
     <span class="doccomment">/// associated file.</span>
     <span class="ident">_POSIX_ASYNC_IO</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_ASYNC_IO</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Prioritized input or output operations may be performed for the</span>
     <span class="doccomment">/// associated file.</span>
     <span class="ident">_POSIX_PRIO_IO</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_PRIO_IO</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
-              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>,
+              <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="doccomment">/// Synchronized input or output operations may be performed for the</span>
     <span class="doccomment">/// associated file.</span>
     <span class="ident">_POSIX_SYNC_IO</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_PC_SYNC_IO</span>,
@@ -4703,9 +4752,11 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SysconfVar</span> {
     <span class="doccomment">/// Maximum number of I/O operations in a single list I/O call supported by</span>
     <span class="doccomment">/// the implementation.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">AIO_LISTIO_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_AIO_LISTIO_MAX</span>,
     <span class="doccomment">/// Maximum number of outstanding asynchronous I/O operations supported by</span>
     <span class="doccomment">/// the implementation.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">AIO_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_AIO_MAX</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>,
               <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>,
@@ -4716,14 +4767,19 @@
     <span class="doccomment">/// Maximum length of argument to the exec functions including environment data.</span>
     <span class="ident">ARG_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_ARG_MAX</span>,
     <span class="doccomment">/// Maximum number of functions that may be registered with `atexit`.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">ATEXIT_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_ATEXIT_MAX</span>,
     <span class="doccomment">/// Maximum obase values allowed by the bc utility.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">BC_BASE_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_BC_BASE_MAX</span>,
     <span class="doccomment">/// Maximum number of elements permitted in an array by the bc utility.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">BC_DIM_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_BC_DIM_MAX</span>,
     <span class="doccomment">/// Maximum scale value allowed by the bc utility.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">BC_SCALE_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_BC_SCALE_MAX</span>,
     <span class="doccomment">/// Maximum length of a string constant accepted by the bc utility.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">BC_STRING_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_BC_STRING_MAX</span>,
     <span class="doccomment">/// Maximum number of simultaneous processes per real user ID.</span>
     <span class="ident">CHILD_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_CHILD_MAX</span>,
@@ -4731,11 +4787,14 @@
     <span class="ident">CLK_TCK</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_CLK_TCK</span>,
     <span class="doccomment">/// Maximum number of weights that can be assigned to an entry of the</span>
     <span class="doccomment">/// LC_COLLATE order keyword in the locale definition file</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">COLL_WEIGHTS_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_COLL_WEIGHTS_MAX</span>,
     <span class="doccomment">/// Maximum number of timer expiration overruns.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">DELAYTIMER_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_DELAYTIMER_MAX</span>,
     <span class="doccomment">/// Maximum number of expressions that can be nested within parentheses by</span>
     <span class="doccomment">/// the expr utility.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">EXPR_NEST_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_EXPR_NEST_MAX</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>,
@@ -4745,23 +4804,29 @@
     <span class="ident">HOST_NAME_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_HOST_NAME_MAX</span>,
     <span class="doccomment">/// Maximum number of iovec structures that one process has available for</span>
     <span class="doccomment">/// use with `readv` or `writev`.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">IOV_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_IOV_MAX</span>,
     <span class="doccomment">/// Unless otherwise noted, the maximum length, in bytes, of a utility&#39;s</span>
     <span class="doccomment">/// input line (either standard input or another file), when the utility is</span>
     <span class="doccomment">/// described as processing text files. The length includes room for the</span>
     <span class="doccomment">/// trailing &lt;newline&gt;.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">LINE_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_LINE_MAX</span>,
     <span class="doccomment">/// Maximum length of a login name.</span>
     <span class="ident">LOGIN_NAME_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_LOGIN_NAME_MAX</span>,
     <span class="doccomment">/// Maximum number of simultaneous supplementary group IDs per process.</span>
     <span class="ident">NGROUPS_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_NGROUPS_MAX</span>,
     <span class="doccomment">/// Initial size of `getgrgid_r` and `getgrnam_r` data buffers</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">GETGR_R_SIZE_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_GETGR_R_SIZE_MAX</span>,
     <span class="doccomment">/// Initial size of `getpwuid_r` and `getpwnam_r` data buffers</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">GETPW_R_SIZE_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_GETPW_R_SIZE_MAX</span>,
     <span class="doccomment">/// The maximum number of open message queue descriptors a process may hold.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">MQ_OPEN_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MQ_OPEN_MAX</span>,
     <span class="doccomment">/// The maximum number of message priorities supported by the implementation.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">MQ_PRIO_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MQ_PRIO_MAX</span>,
     <span class="doccomment">/// A value one greater than the maximum value that the system may assign to</span>
     <span class="doccomment">/// a newly-created file descriptor.</span>
@@ -4776,6 +4841,7 @@
     <span class="doccomment">/// The implementation supports barriers.</span>
     <span class="ident">_POSIX_BARRIERS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_BARRIERS</span>,
     <span class="doccomment">/// The implementation supports asynchronous input and output.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_ASYNCHRONOUS_IO</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_ASYNCHRONOUS_IO</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>,
@@ -4788,24 +4854,32 @@
     <span class="doccomment">/// The implementation supports the Process CPU-Time Clocks option.</span>
     <span class="ident">_POSIX_CPUTIME</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_CPUTIME</span>,
     <span class="doccomment">/// The implementation supports the File Synchronization option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_FSYNC</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_FSYNC</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
     <span class="doccomment">/// The implementation supports the IPv6 option.</span>
     <span class="ident">_POSIX_IPV6</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_IPV6</span>,
     <span class="doccomment">/// The implementation supports job control.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_JOB_CONTROL</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_JOB_CONTROL</span>,
     <span class="doccomment">/// The implementation supports memory mapped Files.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_MAPPED_FILES</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MAPPED_FILES</span>,
     <span class="doccomment">/// The implementation supports the Process Memory Locking option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_MEMLOCK</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MEMLOCK</span>,
     <span class="doccomment">/// The implementation supports the Range Memory Locking option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_MEMLOCK_RANGE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MEMLOCK_RANGE</span>,
     <span class="doccomment">/// The implementation supports memory protection.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_MEMORY_PROTECTION</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MEMORY_PROTECTION</span>,
     <span class="doccomment">/// The implementation supports the Message Passing option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_MESSAGE_PASSING</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MESSAGE_PASSING</span>,
     <span class="doccomment">/// The implementation supports the Monotonic Clock option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_MONOTONIC_CLOCK</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_MONOTONIC_CLOCK</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>,
               <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>,
@@ -4813,6 +4887,7 @@
     <span class="doccomment">/// The implementation supports the Prioritized Input and Output option.</span>
     <span class="ident">_POSIX_PRIORITIZED_IO</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_PRIORITIZED_IO</span>,
     <span class="doccomment">/// The implementation supports the Process Scheduling option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_PRIORITY_SCHEDULING</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_PRIORITY_SCHEDULING</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
@@ -4834,10 +4909,13 @@
     <span class="doccomment">/// The implementation supports the Regular Expression Handling option.</span>
     <span class="ident">_POSIX_REGEXP</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_REGEXP</span>,
     <span class="doccomment">/// Each process has a saved set-user-ID and a saved set-group-ID.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_SAVED_IDS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SAVED_IDS</span>,
     <span class="doccomment">/// The implementation supports semaphores.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_SEMAPHORES</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SEMAPHORES</span>,
     <span class="doccomment">/// The implementation supports the Shared Memory Objects option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_SHARED_MEMORY_OBJECTS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SHARED_MEMORY_OBJECTS</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>,
@@ -4862,10 +4940,13 @@
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
     <span class="ident">_POSIX_SS_REPL_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SS_REPL_MAX</span>,
     <span class="doccomment">/// The implementation supports the Synchronized Input and Output option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_SYNCHRONIZED_IO</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SYNCHRONIZED_IO</span>,
     <span class="doccomment">/// The implementation supports the Thread Stack Address Attribute option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREAD_ATTR_STACKADDR</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_ATTR_STACKADDR</span>,
     <span class="doccomment">/// The implementation supports the Thread Stack Size Attribute option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREAD_ATTR_STACKSIZE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_ATTR_STACKSIZE</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
@@ -4873,10 +4954,13 @@
     <span class="ident">_POSIX_THREAD_CPUTIME</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_CPUTIME</span>,
     <span class="doccomment">/// The implementation supports the Non-Robust Mutex Priority Inheritance</span>
     <span class="doccomment">/// option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREAD_PRIO_INHERIT</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_PRIO_INHERIT</span>,
     <span class="doccomment">/// The implementation supports the Non-Robust Mutex Priority Protection option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREAD_PRIO_PROTECT</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_PRIO_PROTECT</span>,
     <span class="doccomment">/// The implementation supports the Thread Execution Scheduling option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREAD_PRIORITY_SCHEDULING</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_PRIORITY_SCHEDULING</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>,
@@ -4891,18 +4975,21 @@
     <span class="doccomment">/// The implementation supports the Robust Mutex Priority Protection option.</span>
     <span class="ident">_POSIX_THREAD_ROBUST_PRIO_PROTECT</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_ROBUST_PRIO_PROTECT</span>,
     <span class="doccomment">/// The implementation supports thread-safe functions.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREAD_SAFE_FUNCTIONS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_SAFE_FUNCTIONS</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
     <span class="doccomment">/// The implementation supports the Thread Sporadic Server option.</span>
     <span class="ident">_POSIX_THREAD_SPORADIC_SERVER</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_SPORADIC_SERVER</span>,
     <span class="doccomment">/// The implementation supports threads.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_THREADS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREADS</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
     <span class="doccomment">/// The implementation supports timeouts.</span>
     <span class="ident">_POSIX_TIMEOUTS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_TIMEOUTS</span>,
     <span class="doccomment">/// The implementation supports timers.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX_TIMERS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_TIMERS</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
@@ -4967,17 +5054,23 @@
     <span class="doccomment">/// using at least 64 bits.</span>
     <span class="ident">_POSIX_V6_LPBIG_OFFBIG</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_V6_LPBIG_OFFBIG</span>,
     <span class="doccomment">/// The implementation supports the C-Language Binding option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_C_BIND</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_C_BIND</span>,
     <span class="doccomment">/// The implementation supports the C-Language Development Utilities option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_C_DEV</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_C_DEV</span>,
     <span class="doccomment">/// The implementation supports the Terminal Characteristics option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_CHAR_TERM</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_CHAR_TERM</span>,
     <span class="doccomment">/// The implementation supports the FORTRAN Development Utilities option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_FORT_DEV</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_FORT_DEV</span>,
     <span class="doccomment">/// The implementation supports the FORTRAN Runtime Utilities option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_FORT_RUN</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_FORT_RUN</span>,
     <span class="doccomment">/// The implementation supports the creation of locales by the localedef</span>
     <span class="doccomment">/// utility.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_LOCALEDEF</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_LOCALEDEF</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>,
@@ -5011,26 +5104,34 @@
     <span class="doccomment">/// The implementation supports the Track Batch Job Request option.</span>
     <span class="ident">_POSIX2_PBS_TRACK</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_PBS_TRACK</span>,
     <span class="doccomment">/// The implementation supports the Software Development Utilities option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_SW_DEV</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_SW_DEV</span>,
     <span class="doccomment">/// The implementation supports the User Portability Utilities option.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_UPE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_UPE</span>,
     <span class="doccomment">/// Integer value indicating version of the Shell and Utilities volume of</span>
     <span class="doccomment">/// POSIX.1 to which the implementation conforms.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_POSIX2_VERSION</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_2_VERSION</span>,
     <span class="doccomment">/// The size of a system page in bytes.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// POSIX also defines an alias named `PAGESIZE`, but Rust does not allow two</span>
     <span class="doccomment">/// enum constants to have the same value, so nix omits `PAGESIZE`.</span>
     <span class="ident">PAGE_SIZE</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_PAGE_SIZE</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">PTHREAD_DESTRUCTOR_ITERATIONS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_DESTRUCTOR_ITERATIONS</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">PTHREAD_KEYS_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_KEYS_MAX</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">PTHREAD_STACK_MIN</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_STACK_MIN</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">PTHREAD_THREADS_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_THREAD_THREADS_MAX</span>,
     <span class="ident">RE_DUP_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_RE_DUP_MAX</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>,
               <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
     <span class="ident">RTSIG_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_RTSIG_MAX</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">SEM_NSEMS_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SEM_NSEMS_MAX</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>,
               <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>,
@@ -5045,6 +5146,7 @@
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;netbsd&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
     <span class="ident">SYMLOOP_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_SYMLOOP_MAX</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">TIMER_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_TIMER_MAX</span>,
     <span class="ident">TTY_NAME_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_TTY_NAME_MAX</span>,
     <span class="ident">TZNAME_MAX</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_TZNAME_MAX</span>,
@@ -5075,6 +5177,7 @@
     <span class="ident">_XOPEN_REALTIME_THREADS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_XOPEN_REALTIME_THREADS</span>,
     <span class="doccomment">/// The implementation supports the Issue 4, Version 2 Shared Memory Option</span>
     <span class="doccomment">/// Group.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
     <span class="ident">_XOPEN_SHM</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">_SC_XOPEN_SHM</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
               <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;openbsd&quot;</span>))]</span>
@@ -5127,9 +5230,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
 <span class="kw">mod</span> <span class="ident">pivot_root</span> {
-    <span class="kw">use</span> <span class="ident">libc</span>;
-    <span class="kw">use</span> {<span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
-    <span class="kw">use</span> <span class="ident">errno</span>::<span class="ident">Errno</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::<span class="ident">Errno</span>;
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pivot_root</span><span class="op">&lt;</span><span class="ident">P1</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span>, <span class="ident">P2</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">NixPath</span><span class="op">&gt;</span>(
             <span class="ident">new_root</span>: <span class="kw-2">&amp;</span><span class="ident">P1</span>, <span class="ident">put_old</span>: <span class="kw-2">&amp;</span><span class="ident">P2</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -5148,9 +5250,8 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
 <span class="kw">mod</span> <span class="ident">setres</span> {
-    <span class="kw">use</span> <span class="ident">libc</span>;
-    <span class="kw">use</span> <span class="prelude-ty">Result</span>;
-    <span class="kw">use</span> <span class="ident">errno</span>::<span class="ident">Errno</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="prelude-ty">Result</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::<span class="ident">Errno</span>;
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Uid</span>, <span class="ident">Gid</span>};
 
     <span class="doccomment">/// Sets the real, effective, and saved uid.</span>
@@ -5217,6 +5318,7 @@
 <span class="doccomment">/// fields are based on the user&#39;s locale, which could be non-UTF8, while other fields are</span>
 <span class="doccomment">/// guaranteed to conform to [`NAME_REGEX`](https://serverfault.com/a/73101/407341), which only</span>
 <span class="doccomment">/// contains ASCII.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support passwd</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">User</span> {
     <span class="doccomment">/// Username</span>
@@ -5245,6 +5347,7 @@
     <span class="kw">pub</span> <span class="ident">expire</span>: <span class="ident">libc</span>::<span class="ident">time_t</span>
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support passwd</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">libc</span>::<span class="ident">passwd</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">User</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">pw</span>: <span class="kw-2">&amp;</span><span class="ident">libc</span>::<span class="ident">passwd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">User</span> {
         <span class="kw">unsafe</span> {
@@ -5268,6 +5371,7 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support passwd</span>
 <span class="kw">impl</span> <span class="ident">User</span> {
     <span class="kw">fn</span> <span class="ident">from_anything</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -5345,6 +5449,7 @@
 }
 
 <span class="doccomment">/// Representation of a Group, based on `libc::group`</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support passwd</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Group</span> {
     <span class="doccomment">/// Group name</span>
@@ -5355,6 +5460,7 @@
     <span class="kw">pub</span> <span class="ident">mem</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support passwd</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">libc</span>::<span class="ident">group</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Group</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">gr</span>: <span class="kw-2">&amp;</span><span class="ident">libc</span>::<span class="ident">group</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Group</span> {
         <span class="kw">unsafe</span> {
@@ -5367,6 +5473,7 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span> <span class="comment">// RedoxFS does not support passwd</span>
 <span class="kw">impl</span> <span class="ident">Group</span> {
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">members</span>(<span class="ident">mem</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -5461,6 +5568,23 @@
             <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">getgrnam_r</span>(<span class="ident">name</span>.<span class="ident">as_ptr</span>(), <span class="ident">grp</span>, <span class="ident">cbuf</span>, <span class="ident">cap</span>, <span class="ident">res</span>) }
         })
     }
+}
+
+<span class="doccomment">/// Get the name of the terminal device that is open on file descriptor fd</span>
+<span class="doccomment">/// (see [`ttyname(3)`](http://man7.org/linux/man-pages/man3/ttyname.3.html)).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ttyname</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
+    <span class="kw">const</span> <span class="ident">PATH_MAX</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">PATH_MAX</span> <span class="kw">as</span> <span class="ident">usize</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0_u8</span>; <span class="ident">PATH_MAX</span>];
+    <span class="kw">let</span> <span class="ident">c_buf</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc</span>::<span class="ident">c_char</span>;
+
+    <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">ttyname_r</span>(<span class="ident">fd</span>, <span class="ident">c_buf</span>, <span class="ident">buf</span>.<span class="ident">len</span>()) };
+    <span class="kw">if</span> <span class="ident">ret</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Sys</span>(<span class="ident">Errno</span>::<span class="ident">from_i32</span>(<span class="ident">ret</span>)));
+    }
+
+    <span class="kw">let</span> <span class="ident">nul</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\0&#39;</span>).<span class="ident">unwrap</span>();
+    <span class="ident">buf</span>.<span class="ident">truncate</span>(<span class="ident">nul</span>);
+    <span class="prelude-val">Ok</span>(<span class="ident">OsString</span>::<span class="ident">from_vec</span>(<span class="ident">buf</span>).<span class="ident">into</span>())
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "nix";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

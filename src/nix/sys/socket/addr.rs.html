@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.17.0/src/sys/socket/addr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>addr.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../nix/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.18.0/src/sys/socket/addr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>addr.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../nix/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1306,24 +1306,54 @@
 <span id="1305">1305</span>
 <span id="1306">1306</span>
 <span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
+<span id="1312">1312</span>
+<span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+<span id="1319">1319</span>
+<span id="1320">1320</span>
+<span id="1321">1321</span>
+<span id="1322">1322</span>
+<span id="1323">1323</span>
+<span id="1324">1324</span>
+<span id="1325">1325</span>
+<span id="1326">1326</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">sa_family_t</span>;
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
-<span class="kw">use</span> <span class="ident">errno</span>::<span class="ident">Errno</span>;
-<span class="kw">use</span> <span class="ident">libc</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::<span class="ident">Errno</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>, <span class="ident">net</span>, <span class="ident">ptr</span>, <span class="ident">slice</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsStr</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">ffi</span>::<span class="ident">OsStrExt</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
-<span class="kw">use</span> ::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">netlink</span>::<span class="ident">NetlinkAddr</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">netlink</span>::<span class="ident">NetlinkAddr</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
-<span class="kw">use</span> ::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">alg</span>::<span class="ident">AlgAddr</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">alg</span>::<span class="ident">AlgAddr</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span>
-<span class="kw">use</span> ::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">sys_control</span>::<span class="ident">SysControlAddr</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">sys_control</span>::<span class="ident">SysControlAddr</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
@@ -2023,7 +2053,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Supports only the following address families: Unix, Inet (v4 &amp; v6), Netlink and System.</span>
     <span class="doccomment">/// Returns None for unsupported families.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_libc_sockaddr</span>(<span class="ident">addr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SockAddr</span><span class="op">&gt;</span> {
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// unsafe because it takes a raw pointer as argument.  The caller must</span>
+    <span class="doccomment">/// ensure that the pointer is valid.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_libc_sockaddr</span>(<span class="ident">addr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SockAddr</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">addr</span>.<span class="ident">is_null</span>() {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
@@ -2073,39 +2108,60 @@
     <span class="doccomment">/// with the size of the actual data type. sockaddr is commonly used as a proxy for</span>
     <span class="doccomment">/// a superclass as C doesn&#39;t support inheritance, so many functions that take</span>
     <span class="doccomment">/// a sockaddr * need to take the size of the underlying type as well and then internally cast it back.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">as_ffi_pair</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="kw-2">&amp;</span><span class="ident">libc</span>::<span class="ident">sockaddr</span>, <span class="ident">libc</span>::<span class="ident">socklen_t</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ffi_pair</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="kw-2">&amp;</span><span class="ident">libc</span>::<span class="ident">sockaddr</span>, <span class="ident">libc</span>::<span class="ident">socklen_t</span>) {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">SockAddr</span>::<span class="ident">Inet</span>(<span class="ident">InetAddr</span>::<span class="ident">V4</span>(<span class="kw-2">ref</span> <span class="ident">addr</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_in</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_in</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">addr</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="ident">SockAddr</span>::<span class="ident">Inet</span>(<span class="ident">InetAddr</span>::<span class="ident">V6</span>(<span class="kw-2">ref</span> <span class="ident">addr</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_in6</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_in6</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">addr</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="ident">SockAddr</span>::<span class="ident">Unix</span>(<span class="ident">UnixAddr</span>(<span class="kw-2">ref</span> <span class="ident">addr</span>, <span class="ident">len</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_un</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_un</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 (<span class="ident">len</span> <span class="op">+</span> <span class="macro">offset_of</span><span class="macro">!</span>(<span class="ident">libc</span>::<span class="ident">sockaddr_un</span>, <span class="ident">sun_path</span>)) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
             <span class="ident">SockAddr</span>::<span class="ident">Netlink</span>(<span class="ident">NetlinkAddr</span>(<span class="kw-2">ref</span> <span class="ident">sa</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_nl</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_nl</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">sa</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
             <span class="ident">SockAddr</span>::<span class="ident">Alg</span>(<span class="ident">AlgAddr</span>(<span class="kw-2">ref</span> <span class="ident">sa</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_alg</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_alg</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">sa</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span>
             <span class="ident">SockAddr</span>::<span class="ident">SysControl</span>(<span class="ident">SysControlAddr</span>(<span class="kw-2">ref</span> <span class="ident">sa</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_ctl</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_ctl</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">sa</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
 
             ),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
             <span class="ident">SockAddr</span>::<span class="ident">Link</span>(<span class="ident">LinkAddr</span>(<span class="kw-2">ref</span> <span class="ident">addr</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_ll</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_ll</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">addr</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>,
@@ -2115,12 +2171,18 @@
                       <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>,
                       <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
             <span class="ident">SockAddr</span>::<span class="ident">Link</span>(<span class="ident">LinkAddr</span>(<span class="kw-2">ref</span> <span class="ident">addr</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_dl</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_dl</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">addr</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>)]</span>
             <span class="ident">SockAddr</span>::<span class="ident">Vsock</span>(<span class="ident">VsockAddr</span>(<span class="kw-2">ref</span> <span class="ident">sa</span>)) <span class="op">=</span><span class="op">&gt;</span> (
-                <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_vm</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>),
+                <span class="comment">// This cast is always allowed in C</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">sa</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr_vm</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">sockaddr</span>)
+                },
                 <span class="ident">mem</span>::<span class="ident">size_of_val</span>(<span class="ident">sa</span>) <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">socklen_t</span>
             ),
         }
@@ -2155,7 +2217,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">netlink</span> {
-    <span class="kw">use</span> ::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">AddressFamily</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">AddressFamily</span>;
     <span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">sa_family_t</span>, <span class="ident">sockaddr_nl</span>};
     <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>};
 
@@ -2253,11 +2315,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">sys_control</span> {
-    <span class="kw">use</span> ::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">AddressFamily</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">AddressFamily</span>;
     <span class="kw">use</span> <span class="ident">libc</span>::{<span class="self">self</span>, <span class="ident">c_uchar</span>};
     <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>};
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
-    <span class="kw">use</span> {<span class="ident">Errno</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Errno</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
 
     <span class="comment">// FIXME: Move type into `libc`</span>
     <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
@@ -2325,7 +2387,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
 <span class="kw">mod</span> <span class="ident">datalink</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">libc</span>, <span class="ident">fmt</span>, <span class="ident">AddressFamily</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">fmt</span>, <span class="ident">AddressFamily</span>};
 
     <span class="doccomment">/// Hardware Address</span>
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>)]</span>
@@ -2397,7 +2459,7 @@
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>,
           <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
 <span class="kw">mod</span> <span class="ident">datalink</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">libc</span>, <span class="ident">fmt</span>, <span class="ident">AddressFamily</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">fmt</span>, <span class="ident">AddressFamily</span>};
 
     <span class="doccomment">/// Hardware Address</span>
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>)]</span>
@@ -2484,7 +2546,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">vsock</span> {
-    <span class="kw">use</span> ::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">AddressFamily</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">socket</span>::<span class="ident">addr</span>::<span class="ident">AddressFamily</span>;
     <span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">sa_family_t</span>, <span class="ident">sockaddr_vm</span>};
     <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>};
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.17.0/src/sys/aio.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>aio.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nix/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.18.0/src/sys/aio.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>aio.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nix/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1245,35 +1245,6 @@
 <span id="1244">1244</span>
 <span id="1245">1245</span>
 <span id="1246">1246</span>
-<span id="1247">1247</span>
-<span id="1248">1248</span>
-<span id="1249">1249</span>
-<span id="1250">1250</span>
-<span id="1251">1251</span>
-<span id="1252">1252</span>
-<span id="1253">1253</span>
-<span id="1254">1254</span>
-<span id="1255">1255</span>
-<span id="1256">1256</span>
-<span id="1257">1257</span>
-<span id="1258">1258</span>
-<span id="1259">1259</span>
-<span id="1260">1260</span>
-<span id="1261">1261</span>
-<span id="1262">1262</span>
-<span id="1263">1263</span>
-<span id="1264">1264</span>
-<span id="1265">1265</span>
-<span id="1266">1266</span>
-<span id="1267">1267</span>
-<span id="1268">1268</span>
-<span id="1269">1269</span>
-<span id="1270">1270</span>
-<span id="1271">1271</span>
-<span id="1272">1272</span>
-<span id="1273">1273</span>
-<span id="1274">1274</span>
-<span id="1275">1275</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// vim: tw=80</span>
 <span class="doccomment">//! POSIX Asynchronous I/O</span>
@@ -1298,20 +1269,19 @@
 <span class="doccomment">//! [`aio_cancel_all`](fn.aio_cancel_all.html), though the operating system may</span>
 <span class="doccomment">//! not support this for all filesystems and devices.</span>
 
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">errno</span>::<span class="ident">Errno</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::<span class="ident">Errno</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_void</span>, <span class="ident">off_t</span>, <span class="ident">size_t</span>};
-<span class="kw">use</span> <span class="ident">libc</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::{<span class="ident">Borrow</span>, <span class="ident">BorrowMut</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::{<span class="ident">null</span>, <span class="ident">null_mut</span>};
-<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">signal</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">signal</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
-<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">time</span>::<span class="ident">TimeSpec</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">time</span>::<span class="ident">TimeSpec</span>;
 
 <span class="macro">libc_enum</span><span class="macro">!</span> {
     <span class="doccomment">/// Mode for `AioCb::fsync`.  Controls whether only data or both data and</span>
@@ -1503,8 +1473,6 @@
     <span class="doccomment">/// [`fsync`](#method.fsync) operation.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -1564,8 +1532,6 @@
     <span class="doccomment">/// Create an `AioCb` from a mutable slice and read into it.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -1640,8 +1606,6 @@
     <span class="doccomment">/// Create an `AioCb` from a Vector and use it for writing</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -1671,9 +1635,6 @@
     <span class="doccomment">/// Create an `AioCb` from a `Bytes` object</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate bytes;</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use bytes::Bytes;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
     <span class="doccomment">/// # use nix::sys::signal::SigevNotify;</span>
@@ -1696,9 +1657,6 @@
     <span class="doccomment">/// using an un`Box`ed `Bytes` object.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate bytes;</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use bytes::Bytes;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
     <span class="doccomment">/// # use nix::sys::signal::SigevNotify;</span>
@@ -1757,8 +1715,6 @@
     <span class="doccomment">/// Create an `AioCb` from a Vector and use it for reading</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -1919,8 +1875,6 @@
     <span class="doccomment">/// Construct an `AioCb` from a slice and use it for writing.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -2003,8 +1957,6 @@
     <span class="doccomment">/// result.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -2058,8 +2010,6 @@
     <span class="doccomment">/// is an alternative to `aio_suspend`, used by most of the other examples.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -2202,8 +2152,6 @@
 <span class="doccomment">/// descriptor.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # extern crate tempfile;</span>
-<span class="doccomment">/// # extern crate nix;</span>
 <span class="doccomment">/// # use nix::errno::Errno;</span>
 <span class="doccomment">/// # use nix::Error;</span>
 <span class="doccomment">/// # use nix::sys::aio::*;</span>
@@ -2256,8 +2204,6 @@
 <span class="doccomment">/// Use `aio_suspend` to block until an aio operation completes.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # extern crate tempfile;</span>
-<span class="doccomment">/// # extern crate nix;</span>
 <span class="doccomment">/// # use nix::sys::aio::*;</span>
 <span class="doccomment">/// # use nix::sys::signal::SigevNotify;</span>
 <span class="doccomment">/// # use std::os::unix::io::AsRawFd;</span>
@@ -2364,8 +2310,6 @@
     <span class="doccomment">/// [`AioCb::error`] to poll.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>
     <span class="doccomment">/// # use nix::sys::signal::SigevNotify;</span>
     <span class="doccomment">/// # use std::os::unix::io::AsRawFd;</span>
@@ -2421,8 +2365,6 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// ```no_run</span>
-    <span class="doccomment">/// # extern crate tempfile;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
     <span class="doccomment">/// # use nix::Error;</span>
     <span class="doccomment">/// # use nix::errno::Errno;</span>
     <span class="doccomment">/// # use nix::sys::aio::*;</span>

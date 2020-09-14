@@ -25,7 +25,7 @@ sourcesIndex["libm"] = {"name":"","dirs":[{"name":"math","files":["acos.rs","aco
 sourcesIndex["linked_hash_map"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["log"] = {"name":"","files":["lib.rs","macros.rs"]};
 sourcesIndex["memchr"] = {"name":"","dirs":[{"name":"x86","files":["avx.rs","mod.rs","sse2.rs"]}],"files":["fallback.rs","iter.rs","lib.rs","naive.rs"]};
-sourcesIndex["nix"] = {"name":"","dirs":[{"name":"net","files":["if_.rs","mod.rs"]},{"name":"sys","dirs":[{"name":"ioctl","files":["linux.rs","mod.rs"]},{"name":"ptrace","files":["linux.rs","mod.rs"]},{"name":"socket","files":["addr.rs","mod.rs","sockopt.rs"]}],"files":["aio.rs","epoll.rs","eventfd.rs","inotify.rs","memfd.rs","mman.rs","mod.rs","pthread.rs","quota.rs","reboot.rs","select.rs","sendfile.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","termios.rs","time.rs","uio.rs","utsname.rs","wait.rs"]}],"files":["dir.rs","errno.rs","fcntl.rs","features.rs","ifaddrs.rs","kmod.rs","lib.rs","macros.rs","mount.rs","mqueue.rs","poll.rs","pty.rs","sched.rs","ucontext.rs","unistd.rs"]};
+sourcesIndex["nix"] = {"name":"","dirs":[{"name":"net","files":["if_.rs","mod.rs"]},{"name":"sys","dirs":[{"name":"ioctl","files":["linux.rs","mod.rs"]},{"name":"ptrace","files":["linux.rs","mod.rs"]},{"name":"socket","files":["addr.rs","mod.rs","sockopt.rs"]}],"files":["aio.rs","epoll.rs","eventfd.rs","inotify.rs","memfd.rs","mman.rs","mod.rs","pthread.rs","quota.rs","reboot.rs","select.rs","sendfile.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","termios.rs","time.rs","timerfd.rs","uio.rs","utsname.rs","wait.rs"]}],"files":["dir.rs","env.rs","errno.rs","fcntl.rs","features.rs","ifaddrs.rs","kmod.rs","lib.rs","macros.rs","mount.rs","mqueue.rs","poll.rs","pty.rs","sched.rs","ucontext.rs","unistd.rs"]};
 sourcesIndex["num_integer"] = {"name":"","files":["average.rs","lib.rs","roots.rs"]};
 sourcesIndex["num_traits"] = {"name":"","dirs":[{"name":"ops","files":["checked.rs","inv.rs","mod.rs","mul_add.rs","saturating.rs","wrapping.rs"]}],"files":["bounds.rs","cast.rs","float.rs","identities.rs","int.rs","lib.rs","macros.rs","pow.rs","sign.rs"]};
 sourcesIndex["once_cell"] = {"name":"","files":["imp_std.rs","lib.rs"]};
@@ -75,7 +75,6 @@ sourcesIndex["unicode_xid"] = {"name":"","files":["lib.rs","tables.rs"]};
 sourcesIndex["utf8parse"] = {"name":"","files":["lib.rs","types.rs"]};
 sourcesIndex["uuid"] = {"name":"","dirs":[{"name":"adapter","files":["mod.rs"]},{"name":"builder","files":["error.rs","mod.rs"]},{"name":"parser","files":["error.rs","mod.rs"]}],"files":["error.rs","lib.rs","prelude.rs","v4.rs"]};
 sourcesIndex["vec_map"] = {"name":"","files":["lib.rs"]};
-sourcesIndex["void"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["walkdir"] = {"name":"","files":["dent.rs","error.rs","lib.rs","util.rs"]};
 sourcesIndex["yaml_rust"] = {"name":"","files":["emitter.rs","lib.rs","parser.rs","scanner.rs","yaml.rs"]};
 createSourceSidebar();

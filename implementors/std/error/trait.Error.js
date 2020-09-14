@@ -29,7 +29,6 @@ implementors["spinoso_time"] = [{"text":"impl Error for ComponentOutOfRangeError
 implementors["syn"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["termcolor"] = [{"text":"impl Error for ParseColorError","synthetic":false,"types":[]}];
 implementors["time"] = [{"text":"impl Error for OutOfRangeError","synthetic":false,"types":[]},{"text":"impl Error for ParseError","synthetic":false,"types":[]}];
-implementors["void"] = [{"text":"impl Error for Void","synthetic":false,"types":[]}];
 implementors["walkdir"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["yaml_rust"] = [{"text":"impl Error for EmitError","synthetic":false,"types":[]},{"text":"impl Error for ScanError","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

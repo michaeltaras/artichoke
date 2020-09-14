@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.17.0/src/sys/termios.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>termios.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nix/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.18.0/src/sys/termios.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>termios.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nix/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1089,38 +1089,6 @@
 <span id="1088">1088</span>
 <span id="1089">1089</span>
 <span id="1090">1090</span>
-<span id="1091">1091</span>
-<span id="1092">1092</span>
-<span id="1093">1093</span>
-<span id="1094">1094</span>
-<span id="1095">1095</span>
-<span id="1096">1096</span>
-<span id="1097">1097</span>
-<span id="1098">1098</span>
-<span id="1099">1099</span>
-<span id="1100">1100</span>
-<span id="1101">1101</span>
-<span id="1102">1102</span>
-<span id="1103">1103</span>
-<span id="1104">1104</span>
-<span id="1105">1105</span>
-<span id="1106">1106</span>
-<span id="1107">1107</span>
-<span id="1108">1108</span>
-<span id="1109">1109</span>
-<span id="1110">1110</span>
-<span id="1111">1111</span>
-<span id="1112">1112</span>
-<span id="1113">1113</span>
-<span id="1114">1114</span>
-<span id="1115">1115</span>
-<span id="1116">1116</span>
-<span id="1117">1117</span>
-<span id="1118">1118</span>
-<span id="1119">1119</span>
-<span id="1120">1120</span>
-<span id="1121">1121</span>
-<span id="1122">1122</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! An interface for controlling asynchronous communication ports</span>
 <span class="doccomment">//!</span>
@@ -1149,7 +1117,7 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! # use self::nix::sys::termios::SpecialCharacterIndices::VEOF;</span>
 <span class="doccomment">//! # use self::nix::sys::termios::{_POSIX_VDISABLE, Termios};</span>
-<span class="doccomment">//! # let mut termios = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut termios: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! termios.control_chars[VEOF as usize] = _POSIX_VDISABLE;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -1162,7 +1130,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! # use self::nix::sys::termios::{ControlFlags, Termios};</span>
-<span class="doccomment">//! # let mut termios = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut termios: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! termios.control_flags &amp; ControlFlags::CSIZE == ControlFlags::CS5;</span>
 <span class="doccomment">//! termios.control_flags |= ControlFlags::CS5;</span>
 <span class="doccomment">//! ```</span>
@@ -1185,10 +1153,9 @@
 <span class="doccomment">//! platforms:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! # #[macro_use] extern crate nix;</span>
 <span class="doccomment">//! # use nix::sys::termios::{BaudRate, cfsetispeed, cfsetospeed, cfsetspeed, Termios};</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! # let mut t = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut t: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! cfsetispeed(&amp;mut t, BaudRate::B9600);</span>
 <span class="doccomment">//! cfsetospeed(&amp;mut t, BaudRate::B9600);</span>
 <span class="doccomment">//! cfsetspeed(&amp;mut t, BaudRate::B9600);</span>
@@ -1198,10 +1165,9 @@
 <span class="doccomment">//! Additionally round-tripping baud rates is consistent across platforms:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! # extern crate nix;</span>
 <span class="doccomment">//! # use nix::sys::termios::{BaudRate, cfgetispeed, cfgetospeed, cfsetispeed, cfsetspeed, Termios};</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! # let mut t = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut t: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! # cfsetspeed(&amp;mut t, BaudRate::B9600);</span>
 <span class="doccomment">//! let speed = cfgetispeed(&amp;t);</span>
 <span class="doccomment">//! assert_eq!(speed, cfgetospeed(&amp;t));</span>
@@ -1217,10 +1183,9 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
                     <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>)),
             <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust&quot;</span>)]</span>
-<span class="doccomment">//! # extern crate nix;</span>
 <span class="doccomment">//! # use nix::sys::termios::{BaudRate, cfgetispeed, cfgetospeed, cfsetspeed, Termios};</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! # let mut t = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut t: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! # cfsetspeed(&amp;mut t, BaudRate::B9600);</span>
 <span class="doccomment">//! assert_eq!(cfgetispeed(&amp;t), BaudRate::B9600);</span>
 <span class="doccomment">//! assert_eq!(cfgetospeed(&amp;t), BaudRate::B9600);</span>
@@ -1235,10 +1200,9 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
                     <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>)),
             <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust,ignore&quot;</span>)]</span>
-<span class="doccomment">//! # extern crate nix;</span>
 <span class="doccomment">//! # use nix::sys::termios::{BaudRate, cfgetispeed, cfgetospeed, cfsetspeed, Termios};</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! # let mut t = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut t: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! # cfsetspeed(&amp;mut t, 9600u32);</span>
 <span class="doccomment">//! assert_eq!(cfgetispeed(&amp;t), 9600u32);</span>
 <span class="doccomment">//! assert_eq!(cfgetospeed(&amp;t), 9600u32);</span>
@@ -1253,10 +1217,9 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
                     <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>)),
             <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust,ignore&quot;</span>)]</span>
-<span class="doccomment">//! # extern crate nix;</span>
 <span class="doccomment">//! # use nix::sys::termios::{BaudRate, cfgetispeed, cfsetspeed, Termios};</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! # let mut t = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut t: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! # cfsetspeed(&amp;mut t, 9600u32);</span>
 <span class="doccomment">//! assert_eq!(cfgetispeed(&amp;t), BaudRate::B9600.into());</span>
 <span class="doccomment">//! assert_eq!(u32::from(BaudRate::B9600), 9600u32);</span>
@@ -1272,24 +1235,24 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>,
                     <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>)),
             <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust,ignore&quot;</span>)]</span>
-<span class="doccomment">//! # extern crate nix;</span>
 <span class="doccomment">//! # use nix::sys::termios::{cfsetispeed, cfsetospeed, cfsetspeed, Termios};</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! # let mut t = unsafe { Termios::default_uninit() };</span>
+<span class="doccomment">//! # let mut t: Termios = unsafe { std::mem::zeroed() };</span>
 <span class="doccomment">//! cfsetispeed(&amp;mut t, 9600u32);</span>
 <span class="doccomment">//! cfsetospeed(&amp;mut t, 9600u32);</span>
 <span class="doccomment">//! cfsetspeed(&amp;mut t, 9600u32);</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">errno</span>::<span class="ident">Errno</span>;
+<span class="kw">use</span> <span class="ident">cfg_if</span>::<span class="ident">cfg_if</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errno</span>::<span class="ident">Errno</span>;
 <span class="kw">use</span> <span class="ident">libc</span>::{<span class="self">self</span>, <span class="ident">c_int</span>, <span class="ident">tcflag_t</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::{<span class="ident">Ref</span>, <span class="ident">RefCell</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::{<span class="ident">From</span>, <span class="ident">TryFrom</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 
-<span class="kw">use</span> ::<span class="ident">unistd</span>::<span class="ident">Pid</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">unistd</span>::<span class="ident">Pid</span>;
 
 <span class="doccomment">/// Stores settings for the termios API</span>
 <span class="doccomment">///</span>
@@ -1314,24 +1277,9 @@
 <span class="kw">impl</span> <span class="ident">Termios</span> {
     <span class="doccomment">/// Exposes an immutable reference to the underlying `libc::termios` data structure.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This can be used for interfacing with other FFI functions like:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// # extern crate libc;</span>
-    <span class="doccomment">/// # extern crate nix;</span>
-    <span class="doccomment">/// # fn main() {</span>
-    <span class="doccomment">/// # use nix::sys::termios::Termios;</span>
-    <span class="doccomment">/// # let mut termios = unsafe { Termios::default_uninit() };</span>
-    <span class="doccomment">/// let inner_termios = termios.get_libc_termios();</span>
-    <span class="doccomment">/// unsafe { libc::cfgetispeed(&amp;*inner_termios) };</span>
-    <span class="doccomment">/// # }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// There is no public API exposed for functions that modify the underlying `libc::termios`</span>
-    <span class="doccomment">/// data because it requires additional work to maintain type safety.</span>
-    <span class="comment">// FIXME: Switch this over to use pub(crate)</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_libc_termios</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ref</span><span class="op">&lt;</span><span class="ident">libc</span>::<span class="ident">termios</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// This is not part of `nix`&#39;s public API because it requires additional work to maintain type</span>
+    <span class="doccomment">/// safety.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">get_libc_termios</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ref</span><span class="op">&lt;</span><span class="ident">libc</span>::<span class="ident">termios</span><span class="op">&gt;</span> {
         {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">termios</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>();
             <span class="ident">termios</span>.<span class="ident">c_iflag</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">input_flags</span>.<span class="ident">bits</span>();
@@ -1345,12 +1293,11 @@
 
     <span class="doccomment">/// Exposes the inner `libc::termios` datastore within `Termios`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This is unsafe because if this is used to modify the inner libc::termios struct, it will not</span>
-    <span class="doccomment">/// automatically update the safe wrapper type around it. Therefore we disable docs to</span>
-    <span class="doccomment">/// effectively limit its use to nix internals. In this case it should also be paired with a</span>
-    <span class="doccomment">/// call to `update_wrapper()` so that the wrapper-type and internal representation stay</span>
-    <span class="doccomment">/// consistent.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_libc_termios_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc</span>::<span class="ident">termios</span> {
+    <span class="doccomment">/// This is unsafe because if this is used to modify the inner `libc::termios` struct, it will</span>
+    <span class="doccomment">/// not automatically update the safe wrapper type around it. In this case it should also be</span>
+    <span class="doccomment">/// paired with a call to `update_wrapper()` so that the wrapper-type and internal</span>
+    <span class="doccomment">/// representation stay consistent.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_libc_termios_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc</span>::<span class="ident">termios</span> {
         {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">termios</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>();
             <span class="ident">termios</span>.<span class="ident">c_iflag</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">input_flags</span>.<span class="ident">bits</span>();
@@ -1362,26 +1309,8 @@
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ptr</span>()
     }
 
-    <span class="doccomment">/// Allows for easily creating new `Termios` structs that will be overwritten with real data.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This should only be used when the inner libc::termios struct will be overwritten before it&#39;s</span>
-    <span class="doccomment">/// read.</span>
-    <span class="comment">// FIXME: Switch this over to use pub(crate)</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">default_uninit</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">Termios</span> {
-            <span class="ident">inner</span>: <span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">mem</span>::<span class="ident">zeroed</span>()),
-            <span class="ident">input_flags</span>: <span class="ident">InputFlags</span>::<span class="ident">empty</span>(),
-            <span class="ident">output_flags</span>: <span class="ident">OutputFlags</span>::<span class="ident">empty</span>(),
-            <span class="ident">control_flags</span>: <span class="ident">ControlFlags</span>::<span class="ident">empty</span>(),
-            <span class="ident">local_flags</span>: <span class="ident">LocalFlags</span>::<span class="ident">empty</span>(),
-            <span class="ident">control_chars</span>: [<span class="number">0</span> <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">cc_t</span>; <span class="ident">NCCS</span>],
-        }
-    }
-
     <span class="doccomment">/// Updates the wrapper values from the internal `libc::termios` data structure.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_wrapper</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">update_wrapper</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">let</span> <span class="ident">termios</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>();
         <span class="self">self</span>.<span class="ident">input_flags</span> <span class="op">=</span> <span class="ident">InputFlags</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">termios</span>.<span class="ident">c_iflag</span>);
         <span class="self">self</span>.<span class="ident">output_flags</span> <span class="op">=</span> <span class="ident">OutputFlags</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">termios</span>.<span class="ident">c_oflag</span>);
@@ -1942,6 +1871,7 @@
         <span class="ident">PARODD</span>;
         <span class="ident">HUPCL</span>;
         <span class="ident">CLOCAL</span>;
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">CRTSCTS</span>;
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>))]</span>
         <span class="ident">CBAUD</span>;
@@ -1992,12 +1922,15 @@
 <span class="macro">libc_bitflags</span><span class="macro">!</span> {
     <span class="doccomment">/// Flags for setting any local modes</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocalFlags</span>: <span class="ident">tcflag_t</span> {
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">ECHOKE</span>;
         <span class="ident">ECHOE</span>;
         <span class="ident">ECHOK</span>;
         <span class="ident">ECHO</span>;
         <span class="ident">ECHONL</span>;
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">ECHOPRT</span>;
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">ECHOCTL</span>;
         <span class="ident">ISIG</span>;
         <span class="ident">ICANON</span>;
@@ -2009,8 +1942,10 @@
                   <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
         <span class="ident">ALTWERASE</span>;
         <span class="ident">IEXTEN</span>;
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">EXTPROC</span>;
         <span class="ident">TOSTOP</span>;
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">FLUSHO</span>;
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>,
                   <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;dragonfly&quot;</span>,
@@ -2019,6 +1954,7 @@
                   <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>,
                   <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;openbsd&quot;</span>))]</span>
         <span class="ident">NOKERNINFO</span>;
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;redox&quot;</span>))]</span>
         <span class="ident">PENDIN</span>;
         <span class="ident">NOFLSH</span>;
     }
