@@ -1,4 +1,0 @@
-(function() {var implementors = {};
-implementors["serde_yaml"] = [{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for Mapping","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for Number","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for Value","synthetic":false,"types":[]}];
-implementors["spec_runner"] = [{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for Config","synthetic":false,"types":[]},{"text":"impl&lt;'de&gt; Deserialize&lt;'de&gt; for Suite","synthetic":false,"types":[]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

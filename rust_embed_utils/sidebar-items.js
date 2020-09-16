@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["get_files",""]],"struct":[["FileEntry",""]]});
