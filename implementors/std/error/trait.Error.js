@@ -26,5 +26,4 @@ implementors["spinoso_symbol"] = [{"text":"impl Error for SymbolOverflowError","
 implementors["spinoso_time"] = [{"text":"impl Error for ComponentOutOfRangeError","synthetic":false,"types":[]}];
 implementors["syn"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["termcolor"] = [{"text":"impl Error for ParseColorError","synthetic":false,"types":[]}];
-implementors["time"] = [{"text":"impl Error for OutOfRangeError","synthetic":false,"types":[]},{"text":"impl Error for ParseError","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
