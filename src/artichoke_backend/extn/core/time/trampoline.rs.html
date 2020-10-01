@@ -371,6 +371,19 @@
 <span id="370">370</span>
 <span id="371">371</span>
 <span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Glue between mruby FFI and `Time` Rust implementation.</span>
 
@@ -529,9 +542,22 @@
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
-    <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
+    <span class="comment">// XXX: This function is used to implement `Time#inspect`. Raising in an</span>
+    <span class="comment">// `#inspect` implementation interacts poorly with the locals table when</span>
+    <span class="comment">// running Artichoke in a REPL.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Rather than fix this, which will involve deep diving into mruby, work</span>
+    <span class="comment">// around this by returning a `String` that says `Time#inspect` is not</span>
+    <span class="comment">// implemented. This allows us to uphold the API contract without</span>
+    <span class="comment">// implementing `strftime`.</span>
+    <span class="comment">//</span>
+    <span class="comment">// This hack replaces this code:</span>
+    <span class="comment">//</span>
+    <span class="comment">// ```rust</span>
+    <span class="comment">// Err(NotImplementedError::new().into())</span>
+    <span class="comment">// ```</span>
+    <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="string">&quot;Time&lt;Time#inspect is not implemented&gt;&quot;</span>))
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_array</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {

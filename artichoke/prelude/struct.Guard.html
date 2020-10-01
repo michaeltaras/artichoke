@@ -4,12 +4,12 @@ boundary.</p>
 <p>Artichoke integrates with the mruby VM via many <code>extern &quot;C&quot; fn</code> trampolines
 that are invoked by mruby to run some portion of the VM in Rust.</p>
 <p>These trampolines typically require an <a href="../../artichoke/prelude/struct.Artichoke.html" title="Artichoke"><code>Artichoke</code></a> interpreter to do
-useful work, so they move the <a href="crate::state::State"><code>State</code></a> out of the
+useful work, so they move the <a href="../../artichoke_backend/state/struct.State.html"><code>State</code></a> out of the
 <code>mrb</code> userdata pointer into an <code>Artichoke</code> struct.</p>
 <p>To ensure safety, the <code>State</code> must be moved back into the <code>mrb</code> userdata
 pointer before re-entering the FFI boundary. This guard implements <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="Drop"><code>Drop</code></a>
 to reserialize the <code>State</code> into the <code>mrb</code> once it goes out of scope.</p>
-<p><code>Guard</code> is passed directly to <a href="crate::error::raise"><code>error::raise</code></a>.</p>
+<p><code>Guard</code> is passed directly to <a href="../../artichoke/prelude/error/fn.raise.html"><code>error::raise</code></a>.</p>
 </div><h2 id='implementations' class='small-section-header'>Implementations<a href='#implementations' class='anchor'></a></h2><h3 id='impl' class='impl'><code class='in-band'>impl&lt;'a&gt; <a class="struct" href="../../artichoke/prelude/struct.Guard.html" title="struct artichoke::prelude::Guard">Guard</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a><a class='srclink' href='../../src/artichoke_backend/artichoke.rs.html#163-180' title='goto source code'>[src]</a></h3><div class='impl-items'><h4 id='method.new' class="method"><code>pub fn <a href='#method.new' class='fnname'>new</a>(interp: &amp;'a mut <a class="struct" href="../../artichoke/prelude/struct.Artichoke.html" title="struct artichoke::prelude::Artichoke">Artichoke</a>) -&gt; <a class="struct" href="../../artichoke/prelude/struct.Guard.html" title="struct artichoke::prelude::Guard">Guard</a>&lt;'a&gt;</code><a class='srclink' href='../../src/artichoke_backend/artichoke.rs.html#168-170' title='goto source code'>[src]</a></h4><div class='docblock'><p>Create a new guard that wraps an interpreter.</p>
 <p>This function is most effective when the interpreter is temporarily
 reified and stored on the stack.</p>

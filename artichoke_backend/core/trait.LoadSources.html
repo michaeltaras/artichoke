@@ -43,7 +43,7 @@ filesystem.</p>
 onto the interpreter. This loads files with the following steps:</p>
 <ol>
 <li>Retrieve and execute the extension hook, if any.</li>
-<li>Read file contents and <a href="crate::eval::Eval"><code>eval</code></a> them.</li>
+<li>Read file contents and <a href="../../artichoke_backend/prelude/trait.Eval.html"><code>eval</code></a> them.</li>
 </ol>
 <p>If this function returns without error, the feature specified by <code>path</code>
 is loaded, but is not added to <code>$LOADED_FEATURES</code>. This function is
@@ -58,7 +58,7 @@ equivalent to <code>Kernel#load</code>.</p>
 onto the interpreter. This requires files with the following steps:</p>
 <ol>
 <li>Retrieve and execute the extension hook, if any.</li>
-<li>Read file contents and <a href="crate::eval::Eval"><code>eval</code></a> them.</li>
+<li>Read file contents and <a href="../../artichoke_backend/prelude/trait.Eval.html"><code>eval</code></a> them.</li>
 <li>Mark file as required and add to <code>$LOADED_FEATURES</code>.</li>
 </ol>
 <p>If this function returns without error, the feature specified by <code>path</code>
