@@ -1,7 +1,7 @@
 (function() {var implementors = {};
 implementors["artichoke"] = [{"text":"impl Drop for Parser","synthetic":false,"types":[]}];
 implementors["artichoke_backend"] = [{"text":"impl&lt;'a&gt; Drop for Guard&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Drop for ArenaIndex&lt;'a&gt;","synthetic":false,"types":[]}];
-implementors["base64"] = [{"text":"impl&lt;'a, W:&nbsp;Write&gt; Drop for EncoderWriter&lt;'a, W&gt;","synthetic":false,"types":[]}];
+implementors["base64"] = [{"text":"impl&lt;W:&nbsp;Write&gt; Drop for EncoderWriter&lt;W&gt;","synthetic":false,"types":[]}];
 implementors["nix"] = [{"text":"impl Drop for Dir","synthetic":false,"types":[]},{"text":"impl&lt;'d&gt; Drop for Iter&lt;'d&gt;","synthetic":false,"types":[]},{"text":"impl Drop for InterfaceAddressIterator","synthetic":false,"types":[]},{"text":"impl Drop for PtyMaster","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Drop for AioCb&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl Drop for SignalFd","synthetic":false,"types":[]}];
 implementors["onig"] = [{"text":"impl Drop for MatchParam","synthetic":false,"types":[]},{"text":"impl Drop for Region","synthetic":false,"types":[]},{"text":"impl Drop for Regex","synthetic":false,"types":[]}];
 implementors["regex_syntax"] = [{"text":"impl Drop for Ast","synthetic":false,"types":[]},{"text":"impl Drop for ClassSet","synthetic":false,"types":[]},{"text":"impl Drop for Hir","synthetic":false,"types":[]}];
