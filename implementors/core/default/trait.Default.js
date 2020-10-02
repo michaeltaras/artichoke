@@ -31,6 +31,5 @@ implementors["syn"] = [{"text":"impl Default for Underscore","synthetic":false,"
 implementors["termcolor"] = [{"text":"impl Default for ColorSpec","synthetic":false,"types":[]}];
 implementors["thread_local"] = [{"text":"impl&lt;T:&nbsp;Send&gt; Default for CachedThreadLocal&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Send&gt; Default for ThreadLocal&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["utf8parse"] = [{"text":"impl Default for Parser","synthetic":false,"types":[]}];
-implementors["uuid"] = [{"text":"impl Default for Hyphenated","synthetic":false,"types":[]},{"text":"impl Default for Simple","synthetic":false,"types":[]},{"text":"impl Default for Urn","synthetic":false,"types":[]},{"text":"impl Default for Uuid","synthetic":false,"types":[]}];
 implementors["vec_map"] = [{"text":"impl&lt;V&gt; Default for VecMap&lt;V&gt;","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

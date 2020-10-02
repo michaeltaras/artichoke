@@ -48,7 +48,7 @@ sourcesIndex["spinoso_env"] = {"name":"","dirs":[{"name":"env","files":["memory.
 sourcesIndex["spinoso_exception"] = {"name":"","dirs":[{"name":"core","files":["argumenterror.rs","encodingerror.rs","eoferror.rs","exception.rs","fatal.rs","fibererror.rs","floatdomainerror.rs","frozenerror.rs","indexerror.rs","interrupt.rs","ioerror.rs","keyerror.rs","loaderror.rs","localjumperror.rs","mod.rs","nameerror.rs","nomemoryerror.rs","nomethoderror.rs","notimplementederror.rs","rangeerror.rs","regexperror.rs","runtimeerror.rs","scripterror.rs","securityerror.rs","signalexception.rs","standarderror.rs","stopiteration.rs","syntaxerror.rs","systemcallerror.rs","systemexit.rs","systemstackerror.rs","threaderror.rs","typeerror.rs","uncaughtthrowerror.rs","zerodivisionerror.rs"]}],"files":["lib.rs"]};
 sourcesIndex["spinoso_math"] = {"name":"","files":["lib.rs","math.rs"]};
 sourcesIndex["spinoso_random"] = {"name":"","dirs":[{"name":"random","dirs":[{"name":"ruby","files":["mod.rs","rand.rs"]}],"files":["mod.rs","rand.rs"]}],"files":["lib.rs","rand.rs","urandom.rs"]};
-sourcesIndex["spinoso_securerandom"] = {"name":"","files":["lib.rs"]};
+sourcesIndex["spinoso_securerandom"] = {"name":"","files":["lib.rs","uuid.rs"]};
 sourcesIndex["spinoso_symbol"] = {"name":"","dirs":[{"name":"casecmp","files":["ascii.rs","mod.rs","unicode.rs"]}],"files":["all_symbols.rs","convert.rs","eq.rs","ident.rs","inspect.rs","lib.rs"]};
 sourcesIndex["spinoso_time"] = {"name":"","dirs":[{"name":"time","dirs":[{"name":"chrono","files":["build.rs","convert.rs","date.rs","math.rs","mod.rs","offset.rs","ops.rs","ordinal.rs","time.rs","timezone.rs","weekday.rs"]}],"files":["mod.rs"]}],"files":["lib.rs"]};
 sourcesIndex["strsim"] = {"name":"","files":["lib.rs"]};
@@ -62,6 +62,5 @@ sourcesIndex["unicode_segmentation"] = {"name":"","files":["grapheme.rs","lib.rs
 sourcesIndex["unicode_width"] = {"name":"","files":["lib.rs","tables.rs"]};
 sourcesIndex["unicode_xid"] = {"name":"","files":["lib.rs","tables.rs"]};
 sourcesIndex["utf8parse"] = {"name":"","files":["lib.rs","types.rs"]};
-sourcesIndex["uuid"] = {"name":"","dirs":[{"name":"adapter","files":["mod.rs"]},{"name":"builder","files":["error.rs","mod.rs"]},{"name":"parser","files":["error.rs","mod.rs"]}],"files":["error.rs","lib.rs","prelude.rs","v4.rs"]};
 sourcesIndex["vec_map"] = {"name":"","files":["lib.rs"]};
 createSourceSidebar();

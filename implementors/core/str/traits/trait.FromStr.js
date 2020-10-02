@@ -8,5 +8,4 @@ implementors["proc_macro2"] = [{"text":"impl FromStr for TokenStream","synthetic
 implementors["regex"] = [{"text":"impl FromStr for Regex","synthetic":false,"types":[]},{"text":"impl FromStr for Regex","synthetic":false,"types":[]}];
 implementors["spinoso_symbol"] = [{"text":"impl FromStr for IdentifierType","synthetic":false,"types":[]}];
 implementors["termcolor"] = [{"text":"impl FromStr for Color","synthetic":false,"types":[]}];
-implementors["uuid"] = [{"text":"impl FromStr for Uuid","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
