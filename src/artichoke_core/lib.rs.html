@@ -147,6 +147,8 @@
 <span id="146">146</span>
 <span id="147">147</span>
 <span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -251,6 +253,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">coerce_to_numeric</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">constant</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">convert</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">debug</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">eval</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">globals</span>;
@@ -281,6 +284,7 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">coerce_to_numeric</span>::<span class="ident">CoerceToNumeric</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">constant</span>::<span class="ident">DefineConstant</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>, <span class="ident">TryConvertMut</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">debug</span>::<span class="ident">Debug</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">file</span>::<span class="ident">File</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">globals</span>::<span class="ident">Globals</span>;

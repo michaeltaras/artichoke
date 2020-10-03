@@ -425,9 +425,7 @@
 <span id="424">424</span>
 <span id="425">425</span>
 <span id="426">426</span>
-<span id="427">427</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">pretty_name</span>;
 <span class="kw">use</span> <span class="ident">spinoso_array</span>::<span class="ident">SmallArray</span> <span class="kw">as</span> <span class="ident">SpinosoArray</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
@@ -609,12 +607,12 @@
                             <span class="ident">other</span>.<span class="number">0</span>.<span class="ident">clone</span>()
                         } <span class="kw">else</span> {
                             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">pretty_name</span>(<span class="ident">array_or_len</span>, <span class="ident">interp</span>);
+                            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">array_or_len</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; to Array (&quot;</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_ary gives &quot;</span>);
-                            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">other</span>, <span class="ident">interp</span>));
+                            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">other</span>));
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
                         }
                     } <span class="kw">else</span> {
@@ -654,12 +652,12 @@
                             <span class="ident">other</span>.<span class="number">0</span>.<span class="ident">clone</span>()
                         } <span class="kw">else</span> {
                             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">pretty_name</span>(<span class="ident">array_or_len</span>, <span class="ident">interp</span>);
+                            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">array_or_len</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; to Array (&quot;</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_ary gives &quot;</span>);
-                            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">other</span>, <span class="ident">interp</span>));
+                            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">other</span>));
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
                         }
                     } <span class="kw">else</span> {
@@ -747,12 +745,12 @@
                     <span class="self">self</span>.<span class="number">0</span>.<span class="ident">set_slice</span>(<span class="ident">start</span>, <span class="ident">drain</span>, <span class="ident">other</span>.<span class="number">0</span>.<span class="ident">as_slice</span>());
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">pretty_name</span>(<span class="ident">elem</span>, <span class="ident">interp</span>);
+                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">elem</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; to Array (&quot;</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_ary gives &quot;</span>);
-                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">other</span>, <span class="ident">interp</span>));
+                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">other</span>));
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
                 }
             } <span class="kw">else</span> {
@@ -791,17 +789,17 @@
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">concat</span>(<span class="ident">other</span>.<span class="number">0</span>.<span class="ident">as_slice</span>());
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">pretty_name</span>(<span class="ident">other</span>, <span class="ident">interp</span>);
+                <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">other</span>);
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; to Array (&quot;</span>);
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_ary gives &quot;</span>);
-                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">arr</span>, <span class="ident">interp</span>));
+                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">arr</span>));
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
             }
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;no implicit conversion of &quot;</span>);
-            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">other</span>, <span class="ident">interp</span>));
+            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">other</span>));
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Array&quot;</span>);
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
         };

@@ -697,8 +697,13 @@
 <span id="696">696</span>
 <span id="697">697</span>
 <span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">pretty_name</span>;
+<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>};
+<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">debug</span>::<span class="ident">Debug</span>;
+<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">intern</span>::<span class="ident">Intern</span>;
+<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="ident">ValueCore</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -708,7 +713,6 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class_registry</span>::<span class="ident">ClassRegistry</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">BoxUnboxVmValue</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">core</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">Intern</span>, <span class="ident">TryConvert</span>, <span class="ident">Value</span> <span class="kw">as</span> <span class="ident">ValueCore</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="ident">RubyException</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">exception_handler</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span>::{<span class="ident">ArgumentError</span>, <span class="ident">Fatal</span>, <span class="ident">TypeError</span>};
@@ -841,24 +845,24 @@
                     <span class="ident">int</span>
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">interp</span>);
+                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="self">self</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; to Integer (&quot;</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_int gives &quot;</span>);
-                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">maybe</span>, <span class="ident">interp</span>));
+                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">maybe</span>));
                     <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>));
                 }
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;no implicit conversion of &quot;</span>);
-                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">interp</span>));
+                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="self">self</span>));
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Integer&quot;</span>);
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>));
             }
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;no implicit conversion of &quot;</span>);
-            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">interp</span>));
+            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="self">self</span>));
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Integer&quot;</span>);
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>));
         };
@@ -887,24 +891,24 @@
                     <span class="ident">string</span>
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">interp</span>);
+                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="self">self</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; to String (&quot;</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">name</span>);
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;#to_str gives &quot;</span>);
-                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="ident">maybe</span>, <span class="ident">interp</span>));
+                    <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">maybe</span>));
                     <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>));
                 }
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;no implicit conversion of &quot;</span>);
-                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">interp</span>));
+                <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="self">self</span>));
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into String&quot;</span>);
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>));
             }
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;no implicit conversion of &quot;</span>);
-            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">interp</span>));
+            <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="self">self</span>));
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into String&quot;</span>);
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>));
         };

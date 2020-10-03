@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["pretty_name","Return a name for this value's type suitable for using in an `Exception` message."]],"trait":[["Value","A boxed Ruby value owned by the interpreter."]]});
+initSidebarItems({"trait":[["Value","A boxed Ruby value owned by the interpreter."]]});

@@ -353,9 +353,7 @@
 <span id="352">352</span>
 <span id="353">353</span>
 <span id="354">354</span>
-<span id="355">355</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">pretty_name</span>;
 <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -513,7 +511,7 @@
 
     <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">IntegerString</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t convert &quot;</span>);
-        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="ident">pretty_name</span>(<span class="kw-2">*</span><span class="ident">value</span>, <span class="self">self</span>));
+        <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="self">self</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="kw-2">*</span><span class="ident">value</span>));
         <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; into Integer&quot;</span>);
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">arg</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">implicitly_convert_to_string</span>(<span class="self">self</span>) {
