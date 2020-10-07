@@ -590,10 +590,8 @@
 <span id="589">589</span>
 <span id="590">590</span>
 <span id="591">591</span>
-<span id="592">592</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">regex</span>::{<span class="ident">Regex</span>, <span class="ident">RegexBuilder</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::{<span class="self">self</span>, <span class="ident">TryFrom</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -1026,9 +1024,9 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">names</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">capture_names</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">named_captures</span>().<span class="ident">unwrap_or_default</span>();
         <span class="ident">capture_names</span>.<span class="ident">sort_by</span>(<span class="op">|</span><span class="ident">left</span>, <span class="ident">right</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="number">1</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">fold</span>(<span class="ident">usize</span>::<span class="ident">max_value</span>(), <span class="ident">usize</span>::<span class="ident">min</span>);
-            <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="number">1</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">fold</span>(<span class="ident">usize</span>::<span class="ident">max_value</span>(), <span class="ident">usize</span>::<span class="ident">min</span>);
-            <span class="ident">left</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">right</span>).<span class="ident">unwrap_or</span>(<span class="ident">Ordering</span>::<span class="ident">Equal</span>)
+            <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left</span>.<span class="number">1</span>.<span class="ident">iter</span>().<span class="ident">min</span>().<span class="ident">copied</span>().<span class="ident">unwrap_or</span>(<span class="ident">usize</span>::<span class="ident">MAX</span>);
+            <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right</span>.<span class="number">1</span>.<span class="ident">iter</span>().<span class="ident">min</span>().<span class="ident">copied</span>().<span class="ident">unwrap_or</span>(<span class="ident">usize</span>::<span class="ident">MAX</span>);
+            <span class="ident">left</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">right</span>)
         });
         <span class="kw">for</span> (<span class="ident">name</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="ident">capture_names</span> {
             <span class="kw">if</span> <span class="op">!</span><span class="ident">names</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>) {

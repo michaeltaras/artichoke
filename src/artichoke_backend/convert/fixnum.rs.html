@@ -333,8 +333,8 @@
 <span class="doccomment">/// # use std::mem;</span>
 <span class="doccomment">/// # use artichoke_backend::types::Int;</span>
 <span class="doccomment">/// assert_eq!(mem::size_of::&lt;i64&gt;(), mem::size_of::&lt;Int&gt;());</span>
-<span class="doccomment">/// assert_eq!(i64::min_value(), Int::min_value());</span>
-<span class="doccomment">/// assert_eq!(i64::max_value(), Int::max_value());</span>
+<span class="doccomment">/// assert_eq!(i64::MIN, Int::MIN);</span>
+<span class="doccomment">/// assert_eq!(i64::MAX, Int::MAX);</span>
 <span class="doccomment">/// assert_eq!(TypeId::of::&lt;i64&gt;(), TypeId::of::&lt;Int&gt;());</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">impl</span> <span class="ident">Convert</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {

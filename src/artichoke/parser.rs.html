@@ -226,7 +226,7 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">State</span> {
     <span class="doccomment">/// Internal parser error. This is a fatal error.</span>
     <span class="ident">ParseError</span>,
-    <span class="doccomment">/// Code must be fewer than `isize::max_value` bytes.</span>
+    <span class="doccomment">/// Code must be fewer than [`isize::MAX`] bytes.</span>
     <span class="ident">CodeTooLong</span>,
     <span class="doccomment">/// The code has too many end statements.</span>
     <span class="ident">UnexpectedEnd</span>,
