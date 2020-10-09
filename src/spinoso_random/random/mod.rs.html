@@ -316,7 +316,31 @@
 <span id="313">313</span>
 <span id="314">314</span>
 <span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">size_of</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">InitializeError</span>, <span class="ident">NewSeedError</span>};
@@ -374,7 +398,7 @@
 <span class="doccomment">/// let mut random = Random::with_array_seed(seed);</span>
 <span class="doccomment">/// let rand = random.next_int32();</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Random</span> {
     <span class="ident">mt</span>: <span class="ident">Mt</span>,
     <span class="ident">seed</span>: [<span class="ident">u32</span>; <span class="number">4</span>],
@@ -388,6 +412,12 @@
         } <span class="kw">else</span> {
             <span class="ident">Random</span>::<span class="ident">with_seed</span>(<span class="ident">DEFAULT_SEED</span>)
         }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Random</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Random {}&quot;</span>)
     }
 }
 
@@ -631,6 +661,22 @@
     }
     <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed_to_key</span>(<span class="ident">seed</span>);
     <span class="prelude-val">Ok</span>(<span class="ident">seed</span>)
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Random</span>;
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">fmt_debug_does_not_leak_seed</span>() {
+        <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">with_seed</span>(<span class="number">874</span>);
+        <span class="kw">let</span> <span class="ident">debug</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">random</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">debug</span>.<span class="ident">contains</span>(<span class="string">&quot;894&quot;</span>));
+
+        <span class="kw">let</span> <span class="ident">random</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">with_seed</span>(<span class="number">123_456</span>);
+        <span class="kw">let</span> <span class="ident">debug</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">random</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">debug</span>.<span class="ident">contains</span>(<span class="string">&quot;123456&quot;</span>));
+    }
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "spinoso_random";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
