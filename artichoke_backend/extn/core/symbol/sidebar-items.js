@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["ffi",""],["mruby",""],["trampoline",""]],"struct":[["Symbol","Identifier bound to an interned bytestring."]]});
+initSidebarItems({"mod":[["ffi",""],["mruby",""],["trampoline",""]],"struct":[["Symbol",""]]});
