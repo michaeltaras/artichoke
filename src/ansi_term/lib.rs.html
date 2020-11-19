@@ -207,172 +207,172 @@
 <span id="204">204</span>
 <span id="205">205</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! This is a library for controlling colours and formatting, such as</span>
-<span class="doccomment">//! red bold text or blue underlined text, on ANSI terminals.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Basic usage</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! There are two main data structures in this crate that you need to be</span>
-<span class="doccomment">//! concerned with: `ANSIString` and `Style`. A `Style` holds stylistic</span>
-<span class="doccomment">//! information: colours, whether the text should be bold, or blinking, or</span>
-<span class="doccomment">//! whatever. There are also `Colour` variants that represent simple foreground</span>
-<span class="doccomment">//! colour styles. An `ANSIString` is a string paired with a `Style`.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! (Yes, it’s British English, but you won’t have to write “colour” very often.</span>
-<span class="doccomment">//! `Style` is used the majority of the time.)</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! To format a string, call the `paint` method on a `Style` or a `Colour`,</span>
-<span class="doccomment">//! passing in the string you want to format as the argument. For example,</span>
-<span class="doccomment">//! here’s how to get some red text:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
-<span class="doccomment">//!     println!(&quot;This is in red: {}&quot;, Red.paint(&quot;a red string&quot;));</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! It’s important to note that the `paint` method does *not* actually return a</span>
-<span class="doccomment">//! string with the ANSI control characters surrounding it. Instead, it returns</span>
-<span class="doccomment">//! an `ANSIString` value that has a `Display` implementation that, when</span>
-<span class="doccomment">//! formatted, returns the characters. This allows strings to be printed with a</span>
-<span class="doccomment">//! minimum of `String` allocations being performed behind the scenes.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! If you *do* want to get at the escape codes, then you can convert the</span>
-<span class="doccomment">//! `ANSIString` to a string as you would any other `Display` value:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
-<span class="doccomment">//!     use std::string::ToString;</span>
-<span class="doccomment">//!     let red_string = Red.paint(&quot;a red string&quot;).to_string();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Bold, underline, background, and other styles</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! For anything more complex than plain foreground colour changes, you need to</span>
-<span class="doccomment">//! construct `Style` objects themselves, rather than beginning with a `Colour`.</span>
-<span class="doccomment">//! You can do this by chaining methods based on a new `Style`, created with</span>
-<span class="doccomment">//! `Style::new()`. Each method creates a new style that has that specific</span>
-<span class="doccomment">//! property set. For example:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Style;</span>
-<span class="doccomment">//!     println!(&quot;How about some {} and {}?&quot;,</span>
-<span class="doccomment">//!              Style::new().bold().paint(&quot;bold&quot;),</span>
-<span class="doccomment">//!              Style::new().underline().paint(&quot;underline&quot;));</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! For brevity, these methods have also been implemented for `Colour` values,</span>
-<span class="doccomment">//! so you can give your styles a foreground colour without having to begin with</span>
-<span class="doccomment">//! an empty `Style` value:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::{Blue, Yellow};</span>
-<span class="doccomment">//!     println!(&quot;Demonstrating {} and {}!&quot;,</span>
-<span class="doccomment">//!              Blue.bold().paint(&quot;blue bold&quot;),</span>
-<span class="doccomment">//!              Yellow.underline().paint(&quot;yellow underline&quot;));</span>
-<span class="doccomment">//!     println!(&quot;Yellow on blue: {}&quot;, Yellow.on(Blue).paint(&quot;wow!&quot;));</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The complete list of styles you can use are: `bold`, `dimmed`, `italic`,</span>
-<span class="doccomment">//! `underline`, `blink`, `reverse`, `hidden`, `strikethrough`, and `on` for</span>
-<span class="doccomment">//! background colours.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! In some cases, you may find it easier to change the foreground on an</span>
-<span class="doccomment">//! existing `Style` rather than starting from the appropriate `Colour`.</span>
-<span class="doccomment">//! You can do this using the `fg` method:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Style;</span>
-<span class="doccomment">//!     use ansi_term::Colour::{Blue, Cyan, Yellow};</span>
-<span class="doccomment">//!     println!(&quot;Yellow on blue: {}&quot;, Style::new().on(Blue).fg(Yellow).paint(&quot;yow!&quot;));</span>
-<span class="doccomment">//!     println!(&quot;Also yellow on blue: {}&quot;, Cyan.on(Blue).fg(Yellow).paint(&quot;zow!&quot;));</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Finally, you can turn a `Colour` into a `Style` with the `normal` method.</span>
-<span class="doccomment">//! This will produce the exact same `ANSIString` as if you just used the</span>
-<span class="doccomment">//! `paint` method on the `Colour` directly, but it’s useful in certain cases:</span>
-<span class="doccomment">//! for example, you may have a method that returns `Styles`, and need to</span>
-<span class="doccomment">//! represent both the “red bold” and “red, but not bold” styles with values of</span>
-<span class="doccomment">//! the same type. The `Style` struct also has a `Default` implementation if you</span>
-<span class="doccomment">//! want to have a style with *nothing* set.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Style;</span>
-<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
-<span class="doccomment">//!     Red.normal().paint(&quot;yet another red string&quot;);</span>
-<span class="doccomment">//!     Style::default().paint(&quot;a completely regular string&quot;);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Extended colours</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! You can access the extended range of 256 colours by using the `Fixed` colour</span>
-<span class="doccomment">//! variant, which takes an argument of the colour number to use. This can be</span>
-<span class="doccomment">//! included wherever you would use a `Colour`:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::Fixed;</span>
-<span class="doccomment">//!     Fixed(134).paint(&quot;A sort of light purple&quot;);</span>
-<span class="doccomment">//!     Fixed(221).on(Fixed(124)).paint(&quot;Mustard in the ketchup&quot;);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The first sixteen of these values are the same as the normal and bold</span>
-<span class="doccomment">//! standard colour variants. There’s nothing stopping you from using these as</span>
-<span class="doccomment">//! `Fixed` colours instead, but there’s nothing to be gained by doing so</span>
-<span class="doccomment">//! either.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! You can also access full 24-bit color by using the `RGB` colour variant,</span>
-<span class="doccomment">//! which takes separate `u8` arguments for red, green, and blue:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::RGB;</span>
-<span class="doccomment">//!     RGB(70, 130, 180).paint(&quot;Steel blue&quot;);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Combining successive coloured strings</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The benefit of writing ANSI escape codes to the terminal is that they</span>
-<span class="doccomment">//! *stack*: you do not need to end every coloured string with a reset code if</span>
-<span class="doccomment">//! the text that follows it is of a similar style. For example, if you want to</span>
-<span class="doccomment">//! have some blue text followed by some blue bold text, it’s possible to send</span>
-<span class="doccomment">//! the ANSI code for blue, followed by the ANSI code for bold, and finishing</span>
-<span class="doccomment">//! with a reset code without having to have an extra one between the two</span>
-<span class="doccomment">//! strings.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This crate can optimise the ANSI codes that get printed in situations like</span>
-<span class="doccomment">//! this, making life easier for your terminal renderer. The `ANSIStrings`</span>
-<span class="doccomment">//! struct takes a slice of several `ANSIString` values, and will iterate over</span>
-<span class="doccomment">//! each of them, printing only the codes for the styles that need to be updated</span>
-<span class="doccomment">//! as part of its formatting routine.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The following code snippet uses this to enclose a binary number displayed in</span>
-<span class="doccomment">//! red bold text inside some red, but not bold, brackets:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
-<span class="doccomment">//!     use ansi_term::{ANSIString, ANSIStrings};</span>
-<span class="doccomment">//!     let some_value = format!(&quot;{:b}&quot;, 42);</span>
-<span class="doccomment">//!     let strings: &amp;[ANSIString&lt;&#39;static&gt;] = &amp;[</span>
-<span class="doccomment">//!         Red.paint(&quot;[&quot;),</span>
-<span class="doccomment">//!         Red.bold().paint(some_value),</span>
-<span class="doccomment">//!         Red.paint(&quot;]&quot;),</span>
-<span class="doccomment">//!     ];</span>
-<span class="doccomment">//!     println!(&quot;Value: {}&quot;, ANSIStrings(strings));</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! There are several things to note here. Firstly, the `paint` method can take</span>
-<span class="doccomment">//! *either* an owned `String` or a borrowed `&amp;str`. Internally, an `ANSIString`</span>
-<span class="doccomment">//! holds a copy-on-write (`Cow`) string value to deal with both owned and</span>
-<span class="doccomment">//! borrowed strings at the same time. This is used here to display a `String`,</span>
-<span class="doccomment">//! the result of the `format!` call, using the same mechanism as some</span>
-<span class="doccomment">//! statically-available `&amp;str` slices. Secondly, that the `ANSIStrings` value</span>
-<span class="doccomment">//! works in the same way as its singular counterpart, with a `Display`</span>
-<span class="doccomment">//! implementation that only performs the formatting when required.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Byte strings</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This library also supports formatting `[u8]` byte strings; this supports</span>
-<span class="doccomment">//! applications working with text in an unknown encoding.  `Style` and</span>
-<span class="doccomment">//! `Color` support painting `[u8]` values, resulting in an `ANSIByteString`.</span>
-<span class="doccomment">//! This type does not implement `Display`, as it may not contain UTF-8, but</span>
-<span class="doccomment">//! it does provide a method `write_to` to write the result to any</span>
-<span class="doccomment">//! `io::Write`:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::Green;</span>
-<span class="doccomment">//!     Green.paint(&quot;user data&quot;.as_bytes()).write_to(&amp;mut std::io::stdout()).unwrap();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Similarly, the type `ANSIByteStrings` supports writing a list of</span>
-<span class="doccomment">//! `ANSIByteString` values with minimal escape sequences:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     use ansi_term::Colour::Green;</span>
-<span class="doccomment">//!     use ansi_term::ANSIByteStrings;</span>
-<span class="doccomment">//!     ANSIByteStrings(&amp;[</span>
-<span class="doccomment">//!         Green.paint(&quot;user data 1\n&quot;.as_bytes()),</span>
-<span class="doccomment">//!         Green.bold().paint(&quot;user data 2\n&quot;.as_bytes()),</span>
-<span class="doccomment">//!     ]).write_to(&amp;mut std::io::stdout()).unwrap();</span>
+<span class="doccomment">//! This is a library for controlling colours and formatting, such as</span>
+<span class="doccomment">//! red bold text or blue underlined text, on ANSI terminals.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Basic usage</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! There are two main data structures in this crate that you need to be</span>
+<span class="doccomment">//! concerned with: `ANSIString` and `Style`. A `Style` holds stylistic</span>
+<span class="doccomment">//! information: colours, whether the text should be bold, or blinking, or</span>
+<span class="doccomment">//! whatever. There are also `Colour` variants that represent simple foreground</span>
+<span class="doccomment">//! colour styles. An `ANSIString` is a string paired with a `Style`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! (Yes, it’s British English, but you won’t have to write “colour” very often.</span>
+<span class="doccomment">//! `Style` is used the majority of the time.)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! To format a string, call the `paint` method on a `Style` or a `Colour`,</span>
+<span class="doccomment">//! passing in the string you want to format as the argument. For example,</span>
+<span class="doccomment">//! here’s how to get some red text:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
+<span class="doccomment">//!     println!(&quot;This is in red: {}&quot;, Red.paint(&quot;a red string&quot;));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! It’s important to note that the `paint` method does *not* actually return a</span>
+<span class="doccomment">//! string with the ANSI control characters surrounding it. Instead, it returns</span>
+<span class="doccomment">//! an `ANSIString` value that has a `Display` implementation that, when</span>
+<span class="doccomment">//! formatted, returns the characters. This allows strings to be printed with a</span>
+<span class="doccomment">//! minimum of `String` allocations being performed behind the scenes.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! If you *do* want to get at the escape codes, then you can convert the</span>
+<span class="doccomment">//! `ANSIString` to a string as you would any other `Display` value:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
+<span class="doccomment">//!     use std::string::ToString;</span>
+<span class="doccomment">//!     let red_string = Red.paint(&quot;a red string&quot;).to_string();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Bold, underline, background, and other styles</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! For anything more complex than plain foreground colour changes, you need to</span>
+<span class="doccomment">//! construct `Style` objects themselves, rather than beginning with a `Colour`.</span>
+<span class="doccomment">//! You can do this by chaining methods based on a new `Style`, created with</span>
+<span class="doccomment">//! `Style::new()`. Each method creates a new style that has that specific</span>
+<span class="doccomment">//! property set. For example:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Style;</span>
+<span class="doccomment">//!     println!(&quot;How about some {} and {}?&quot;,</span>
+<span class="doccomment">//!              Style::new().bold().paint(&quot;bold&quot;),</span>
+<span class="doccomment">//!              Style::new().underline().paint(&quot;underline&quot;));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! For brevity, these methods have also been implemented for `Colour` values,</span>
+<span class="doccomment">//! so you can give your styles a foreground colour without having to begin with</span>
+<span class="doccomment">//! an empty `Style` value:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::{Blue, Yellow};</span>
+<span class="doccomment">//!     println!(&quot;Demonstrating {} and {}!&quot;,</span>
+<span class="doccomment">//!              Blue.bold().paint(&quot;blue bold&quot;),</span>
+<span class="doccomment">//!              Yellow.underline().paint(&quot;yellow underline&quot;));</span>
+<span class="doccomment">//!     println!(&quot;Yellow on blue: {}&quot;, Yellow.on(Blue).paint(&quot;wow!&quot;));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The complete list of styles you can use are: `bold`, `dimmed`, `italic`,</span>
+<span class="doccomment">//! `underline`, `blink`, `reverse`, `hidden`, `strikethrough`, and `on` for</span>
+<span class="doccomment">//! background colours.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! In some cases, you may find it easier to change the foreground on an</span>
+<span class="doccomment">//! existing `Style` rather than starting from the appropriate `Colour`.</span>
+<span class="doccomment">//! You can do this using the `fg` method:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Style;</span>
+<span class="doccomment">//!     use ansi_term::Colour::{Blue, Cyan, Yellow};</span>
+<span class="doccomment">//!     println!(&quot;Yellow on blue: {}&quot;, Style::new().on(Blue).fg(Yellow).paint(&quot;yow!&quot;));</span>
+<span class="doccomment">//!     println!(&quot;Also yellow on blue: {}&quot;, Cyan.on(Blue).fg(Yellow).paint(&quot;zow!&quot;));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Finally, you can turn a `Colour` into a `Style` with the `normal` method.</span>
+<span class="doccomment">//! This will produce the exact same `ANSIString` as if you just used the</span>
+<span class="doccomment">//! `paint` method on the `Colour` directly, but it’s useful in certain cases:</span>
+<span class="doccomment">//! for example, you may have a method that returns `Styles`, and need to</span>
+<span class="doccomment">//! represent both the “red bold” and “red, but not bold” styles with values of</span>
+<span class="doccomment">//! the same type. The `Style` struct also has a `Default` implementation if you</span>
+<span class="doccomment">//! want to have a style with *nothing* set.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Style;</span>
+<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
+<span class="doccomment">//!     Red.normal().paint(&quot;yet another red string&quot;);</span>
+<span class="doccomment">//!     Style::default().paint(&quot;a completely regular string&quot;);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Extended colours</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! You can access the extended range of 256 colours by using the `Fixed` colour</span>
+<span class="doccomment">//! variant, which takes an argument of the colour number to use. This can be</span>
+<span class="doccomment">//! included wherever you would use a `Colour`:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::Fixed;</span>
+<span class="doccomment">//!     Fixed(134).paint(&quot;A sort of light purple&quot;);</span>
+<span class="doccomment">//!     Fixed(221).on(Fixed(124)).paint(&quot;Mustard in the ketchup&quot;);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The first sixteen of these values are the same as the normal and bold</span>
+<span class="doccomment">//! standard colour variants. There’s nothing stopping you from using these as</span>
+<span class="doccomment">//! `Fixed` colours instead, but there’s nothing to be gained by doing so</span>
+<span class="doccomment">//! either.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! You can also access full 24-bit color by using the `RGB` colour variant,</span>
+<span class="doccomment">//! which takes separate `u8` arguments for red, green, and blue:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::RGB;</span>
+<span class="doccomment">//!     RGB(70, 130, 180).paint(&quot;Steel blue&quot;);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Combining successive coloured strings</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The benefit of writing ANSI escape codes to the terminal is that they</span>
+<span class="doccomment">//! *stack*: you do not need to end every coloured string with a reset code if</span>
+<span class="doccomment">//! the text that follows it is of a similar style. For example, if you want to</span>
+<span class="doccomment">//! have some blue text followed by some blue bold text, it’s possible to send</span>
+<span class="doccomment">//! the ANSI code for blue, followed by the ANSI code for bold, and finishing</span>
+<span class="doccomment">//! with a reset code without having to have an extra one between the two</span>
+<span class="doccomment">//! strings.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This crate can optimise the ANSI codes that get printed in situations like</span>
+<span class="doccomment">//! this, making life easier for your terminal renderer. The `ANSIStrings`</span>
+<span class="doccomment">//! struct takes a slice of several `ANSIString` values, and will iterate over</span>
+<span class="doccomment">//! each of them, printing only the codes for the styles that need to be updated</span>
+<span class="doccomment">//! as part of its formatting routine.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The following code snippet uses this to enclose a binary number displayed in</span>
+<span class="doccomment">//! red bold text inside some red, but not bold, brackets:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::Red;</span>
+<span class="doccomment">//!     use ansi_term::{ANSIString, ANSIStrings};</span>
+<span class="doccomment">//!     let some_value = format!(&quot;{:b}&quot;, 42);</span>
+<span class="doccomment">//!     let strings: &amp;[ANSIString&lt;&#39;static&gt;] = &amp;[</span>
+<span class="doccomment">//!         Red.paint(&quot;[&quot;),</span>
+<span class="doccomment">//!         Red.bold().paint(some_value),</span>
+<span class="doccomment">//!         Red.paint(&quot;]&quot;),</span>
+<span class="doccomment">//!     ];</span>
+<span class="doccomment">//!     println!(&quot;Value: {}&quot;, ANSIStrings(strings));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! There are several things to note here. Firstly, the `paint` method can take</span>
+<span class="doccomment">//! *either* an owned `String` or a borrowed `&amp;str`. Internally, an `ANSIString`</span>
+<span class="doccomment">//! holds a copy-on-write (`Cow`) string value to deal with both owned and</span>
+<span class="doccomment">//! borrowed strings at the same time. This is used here to display a `String`,</span>
+<span class="doccomment">//! the result of the `format!` call, using the same mechanism as some</span>
+<span class="doccomment">//! statically-available `&amp;str` slices. Secondly, that the `ANSIStrings` value</span>
+<span class="doccomment">//! works in the same way as its singular counterpart, with a `Display`</span>
+<span class="doccomment">//! implementation that only performs the formatting when required.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Byte strings</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This library also supports formatting `[u8]` byte strings; this supports</span>
+<span class="doccomment">//! applications working with text in an unknown encoding.  `Style` and</span>
+<span class="doccomment">//! `Color` support painting `[u8]` values, resulting in an `ANSIByteString`.</span>
+<span class="doccomment">//! This type does not implement `Display`, as it may not contain UTF-8, but</span>
+<span class="doccomment">//! it does provide a method `write_to` to write the result to any</span>
+<span class="doccomment">//! `io::Write`:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::Green;</span>
+<span class="doccomment">//!     Green.paint(&quot;user data&quot;.as_bytes()).write_to(&amp;mut std::io::stdout()).unwrap();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Similarly, the type `ANSIByteStrings` supports writing a list of</span>
+<span class="doccomment">//! `ANSIByteString` values with minimal escape sequences:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     use ansi_term::Colour::Green;</span>
+<span class="doccomment">//!     use ansi_term::ANSIByteStrings;</span>
+<span class="doccomment">//!     ANSIByteStrings(&amp;[</span>
+<span class="doccomment">//!         Green.paint(&quot;user data 1\n&quot;.as_bytes()),</span>
+<span class="doccomment">//!         Green.bold().paint(&quot;user data 2\n&quot;.as_bytes()),</span>
+<span class="doccomment">//!     ]).write_to(&amp;mut std::io::stdout()).unwrap();</span>
 
 
 <span class="attribute">#![<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;ansi_term&quot;</span>]</span>
@@ -393,14 +393,14 @@
 <span class="kw">mod</span> <span class="ident">style</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">style</span>::{<span class="ident">Colour</span>, <span class="ident">Style</span>};
 
-<span class="doccomment">/// Color is a type alias for Colour for those who can&#39;t be bothered.</span>
+<span class="doccomment">/// Color is a type alias for Colour for those who can&#39;t be bothered.</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">Colour</span> <span class="kw">as</span> <span class="ident">Color</span>;
 
-<span class="comment">// I&#39;m not beyond calling Colour Colour, rather than Color, but I did</span>
-<span class="comment">// purposefully name this crate &#39;ansi-term&#39; so people wouldn&#39;t get</span>
-<span class="comment">// confused when they tried to install it.</span>
-<span class="comment">//</span>
-<span class="comment">// Only *after* they&#39;d installed it.</span>
+<span class="comment">// I&#39;m not beyond calling Colour Colour, rather than Color, but I did</span>
+<span class="comment">// purposefully name this crate &#39;ansi-term&#39; so people wouldn&#39;t get</span>
+<span class="comment">// confused when they tried to install it.</span>
+<span class="comment">//</span>
+<span class="comment">// Only *after* they&#39;d installed it.</span>
 
 <span class="kw">mod</span> <span class="ident">difference</span>;
 <span class="kw">mod</span> <span class="ident">display</span>;
