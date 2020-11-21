@@ -10,7 +10,7 @@ serializing/persisting to lower precision. Truncation is the default
 behavior in Chrono display formatting.  Either can be used to guarantee
 equality (e.g. for testing) when round-tripping through a lower precision
 format.</p>
-</div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><h3 id="tymethod.round_subsecs" class="method"><code>pub fn <a href="#tymethod.round_subsecs" class="fnname">round_subsecs</a>(self, digits: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; Self</code></h3><div class="docblock"><p>Return a copy rounded to the specified number of subsecond digits. With
+</div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><h3 id="tymethod.round_subsecs" class="method"><code>pub fn <a href="#tymethod.round_subsecs" class="fnname">round_subsecs</a>(self, digits: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; Self</code><a class="srclink" href="../src/chrono/round.rs.html#33" title="goto source code">[src]</a></h3><div class="docblock"><p>Return a copy rounded to the specified number of subsecond digits. With
 9 or more digits, self is returned unmodified. Halfway values are
 rounded up (away from zero).</p>
 <h1 id="example" class="section-header"><a href="#example">Example</a></h1>
@@ -18,7 +18,7 @@ rounded up (away from zero).</p>
 <span class="kw">let</span> <span class="ident">dt</span> <span class="op">=</span> <span class="ident">Utc</span>.<span class="ident">ymd</span>(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">11</span>).<span class="ident">and_hms_milli</span>(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">154</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">dt</span>.<span class="ident">round_subsecs</span>(<span class="number">2</span>).<span class="ident">nanosecond</span>(), <span class="number">150_000_000</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">dt</span>.<span class="ident">round_subsecs</span>(<span class="number">1</span>).<span class="ident">nanosecond</span>(), <span class="number">200_000_000</span>);</pre></div>
-</div><h3 id="tymethod.trunc_subsecs" class="method"><code>pub fn <a href="#tymethod.trunc_subsecs" class="fnname">trunc_subsecs</a>(self, digits: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; Self</code></h3><div class="docblock"><p>Return a copy truncated to the specified number of subsecond
+</div><h3 id="tymethod.trunc_subsecs" class="method"><code>pub fn <a href="#tymethod.trunc_subsecs" class="fnname">trunc_subsecs</a>(self, digits: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; Self</code><a class="srclink" href="../src/chrono/round.rs.html#45" title="goto source code">[src]</a></h3><div class="docblock"><p>Return a copy truncated to the specified number of subsecond
 digits. With 9 or more digits, self is returned unmodified.</p>
 <h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
