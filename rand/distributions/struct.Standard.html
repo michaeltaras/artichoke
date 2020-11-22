@@ -60,7 +60,7 @@ the 24 most significant random bits of a <code>u32</code> are used and for <code
 multiplicative method: <code>(rng.gen::&lt;$uty&gt;() &gt;&gt; N) as $ty * (ε/2)</code>.</p>
 <p>See also: <a href="../../rand/distributions/struct.Open01.html" title="Open01"><code>Open01</code></a> which samples from <code>(0, 1)</code>, <a href="../../rand/distributions/struct.OpenClosed01.html" title="OpenClosed01"><code>OpenClosed01</code></a> which
 samples from <code>(0, 1]</code> and <code>Rng::gen_range(0, 1)</code> which also samples from
-<code>[0, 1)</code>. Note that <code>Open01</code> and <code>gen_range</code> (which uses <a href="../../rand/distributions/uniform/struct.Uniform.html"><code>Uniform</code></a>) use
+<code>[0, 1)</code>. Note that <code>Open01</code> and <code>gen_range</code> (which uses <a href="../../rand/distributions/struct.Uniform.html"><code>Uniform</code></a>) use
 transmute-based methods which yield 1 bit less precision but may perform
 faster on some architectures (on modern Intel CPUs all methods have
 approximately equal performance).</p>

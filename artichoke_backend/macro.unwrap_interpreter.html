@@ -5,7 +5,7 @@
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="ident">or_else</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> { ... };
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> { ... };
 }</pre></div>
-</div><div class="docblock"><p>Extract an <a href="../artichoke_backend/struct.Artichoke.html"><code>Artichoke</code></a> instance from the userdata on a <a href="../artichoke_backend/sys/struct.mrb_state.html"><code>sys::mrb_state</code></a>.</p>
+</div><div class="docblock"><p>Extract an <a href="../artichoke_backend/prelude/struct.Artichoke.html"><code>Artichoke</code></a> instance from the userdata on a <a href="../artichoke_backend/sys/struct.mrb_state.html"><code>sys::mrb_state</code></a>.</p>
 <p>If there is an error when extracting the Rust wrapper around the
 interpreter, return <code>nil</code> or a user-provided default.</p>
 <p>This macro calls <code>unsafe</code> functions.</p>

@@ -30,7 +30,7 @@ module registry.</p>
 <p>The current implemention results in recursive calls to this function
 for each enclosing scope.</p>
 <h1 id="safety" class="section-header"><a href="#safety">Safety</a></h1>
-<p>This function must be called within an <a href="../../artichoke_backend/struct.Artichoke.html#method.with_ffi_boundary" title="Artichoke::with_ffi_boundary"><code>Artichoke::with_ffi_boundary</code></a>
+<p>This function must be called within an <a href="../../artichoke_backend/prelude/struct.Artichoke.html#method.with_ffi_boundary" title="Artichoke::with_ffi_boundary"><code>Artichoke::with_ffi_boundary</code></a>
 closure because the FFI APIs called in this function may require access
 to the Artichoke <a href="../../artichoke_backend/state/struct.State.html">`State</a>.</p>
 </div><h4 id="method.fqname" class="method"><code><span class="docblock attributes">#[must_use]</span>pub fn <a href="#method.fqname" class="fnname">fqname</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'_, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;</code><a class="srclink" href="../../src/artichoke_backend/def.rs.html#170-175" title="goto source code">[src]</a></h4><div class="docblock"><p>Get the fully qualified name of the wrapped class or module.</p>

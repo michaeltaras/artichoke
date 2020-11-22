@@ -187,10 +187,14 @@
 <span id="186">186</span>
 <span id="187">187</span>
 <span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">cargo</span>)]</span>
+<span class="comment">// https://github.com/rust-lang/rust-clippy/pull/5998#issuecomment-731855891</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">map_err_ignore</span>)]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">missing_errors_doc</span>)]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">option_if_let_else</span>)]</span>
 <span class="comment">// disable or_fun_call lint until release of:</span>
