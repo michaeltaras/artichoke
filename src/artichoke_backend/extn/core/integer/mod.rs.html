@@ -328,12 +328,14 @@
 <span id="327">327</span>
 <span id="328">328</span>
 <span id="329">329</span>
+<span id="330">330</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">numeric</span>::{<span class="self">self</span>, <span class="ident">Coercion</span>, <span class="ident">Outcome</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>::<span class="ident">WriteError</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mruby</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">trampoline</span>;
@@ -458,7 +460,7 @@
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-                    <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="self">self</span>.<span class="ident">as_i64</span>())<span class="question-mark">?</span>;
+                    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="self">self</span>.<span class="ident">as_i64</span>()).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; out of char range&quot;</span>);
                     <span class="prelude-val">Err</span>(<span class="ident">RangeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
                 }

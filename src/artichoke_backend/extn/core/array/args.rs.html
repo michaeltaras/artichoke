@@ -148,10 +148,12 @@
 <span id="147">147</span>
 <span id="148">148</span>
 <span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>::<span class="ident">WriteError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>::<span class="ident">protect</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
@@ -212,9 +214,9 @@
                 <span class="ident">start</span>
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;index &quot;</span>);
-                <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
+                <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
-                <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
+                <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
             }
         };
@@ -223,7 +225,7 @@
             <span class="prelude-val">Ok</span>((<span class="ident">start</span>, <span class="prelude-val">Some</span>(<span class="ident">slice_len</span>), <span class="ident">elem</span>))
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;negative length (&quot;</span>);
-            <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">slice_len</span>)<span class="question-mark">?</span>;
+            <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">slice_len</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
             <span class="ident">message</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
             <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
         }
@@ -239,9 +241,9 @@
                 <span class="prelude-val">Ok</span>((<span class="ident">idx</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>))
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;index &quot;</span>);
-                <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">index</span>)<span class="question-mark">?</span>;
+                <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">index</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
-                <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
+                <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
             }
         }
@@ -263,9 +265,9 @@
             <span class="comment">// TODO: This conditional is probably not doing the right thing</span>
             <span class="kw">if</span> <span class="ident">start</span> <span class="op">+</span> (<span class="ident">end</span> <span class="op">-</span> <span class="ident">start</span>) <span class="op">&lt;</span> <span class="number">0</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-                <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
+                <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;..&quot;</span>);
-                <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">end</span>)<span class="question-mark">?</span>;
+                <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">end</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                 <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; out of range&quot;</span>);
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">RangeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
             }
@@ -280,18 +282,18 @@
                         <span class="prelude-val">Ok</span>((<span class="ident">start</span>, <span class="ident">end</span>.<span class="ident">checked_sub</span>(<span class="ident">start</span>), <span class="ident">second</span>))
                     } <span class="kw">else</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;index &quot;</span>);
-                        <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
+                        <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                         <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
-                        <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
+                        <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                         <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
                     }
                 }
                 (<span class="prelude-val">Ok</span>(<span class="ident">start</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">start</span>, <span class="prelude-val">None</span>, <span class="ident">second</span>)),
                 (<span class="prelude-val">Err</span>(<span class="kw">_</span>), <span class="prelude-val">Err</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;index &quot;</span>);
-                    <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
+                    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">start</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                     <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot; too small for array; minimum: -&quot;</span>);
-                    <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
+                    <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">len</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
                     <span class="prelude-val">Err</span>(<span class="ident">IndexError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
                 }
             }

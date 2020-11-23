@@ -200,12 +200,14 @@
 <span id="199">199</span>
 <span id="200">200</span>
 <span id="201">201</span>
+<span id="202">202</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Glue between mruby FFI and `ENV` Rust implementation.</span>
 
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">string</span>::<span class="ident">WriteError</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acos</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">value</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Fp</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">coerce_to_float</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
@@ -330,13 +332,13 @@
         }
         <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="kw">if</span> <span class="ident">exponent</span> <span class="op">&lt;</span> <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;integer &quot;</span>);
-            <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">exponent</span>)<span class="question-mark">?</span>;
+            <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">exponent</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;too small to convert to `int&#39;&quot;</span>);
             <span class="prelude-val">Err</span>(<span class="ident">RangeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
         }
         <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;integer &quot;</span>);
-            <span class="ident">string</span>::<span class="ident">format_int_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">exponent</span>)<span class="question-mark">?</span>;
+            <span class="ident">itoa</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">message</span>, <span class="ident">exponent</span>).<span class="ident">map_err</span>(<span class="ident">WriteError</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
             <span class="ident">message</span>.<span class="ident">push_str</span>(<span class="string">&quot;too big to convert to `int&#39;&quot;</span>);
             <span class="prelude-val">Err</span>(<span class="ident">RangeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>())
         }
