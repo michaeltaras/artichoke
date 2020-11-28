@@ -313,6 +313,24 @@
 <span id="312">312</span>
 <span id="313">313</span>
 <span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This module defines macros for working with interpreters and `Value`s. This</span>
 <span class="comment">// source module is included first in `lib.rs`, which means the macros are</span>
@@ -330,22 +348,40 @@
 <span class="doccomment">/// [`sys::mrb_state`]: crate::sys::mrb_state</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">unwrap_interpreter</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="ident">or_else</span> <span class="op">=</span> ()) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">from_user_data</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>) {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>:<span class="ident">ident</span>, <span class="ident">or_else</span> <span class="op">=</span> ()) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">from_user_data</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>) {
             <span class="ident">interp</span>
         } <span class="kw">else</span> {
             <span class="kw">return</span>;
-        }
+        };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">arena</span>) <span class="op">=</span>
+            <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">gc</span>::<span class="ident">MrbGarbageCollection</span>::<span class="ident">create_arena_savepoint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>)
+        {
+            <span class="ident">arena</span>
+        } <span class="kw">else</span> {
+            <span class="kw">return</span>;
+        };
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Guard</span>::<span class="ident">new</span>(<span class="ident">arena</span>.<span class="ident">interp</span>());
     };
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="ident">or_else</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">from_user_data</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>) {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>:<span class="ident">ident</span>, <span class="ident">or_else</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">interp</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">from_user_data</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>) {
             <span class="ident">interp</span>
         } <span class="kw">else</span> {
             <span class="kw">return</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default</span>;
-        }
+        };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">arena</span>) <span class="op">=</span>
+            <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">gc</span>::<span class="ident">MrbGarbageCollection</span>::<span class="ident">create_arena_savepoint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>)
+        {
+            <span class="ident">arena</span>
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default</span>;
+        };
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Guard</span>::<span class="ident">new</span>(<span class="ident">arena</span>.<span class="ident">interp</span>());
     };
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>, <span class="ident">or_else</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">sys</span>::<span class="ident">mrb_sys_nil_value</span>())
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">to</span>, <span class="ident">or_else</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">sys</span>::<span class="ident">mrb_sys_nil_value</span>())
     };
 }
 

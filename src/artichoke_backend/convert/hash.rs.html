@@ -135,6 +135,19 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -155,13 +168,15 @@
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Value</span>, <span class="ident">Value</span>)<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">capa</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">value</span>.<span class="ident">len</span>()).<span class="ident">unwrap_or_default</span>();
         <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_new_capa</span>(<span class="ident">mrb</span>, <span class="ident">capa</span>)) };
-        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">hash</span>.<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">protect</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>.<span class="ident">unwrap</span>()));
         <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="ident">value</span> {
             <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">inner</span>();
             <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">inner</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>, <span class="ident">key</span>, <span class="ident">val</span>)) };
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>.<span class="ident">inner</span>(), <span class="ident">key</span>, <span class="ident">val</span>))
+            };
         }
-        <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>)
+        <span class="ident">hash</span>
     }
 }
 
@@ -171,13 +186,17 @@
     <span class="kw">fn</span> <span class="ident">try_convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>)<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">capa</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">value</span>.<span class="ident">len</span>()).<span class="ident">unwrap_or_default</span>();
         <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_new_capa</span>(<span class="ident">mrb</span>, <span class="ident">capa</span>)) };
-        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">hash</span>.<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">protect</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>.<span class="ident">unwrap</span>()));
         <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="ident">value</span> {
-            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">key</span>)<span class="question-mark">?</span>.<span class="ident">inner</span>();
-            <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">val</span>)<span class="question-mark">?</span>.<span class="ident">inner</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>, <span class="ident">key</span>, <span class="ident">val</span>)) };
+            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">key</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">val</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
+                    <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>.<span class="ident">inner</span>(), <span class="ident">key</span>.<span class="ident">inner</span>(), <span class="ident">val</span>.<span class="ident">inner</span>())
+                })
+            };
         }
-        <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>))
+        <span class="prelude-val">Ok</span>(<span class="ident">hash</span>)
     }
 }
 
@@ -185,13 +204,17 @@
     <span class="kw">fn</span> <span class="ident">convert_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
         <span class="kw">let</span> <span class="ident">capa</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">value</span>.<span class="ident">len</span>()).<span class="ident">unwrap_or_default</span>();
         <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_new_capa</span>(<span class="ident">mrb</span>, <span class="ident">capa</span>)) };
-        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">hash</span>.<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">protect</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>.<span class="ident">unwrap</span>()));
         <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="ident">value</span> {
-            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">key</span>).<span class="ident">inner</span>();
-            <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">val</span>).<span class="ident">inner</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>, <span class="ident">key</span>, <span class="ident">val</span>)) };
+            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">key</span>);
+            <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">val</span>);
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
+                    <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>.<span class="ident">inner</span>(), <span class="ident">key</span>.<span class="ident">inner</span>(), <span class="ident">val</span>.<span class="ident">inner</span>())
+                })
+            };
         }
-        <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>)
+        <span class="ident">hash</span>
     }
 }
 
@@ -200,14 +223,17 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">value</span> {
             <span class="kw">let</span> <span class="ident">capa</span> <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">value</span>.<span class="ident">len</span>()).<span class="ident">unwrap_or_default</span>();
             <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_new_capa</span>(<span class="ident">mrb</span>, <span class="ident">capa</span>)) };
-            <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">hash</span>.<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">protect</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>.<span class="ident">unwrap</span>()));
             <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="ident">value</span> {
-                <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">key</span>).<span class="ident">inner</span>();
-                <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">val</span>).<span class="ident">inner</span>();
-                <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span>
-                    <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>, <span class="ident">key</span>, <span class="ident">val</span>)) };
+                <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">key</span>);
+                <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">convert_mut</span>(<span class="ident">val</span>);
+                <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                    <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
+                        <span class="ident">sys</span>::<span class="ident">mrb_hash_set</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>.<span class="ident">inner</span>(), <span class="ident">key</span>.<span class="ident">inner</span>(), <span class="ident">val</span>.<span class="ident">inner</span>())
+                    })
+                };
             }
-            <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">hash</span>)
+            <span class="ident">hash</span>
         } <span class="kw">else</span> {
             <span class="ident">Value</span>::<span class="ident">nil</span>()
         }
@@ -222,7 +248,7 @@
             <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">inner</span>();
             <span class="kw">let</span> <span class="ident">keys</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_keys</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>))<span class="question-mark">?</span> };
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">keys</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">keys</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">keys</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">protect</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">keys</span>));
             <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">keys</span>, <span class="self">self</span>) }<span class="question-mark">?</span>;
 
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pairs</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">array</span>.<span class="ident">len</span>());
@@ -230,7 +256,7 @@
                 <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">unsafe</span> {
                     <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_hash_get</span>(<span class="ident">mrb</span>, <span class="ident">hash</span>, <span class="ident">key</span>.<span class="ident">inner</span>()))<span class="question-mark">?</span>
                 };
-                <span class="ident">pairs</span>.<span class="ident">push</span>((<span class="ident">key</span>, <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">value</span>)))
+                <span class="ident">pairs</span>.<span class="ident">push</span>((<span class="ident">key</span>, <span class="self">self</span>.<span class="ident">protect</span>(<span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">value</span>))))
             }
             <span class="prelude-val">Ok</span>(<span class="ident">pairs</span>)
         } <span class="kw">else</span> {

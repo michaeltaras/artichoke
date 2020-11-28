@@ -699,6 +699,7 @@
 <span id="698">698</span>
 <span id="699">699</span>
 <span id="700">700</span>
+<span id="701">701</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">ConvertMut</span>, <span class="ident">TryConvert</span>};
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">debug</span>::<span class="ident">Debug</span>;
@@ -943,7 +944,6 @@
         <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Arg</span>],
         <span class="ident">block</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Block</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>()<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">arg_count_error</span>) <span class="op">=</span> <span class="ident">ArgCountError</span>::<span class="ident">try_from</span>(<span class="ident">args</span>) {
             <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">arg_count_error</span>);
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">arg_count_error</span>.<span class="ident">into</span>());
@@ -956,9 +956,9 @@
             <span class="ident">args</span>.<span class="ident">len</span>(),
             <span class="kw">if</span> <span class="ident">block</span>.<span class="ident">is_some</span>() { <span class="string">&quot; and block&quot;</span> } <span class="kw">else</span> { <span class="string">&quot;&quot;</span> }
         );
-        <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">intern_string</span>(<span class="ident">func</span>.<span class="ident">to_string</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">intern_string</span>(<span class="ident">func</span>.<span class="ident">to_string</span>())<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">arena</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
+            <span class="ident">interp</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
                 <span class="ident">protect</span>::<span class="ident">funcall</span>(
                     <span class="ident">mrb</span>,
                     <span class="self">self</span>.<span class="ident">inner</span>(),
@@ -979,12 +979,12 @@
                     <span class="comment">// See: https://github.com/mruby/mruby/issues/4460</span>
                     <span class="prelude-val">Err</span>(<span class="ident">Fatal</span>::<span class="ident">from</span>(<span class="string">&quot;Unreachable Ruby value&quot;</span>).<span class="ident">into</span>())
                 } <span class="kw">else</span> {
-                    <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
+                    <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">protect</span>(<span class="ident">value</span>))
                 }
             }
             <span class="prelude-val">Err</span>(<span class="ident">exception</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">exception</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">exception</span>);
-                <span class="prelude-val">Err</span>(<span class="ident">exception_handler</span>::<span class="ident">last_error</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>, <span class="ident">exception</span>)<span class="question-mark">?</span>)
+                <span class="kw">let</span> <span class="ident">exception</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">protect</span>(<span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">exception</span>));
+                <span class="prelude-val">Err</span>(<span class="ident">exception_handler</span>::<span class="ident">last_error</span>(<span class="ident">interp</span>, <span class="ident">exception</span>)<span class="question-mark">?</span>)
             }
         }
     }
@@ -1014,7 +1014,9 @@
     }
 
     <span class="kw">fn</span> <span class="ident">respond_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Artichoke</span>, <span class="ident">method</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">method</span>);
+        <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">intern_string</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">method</span>))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="ident">Symbol</span>::<span class="ident">new</span>(<span class="ident">method</span>);
+        <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="ident">Symbol</span>::<span class="ident">alloc_value</span>(<span class="ident">method</span>, <span class="ident">interp</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">respond_to</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">funcall</span>(<span class="ident">interp</span>, <span class="string">&quot;respond_to?&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">method</span>], <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
         <span class="ident">interp</span>.<span class="ident">try_convert</span>(<span class="ident">respond_to</span>)
     }

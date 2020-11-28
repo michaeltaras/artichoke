@@ -391,7 +391,7 @@
         <span class="comment">// `MRB_TT_ARRAY` refers to the mruby `mrb_array` implementation.</span>
         <span class="comment">// Artichoke implements its own `Array` as a `Ruby::Data`, so this</span>
         <span class="comment">// variant is unreachable.</span>
-        <span class="ident">MRB_TT_ARRAY</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Unreachable</span>,
+        <span class="ident">MRB_TT_ARRAY</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Array</span>,
         <span class="ident">MRB_TT_HASH</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Hash</span>,
         <span class="ident">MRB_TT_STRING</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">String</span>,
         <span class="ident">MRB_TT_RANGE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Range</span>,
@@ -541,12 +541,12 @@
     <span class="kw">fn</span> <span class="ident">parse_array_ruby_type</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;[]&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Data</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">empty</span>.<span class="ident">inner</span>()));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">empty</span>.<span class="ident">inner</span>()));
         <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;[1, /./, Object.new]&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Data</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">array</span>.<span class="ident">inner</span>()));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">array</span>.<span class="ident">inner</span>()));
         <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>];
         <span class="kw">let</span> <span class="ident">converted</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">ary</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Data</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">converted</span>.<span class="ident">inner</span>()));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">converted</span>.<span class="ident">inner</span>()));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

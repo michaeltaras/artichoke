@@ -135,6 +135,48 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
@@ -148,6 +190,13 @@
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="ident">array</span>.<span class="ident">clear</span>();
+
+    <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+    <span class="ident">drop</span>(<span class="ident">array</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+    }
+
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
@@ -182,6 +231,12 @@
 
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">element_assignment</span>(<span class="ident">interp</span>, <span class="ident">first</span>, <span class="ident">second</span>, <span class="ident">third</span>);
 
+    <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+    <span class="ident">drop</span>(<span class="ident">array</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+    }
+
     <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GcState</span>::<span class="ident">Enabled</span> <span class="op">=</span> <span class="ident">prior_gc_state</span> {
         <span class="ident">interp</span>.<span class="ident">enable_gc</span>();
     }
@@ -194,6 +249,13 @@
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">pop</span>();
+
+    <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+    <span class="ident">drop</span>(<span class="ident">array</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+    }
+
     <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">result</span>))
 }
 
@@ -208,6 +270,12 @@
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">other</span>) <span class="op">=</span> <span class="ident">other</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
         <span class="ident">array</span>.<span class="ident">concat</span>(<span class="ident">interp</span>, <span class="ident">other</span>)<span class="question-mark">?</span>;
+
+        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+        <span class="ident">drop</span>(<span class="ident">array</span>);
+        <span class="kw">unsafe</span> {
+            <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+        }
     }
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
@@ -218,6 +286,13 @@
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="ident">array</span>.<span class="ident">push</span>(<span class="ident">value</span>);
+
+    <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+    <span class="ident">drop</span>(<span class="ident">array</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+    }
+
     <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
@@ -261,16 +336,25 @@
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">from</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">count</span>) <span class="op">=</span> <span class="ident">count</span> {
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">count</span>) <span class="op">=</span> <span class="ident">count</span> {
         <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">count</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span>
             <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">count</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;negative array size&quot;</span>))<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">shifted</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">shift_n</span>(<span class="ident">count</span>);
+
         <span class="ident">Array</span>::<span class="ident">alloc_value</span>(<span class="ident">shifted</span>, <span class="ident">interp</span>)
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="ident">shifted</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">shift</span>();
+
         <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">shifted</span>))
+    };
+    <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+    <span class="ident">drop</span>(<span class="ident">array</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
     }
+
+    <span class="ident">result</span>
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>

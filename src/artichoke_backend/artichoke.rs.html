@@ -222,6 +222,43 @@
 <span id="221">221</span>
 <span id="222">222</span>
 <span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
@@ -230,6 +267,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>::{<span class="self">self</span>, <span class="ident">InterpreterExtractError</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">state</span>::<span class="ident">State</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 
 <span class="doccomment">/// Interpreter instance.</span>
 <span class="doccomment">///</span>
@@ -257,6 +295,21 @@
     <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mrb</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_state</span><span class="op">&gt;</span>, <span class="ident">state</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">State</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>);
         <span class="self">Self</span> { <span class="ident">mrb</span>, <span class="ident">state</span> }
+    }
+
+    <span class="doccomment">/// Prevent the given value from being garbage collected.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Calls [`sys::mrb_gc_protect`] on this value which adds it to the GC</span>
+    <span class="doccomment">/// arena. This object will remain in the arena until [`ArenaIndex::restore`]</span>
+    <span class="doccomment">/// restores the arena to an index before this call to protect.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`ArenaIndex::restore`]: crate::gc::arena::ArenaIndex::restore</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">protect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">inner</span>();
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_gc_protect</span>(<span class="ident">mrb</span>, <span class="ident">value</span>));
+        }
+        <span class="ident">value</span>
     }
 
     <span class="doccomment">/// Execute a a closure by moving the [`State`] into the `mrb` instance.</span>
@@ -341,28 +394,49 @@
 
     <span class="doccomment">/// Consume an interpreter and free all live objects.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>();
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">take</span>() {
-                <span class="comment">// Do not free class and module specs before running the final</span>
-                <span class="comment">// garbage collection on `mrb_close`.</span>
-                <span class="kw">let</span> <span class="ident">State</span> {
-                    <span class="ident">parser</span>,
-                    <span class="ident">classes</span>,
-                    <span class="ident">modules</span>,
-                    ..
-                } <span class="op">=</span> <span class="kw-2">*</span><span class="ident">state</span>;
+        <span class="comment">// Safety:</span>
+        <span class="comment">//</span>
+        <span class="comment">// It is permissible to directly access the `*mut sys::mrb_state`</span>
+        <span class="comment">// because we are tearing down the interpreter. The only `MRB_API`</span>
+        <span class="comment">// calls made from this point are related to freeing interpreter</span>
+        <span class="comment">// memory.</span>
+        <span class="kw">let</span> <span class="ident">mrb</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">mrb</span>.<span class="ident">as_mut</span>() };
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">take</span>() {
+            <span class="comment">// Do not free class and module specs before running the final</span>
+            <span class="comment">// garbage collection on `mrb_close`.</span>
+            <span class="kw">let</span> <span class="ident">State</span> {
+                <span class="ident">parser</span>,
+                <span class="ident">classes</span>,
+                <span class="ident">modules</span>,
+                ..
+            } <span class="op">=</span> <span class="kw-2">*</span><span class="ident">state</span>;
 
+            <span class="comment">// Safety</span>
+            <span class="comment">//</span>
+            <span class="comment">// - The parser must be deallocated to free the associated</span>
+            <span class="comment">//   `mrbc_context`.</span>
+            <span class="comment">// - The parser must be freed before the `mrb_state` because the</span>
+            <span class="comment">//   `mrb_state` may hold a copy of the context pointer.</span>
+            <span class="comment">// - `classes` and `modules` from the Artichoke Rust `State`</span>
+            <span class="comment">//   must be live allocations before calling `mrb_close` because</span>
+            <span class="comment">//   these registries allow resolving the `dfree` free functions</span>
+            <span class="comment">//   for Ruby types defined with type tag `MRB_TT_DATA`.</span>
+            <span class="kw">unsafe</span> {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">parser</span>) <span class="op">=</span> <span class="ident">parser</span> {
                     <span class="ident">parser</span>.<span class="ident">close</span>(<span class="ident">mrb</span>);
                 }
                 <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>);
-
-                <span class="ident">drop</span>(<span class="ident">classes</span>);
-                <span class="ident">drop</span>(<span class="ident">modules</span>);
-            } <span class="kw">else</span> {
-                <span class="ident">sys</span>::<span class="ident">mrb_close</span>(<span class="ident">mrb</span>);
             }
+
+            <span class="ident">drop</span>(<span class="ident">classes</span>);
+            <span class="ident">drop</span>(<span class="ident">modules</span>);
+        } <span class="kw">else</span> {
+            <span class="comment">// Safety</span>
+            <span class="comment">//</span>
+            <span class="comment">// If there is no Artichoke Rust `State`, the mruby interpreter</span>
+            <span class="comment">// cannot be safely closed. Prefer to leak the interpreter than</span>
+            <span class="comment">// try to close it.</span>
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">mrb</span>;
         }
     }
 }
