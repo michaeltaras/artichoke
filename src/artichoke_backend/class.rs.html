@@ -386,7 +386,6 @@
 <span id="385">385</span>
 <span id="386">386</span>
 <span id="387">387</span>
-<span id="388">388</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -611,7 +610,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Spec</span> {
     <span class="ident">name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
     <span class="ident">cstring</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>,
-    <span class="ident">data_type</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_data_type</span>,
+    <span class="ident">data_type</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">sys</span>::<span class="ident">mrb_data_type</span><span class="op">&gt;</span>,
     <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
 }
 
@@ -643,7 +642,6 @@
                 <span class="ident">dfree</span>: <span class="ident">free</span>,
             };
             <span class="kw">let</span> <span class="ident">data_type</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">data_type</span>);
-            <span class="kw">let</span> <span class="ident">data_type</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_data_type</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">leak</span>(<span class="ident">data_type</span>);
             <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
                 <span class="ident">name</span>,
                 <span class="ident">cstring</span>,
@@ -656,8 +654,8 @@
     }
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_data_type</span> {
-        <span class="self">self</span>.<span class="ident">data_type</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">sys</span>::<span class="ident">mrb_data_type</span> {
+        <span class="self">self</span>.<span class="ident">data_type</span>.<span class="ident">as_ref</span>()
     }
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
