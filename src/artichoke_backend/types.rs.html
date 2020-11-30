@@ -288,11 +288,6 @@
 <span id="287">287</span>
 <span id="288">288</span>
 <span id="289">289</span>
-<span id="290">290</span>
-<span id="291">291</span>
-<span id="292">292</span>
-<span id="293">293</span>
-<span id="294">294</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 
@@ -396,11 +391,6 @@
         <span class="ident">MRB_TT_STRING</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">String</span>,
         <span class="ident">MRB_TT_RANGE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Range</span>,
         <span class="ident">MRB_TT_EXCEPTION</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Exception</span>,
-        <span class="comment">// This is a special value type for the `mruby-io` implementation of</span>
-        <span class="comment">// the `File` class. Artichoke does not bundle `mruby-io`, so this</span>
-        <span class="comment">// variant is unreachable.</span>
-        <span class="ident">MRB_TT_FILE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Unreachable</span>,
-        <span class="comment">// ENV is currently implemented as a singleton object in Ruby.</span>
         <span class="comment">// NOTE(lopopolo): This might be an internal closure symbol table,</span>
         <span class="comment">// rather than the `ENV` core object.</span>
         <span class="ident">MRB_TT_ENV</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Ruby</span>::<span class="ident">Unreachable</span>,
