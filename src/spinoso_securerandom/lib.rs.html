@@ -851,6 +851,14 @@
 <span id="848">848</span>
 <span id="849">849</span>
 <span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -1583,6 +1591,14 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">rand_thread_rng_must_be_cryptographically_secure</span>() {
         <span class="ident">rng_must_be_cryptographically_secure</span>(<span class="ident">rand</span>::<span class="ident">thread_rng</span>())
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">random_bytes_default_bytes</span>() {
+        <span class="comment">// https://github.com/ruby/ruby/blob/v2_6_3/lib/securerandom.rb#L135</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw">super</span>::<span class="ident">DEFAULT_REQUESTED_BYTES</span>, <span class="number">16</span>);
+        <span class="kw">let</span> <span class="ident">default_requested_bytes</span> <span class="op">=</span> <span class="ident">random_bytes</span>(<span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">default_requested_bytes</span>.<span class="ident">len</span>(), <span class="number">16</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
