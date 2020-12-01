@@ -35,7 +35,7 @@ timestamp.</p>
 <span class="kw">use</span> <span class="ident">spinoso_time</span>::<span class="ident">Time</span>;
 <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Time</span>::<span class="ident">new</span>();</pre></div>
 </div><h4 id="method.now" class="method"><code><span class="docblock attributes">#[must_use]</span>pub fn <a href="#method.now" class="fnname">now</a>() -&gt; <a class="struct" href="../../../../artichoke_backend/extn/core/time/struct.Time.html" title="struct artichoke_backend::extn::core::time::Time">Time</a></code><a class="srclink" href="../../../../src/spinoso_time/time/chrono/build.rs.html#42-52" title="goto source code">[src]</a></h4><div class="docblock"><p>Creates a new <code>Time</code> object for the current time with a local offset.</p>
-<p>This is same as <a href="Self::new"><code>new</code></a>.</p>
+<p>This is same as <a href="../../../../artichoke_backend/extn/core/time/struct.Time.html#method.new"><code>new</code></a>.</p>
 <h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">spinoso_time</span>::<span class="ident">Time</span>;
@@ -110,11 +110,11 @@ seconds</a>. The range of this value is always from 0 to 999,999,999.</p>
 <span class="kw">let</span> <span class="ident">nsec_since_last_second</span> <span class="op">=</span> <span class="ident">now</span>.<span class="ident">nanosecond</span>();</pre></div>
 <h1 id="implementation-notes-1" class="section-header"><a href="#implementation-notes-1">Implementation notes</a></h1>
 <p>The IEEE 754 double is not accurate enough to represent the exact number
-of nanoseconds since the Unix Epoch. <a href="Self::nanosecond"><code>nanosecond</code></a> is
-more accurate than <a href="Self::to_float"><code>to_float</code></a>.</p>
+of nanoseconds since the Unix Epoch. <a href="../../../../artichoke_backend/extn/core/time/struct.Time.html#method.nanosecond"><code>nanosecond</code></a> is
+more accurate than <a href="../../../../artichoke_backend/extn/core/time/struct.Time.html#method.to_float"><code>to_float</code></a>.</p>
 </div><h4 id="method.subsec" class="method"><code><span class="docblock attributes">#[must_use]</span>pub const fn <a href="#method.subsec" class="fnname">subsec</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code><a class="srclink" href="../../../../src/spinoso_time/time/chrono/time.rs.html#220-222" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns the fraction for time.</p>
 <p>The return value can be a rational number. This result is more accurate
-than <a href="Self::to_float"><code>to_float</code></a> because IEEE 754 double precision is
+than <a href="../../../../artichoke_backend/extn/core/time/struct.Time.html#method.to_float"><code>to_float</code></a> because IEEE 754 double precision is
 not sufficient to losslessly encode nanosecond fractions of seconds.</p>
 <h1 id="examples-13" class="section-header"><a href="#examples-13">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
