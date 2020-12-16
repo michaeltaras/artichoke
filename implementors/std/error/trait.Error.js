@@ -12,6 +12,7 @@ implementors["getrandom"] = [{"text":"impl Error for Error","synthetic":false,"t
 implementors["intaglio"] = [{"text":"impl Error for SymbolOverflowError","synthetic":false,"types":[]}];
 implementors["nix"] = [{"text":"impl Error for Errno","synthetic":false,"types":[]},{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["onig"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
+implementors["proc_macro2"] = [{"text":"impl Error for LexError","synthetic":false,"types":[]}];
 implementors["rand"] = [{"text":"impl Error for BernoulliError","synthetic":false,"types":[]},{"text":"impl Error for WeightedError","synthetic":false,"types":[]},{"text":"impl Error for ReadError","synthetic":false,"types":[]}];
 implementors["rand_core"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["regex"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
