@@ -319,18 +319,6 @@
 <span id="318">318</span>
 <span id="319">319</span>
 <span id="320">320</span>
-<span id="321">321</span>
-<span id="322">322</span>
-<span id="323">323</span>
-<span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
-<span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This module defines macros for working with interpreters and `Value`s. This</span>
 <span class="comment">// source module is included first in `lib.rs`, which means the macros are</span>
@@ -539,11 +527,7 @@
             }
             <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">req1</span> <span class="op">=</span> <span class="ident">req1</span>.<span class="ident">assume_init</span>();
-                <span class="kw">let</span> <span class="ident">opt1</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">has_opt1</span> {
-                    <span class="prelude-val">Some</span>(<span class="ident">opt1</span>.<span class="ident">assume_init</span>())
-                } <span class="kw">else</span> {
-                    <span class="prelude-val">None</span>
-                };
+                <span class="kw">let</span> <span class="ident">opt1</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">has_opt1</span> { <span class="prelude-val">Some</span>(<span class="ident">opt1</span>.<span class="ident">assume_init</span>()) } <span class="kw">else</span> { <span class="prelude-val">None</span> };
                 <span class="kw">let</span> <span class="ident">block</span> <span class="op">=</span> <span class="ident">block</span>.<span class="ident">assume_init</span>();
                 (<span class="ident">req1</span>, <span class="ident">opt1</span>, <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">block</span>::<span class="ident">Block</span>::<span class="ident">new</span>(<span class="ident">block</span>))
             }
@@ -613,16 +597,8 @@
         );
         <span class="kw">let</span> <span class="ident">has_opt1</span> <span class="op">=</span> <span class="ident">has_opt1</span>.<span class="ident">assume_init</span>() <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
         <span class="kw">let</span> <span class="ident">has_opt2</span> <span class="op">=</span> <span class="ident">has_opt2</span>.<span class="ident">assume_init</span>() <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">opt1</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">has_opt1</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">opt1</span>.<span class="ident">assume_init</span>())
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        };
-        <span class="kw">let</span> <span class="ident">opt2</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">has_opt2</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">opt2</span>.<span class="ident">assume_init</span>())
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        };
+        <span class="kw">let</span> <span class="ident">opt1</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">has_opt1</span> { <span class="prelude-val">Some</span>(<span class="ident">opt1</span>.<span class="ident">assume_init</span>()) } <span class="kw">else</span> { <span class="prelude-val">None</span> };
+        <span class="kw">let</span> <span class="ident">opt2</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">has_opt2</span> { <span class="prelude-val">Some</span>(<span class="ident">opt2</span>.<span class="ident">assume_init</span>()) } <span class="kw">else</span> { <span class="prelude-val">None</span> };
         <span class="kw">let</span> <span class="ident">block</span> <span class="op">=</span> <span class="ident">block</span>.<span class="ident">assume_init</span>();
         (<span class="ident">opt1</span>, <span class="ident">opt2</span>, <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">block</span>::<span class="ident">Block</span>::<span class="ident">new</span>(<span class="ident">block</span>))
     }};

@@ -51,15 +51,6 @@
 <span id="50">50</span>
 <span id="51">51</span>
 <span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
@@ -70,27 +61,18 @@
     <span class="comment">// any of the `json/add` sources for serializing &quot;extra&quot; types like `Time`</span>
     <span class="comment">// and `BigDecimal`, not all of which Artichoke supports.</span>
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;json.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json.rb&quot;</span>)[..])<span class="question-mark">?</span>;
-    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
-        <span class="string">&quot;json/common.rb&quot;</span>,
-        <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/common.rb&quot;</span>)[..],
-    )<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;json/common.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/common.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
         <span class="string">&quot;json/generic_object.rb&quot;</span>,
         <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/generic_object.rb&quot;</span>)[..],
     )<span class="question-mark">?</span>;
-    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
-        <span class="string">&quot;json/version.rb&quot;</span>,
-        <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/version.rb&quot;</span>)[..],
-    )<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;json/version.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/version.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;json/pure.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/pure.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
         <span class="string">&quot;json/pure/generator.rb&quot;</span>,
         <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/pure/generator.rb&quot;</span>)[..],
     )<span class="question-mark">?</span>;
-    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
-        <span class="string">&quot;json/pure/parser.rb&quot;</span>,
-        <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/pure/parser.rb&quot;</span>)[..],
-    )<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;json/pure/parser.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/json/pure/parser.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 

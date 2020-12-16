@@ -299,7 +299,6 @@
 <span id="298">298</span>
 <span id="299">299</span>
 <span id="300">300</span>
-<span id="301">301</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Random provides an interface to Ruby&#39;s pseudo-random number generator, or</span>
 <span class="doccomment">//! PRNG. The PRNG produces a deterministic sequence of bits which approximate</span>
@@ -325,8 +324,7 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>};
 <span class="kw">use</span> <span class="ident">spinoso_random</span>::{
-    <span class="ident">ArgumentError</span> <span class="kw">as</span> <span class="ident">RandomArgumentError</span>, <span class="ident">InitializeError</span>, <span class="ident">NewSeedError</span>, <span class="ident">Random</span> <span class="kw">as</span> <span class="ident">SpinosoRandom</span>,
-    <span class="ident">UrandomError</span>,
+    <span class="ident">ArgumentError</span> <span class="kw">as</span> <span class="ident">RandomArgumentError</span>, <span class="ident">InitializeError</span>, <span class="ident">NewSeedError</span>, <span class="ident">Random</span> <span class="kw">as</span> <span class="ident">SpinosoRandom</span>, <span class="ident">UrandomError</span>,
 };
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">HeapAllocatedData</span>;

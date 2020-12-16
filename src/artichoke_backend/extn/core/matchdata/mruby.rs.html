@@ -204,58 +204,6 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::{<span class="self">self</span>, <span class="ident">trampoline</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -265,19 +213,11 @@
     <span class="kw">if</span> <span class="ident">interp</span>.<span class="ident">is_class_defined</span>::<span class="op">&lt;</span><span class="ident">matchdata</span>::<span class="ident">MatchData</span><span class="op">&gt;</span>() {
         <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
     }
-    <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
-        <span class="string">&quot;MatchData&quot;</span>,
-        <span class="prelude-val">None</span>,
-        <span class="prelude-val">Some</span>(<span class="ident">def</span>::<span class="ident">box_unbox_free</span>::<span class="op">&lt;</span><span class="ident">matchdata</span>::<span class="ident">MatchData</span><span class="op">&gt;</span>),
-    )<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;MatchData&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="ident">def</span>::<span class="ident">box_unbox_free</span>::<span class="op">&lt;</span><span class="ident">matchdata</span>::<span class="ident">MatchData</span><span class="op">&gt;</span>))<span class="question-mark">?</span>;
     <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">spec</span>)
         .<span class="ident">value_is_rust_object</span>()
         .<span class="ident">add_method</span>(<span class="string">&quot;begin&quot;</span>, <span class="ident">artichoke_matchdata_begin</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>))<span class="question-mark">?</span>
-        .<span class="ident">add_method</span>(
-            <span class="string">&quot;captures&quot;</span>,
-            <span class="ident">artichoke_matchdata_captures</span>,
-            <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>(),
-        )<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;captures&quot;</span>, <span class="ident">artichoke_matchdata_captures</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(
             <span class="string">&quot;[]&quot;</span>,
             <span class="ident">artichoke_matchdata_element_reference</span>,
@@ -291,16 +231,8 @@
         )<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;names&quot;</span>, <span class="ident">artichoke_matchdata_names</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;offset&quot;</span>, <span class="ident">artichoke_matchdata_offset</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>))<span class="question-mark">?</span>
-        .<span class="ident">add_method</span>(
-            <span class="string">&quot;post_match&quot;</span>,
-            <span class="ident">artichoke_matchdata_post_match</span>,
-            <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>(),
-        )<span class="question-mark">?</span>
-        .<span class="ident">add_method</span>(
-            <span class="string">&quot;pre_match&quot;</span>,
-            <span class="ident">artichoke_matchdata_pre_match</span>,
-            <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>(),
-        )<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;post_match&quot;</span>, <span class="ident">artichoke_matchdata_post_match</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;pre_match&quot;</span>, <span class="ident">artichoke_matchdata_pre_match</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;regexp&quot;</span>, <span class="ident">artichoke_matchdata_regexp</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;size&quot;</span>, <span class="ident">artichoke_matchdata_length</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;string&quot;</span>, <span class="ident">artichoke_matchdata_string</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
@@ -314,10 +246,7 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_begin</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_begin</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="kw">let</span> <span class="ident">begin</span> <span class="op">=</span> <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">required</span> <span class="op">=</span> <span class="number">1</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -329,10 +258,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_captures</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_captures</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -359,10 +285,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_end</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_end</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">required</span> <span class="op">=</span> <span class="number">1</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -374,10 +297,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_length</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_length</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -402,10 +322,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_names</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_names</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -416,10 +333,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_offset</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_offset</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">required</span> <span class="op">=</span> <span class="number">1</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -431,10 +345,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_post_match</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_post_match</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -445,10 +356,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_pre_match</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_pre_match</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -459,10 +367,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_regexp</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_regexp</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -473,10 +378,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_string</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_string</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -487,10 +389,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_to_a</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_to_a</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -501,10 +400,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_to_s</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_matchdata_to_s</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);

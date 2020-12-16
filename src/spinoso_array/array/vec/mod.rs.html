@@ -1737,8 +1737,6 @@
 <span id="1734">1734</span>
 <span id="1735">1735</span>
 <span id="1736">1736</span>
-<span id="1737">1737</span>
-<span id="1738">1738</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Ruby `Array` based on [`Vec`].</span>
 
@@ -2876,8 +2874,7 @@
         <span class="kw">if</span> <span class="ident">index</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() {
             <span class="self">self</span>.<span class="number">0</span>.<span class="ident">extend_from_slice</span>(<span class="ident">values</span>);
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="number">0</span>
-                .<span class="ident">splice</span>(<span class="ident">index</span>..<span class="ident">index</span> <span class="op">+</span> <span class="ident">drained</span>, <span class="ident">values</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>());
+            <span class="self">self</span>.<span class="number">0</span>.<span class="ident">splice</span>(<span class="ident">index</span>..<span class="ident">index</span> <span class="op">+</span> <span class="ident">drained</span>, <span class="ident">values</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>());
         }
 
         <span class="ident">drained</span>
@@ -3232,8 +3229,7 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">non_empty_array_set_slice_interior_non_empty_drain_greater_than_insert_length_overrun_tail</span>()
-    {
+    <span class="kw">fn</span> <span class="ident">non_empty_array_set_slice_interior_non_empty_drain_greater_than_insert_length_overrun_tail</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ary</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
         <span class="kw">let</span> <span class="ident">drained</span> <span class="op">=</span> <span class="ident">ary</span>.<span class="ident">set_slice</span>(<span class="number">3</span>, <span class="number">10</span>, <span class="kw-2">&amp;</span>[<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">drained</span>, <span class="number">1</span>);

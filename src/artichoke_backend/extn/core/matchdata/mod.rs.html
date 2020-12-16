@@ -399,10 +399,6 @@
 <span id="398">398</span>
 <span id="399">399</span>
 <span id="400">400</span>
-<span id="401">401</span>
-<span id="402">402</span>
-<span id="403">403</span>
-<span id="404">404</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! An implementation of [`MatchData`][matchdata] for all [`Regexp`] backends.</span>
 <span class="doccomment">//!</span>
@@ -652,11 +648,7 @@
                             <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">CaptureMatch</span>::<span class="prelude-val">None</span>);
                         }
                     };
-                    <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="ident">captures</span>
-                        .<span class="ident">into_iter</span>()
-                        .<span class="ident">skip</span>(<span class="ident">start</span>)
-                        .<span class="ident">take</span>(<span class="ident">len</span>)
-                        .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+                    <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="ident">captures</span>.<span class="ident">into_iter</span>().<span class="ident">skip</span>(<span class="ident">start</span>).<span class="ident">take</span>(<span class="ident">len</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
                     <span class="prelude-val">Ok</span>(<span class="ident">CaptureMatch</span>::<span class="ident">Range</span>(<span class="ident">matches</span>))
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Ok</span>(<span class="ident">CaptureMatch</span>::<span class="prelude-val">None</span>)

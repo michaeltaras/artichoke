@@ -902,8 +902,6 @@
 <span id="899">899</span>
 <span id="900">900</span>
 <span id="901">901</span>
-<span id="902">902</span>
-<span id="903">903</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;full&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -1424,9 +1422,7 @@
             <span class="string">r#&quot;Numerical argument is out of domain - &quot;gamma&quot;&quot;#</span>,
         )),
         <span class="ident">value</span> <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_infinite</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">f64</span>::<span class="ident">INFINITY</span>),
-        <span class="ident">value</span> <span class="kw">if</span> <span class="macro">matches</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">classify</span>(), <span class="ident">FpCategory</span>::<span class="ident">Zero</span>) <span class="op">&amp;&amp;</span> <span class="ident">value</span>.<span class="ident">is_sign_negative</span>() <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">f64</span>::<span class="ident">NEG_INFINITY</span>)
-        }
+        <span class="ident">value</span> <span class="kw">if</span> <span class="macro">matches</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">classify</span>(), <span class="ident">FpCategory</span>::<span class="ident">Zero</span>) <span class="op">&amp;&amp;</span> <span class="ident">value</span>.<span class="ident">is_sign_negative</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">f64</span>::<span class="ident">NEG_INFINITY</span>),
         <span class="ident">value</span> <span class="kw">if</span> <span class="macro">matches</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">classify</span>(), <span class="ident">FpCategory</span>::<span class="ident">Zero</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">f64</span>::<span class="ident">INFINITY</span>),
         <span class="ident">value</span> <span class="kw">if</span> (<span class="ident">value</span> <span class="op">-</span> <span class="ident">value</span>.<span class="ident">floor</span>()).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">f64</span>::<span class="ident">EPSILON</span> <span class="op">&amp;&amp;</span> <span class="ident">value</span>.<span class="ident">is_sign_negative</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(
             <span class="ident">DomainError</span>::<span class="ident">with_message</span>(<span class="string">r#&quot;Numerical argument is out of domain - &quot;gamma&quot;&quot;#</span>),

@@ -178,7 +178,6 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
-<span id="180">180</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
@@ -230,8 +229,7 @@
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">try_convert_mut</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
         <span class="comment">// This converter requires that the bytes be valid UTF-8 data. If the</span>
         <span class="comment">// `Value` contains binary data, use the `Vec&lt;u8&gt;` or `&amp;[u8]` converter.</span>
-        <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span>
-            <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">String</span>))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">UnboxRubyError</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">Rust</span>::<span class="ident">String</span>))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">string</span>)
     }
 }

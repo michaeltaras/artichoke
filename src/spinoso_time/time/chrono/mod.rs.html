@@ -452,11 +452,6 @@
 <span id="449">449</span>
 <span id="450">450</span>
 <span id="451">451</span>
-<span id="452">452</span>
-<span id="453">453</span>
-<span id="454">454</span>
-<span id="455">455</span>
-<span id="456">456</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
@@ -683,8 +678,8 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_tuple</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u32</span>, <span class="ident">u32</span>, <span class="ident">u32</span>, <span class="ident">u32</span>, <span class="ident">u32</span>, <span class="ident">i32</span>, <span class="ident">u32</span>, <span class="ident">u32</span>, <span class="ident">bool</span>, <span class="ident">Offset</span>) {
         (
-            <span class="self">self</span>.<span class="ident">sec</span>, <span class="self">self</span>.<span class="ident">min</span>, <span class="self">self</span>.<span class="ident">hour</span>, <span class="self">self</span>.<span class="ident">day</span>, <span class="self">self</span>.<span class="ident">month</span>, <span class="self">self</span>.<span class="ident">year</span>, <span class="self">self</span>.<span class="ident">wday</span>, <span class="self">self</span>.<span class="ident">yday</span>,
-            <span class="self">self</span>.<span class="ident">isdst</span>, <span class="self">self</span>.<span class="ident">zone</span>,
+            <span class="self">self</span>.<span class="ident">sec</span>, <span class="self">self</span>.<span class="ident">min</span>, <span class="self">self</span>.<span class="ident">hour</span>, <span class="self">self</span>.<span class="ident">day</span>, <span class="self">self</span>.<span class="ident">month</span>, <span class="self">self</span>.<span class="ident">year</span>, <span class="self">self</span>.<span class="ident">wday</span>, <span class="self">self</span>.<span class="ident">yday</span>, <span class="self">self</span>.<span class="ident">isdst</span>,
+            <span class="self">self</span>.<span class="ident">zone</span>,
         )
     }
 }
@@ -722,12 +717,10 @@
             ..
         } <span class="op">=</span> <span class="ident">time</span>;
 
-        <span class="kw">let</span> <span class="ident">date</span> <span class="op">=</span>
-            <span class="ident">NaiveDate</span>::<span class="ident">from_ymd_opt</span>(<span class="ident">year</span>, <span class="ident">month</span>, <span class="ident">day</span>).<span class="ident">ok_or</span>(<span class="ident">ComponentOutOfRangeError</span>::<span class="ident">Date</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">date</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd_opt</span>(<span class="ident">year</span>, <span class="ident">month</span>, <span class="ident">day</span>).<span class="ident">ok_or</span>(<span class="ident">ComponentOutOfRangeError</span>::<span class="ident">Date</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">sec</span> <span class="op">=</span><span class="op">=</span> <span class="number">60</span> {
             <span class="comment">// Leap second - chrono stores the 60th second in the nanos.</span>
-            <span class="ident">NaiveTime</span>::<span class="ident">from_hms_nano_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="number">59</span>, <span class="ident">NANOS_IN_SECOND</span>)
-                .<span class="ident">ok_or</span>(<span class="ident">ComponentOutOfRangeError</span>::<span class="ident">Time</span>)<span class="question-mark">?</span>
+            <span class="ident">NaiveTime</span>::<span class="ident">from_hms_nano_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="number">59</span>, <span class="ident">NANOS_IN_SECOND</span>).<span class="ident">ok_or</span>(<span class="ident">ComponentOutOfRangeError</span>::<span class="ident">Time</span>)<span class="question-mark">?</span>
         } <span class="kw">else</span> {
             <span class="ident">NaiveTime</span>::<span class="ident">from_hms_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>).<span class="ident">ok_or</span>(<span class="ident">ComponentOutOfRangeError</span>::<span class="ident">Time</span>)<span class="question-mark">?</span>
         };
@@ -830,10 +823,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">properties_fixed</span>() {
         <span class="kw">let</span> <span class="ident">hour</span> <span class="op">=</span> <span class="number">3600</span>;
-        <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">Time</span>::<span class="ident">from</span>(<span class="ident">DateTime</span>::<span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>::<span class="ident">from_utc</span>(
-            <span class="ident">date</span>(),
-            <span class="ident">FixedOffset</span>::<span class="ident">west</span>(<span class="number">7</span> <span class="op">*</span> <span class="ident">hour</span>),
-        ));
+        <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">Time</span>::<span class="ident">from</span>(<span class="ident">DateTime</span>::<span class="op">&lt;</span><span class="ident">FixedOffset</span><span class="op">&gt;</span>::<span class="ident">from_utc</span>(<span class="ident">date</span>(), <span class="ident">FixedOffset</span>::<span class="ident">west</span>(<span class="number">7</span> <span class="op">*</span> <span class="ident">hour</span>)));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">time</span>.<span class="ident">year</span>(), <span class="number">2019</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">time</span>.<span class="ident">month</span>(), <span class="number">4</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">time</span>.<span class="ident">day</span>(), <span class="number">6</span>);

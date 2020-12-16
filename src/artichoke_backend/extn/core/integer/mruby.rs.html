@@ -68,19 +68,6 @@
 <span id="67">67</span>
 <span id="68">68</span>
 <span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
-<span id="78">78</span>
-<span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">integer</span>::<span class="ident">trampoline</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">integer</span>::<span class="ident">Integer</span>;
@@ -93,11 +80,7 @@
     <span class="kw">let</span> <span class="ident">spec</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;Integer&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
     <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">spec</span>)
         .<span class="ident">add_method</span>(<span class="string">&quot;chr&quot;</span>, <span class="ident">artichoke_integer_chr</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_opt</span>(<span class="number">1</span>))<span class="question-mark">?</span>
-        .<span class="ident">add_method</span>(
-            <span class="string">&quot;[]&quot;</span>,
-            <span class="ident">artichoke_integer_element_reference</span>,
-            <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>),
-        )<span class="question-mark">?</span>
+        .<span class="ident">add_method</span>(<span class="string">&quot;[]&quot;</span>, <span class="ident">artichoke_integer_element_reference</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>))<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;/&quot;</span>, <span class="ident">artichoke_integer_div</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_req</span>(<span class="number">1</span>))<span class="question-mark">?</span>
         .<span class="ident">add_method</span>(<span class="string">&quot;size&quot;</span>, <span class="ident">artichoke_integer_size</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())<span class="question-mark">?</span>
         .<span class="ident">define</span>()<span class="question-mark">?</span>;
@@ -107,10 +90,7 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_integer_chr</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_integer_chr</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="kw">let</span> <span class="ident">encoding</span> <span class="op">=</span> <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">optional</span> <span class="op">=</span> <span class="number">1</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -137,10 +117,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_integer_div</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_integer_div</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="kw">let</span> <span class="ident">denominator</span> <span class="op">=</span> <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">required</span> <span class="op">=</span> <span class="number">1</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">slf</span>);
@@ -152,10 +129,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_integer_size</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">artichoke_integer_size</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">mrb_get_args</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">none</span>);
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">trampoline</span>::<span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="ident">guard</span>);

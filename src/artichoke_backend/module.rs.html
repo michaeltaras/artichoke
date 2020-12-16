@@ -304,31 +304,6 @@
 <span id="303">303</span>
 <span id="304">304</span>
 <span id="305">305</span>
-<span id="306">306</span>
-<span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
-<span id="312">312</span>
-<span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
-<span id="316">316</span>
-<span id="317">317</span>
-<span id="318">318</span>
-<span id="319">319</span>
-<span id="320">320</span>
-<span id="321">321</span>
-<span id="322">322</span>
-<span id="323">323</span>
-<span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
-<span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
@@ -365,12 +340,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_method</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">name</span>: <span class="ident">T</span>,
-        <span class="ident">method</span>: <span class="ident">Method</span>,
-        <span class="ident">args</span>: <span class="ident">sys</span>::<span class="ident">mrb_aspec</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ConstantNameError</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_method</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">T</span>, <span class="ident">method</span>: <span class="ident">Method</span>, <span class="ident">args</span>: <span class="ident">sys</span>::<span class="ident">mrb_aspec</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ConstantNameError</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -416,28 +386,19 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">rclass</span>)) <span class="op">=</span> <span class="ident">rclass</span> {
             <span class="ident">rclass</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">enclosing_scope</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">enclosing_scope</span>() {
-            <span class="kw">let</span> <span class="ident">scope</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                <span class="self">self</span>.<span class="ident">interp</span>
-                    .<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">enclosing_scope</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>))
-            };
+            <span class="kw">let</span> <span class="ident">scope</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">enclosing_scope</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>)) };
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">scope</span>)) <span class="op">=</span> <span class="ident">scope</span> {
                 <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                    <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> {
-                        <span class="ident">sys</span>::<span class="ident">mrb_define_module_under</span>(<span class="ident">mrb</span>, <span class="ident">scope</span>.<span class="ident">as_mut</span>(), <span class="ident">name</span>)
-                    })
+                    <span class="self">self</span>.<span class="ident">interp</span>
+                        .<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_define_module_under</span>(<span class="ident">mrb</span>, <span class="ident">scope</span>.<span class="ident">as_mut</span>(), <span class="ident">name</span>))
                 };
                 <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="ident">rclass</span>.<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">module</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>()))<span class="question-mark">?</span>;
                 <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">rclass</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">module</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>()))<span class="question-mark">?</span>
             } <span class="kw">else</span> {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NotDefinedError</span>::<span class="ident">enclosing_scope</span>(
-                    <span class="ident">enclosing_scope</span>.<span class="ident">fqname</span>().<span class="ident">into_owned</span>(),
-                ));
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NotDefinedError</span>::<span class="ident">enclosing_scope</span>(<span class="ident">enclosing_scope</span>.<span class="ident">fqname</span>().<span class="ident">into_owned</span>()));
             }
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                <span class="self">self</span>.<span class="ident">interp</span>
-                    .<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_define_module</span>(<span class="ident">mrb</span>, <span class="ident">name</span>))
-            };
+            <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="ident">sys</span>::<span class="ident">mrb_define_module</span>(<span class="ident">mrb</span>, <span class="ident">name</span>)) };
             <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="ident">rclass</span>.<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">module</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>()))<span class="question-mark">?</span>;
             <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">rclass</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">module</span>(<span class="self">self</span>.<span class="ident">spec</span>.<span class="ident">name</span>()))<span class="question-mark">?</span>
         };
@@ -460,11 +421,7 @@
 
 <span class="kw">impl</span> <span class="ident">Rclass</span> {
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">sym</span>: <span class="ident">u32</span>,
-        <span class="ident">name</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>,
-        <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sym</span>: <span class="ident">u32</span>, <span class="ident">name</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>, <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">sym</span>,
             <span class="ident">name</span>,
@@ -484,11 +441,8 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">scope</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">enclosing_scope</span> {
             <span class="comment">// Short circuit if enclosing scope does not exist.</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scope</span> <span class="op">=</span> <span class="ident">scope</span>.<span class="ident">rclass</span>(<span class="ident">mrb</span>)<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="ident">is_defined_under</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_const_defined_at</span>(
-                <span class="ident">mrb</span>,
-                <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_value</span>(<span class="ident">scope</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">c_void</span><span class="op">&gt;</span>().<span class="ident">as_mut</span>()),
-                <span class="self">self</span>.<span class="ident">sym</span>,
-            );
+            <span class="kw">let</span> <span class="ident">is_defined_under</span> <span class="op">=</span>
+                <span class="ident">sys</span>::<span class="ident">mrb_const_defined_at</span>(<span class="ident">mrb</span>, <span class="ident">sys</span>::<span class="ident">mrb_sys_obj_value</span>(<span class="ident">scope</span>.<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">c_void</span><span class="op">&gt;</span>().<span class="ident">as_mut</span>()), <span class="self">self</span>.<span class="ident">sym</span>);
             <span class="kw">if</span> <span class="ident">is_defined_under</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="comment">// Enclosing scope exists.</span>
                 <span class="comment">// Module is not defined under the enclosing scope.</span>
@@ -526,11 +480,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Spec</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(
-        <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-        <span class="ident">name</span>: <span class="ident">T</span>,
-        <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">name</span>: <span class="ident">T</span>, <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {

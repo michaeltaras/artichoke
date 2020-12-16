@@ -320,20 +320,6 @@
 <span id="319">319</span>
 <span id="320">320</span>
 <span id="321">321</span>
-<span id="322">322</span>
-<span id="323">323</span>
-<span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
-<span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>;
@@ -355,10 +341,7 @@
 
 <span class="comment">// MRB_API mrb_value mrb_ary_new_capa(mrb_state*, mrb_int);</span>
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_new_capa</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">capa</span>: <span class="ident">sys</span>::<span class="ident">mrb_int</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_new_capa</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">capa</span>: <span class="ident">sys</span>::<span class="ident">mrb_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="ident">capacity</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">capa</span>).<span class="ident">unwrap_or_default</span>();
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>);
@@ -413,10 +396,7 @@
 
 <span class="comment">// MRB_API mrb_value mrb_ary_splat(mrb_state *mrb, mrb_value value);</span>
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_splat</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">value</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_splat</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">value</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">value</span>);
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">is_ok</span>() {
@@ -436,11 +416,7 @@
 <span class="comment">//</span>
 <span class="comment">// This function corresponds to the `OP_ARYCAT` VM opcode.</span>
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_concat</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">ary</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-    <span class="ident">other</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_concat</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">ary</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>, <span class="ident">other</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) {
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>, <span class="ident">or_else</span> <span class="op">=</span> ());
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">ary</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">other</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">other</span>);
@@ -485,11 +461,7 @@
 
 <span class="comment">// MRB_API void mrb_ary_push(mrb_state *mrb, mrb_value array, mrb_value value);</span>
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_push</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">ary</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-    <span class="ident">value</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_push</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">ary</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>, <span class="ident">value</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) {
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>, <span class="ident">or_else</span> <span class="op">=</span> ());
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">ary</span>);
     <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">value</span>);
@@ -565,10 +537,7 @@
 
 <span class="comment">// MRB_API mrb_value mrb_ary_shift(mrb_state *mrb, mrb_value self)</span>
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_shift</span>(
-    <span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>,
-    <span class="ident">ary</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">mrb_ary_shift</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">ary</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">ary</span>);
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">array</span>) <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">array</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>) {
@@ -667,7 +636,10 @@
     <span class="comment">// it. Prefer to leak the `Vec` if this happens so we don&#39;t segfault.</span>
     <span class="macro">warn</span><span class="macro">!</span>(
         <span class="string">&quot;Attempted to free Array with unaligned pointer: ptr = {:p}, offset = {:x}, len = {}, capa = {}&quot;</span>,
-        <span class="ident">ptr</span>, <span class="ident">ptr</span>.<span class="ident">align_offset</span>(<span class="number">0x10</span>), <span class="ident">len</span>, <span class="ident">capacity</span>
+        <span class="ident">ptr</span>,
+        <span class="ident">ptr</span>.<span class="ident">align_offset</span>(<span class="number">0x10</span>),
+        <span class="ident">len</span>,
+        <span class="ident">capacity</span>
     );
 }
 </pre></div>

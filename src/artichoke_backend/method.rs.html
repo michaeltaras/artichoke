@@ -122,18 +122,6 @@
 <span id="121">121</span>
 <span id="122">122</span>
 <span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
-<span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>};
@@ -216,20 +204,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method requires that the [`sys::mrb_state`] has a valid `top_self`</span>
     <span class="doccomment">/// object.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">define</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-        <span class="ident">into</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">RClass</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">NotDefinedError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">define</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">into</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">RClass</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">NotDefinedError</span><span class="op">&gt;</span> {
         <span class="ident">interp</span>
             .<span class="ident">with_ffi_boundary</span>(<span class="op">|</span><span class="ident">mrb</span><span class="op">|</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">method_type</span> {
-                <span class="ident">Type</span>::<span class="ident">Class</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_define_class_method</span>(
-                    <span class="ident">mrb</span>,
-                    <span class="ident">into</span>,
-                    <span class="self">self</span>.<span class="ident">name_c_str</span>().<span class="ident">as_ptr</span>(),
-                    <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">method</span>),
-                    <span class="self">self</span>.<span class="ident">args</span>,
-                ),
+                <span class="ident">Type</span>::<span class="ident">Class</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">sys</span>::<span class="ident">mrb_define_class_method</span>(<span class="ident">mrb</span>, <span class="ident">into</span>, <span class="self">self</span>.<span class="ident">name_c_str</span>().<span class="ident">as_ptr</span>(), <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">method</span>), <span class="self">self</span>.<span class="ident">args</span>)
+                }
                 <span class="ident">Type</span>::<span class="ident">Global</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_define_singleton_method</span>(
                     <span class="ident">mrb</span>,
                     (<span class="kw-2">*</span><span class="ident">mrb</span>).<span class="ident">top_self</span>,
@@ -237,13 +217,9 @@
                     <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">method</span>),
                     <span class="self">self</span>.<span class="ident">args</span>,
                 ),
-                <span class="ident">Type</span>::<span class="ident">Instance</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_define_method</span>(
-                    <span class="ident">mrb</span>,
-                    <span class="ident">into</span>,
-                    <span class="self">self</span>.<span class="ident">name_c_str</span>().<span class="ident">as_ptr</span>(),
-                    <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">method</span>),
-                    <span class="self">self</span>.<span class="ident">args</span>,
-                ),
+                <span class="ident">Type</span>::<span class="ident">Instance</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">sys</span>::<span class="ident">mrb_define_method</span>(<span class="ident">mrb</span>, <span class="ident">into</span>, <span class="self">self</span>.<span class="ident">name_c_str</span>().<span class="ident">as_ptr</span>(), <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">method</span>), <span class="self">self</span>.<span class="ident">args</span>)
+                }
                 <span class="ident">Type</span>::<span class="ident">Module</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_define_module_function</span>(
                     <span class="ident">mrb</span>,
                     <span class="ident">into</span>,

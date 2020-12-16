@@ -830,35 +830,6 @@
 <span id="827">827</span>
 <span id="828">828</span>
 <span id="829">829</span>
-<span id="830">830</span>
-<span id="831">831</span>
-<span id="832">832</span>
-<span id="833">833</span>
-<span id="834">834</span>
-<span id="835">835</span>
-<span id="836">836</span>
-<span id="837">837</span>
-<span id="838">838</span>
-<span id="839">839</span>
-<span id="840">840</span>
-<span id="841">841</span>
-<span id="842">842</span>
-<span id="843">843</span>
-<span id="844">844</span>
-<span id="845">845</span>
-<span id="846">846</span>
-<span id="847">847</span>
-<span id="848">848</span>
-<span id="849">849</span>
-<span id="850">850</span>
-<span id="851">851</span>
-<span id="852">852</span>
-<span id="853">853</span>
-<span id="854">854</span>
-<span id="855">855</span>
-<span id="856">856</span>
-<span id="857">857</span>
-<span id="858">858</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -1584,9 +1555,7 @@
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">Not</span>;
     <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">CryptoRng</span>;
 
-    <span class="kw">use</span> <span class="kw">super</span>::{
-        <span class="ident">alphanumeric</span>, <span class="ident">base64</span>, <span class="ident">hex</span>, <span class="ident">random_bytes</span>, <span class="ident">random_number</span>, <span class="ident">uuid</span>, <span class="ident">DomainError</span>, <span class="ident">Error</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>,
-    };
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">alphanumeric</span>, <span class="ident">base64</span>, <span class="ident">hex</span>, <span class="ident">random_bytes</span>, <span class="ident">random_number</span>, <span class="ident">uuid</span>, <span class="ident">DomainError</span>, <span class="ident">Error</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>};
 
     <span class="kw">fn</span> <span class="ident">rng_must_be_cryptographically_secure</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CryptoRng</span><span class="op">&gt;</span>(<span class="ident">_rng</span>: <span class="ident">T</span>) {}
 
@@ -1644,14 +1613,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">random_number_domain_error</span>() {
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">f64</span>::<span class="ident">NAN</span>)), <span class="prelude-val">Err</span>(<span class="ident">DomainError</span>::<span class="ident">new</span>()));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">f64</span>::<span class="ident">INFINITY</span>)),
-            <span class="prelude-val">Err</span>(<span class="ident">DomainError</span>::<span class="ident">new</span>())
-        );
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">f64</span>::<span class="ident">NEG_INFINITY</span>)),
-            <span class="prelude-val">Err</span>(<span class="ident">DomainError</span>::<span class="ident">new</span>())
-        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">f64</span>::<span class="ident">INFINITY</span>)), <span class="prelude-val">Err</span>(<span class="ident">DomainError</span>::<span class="ident">new</span>()));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">f64</span>::<span class="ident">NEG_INFINITY</span>)), <span class="prelude-val">Err</span>(<span class="ident">DomainError</span>::<span class="ident">new</span>()));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1659,27 +1622,15 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="prelude-val">None</span>), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">0.5</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">1.0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">9000.63</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">9000.63</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="number">0.0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="op">-</span><span class="number">0.0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="op">-</span><span class="number">1.0</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="op">-</span><span class="number">0.0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="op">-</span><span class="number">1.0</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">random_number_in_neg_integer_out_float</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="op">-</span><span class="number">1</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="op">-</span><span class="number">1</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="kw">_</span>))));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1689,18 +1640,9 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">random_number_in_pos_integer_out_integer</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">1</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
-        ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">9000</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
-        ));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(
-            <span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">i64</span>::<span class="ident">MAX</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))
-        ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">1</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="number">9000</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">random_number</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">i64</span>::<span class="ident">MAX</span>)), <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="kw">_</span>))));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

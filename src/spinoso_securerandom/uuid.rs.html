@@ -102,8 +102,6 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
-<span id="102">102</span>
-<span id="103">103</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Generator for Version 4 UUIDs.</span>
 <span class="doccomment">//!</span>
@@ -186,9 +184,7 @@
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ITERATIONS</span> {
             <span class="kw">let</span> <span class="ident">gen</span> <span class="op">=</span> <span class="ident">uuid</span>().<span class="ident">unwrap</span>();
             <span class="ident">validate</span>(<span class="ident">gen</span>.<span class="ident">as_str</span>());
-            <span class="kw">let</span> <span class="ident">uuid_only_contains_chars_in_alphabet</span> <span class="op">=</span> <span class="ident">gen</span>
-                .<span class="ident">chars</span>()
-                .<span class="ident">all</span>(<span class="op">|</span><span class="ident">ch</span><span class="op">|</span> <span class="macro">matches</span><span class="macro">!</span>(<span class="ident">ch</span>, <span class="string">&#39;a&#39;</span>..<span class="op">=</span><span class="string">&#39;f&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span>));
+            <span class="kw">let</span> <span class="ident">uuid_only_contains_chars_in_alphabet</span> <span class="op">=</span> <span class="ident">gen</span>.<span class="ident">chars</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">ch</span><span class="op">|</span> <span class="macro">matches</span><span class="macro">!</span>(<span class="ident">ch</span>, <span class="string">&#39;a&#39;</span>..<span class="op">=</span><span class="string">&#39;f&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span>..<span class="op">=</span><span class="string">&#39;9&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span>));
             <span class="macro">assert</span><span class="macro">!</span>(
                 <span class="ident">uuid_only_contains_chars_in_alphabet</span>,
                 <span class="string">&quot;Expected alphabet &#39;a&#39;..=&#39;f&#39;, &#39;0&#39;..=&#39;9&#39;, &#39;-&#39;, found &#39;{}&#39;&quot;</span>,

@@ -75,8 +75,6 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
-<span id="77">77</span>
-<span id="78">78</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">debug</span>::<span class="ident">Debug</span>;
 <span class="kw">use</span> <span class="ident">artichoke_core</span>::<span class="ident">value</span>::<span class="ident">Value</span> <span class="kw">as</span> <span class="kw">_</span>;
@@ -143,9 +141,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">debug_hash_value_as_classlike</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>
-            .<span class="ident">try_convert_mut</span>(<span class="macro">vec</span><span class="macro">!</span>[(<span class="string">b&quot;foo&quot;</span>.<span class="ident">to_vec</span>(), <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])])
-            .<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="macro">vec</span><span class="macro">!</span>[(<span class="string">b&quot;foo&quot;</span>.<span class="ident">to_vec</span>(), <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])]).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">interp</span>.<span class="ident">inspect_type_name_for_value</span>(<span class="ident">value</span>), <span class="string">&quot;Hash&quot;</span>);
     }
 

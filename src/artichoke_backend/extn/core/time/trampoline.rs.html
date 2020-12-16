@@ -366,22 +366,6 @@
 <span id="365">365</span>
 <span id="366">366</span>
 <span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
-<span id="372">372</span>
-<span id="373">373</span>
-<span id="374">374</span>
-<span id="375">375</span>
-<span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
-<span id="379">379</span>
-<span id="380">380</span>
-<span id="381">381</span>
-<span id="382">382</span>
-<span id="383">383</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Glue between mruby FFI and `Time` Rust implementation.</span>
 
@@ -483,11 +467,7 @@
     <span class="prelude-val">Err</span>(<span class="ident">NotImplementedError</span>::<span class="ident">new</span>().<span class="ident">into</span>())
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_copy</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">time</span>: <span class="ident">Value</span>,
-    <span class="kw-2">mut</span> <span class="ident">from</span>: <span class="ident">Value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_copy</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="kw-2">mut</span> <span class="ident">from</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Time</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">from</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">from</span>;
     <span class="ident">Time</span>::<span class="ident">box_into_value</span>(<span class="ident">result</span>, <span class="ident">time</span>, <span class="ident">interp</span>)
@@ -495,11 +475,7 @@
 
 <span class="comment">// Mutators and converters</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mutate_to_local</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">time</span>: <span class="ident">Value</span>,
-    <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mutate_to_local</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">offset</span>;
@@ -512,11 +488,7 @@
     <span class="prelude-val">Ok</span>(<span class="ident">time</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_local</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">time</span>: <span class="ident">Value</span>,
-    <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_local</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">offset</span>;
@@ -588,11 +560,7 @@
     <span class="ident">Time</span>::<span class="ident">alloc_value</span>(<span class="ident">next</span>, <span class="ident">interp</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round</span>(
-    <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>,
-    <span class="ident">time</span>: <span class="ident">Value</span>,
-    <span class="ident">num_digits</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">time</span>: <span class="ident">Value</span>, <span class="ident">num_digits</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">time</span>;
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">num_digits</span>;

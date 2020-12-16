@@ -67,9 +67,6 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
@@ -87,10 +84,7 @@
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/common.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/common.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/file.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/file.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/ftp.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/ftp.rb&quot;</span>)[..])<span class="question-mark">?</span>;
-    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(
-        <span class="string">&quot;uri/generic.rb&quot;</span>,
-        <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/generic.rb&quot;</span>)[..],
-    )<span class="question-mark">?</span>;
+    <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/generic.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/generic.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/http.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/http.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/https.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/https.rb&quot;</span>)[..])<span class="question-mark">?</span>;
     <span class="ident">interp</span>.<span class="ident">def_rb_source_file</span>(<span class="string">&quot;uri/ldap.rb&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;vendor/uri/ldap.rb&quot;</span>)[..])<span class="question-mark">?</span>;

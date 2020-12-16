@@ -96,6 +96,7 @@
 <span id="95">95</span>
 <span id="96">96</span>
 <span id="97">97</span>
+<span id="98">98</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This module is forked from `regex-syntax` crate @ 26f7318e.</span>
 <span class="comment">//</span>
@@ -148,8 +149,9 @@
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_meta_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
-        <span class="string">&#39;\\&#39;</span> <span class="op">|</span> <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;+&#39;</span> <span class="op">|</span> <span class="string">&#39;*&#39;</span> <span class="op">|</span> <span class="string">&#39;?&#39;</span> <span class="op">|</span> <span class="string">&#39;(&#39;</span> <span class="op">|</span> <span class="string">&#39;)&#39;</span> <span class="op">|</span> <span class="string">&#39;|&#39;</span> <span class="op">|</span> <span class="string">&#39;[&#39;</span> <span class="op">|</span> <span class="string">&#39;]&#39;</span> <span class="op">|</span> <span class="string">&#39;{&#39;</span> <span class="op">|</span> <span class="string">&#39;}&#39;</span> <span class="op">|</span> <span class="string">&#39;^&#39;</span> <span class="op">|</span> <span class="string">&#39;$&#39;</span>
-        <span class="op">|</span> <span class="string">&#39;#&#39;</span> <span class="op">|</span> <span class="string">&#39;&amp;&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span> <span class="string">&#39;~&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+        <span class="string">&#39;\\&#39;</span> <span class="op">|</span> <span class="string">&#39;.&#39;</span> <span class="op">|</span> <span class="string">&#39;+&#39;</span> <span class="op">|</span> <span class="string">&#39;*&#39;</span> <span class="op">|</span> <span class="string">&#39;?&#39;</span> <span class="op">|</span> <span class="string">&#39;(&#39;</span> <span class="op">|</span> <span class="string">&#39;)&#39;</span> <span class="op">|</span> <span class="string">&#39;|&#39;</span> <span class="op">|</span> <span class="string">&#39;[&#39;</span> <span class="op">|</span> <span class="string">&#39;]&#39;</span> <span class="op">|</span> <span class="string">&#39;{&#39;</span> <span class="op">|</span> <span class="string">&#39;}&#39;</span> <span class="op">|</span> <span class="string">&#39;^&#39;</span> <span class="op">|</span> <span class="string">&#39;$&#39;</span> <span class="op">|</span> <span class="string">&#39;#&#39;</span> <span class="op">|</span> <span class="string">&#39;&amp;&#39;</span> <span class="op">|</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span> <span class="string">&#39;~&#39;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="bool-val">true</span>
+        }
         <span class="comment">// This match arm differs from `regex-syntax` by including &#39;/&#39;.</span>
         <span class="comment">// Ruby uses &#39;/&#39; to mark `Regexp` literals in source code.</span>
         <span class="string">&#39;/&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
