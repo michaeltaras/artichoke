@@ -3,10 +3,8 @@
 <p>Arena savepoints ensure mruby objects are reaped even when allocated with
 the C API.</p>
 <p>mruby manages objects created via the C API in a memory construct called
-the
-<a href="https://github.com/mruby/mruby/blob/master/doc/guides/gc-arena-howto.md">arena</a>.
-The arena is a stack and objects stored there are permanently alive to avoid
-having to track lifetimes externally to the interperter.</p>
+the <a href="https://github.com/mruby/mruby/blob/master/doc/guides/gc-arena-howto.md">arena</a>. The arena is a stack and objects stored there are permanently
+alive to avoid having to track lifetimes externally to the interperter.</p>
 <p>An <a href="../../../artichoke_backend/gc/arena/struct.ArenaIndex.html" title="ArenaIndex"><code>ArenaIndex</code></a> is an index to some position of the stack. When restoring
 an <code>ArenaIndex</code>, the stack pointer is moved. All objects beyond the pointer
 are no longer live and are eligible to be collected at the next GC.</p>

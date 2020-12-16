@@ -263,10 +263,8 @@
 <span class="doccomment">/// the C API.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// mruby manages objects created via the C API in a memory construct called</span>
-<span class="doccomment">/// the</span>
-<span class="doccomment">/// [arena](https://github.com/mruby/mruby/blob/master/doc/guides/gc-arena-howto.md).</span>
-<span class="doccomment">/// The arena is a stack and objects stored there are permanently alive to avoid</span>
-<span class="doccomment">/// having to track lifetimes externally to the interperter.</span>
+<span class="doccomment">/// the [arena]. The arena is a stack and objects stored there are permanently</span>
+<span class="doccomment">/// alive to avoid having to track lifetimes externally to the interperter.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// An [`ArenaIndex`] is an index to some position of the stack. When restoring</span>
 <span class="doccomment">/// an `ArenaIndex`, the stack pointer is moved. All objects beyond the pointer</span>
@@ -274,6 +272,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// `ArenaIndex` implements [`Drop`], so letting it go out of scope is</span>
 <span class="doccomment">/// sufficient to ensure objects get collected eventually.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [arena]: https://github.com/mruby/mruby/blob/master/doc/guides/gc-arena-howto.md</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ArenaIndex</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
