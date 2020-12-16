@@ -36,7 +36,7 @@ maximum:</p>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="ident">uuid</span> <span class="op">=</span> <span class="ident">spinoso_securerandom</span>::<span class="ident">uuid</span>()<span class="question-mark">?</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uuid</span>.<span class="ident">len</span>(), <span class="number">36</span>);
-<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">uuid</span>.<span class="ident">is_ascii</span>());</pre></div>
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">uuid</span>.<span class="ident">chars</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">ch</span><span class="op">|</span> <span class="ident">ch</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ch</span>.<span class="ident">is_ascii_hexdigit</span>()));</pre></div>
 </div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
 <table><tr class="module-item"><td><a class="struct" href="struct.ArgumentError.html" title="spinoso_securerandom::ArgumentError struct">ArgumentError</a></td><td class="docblock-short"><p>Error that indicates an argument parsing or value logic error occurred.</p>
 </td></tr><tr class="module-item"><td><a class="struct" href="struct.DomainError.html" title="spinoso_securerandom::DomainError struct">DomainError</a></td><td class="docblock-short"><p>Error that indicates the given maximum value is not finite and cannot be

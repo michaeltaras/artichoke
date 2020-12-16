@@ -203,8 +203,6 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Detect if Ruby code parses successfully.</span>
 <span class="doccomment">//!</span>
@@ -258,12 +256,10 @@
     <span class="doccomment">/// an interpreter.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_code_block_open</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Valid</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedEnd</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedRegexpBegin</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">CodeTooLong</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="bool-val">false</span>
-            }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-        }
+        <span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(
+            <span class="self">self</span>,
+            <span class="self">Self</span>::<span class="ident">Valid</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedEnd</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">UnexpectedRegexpBegin</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">CodeTooLong</span>
+        )
     }
 
     <span class="doccomment">/// Whether this variant is a recoverable error.</span>
@@ -272,7 +268,7 @@
     <span class="doccomment">/// buffer.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_recoverable_error</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">CodeTooLong</span>
+        <span class="macro">matches</span><span class="macro">!</span>(<span class="self">self</span>, <span class="self">Self</span>::<span class="ident">CodeTooLong</span>)
     }
 
     <span class="doccomment">/// Whether this variant is a fatal parse error.</span>
@@ -281,7 +277,7 @@
     <span class="doccomment">/// again.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_fatal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">ParseError</span>
+        <span class="macro">matches</span><span class="macro">!</span>(<span class="self">self</span>, <span class="self">Self</span>::<span class="ident">ParseError</span>)
     }
 }
 
