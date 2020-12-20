@@ -316,6 +316,12 @@
 <span id="313">313</span>
 <span id="314">314</span>
 <span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This source file is derived from rand_mt.</span>
 <span class="comment">//</span>
@@ -356,8 +362,11 @@
 <span class="doccomment">/// [`Box`]: https://doc.rust-lang.org/std/boxed/struct.Box.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Mersenne&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Twister&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Mersenne Twister&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;mersenne&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;twister&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;mersenne twister&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;MT&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;MT19937&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span> <span class="comment">// RNGs should not implement `Copy`</span>
@@ -614,6 +623,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>;
+
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Mt</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -625,11 +636,12 @@
         <span class="kw">let</span> <span class="ident">mt</span> <span class="op">=</span> <span class="ident">Mt</span>::<span class="ident">with_seed</span>(<span class="number">123_456</span>);
         <span class="kw">let</span> <span class="ident">debug</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">mt</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">debug</span>.<span class="ident">contains</span>(<span class="string">&quot;123456&quot;</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">debug</span>, <span class="string">&quot;Mt {}&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">seed_with_empty_iter_returns</span>() {
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">Mt</span>::<span class="ident">new_with_key</span>(<span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">empty</span>());
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">Mt</span>::<span class="ident">new_with_key</span>(<span class="ident">iter</span>::<span class="ident">empty</span>());
     }
 }
 </pre></div>
