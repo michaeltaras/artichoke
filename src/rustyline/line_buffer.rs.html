@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/rustyline-6.3.0/src/line_buffer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>line_buffer.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/rustyline-7.1.0/src/line_buffer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>line_buffer.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
 <link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rustyline/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
@@ -1819,10 +1819,72 @@
 <span id="1816">1816</span>
 <span id="1817">1817</span>
 <span id="1818">1818</span>
+<span id="1819">1819</span>
+<span id="1820">1820</span>
+<span id="1821">1821</span>
+<span id="1822">1822</span>
+<span id="1823">1823</span>
+<span id="1824">1824</span>
+<span id="1825">1825</span>
+<span id="1826">1826</span>
+<span id="1827">1827</span>
+<span id="1828">1828</span>
+<span id="1829">1829</span>
+<span id="1830">1830</span>
+<span id="1831">1831</span>
+<span id="1832">1832</span>
+<span id="1833">1833</span>
+<span id="1834">1834</span>
+<span id="1835">1835</span>
+<span id="1836">1836</span>
+<span id="1837">1837</span>
+<span id="1838">1838</span>
+<span id="1839">1839</span>
+<span id="1840">1840</span>
+<span id="1841">1841</span>
+<span id="1842">1842</span>
+<span id="1843">1843</span>
+<span id="1844">1844</span>
+<span id="1845">1845</span>
+<span id="1846">1846</span>
+<span id="1847">1847</span>
+<span id="1848">1848</span>
+<span id="1849">1849</span>
+<span id="1850">1850</span>
+<span id="1851">1851</span>
+<span id="1852">1852</span>
+<span id="1853">1853</span>
+<span id="1854">1854</span>
+<span id="1855">1855</span>
+<span id="1856">1856</span>
+<span id="1857">1857</span>
+<span id="1858">1858</span>
+<span id="1859">1859</span>
+<span id="1860">1860</span>
+<span id="1861">1861</span>
+<span id="1862">1862</span>
+<span id="1863">1863</span>
+<span id="1864">1864</span>
+<span id="1865">1865</span>
+<span id="1866">1866</span>
+<span id="1867">1867</span>
+<span id="1868">1868</span>
+<span id="1869">1869</span>
+<span id="1870">1870</span>
+<span id="1871">1871</span>
+<span id="1872">1872</span>
+<span id="1873">1873</span>
+<span id="1874">1874</span>
+<span id="1875">1875</span>
+<span id="1876">1876</span>
+<span id="1877">1877</span>
+<span id="1878">1878</span>
+<span id="1879">1879</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Line buffer with current cursor position</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">keymap</span>::{<span class="ident">At</span>, <span class="ident">CharSearch</span>, <span class="ident">Movement</span>, <span class="ident">RepeatCount</span>, <span class="ident">Word</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">Index</span>, <span class="ident">Range</span>};
@@ -1833,6 +1895,7 @@
 
 <span class="doccomment">/// Default maximum buffer size for the line read</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">MAX_LINE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4096</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">INDENT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;                                &quot;</span>;
 
 <span class="doccomment">/// Word&#39;s case change</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
@@ -2842,10 +2905,7 @@
 
     <span class="doccomment">/// Kill range specified by `mvt`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kill</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mvt</span>: <span class="kw-2">&amp;</span><span class="ident">Movement</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">notify</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">mvt</span> {
-            <span class="ident">Movement</span>::<span class="ident">ForwardChar</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">BackwardChar</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-        };
+        <span class="kw">let</span> <span class="ident">notify</span> <span class="op">=</span> <span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">mvt</span>, <span class="ident">Movement</span>::<span class="ident">ForwardChar</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">BackwardChar</span>(<span class="kw">_</span>));
         <span class="kw">if</span> <span class="ident">notify</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">dl</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">dl</span>.<span class="ident">as_ref</span>() {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dl</span> <span class="op">=</span> <span class="ident">dl</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
@@ -2921,6 +2981,68 @@
             }
         }
         <span class="ident">killed</span>
+    }
+
+    <span class="doccomment">/// Indent range specified by `mvt`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mvt</span>: <span class="kw-2">&amp;</span><span class="ident">Movement</span>, <span class="ident">amount</span>: <span class="ident">usize</span>, <span class="ident">dedent</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">pair</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">mvt</span> {
+            <span class="comment">// All inline operators are the same: indent current line</span>
+            <span class="ident">Movement</span>::<span class="ident">WholeLine</span>
+            <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">BeginningOfLine</span>
+            <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">ViFirstPrint</span>
+            <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">EndOfLine</span>
+            <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">BackwardChar</span>(..)
+            <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">ForwardChar</span>(..)
+            <span class="op">|</span> <span class="ident">Movement</span>::<span class="ident">ViCharSearch</span>(..) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="self">self</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>)),
+            <span class="ident">Movement</span>::<span class="ident">EndOfBuffer</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="self">self</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">len</span>())),
+            <span class="ident">Movement</span>::<span class="ident">WholeBuffer</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="number">0</span>, <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">len</span>())),
+            <span class="ident">Movement</span>::<span class="ident">BeginningOfBuffer</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="number">0</span>, <span class="self">self</span>.<span class="ident">pos</span>)),
+            <span class="ident">Movement</span>::<span class="ident">BackwardWord</span>(<span class="ident">n</span>, <span class="ident">word_def</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>
+                .<span class="ident">prev_word_pos</span>(<span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">word_def</span>, <span class="ident">n</span>)
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">pos</span><span class="op">|</span> (<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>)),
+            <span class="ident">Movement</span>::<span class="ident">ForwardWord</span>(<span class="ident">n</span>, <span class="ident">at</span>, <span class="ident">word_def</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>
+                .<span class="ident">next_word_pos</span>(<span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">at</span>, <span class="ident">word_def</span>, <span class="ident">n</span>)
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">pos</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">pos</span>)),
+            <span class="ident">Movement</span>::<span class="ident">LineUp</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">n_lines_up</span>(<span class="ident">n</span>),
+            <span class="ident">Movement</span>::<span class="ident">LineDown</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">n_lines_down</span>(<span class="ident">n</span>),
+        };
+        <span class="kw">let</span> (<span class="ident">start</span>, <span class="ident">end</span>) <span class="op">=</span> <span class="ident">pair</span>.<span class="ident">unwrap_or</span>((<span class="self">self</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buf</span>[..<span class="ident">start</span>]
+            .<span class="ident">rfind</span>(<span class="string">&#39;\n&#39;</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">pos</span><span class="op">|</span> <span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>)
+            .<span class="ident">unwrap_or</span>(<span class="number">0</span>);
+        <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buf</span>[<span class="ident">end</span>..]
+            .<span class="ident">rfind</span>(<span class="string">&#39;\n&#39;</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">pos</span><span class="op">|</span> <span class="ident">end</span> <span class="op">+</span> <span class="ident">pos</span>)
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">len</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">start</span>;
+        <span class="kw">if</span> <span class="ident">dedent</span> {
+            <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">buf</span>[<span class="ident">start</span>..<span class="ident">end</span>].<span class="ident">to_string</span>().<span class="ident">split</span>(<span class="string">&#39;\n&#39;</span>) {
+                <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">line</span>.<span class="ident">trim_start</span>().<span class="ident">len</span>();
+                <span class="kw">let</span> <span class="ident">deleting</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">max</span>, <span class="ident">amount</span>);
+                <span class="self">self</span>.<span class="ident">drain</span>(<span class="ident">index</span>..<span class="ident">index</span> <span class="op">+</span> <span class="ident">deleting</span>, <span class="ident">Default</span>::<span class="ident">default</span>());
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">index</span> {
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span>.<span class="ident">saturating_sub</span>(<span class="ident">index</span>) <span class="op">&lt;</span> <span class="ident">deleting</span> {
+                        <span class="comment">// don&#39;t wrap into the previous line</span>
+                        <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span> <span class="ident">index</span>;
+                    } <span class="kw">else</span> {
+                        <span class="self">self</span>.<span class="ident">pos</span> <span class="op">-</span><span class="op">=</span> <span class="ident">deleting</span>;
+                    }
+                }
+                <span class="ident">index</span> <span class="op">+</span><span class="op">=</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">deleting</span>;
+            }
+        } <span class="kw">else</span> {
+            <span class="kw">for</span> <span class="ident">line</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">buf</span>[<span class="ident">start</span>..<span class="ident">end</span>].<span class="ident">to_string</span>().<span class="ident">split</span>(<span class="string">&#39;\n&#39;</span>) {
+                <span class="kw">for</span> <span class="ident">off</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="ident">amount</span>).<span class="ident">step_by</span>(<span class="ident">INDENT</span>.<span class="ident">len</span>()) {
+                    <span class="self">self</span>.<span class="ident">insert_str</span>(<span class="ident">index</span>, <span class="kw-2">&amp;</span><span class="ident">INDENT</span>[..<span class="ident">min</span>(<span class="ident">amount</span> <span class="op">-</span> <span class="ident">off</span>, <span class="ident">INDENT</span>.<span class="ident">len</span>())]);
+                }
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">index</span> {
+                    <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">amount</span>;
+                }
+                <span class="ident">index</span> <span class="op">+</span><span class="op">=</span> <span class="ident">amount</span> <span class="op">+</span> <span class="ident">line</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>;
+            }
+        }
+        <span class="bool-val">true</span>
     }
 }
 

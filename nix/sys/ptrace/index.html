@@ -24,7 +24,10 @@ in <code>man ptrace</code>.</p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.setsiginfo.html" title="nix::sys::ptrace::setsiginfo fn">setsiginfo</a></td><td class="docblock-short"><p>Set siginfo as with <code>ptrace(PTRACE_SETSIGINFO,...)</code></p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.step.html" title="nix::sys::ptrace::step fn">step</a></td><td class="docblock-short"><p>Move the stopped tracee process forward by a single step as with 
 <code>ptrace(PTRACE_SINGLESTEP, ...)</code></p>
-</td></tr><tr class="module-item"><td><a class="fn" href="fn.syscall.html" title="nix::sys::ptrace::syscall fn">syscall</a></td><td class="docblock-short"><p>Ask for next syscall, as with <code>ptrace(PTRACE_SYSCALL, ...)</code></p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.syscall.html" title="nix::sys::ptrace::syscall fn">syscall</a></td><td class="docblock-short"><p>Continue execution until the next syscall, as with <code>ptrace(PTRACE_SYSCALL, ...)</code></p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.sysemu.html" title="nix::sys::ptrace::sysemu fn">sysemu</a></td><td class="docblock-short"><p>Continue execution until the next syscall, as with <code>ptrace(PTRACE_SYSEMU, ...)</code></p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.sysemu_step.html" title="nix::sys::ptrace::sysemu_step fn">sysemu_step</a></td><td class="docblock-short"><p>Move the stopped tracee process forward by a single step or stop at the next syscall
+as with <code>ptrace(PTRACE_SYSEMU_SINGLESTEP, ...)</code></p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.traceme.html" title="nix::sys::ptrace::traceme fn">traceme</a></td><td class="docblock-short"><p>Sets the process as traceable, as with <code>ptrace(PTRACE_TRACEME, ...)</code></p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.write.html" title="nix::sys::ptrace::write fn">write</a><a title="unsafe function" href="#"><sup>⚠</sup></a></td><td class="docblock-short"><p>Writes a word into the processes memory at the given address</p>
 </td></tr></table><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
