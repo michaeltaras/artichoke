@@ -252,6 +252,7 @@
 <span id="251">251</span>
 <span id="252">252</span>
 <span id="253">253</span>
+<span id="254">254</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A REPL (read–eval–print–loop) for an Artichoke interpreter.</span>
 <span class="doccomment">//!</span>
@@ -479,6 +480,7 @@
                         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">inspect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>);
                         <span class="ident">output</span>.<span class="ident">write_all</span>(<span class="ident">config</span>.<span class="ident">result_prefix</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
                         <span class="ident">output</span>.<span class="ident">write_all</span>(<span class="ident">result</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>;
+                        <span class="ident">output</span>.<span class="ident">write_all</span>(<span class="string">b&quot;\n&quot;</span>)<span class="question-mark">?</span>;
                     }
                     <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">exc</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">backtrace</span>::<span class="ident">format_repl_trace_into</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="ident">exc</span>)<span class="question-mark">?</span>,
                 }
