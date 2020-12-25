@@ -49,7 +49,7 @@ paw = &quot;1.0&quot;
 <h2 id="how-to-derivestructopt" class="section-header"><a href="#how-to-derivestructopt">How to <code>derive(StructOpt)</code></a></h2>
 <p>First, let's look at the example:</p>
 
-<div class='information'><div class='tooltip should_panic'>ⓘ<span class='tooltiptext'>This example panics</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered should_panic">
+<div class='information'><div class='tooltip should_panic'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered should_panic">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
 <span class="kw">use</span> <span class="ident">structopt</span>::<span class="ident">StructOpt</span>;
 
@@ -119,7 +119,7 @@ They are what used to be explicit <code>#[structopt(raw(...))]</code> attrs in p
 </ul>
 <p>Every <code>structopt attribute</code> looks like comma-separated sequence of methods:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">structopt</span>(
     <span class="ident">short</span>, <span class="comment">// method with no arguments - always magical</span>
     <span class="ident">long</span> <span class="op">=</span> <span class="string">&quot;--long-option&quot;</span>, <span class="comment">// method with one argument</span>
@@ -151,7 +151,7 @@ will be turned into this (<em>details omitted</em>):</p>
 <p>They are the reason why <code>structopt</code> is so flexible. <strong>Every and each method from
 <code>clap::App/Arg</code> can be used this way!</strong></p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">structopt</span>(
     <span class="ident">global</span> <span class="op">=</span> <span class="bool-val">true</span>, <span class="comment">// name = arg form, neat for one-arg methods</span>
     <span class="ident">required_if</span>(<span class="string">&quot;out&quot;</span>, <span class="string">&quot;file&quot;</span>) <span class="comment">// name(arg1, arg2, ...) form.</span>
@@ -178,7 +178,7 @@ and/or on &quot;field-level&quot; (on top of a <code>struct</code> field or <em>
 Top level (non-magical) methods correspond to <code>App::method</code> calls, field-level methods
 are <code>Arg::method</code> calls.</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">top_level</span>)]</span>
 <span class="kw">struct</span> <span class="ident">Foo</span> {
     <span class="attribute">#[<span class="ident">structopt</span>(<span class="ident">field_level</span>)]</span>
@@ -542,7 +542,7 @@ line, even if this attribute is present, to allow for a space between
 <p>Also, <code>structopt</code> will <em>still</em> remove leading and trailing blank lines so
 these formats are equivalent:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="doccomment">/** This is a doc comment
 
 Hello! */</span>
