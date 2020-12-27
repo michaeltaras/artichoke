@@ -175,11 +175,11 @@
 
 <span class="doccomment">/// Give access to user input.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ValidationContext</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
-    <span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">Invoke</span>,
+    <span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Invoke</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">ValidationContext</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">Invoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Invoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">ValidationContext</span> { <span class="ident">i</span> }
     }
 

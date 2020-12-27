@@ -481,7 +481,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_misc</span>() {
-        <span class="kw">let</span> <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">RngCore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">rng</span>(<span class="number">820</span>);
+        <span class="kw">let</span> <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">RngCore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">rng</span>(<span class="number">820</span>);
 
         <span class="ident">rng</span>.<span class="ident">sample</span>::<span class="op">&lt;</span><span class="ident">char</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">Standard</span>);
         <span class="ident">rng</span>.<span class="ident">sample</span>::<span class="op">&lt;</span><span class="ident">bool</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">Standard</span>);

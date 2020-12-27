@@ -201,7 +201,7 @@
 }
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RegexpType</span> {
-    <span class="kw">fn</span> <span class="ident">box_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">box_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">debug</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span>;
 
@@ -248,77 +248,77 @@
     <span class="kw">fn</span> <span class="ident">scan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">haystack</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">block</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Block</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Scan</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 }
 
-<span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">box_clone</span>()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="ident">f</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
         <span class="ident">Hash</span>::<span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="ident">state</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">PartialEq</span>::<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">as_ref</span>())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {}
+<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span><span class="op">&gt;</span> {}
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">debug</span>())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span> {
+<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span> {
     <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
         <span class="self">self</span>.<span class="ident">literal_config</span>().<span class="ident">hash</span>(<span class="ident">state</span>);
     }
 }
 
-<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span> {
+<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">derived_config</span>().<span class="ident">pattern</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">derived_config</span>().<span class="ident">pattern</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">encoding</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">encoding</span>()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">RegexpType</span> {}
+<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">RegexpType</span> {}
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">RegexpType</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">RegexpType</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="op">&amp;&amp;</span><span class="kw-2">*</span><span class="self">self</span>, <span class="ident">f</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">RegexpType</span> {
+<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">RegexpType</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
         <span class="ident">Hash</span>::<span class="ident">hash</span>(<span class="op">&amp;&amp;</span><span class="kw-2">*</span><span class="self">self</span>, <span class="ident">state</span>);
     }
 }
 
-<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">RegexpType</span> {
+<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">RegexpType</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">PartialEq</span>::<span class="ident">eq</span>(<span class="op">&amp;&amp;</span><span class="kw-2">*</span><span class="self">self</span>, <span class="op">&amp;&amp;</span><span class="kw-2">*</span><span class="ident">other</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">RegexpType</span> {}
+<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">RegexpType</span> {}
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../../";window.currentCrate = "artichoke_backend";</script><script src="../../../../../../main.js"></script><script src="../../../../../../source-script.js"></script><script src="../../../../../../source-files.js"></script><script defer src="../../../../../../search-index.js"></script></body></html>

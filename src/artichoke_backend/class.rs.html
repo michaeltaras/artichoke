@@ -420,7 +420,7 @@
         <span class="ident">T</span>: <span class="ident">Any</span>,
         <span class="ident">U</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or_else</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">interp</span>.<span class="ident">state</span>.<span class="ident">as_deref</span>().<span class="ident">ok_or_else</span>(<span class="ident">InterpreterExtractError</span>::<span class="ident">new</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">rclass</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">spec</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">classes</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() {
             <span class="ident">spec</span>.<span class="ident">rclass</span>()
         } <span class="kw">else</span> {

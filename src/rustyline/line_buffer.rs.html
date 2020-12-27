@@ -1942,8 +1942,8 @@
     <span class="ident">buf</span>: <span class="ident">String</span>,      <span class="comment">// Edited line buffer (rl_line_buffer)</span>
     <span class="ident">pos</span>: <span class="ident">usize</span>,       <span class="comment">// Current cursor position (byte position) (rl_point)</span>
     <span class="ident">can_growth</span>: <span class="ident">bool</span>, <span class="comment">// Whether to allow dynamic growth</span>
-    <span class="ident">dl</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">DeleteListener</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">cl</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">ChangeListener</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">dl</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">DeleteListener</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">cl</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ChangeListener</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">LineBuffer</span> {
@@ -1981,7 +1981,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">init</span>(
         <span class="ident">line</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">pos</span>: <span class="ident">usize</span>,
-        <span class="ident">cl</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">ChangeListener</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">cl</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ChangeListener</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lb</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">with_capacity</span>(<span class="ident">MAX_LINE</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">lb</span>.<span class="ident">insert_str</span>(<span class="number">0</span>, <span class="ident">line</span>));
@@ -1990,11 +1990,11 @@
         <span class="ident">lb</span>
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_delete_listener</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dl</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">DeleteListener</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_delete_listener</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dl</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">DeleteListener</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">dl</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dl</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_change_listener</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dl</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">ChangeListener</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_change_listener</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dl</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ChangeListener</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">cl</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dl</span>);
     }
 

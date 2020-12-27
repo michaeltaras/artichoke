@@ -289,7 +289,7 @@
         <span class="ident">hint</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">old_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
         <span class="ident">new_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
-        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
+        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Compute layout for rendering prompt + line + some info (either hint,</span>
@@ -368,7 +368,7 @@
         <span class="ident">hint</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">old_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
         <span class="ident">new_layout</span>: <span class="kw-2">&amp;</span><span class="ident">Layout</span>,
-        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
+        <span class="ident">highlighter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Highlighter</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">refresh_line</span>(<span class="ident">prompt</span>, <span class="ident">line</span>, <span class="ident">hint</span>, <span class="ident">old_layout</span>, <span class="ident">new_layout</span>, <span class="ident">highlighter</span>)
     }

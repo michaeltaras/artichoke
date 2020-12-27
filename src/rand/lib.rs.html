@@ -1393,7 +1393,7 @@
     <span class="kw">fn</span> <span class="ident">test_rng_trait_object</span>() {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">Standard</span>};
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rng</span>(<span class="number">109</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rng</span> <span class="kw">as</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">RngCore</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rng</span> <span class="kw">as</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">RngCore</span>;
         <span class="ident">r</span>.<span class="ident">next_u32</span>();
         <span class="ident">r</span>.<span class="ident">gen</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">r</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="number">1</span>), <span class="number">0</span>);
@@ -1405,7 +1405,7 @@
     <span class="kw">fn</span> <span class="ident">test_rng_boxed_trait</span>() {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">Standard</span>};
         <span class="kw">let</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rng</span>(<span class="number">110</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">rng</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">RngCore</span><span class="op">&gt;</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">rng</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">RngCore</span><span class="op">&gt;</span>;
         <span class="ident">r</span>.<span class="ident">next_u32</span>();
         <span class="ident">r</span>.<span class="ident">gen</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">r</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="number">1</span>), <span class="number">0</span>);
