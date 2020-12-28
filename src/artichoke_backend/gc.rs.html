@@ -456,7 +456,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">baseline_object_count</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">live_object_count</span>();
-        <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>.<span class="ident">eval</span>(<span class="string">b&quot;&quot;</span>).<span class="ident">unwrap</span>());
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">eval</span>(<span class="string">b&quot;&quot;</span>).<span class="ident">unwrap</span>();
         <span class="ident">arena</span>.<span class="ident">restore</span>();
         <span class="ident">interp</span>.<span class="ident">full_gc</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">interp</span>.<span class="ident">live_object_count</span>(), <span class="ident">baseline_object_count</span>);

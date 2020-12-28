@@ -456,7 +456,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Symbol</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">empty</span>.<span class="ident">inner</span>()));
         <span class="kw">let</span> <span class="ident">utf8</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;:Artichoke&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Symbol</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">utf8</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">binary</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">r#&quot;:&quot;\xFE&quot;&quot;#</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">binary</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">br#&quot;:&quot;\xFE&quot;&quot;#</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Symbol</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">binary</span>.<span class="ident">inner</span>()));
     }
 

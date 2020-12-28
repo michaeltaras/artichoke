@@ -830,6 +830,8 @@
 <span id="827">827</span>
 <span id="828">828</span>
 <span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -1557,7 +1559,9 @@
 
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">alphanumeric</span>, <span class="ident">base64</span>, <span class="ident">hex</span>, <span class="ident">random_bytes</span>, <span class="ident">random_number</span>, <span class="ident">uuid</span>, <span class="ident">DomainError</span>, <span class="ident">Error</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>};
 
-    <span class="kw">fn</span> <span class="ident">rng_must_be_cryptographically_secure</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CryptoRng</span><span class="op">&gt;</span>(<span class="ident">_rng</span>: <span class="ident">T</span>) {}
+    <span class="kw">fn</span> <span class="ident">rng_must_be_cryptographically_secure</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CryptoRng</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="ident">T</span>) {
+        <span class="ident">drop</span>(<span class="ident">rng</span>);
+    }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">rand_thread_rng_must_be_cryptographically_secure</span>() {

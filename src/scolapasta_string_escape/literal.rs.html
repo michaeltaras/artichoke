@@ -1089,6 +1089,7 @@
 <span id="1086">1086</span>
 <span id="1087">1087</span>
 <span id="1088">1088</span>
+<span id="1089">1089</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">slice</span>;
@@ -1663,6 +1664,7 @@
     <span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">string</span>::<span class="ident">String</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_lines</span>)]</span>
     <span class="kw">fn</span> <span class="ident">exhaustive</span>() {
         <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">Literal</span>::<span class="ident">from</span>(<span class="number">0x0_u8</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">r&quot;\x00&quot;</span>);

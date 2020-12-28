@@ -1062,27 +1062,27 @@
     <span class="kw">mod</span> <span class="ident">fqname</span> {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-        <span class="doccomment">/// A</span>
+        <span class="doccomment">/// `A`</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         <span class="kw">struct</span> <span class="ident">Root</span>;
 
-        <span class="doccomment">/// A::B</span>
+        <span class="doccomment">/// `A::B`</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         <span class="kw">struct</span> <span class="ident">ModuleUnderRoot</span>;
 
-        <span class="doccomment">/// A::C</span>
+        <span class="doccomment">/// `A::C`</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         <span class="kw">struct</span> <span class="ident">ClassUnderRoot</span>;
 
-        <span class="doccomment">/// A::B::D</span>
+        <span class="doccomment">/// `A::B::D`</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         <span class="kw">struct</span> <span class="ident">ClassUnderModule</span>;
 
-        <span class="doccomment">/// A::C::E</span>
+        <span class="doccomment">/// `A::C::E`</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         <span class="kw">struct</span> <span class="ident">ModuleUnderClass</span>;
 
-        <span class="doccomment">/// A::C::F</span>
+        <span class="doccomment">/// `A::C::F`</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
         <span class="kw">struct</span> <span class="ident">ClassUnderClass</span>;
 
