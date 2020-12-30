@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Encoding","The encoding of a Regexp literal."]],"struct":[["InvalidEncodingError",""]]});
+initSidebarItems({});

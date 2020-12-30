@@ -1090,6 +1090,23 @@
 <span id="1087">1087</span>
 <span id="1088">1088</span>
 <span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">slice</span>;
@@ -1197,11 +1214,28 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Literal</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">Literal</span>(<span class="string">b&quot;&quot;</span>.<span class="ident">iter</span>())
+        <span class="self">Self</span>::<span class="ident">empty</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Literal</span> {
+    <span class="doccomment">/// Create an empty literal iterator.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The returned `Literal` always yields [`None`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use scolapasta_string_escape::Literal;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut literal = Literal::empty();</span>
+    <span class="doccomment">/// assert_eq!(literal.as_str(), &quot;&quot;);</span>
+    <span class="doccomment">/// assert_eq!(literal.next(), None);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Literal</span>(<span class="string">b&quot;&quot;</span>.<span class="ident">iter</span>())
+    }
+
     <span class="doccomment">/// Views the underlying data as a subslice of the original data.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This has `&#39;static` lifetime, and so the iterator can continue to be used</span>

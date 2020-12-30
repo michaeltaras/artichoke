@@ -1311,11 +1311,11 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteLiteral</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">bytes</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">bytes</span> {
             [] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">default</span>(),
-            [<span class="ident">byte</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">one</span>(<span class="kw-2">*</span><span class="ident">byte</span>),
-            [<span class="ident">left</span>, <span class="ident">right</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">two</span>(<span class="kw-2">*</span><span class="ident">left</span>, <span class="kw-2">*</span><span class="ident">right</span>),
-            [<span class="ident">left</span>, <span class="ident">mid</span>, <span class="ident">right</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">three</span>(<span class="kw-2">*</span><span class="ident">left</span>, <span class="kw-2">*</span><span class="ident">mid</span>, <span class="kw-2">*</span><span class="ident">right</span>),
+            [<span class="ident">byte</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">one</span>(<span class="ident">byte</span>),
+            [<span class="ident">left</span>, <span class="ident">right</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">two</span>(<span class="ident">left</span>, <span class="ident">right</span>),
+            [<span class="ident">left</span>, <span class="ident">mid</span>, <span class="ident">right</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">three</span>(<span class="ident">left</span>, <span class="ident">mid</span>, <span class="ident">right</span>),
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Invalid UTF-8 byte literal sequences can be at most three bytes&quot;</span>),
         }
     }

@@ -6,5 +6,6 @@ implementors["rand"] = [{"text":"impl&lt;D, R, T&gt; FusedIterator for DistIter&
 implementors["scolapasta_hex"] = [{"text":"impl&lt;'a&gt; FusedIterator for Hex&lt;'a&gt;","synthetic":false,"types":[]}];
 implementors["scolapasta_string_escape"] = [{"text":"impl FusedIterator for Literal","synthetic":false,"types":[]}];
 implementors["smallvec"] = [{"text":"impl&lt;'a, T:&nbsp;Array&gt; FusedIterator for Drain&lt;'a, T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;A:&nbsp;Array&gt; FusedIterator for IntoIter&lt;A&gt;","synthetic":false,"types":[]}];
+implementors["spinoso_regexp"] = [{"text":"impl&lt;'a&gt; FusedIterator for Iter&lt;'a&gt;","synthetic":false,"types":[]}];
 implementors["spinoso_symbol"] = [{"text":"impl FusedIterator for AllSymbols","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; FusedIterator for Inspect&lt;'a&gt;","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
