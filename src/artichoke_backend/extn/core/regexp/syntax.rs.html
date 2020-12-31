@@ -164,19 +164,19 @@
 
 <span class="doccomment">/// Returns true if the given character is non-printable and needs to be quoted.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">match</span> <span class="ident">c</span> {
-        <span class="string">&#39;\n&#39;</span> <span class="op">|</span> <span class="string">&#39;\r&#39;</span> <span class="op">|</span> <span class="string">&#39;\t&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+<span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="macro">matches</span><span class="macro">!</span>(
+        <span class="ident">c</span>,
+        <span class="string">&#39;\n&#39;</span> <span class="op">|</span> <span class="string">&#39;\r&#39;</span> <span class="op">|</span> <span class="string">&#39;\t&#39;</span> <span class="op">|</span>
         <span class="comment">// form feed aka &quot;\f&quot;</span>
-        <span class="string">&#39;\u{C}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
-    }
+        <span class="string">&#39;\u{C}&#39;</span>
+    )
 }
 
 <span class="doccomment">/// Returns `Some(_)` if the given character is non-printable and Rust does not</span>
 <span class="doccomment">/// support the escape sequence.</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_non_supported_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_non_supported_non_printable_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
         <span class="comment">// form feed aka &quot;\f&quot;</span>
         <span class="string">&#39;\u{C}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="string">r&quot;\f&quot;</span>),
