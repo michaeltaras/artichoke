@@ -307,7 +307,7 @@
 
     <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">run_run</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
         <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
-        <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">RuntimeError</span>::<span class="ident">from</span>(<span class="string">&quot;something went wrong&quot;</span>);
+        <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">RuntimeError</span>::<span class="ident">with_message</span>(<span class="string">&quot;something went wrong&quot;</span>);
         <span class="ident">error</span>::<span class="ident">raise</span>(<span class="ident">guard</span>, <span class="ident">exc</span>)
     }
 

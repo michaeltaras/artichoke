@@ -435,7 +435,7 @@
             <span class="ident">spinoso_random</span>::<span class="ident">urandom</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
         }
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>).<span class="ident">into</span>()),
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">with_message</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>).<span class="ident">into</span>()),
     }
 }
 
@@ -506,7 +506,7 @@
                 <span class="self">self</span>.<span class="ident">fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>);
                 <span class="prelude-val">Ok</span>(<span class="ident">buf</span>)
             }
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>).<span class="ident">into</span>()),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ArgumentError</span>::<span class="ident">with_message</span>(<span class="string">&quot;negative string size (or size too big)&quot;</span>).<span class="ident">into</span>()),
         }
     }
 
