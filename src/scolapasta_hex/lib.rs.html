@@ -880,6 +880,96 @@
 <span id="877">877</span>
 <span id="878">878</span>
 <span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+<span id="923">923</span>
+<span id="924">924</span>
+<span id="925">925</span>
+<span id="926">926</span>
+<span id="927">927</span>
+<span id="928">928</span>
+<span id="929">929</span>
+<span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
+<span id="936">936</span>
+<span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -923,7 +1013,10 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! let data = b&quot;Artichoke Ruby&quot;;</span>
 <span class="doccomment">//! let mut buf = String::new();</span>
+<span class="doccomment">//! # #[cfg(feature = &quot;alloc&quot;)]</span>
 <span class="doccomment">//! scolapasta_hex::encode_into(data, &amp;mut buf);</span>
+<span class="doccomment">//! # #[cfg(not(feature = &quot;alloc&quot;))]</span>
+<span class="doccomment">//! # buf.push_str(&quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">//! assert_eq!(buf, &quot;4172746963686f6b652052756279&quot;);</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -954,13 +1047,14 @@
 <span class="doccomment">//! [Base 16 encoding]: https://tools.ietf.org/html/rfc4648#section-8</span>
 <span class="doccomment">//! [`io::Write`]: https://doc.rust-lang.org/std/io/trait.Write.html</span>
 
-<span class="comment">// `scolapasta-hex` is a `no_std` crate unless the `std` feature is enabled.</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+<span class="attribute">#![<span class="ident">no_std</span>]</span>
 
 <span class="comment">// Having access to `String` in tests is convenient to collect `Inspect`</span>
 <span class="comment">// iterators for whole content comparisons.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">test</span>, <span class="ident">doctest</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>))]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">test</span>, <span class="ident">doctest</span>))]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span>;
 
 <span class="comment">// Ensure code blocks in README.md compile</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
@@ -973,7 +1067,7 @@
         <span class="macro">readme</span><span class="macro">!</span>(<span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>));
     };
 }
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">doctest</span>))]</span>
 <span class="macro">readme</span><span class="macro">!</span>();
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
@@ -1605,7 +1699,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">encode</span>, <span class="ident">encode_into</span>, <span class="ident">format_into</span>, <span class="ident">write_into</span>, <span class="ident">EscapedByte</span>, <span class="ident">Hex</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">EscapedByte</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">literal_exhaustive</span>() {
@@ -1658,106 +1752,192 @@
         }
     }
 
-    <span class="comment">// https://tools.ietf.org/html/rfc4648#section-10</span>
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">rfc4648_test_vectors</span>() {
-        <span class="comment">// BASE16(&quot;&quot;) = &quot;&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;&quot;</span>), <span class="string">&quot;&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>(), <span class="number">0</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;&quot;</span>.<span class="ident">to_vec</span>());
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
+    <span class="kw">mod</span> <span class="ident">alloc</span> {
+        <span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">string</span>::<span class="ident">String</span>;
 
-        <span class="comment">// BASE16(&quot;f&quot;) = &quot;66&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;f&quot;</span>), <span class="string">&quot;66&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;f&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;66&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;66&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">2</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;66&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;66&quot;</span>.<span class="ident">to_vec</span>());
+        <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">encode</span>, <span class="ident">encode_into</span>, <span class="ident">format_into</span>, <span class="ident">Hex</span>};
 
-        <span class="comment">// BASE16(&quot;fo&quot;) = &quot;666F&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;fo&quot;</span>), <span class="string">&quot;666f&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;fo&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">4</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f&quot;</span>.<span class="ident">to_vec</span>());
+        <span class="comment">// https://tools.ietf.org/html/rfc4648#section-10</span>
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">rfc4648_test_vectors_encode</span>() {
+            <span class="comment">// BASE16(&quot;&quot;) = &quot;&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;&quot;</span>), <span class="string">&quot;&quot;</span>);
 
-        <span class="comment">// BASE16(&quot;foo&quot;) = &quot;666F6F&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;foo&quot;</span>), <span class="string">&quot;666f6f&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">6</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f&quot;</span>.<span class="ident">to_vec</span>());
+            <span class="comment">// BASE16(&quot;f&quot;) = &quot;66&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;f&quot;</span>), <span class="string">&quot;66&quot;</span>);
 
-        <span class="comment">// BASE16(&quot;foob&quot;) = &quot;666F6F62&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;foob&quot;</span>), <span class="string">&quot;666f6f62&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;foob&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f62&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f62&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">8</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f62&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f62&quot;</span>.<span class="ident">to_vec</span>());
+            <span class="comment">// BASE16(&quot;fo&quot;) = &quot;666F&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;fo&quot;</span>), <span class="string">&quot;666f&quot;</span>);
 
-        <span class="comment">// BASE16(&quot;fooba&quot;) = &quot;666F6F6261&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;fooba&quot;</span>), <span class="string">&quot;666f6f6261&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;fooba&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f6261&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f6261&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">10</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f6261&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f6261&quot;</span>.<span class="ident">to_vec</span>());
+            <span class="comment">// BASE16(&quot;foo&quot;) = &quot;666F6F&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;foo&quot;</span>), <span class="string">&quot;666f6f&quot;</span>);
 
-        <span class="comment">// BASE16(&quot;foobar&quot;) = &quot;666F6F626172&quot;</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;foobar&quot;</span>), <span class="string">&quot;666f6f626172&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;foobar&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f626172&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">encode_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f626172&quot;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">12</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="ident">format_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f626172&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="ident">write_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f626172&quot;</span>.<span class="ident">to_vec</span>());
+            <span class="comment">// BASE16(&quot;foob&quot;) = &quot;666F6F62&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;foob&quot;</span>), <span class="string">&quot;666f6f62&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;fooba&quot;) = &quot;666F6F6261&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;fooba&quot;</span>), <span class="string">&quot;666f6f6261&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foobar&quot;) = &quot;666F6F626172&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encode</span>(<span class="string">&quot;foobar&quot;</span>), <span class="string">&quot;666f6f626172&quot;</span>);
+        }
+
+        <span class="comment">// https://tools.ietf.org/html/rfc4648#section-10</span>
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">rfc4648_test_vectors_hex_iter</span>() {
+            <span class="comment">// BASE16(&quot;&quot;) = &quot;&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;f&quot;) = &quot;66&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;f&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;66&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;fo&quot;) = &quot;666F&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;fo&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foo&quot;) = &quot;666F6F&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foob&quot;) = &quot;666F6F62&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;foob&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f62&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;fooba&quot;) = &quot;666F6F6261&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;fooba&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f6261&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foobar&quot;) = &quot;666F6F626172&quot;</span>
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Hex</span>::<span class="ident">from</span>(<span class="string">&quot;foobar&quot;</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(), <span class="string">&quot;666f6f626172&quot;</span>);
+        }
+
+        <span class="comment">// https://tools.ietf.org/html/rfc4648#section-10</span>
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">rfc4648_test_vectors_encode_into_string</span>() {
+            <span class="comment">// BASE16(&quot;&quot;) = &quot;&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;&quot;</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>(), <span class="number">0</span>);
+
+            <span class="comment">// BASE16(&quot;f&quot;) = &quot;66&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;66&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">2</span>);
+
+            <span class="comment">// BASE16(&quot;fo&quot;) = &quot;666F&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">4</span>);
+
+            <span class="comment">// BASE16(&quot;foo&quot;) = &quot;666F6F&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">6</span>);
+
+            <span class="comment">// BASE16(&quot;foob&quot;) = &quot;666F6F62&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f62&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">8</span>);
+
+            <span class="comment">// BASE16(&quot;fooba&quot;) = &quot;666F6F6261&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f6261&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">10</span>);
+
+            <span class="comment">// BASE16(&quot;foobar&quot;) = &quot;666F6F626172&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">encode_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;666f6f626172&quot;</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">12</span>);
+        }
+
+        <span class="comment">// https://tools.ietf.org/html/rfc4648#section-10</span>
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">rfc4648_test_vectors_format_into</span>() {
+            <span class="comment">// BASE16(&quot;&quot;) = &quot;&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;f&quot;) = &quot;66&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;66&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;fo&quot;) = &quot;666F&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foo&quot;) = &quot;666F6F&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foob&quot;) = &quot;666F6F62&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f62&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;fooba&quot;) = &quot;666F6F6261&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f6261&quot;</span>);
+
+            <span class="comment">// BASE16(&quot;foobar&quot;) = &quot;666F6F626172&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fmt</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+            <span class="ident">format_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;666f6f626172&quot;</span>);
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+    <span class="kw">mod</span> <span class="ident">std</span> {
+        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">vec</span>::<span class="ident">Vec</span>;
+
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">write_into</span>;
+
+        <span class="comment">// https://tools.ietf.org/html/rfc4648#section-10</span>
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">rfc4648_test_vectors_write_into</span>() {
+            <span class="comment">// BASE16(&quot;&quot;) = &quot;&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;&quot;</span>.<span class="ident">to_vec</span>());
+
+            <span class="comment">// BASE16(&quot;f&quot;) = &quot;66&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;f&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;66&quot;</span>.<span class="ident">to_vec</span>());
+
+            <span class="comment">// BASE16(&quot;fo&quot;) = &quot;666F&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;fo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f&quot;</span>.<span class="ident">to_vec</span>());
+
+            <span class="comment">// BASE16(&quot;foo&quot;) = &quot;666F6F&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f&quot;</span>.<span class="ident">to_vec</span>());
+
+            <span class="comment">// BASE16(&quot;foob&quot;) = &quot;666F6F62&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;foob&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f62&quot;</span>.<span class="ident">to_vec</span>());
+
+            <span class="comment">// BASE16(&quot;fooba&quot;) = &quot;666F6F6261&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;fooba&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f6261&quot;</span>.<span class="ident">to_vec</span>());
+
+            <span class="comment">// BASE16(&quot;foobar&quot;) = &quot;666F6F626172&quot;</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">write</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+            <span class="ident">write_into</span>(<span class="string">&quot;foobar&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">write</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">write</span>, <span class="string">b&quot;666f6f626172&quot;</span>.<span class="ident">to_vec</span>());
+        }
     }
 }
 </pre></div>

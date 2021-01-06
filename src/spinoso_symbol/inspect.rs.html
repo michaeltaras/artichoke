@@ -1033,6 +1033,10 @@
 <span id="1030">1030</span>
 <span id="1031">1031</span>
 <span id="1032">1032</span>
+<span id="1033">1033</span>
+<span id="1034">1034</span>
+<span id="1035">1035</span>
+<span id="1036">1036</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -1492,8 +1496,9 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">String</span>;
+
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Inspect</span>;
-    <span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">string</span>::<span class="ident">String</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">empty</span>() {
@@ -1789,8 +1794,9 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">specs</span> {
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">String</span>;
+
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Flags</span>, <span class="ident">Inspect</span>};
-    <span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">string</span>::<span class="ident">String</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">flags_ident</span>() {
@@ -2050,6 +2056,8 @@
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">functionals</span> {
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">String</span>;
+
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Inspect</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fixtures</span>::{<span class="ident">IDENTS</span>, <span class="ident">IDENT_INSPECTS</span>};
 

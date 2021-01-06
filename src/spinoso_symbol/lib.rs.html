@@ -325,9 +325,6 @@
 <span id="322">322</span>
 <span id="323">323</span>
 <span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -407,13 +404,10 @@
 <span class="doccomment">//! [`alloc`]: https://doc.rust-lang.org/alloc/</span>
 <span class="doccomment">//! [`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html</span>
 
-<span class="comment">// `spinoso-symbol` is a `no_std` crate unless the `std` feature is enabled.</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+<span class="attribute">#![<span class="ident">no_std</span>]</span>
 
-<span class="comment">// Having access to `String` in tests is convenient to collect `Inspect`</span>
-<span class="comment">// iterators for whole content comparisons.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">test</span>, <span class="ident">doctest</span>))]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span>;
 
 <span class="comment">// Ensure code blocks in README.md compile</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
@@ -426,7 +420,7 @@
         <span class="macro">readme</span><span class="macro">!</span>(<span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>));
     };
 }
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;inspect&quot;</span>, <span class="ident">doctest</span>))]</span>
 <span class="macro">readme</span><span class="macro">!</span>();
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;artichoke&quot;</span>)]</span>

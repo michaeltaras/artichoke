@@ -216,6 +216,8 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -338,9 +340,11 @@
 <span class="doccomment">//! [`SystemExit`]: https://ruby-doc.org/core-2.6.3/SystemExit.html</span>
 <span class="doccomment">//! [`SystemStackError`]: https://ruby-doc.org/core-2.6.3/SystemStackError.html</span>
 
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
+<span class="attribute">#![<span class="ident">no_std</span>]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span>;
 
 <span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
