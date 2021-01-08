@@ -545,7 +545,6 @@
 <span id="542">542</span>
 <span id="543">543</span>
 <span id="544">544</span>
-<span id="545">545</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -603,9 +602,9 @@
 <span class="doccomment">//! Generate random numbers in a range:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # #[cfg(feature = &quot;rand&quot;)]</span>
+<span class="doccomment">//! # #[cfg(feature = &quot;random-rand&quot;)]</span>
 <span class="doccomment">//! # use spinoso_random::{rand, Error, Max, Rand, Random};</span>
-<span class="doccomment">//! # #[cfg(feature = &quot;rand&quot;)]</span>
+<span class="doccomment">//! # #[cfg(feature = &quot;random-rand&quot;)]</span>
 <span class="doccomment">//! # fn example() -&gt; Result&lt;(), Error&gt; {</span>
 <span class="doccomment">//! let mut random = Random::new()?;</span>
 <span class="doccomment">//! let max = Max::Integer(10);</span>
@@ -613,7 +612,7 @@
 <span class="doccomment">//! assert!(matches!(rand, Rand::Integer(x) if x &lt; 10));</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
-<span class="doccomment">//! # #[cfg(feature = &quot;rand&quot;)]</span>
+<span class="doccomment">//! # #[cfg(feature = &quot;random-rand&quot;)]</span>
 <span class="doccomment">//! # example().unwrap();</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -626,10 +625,10 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! All features are enabled by default.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! - **rand** - Enables range sampling methods for the [`rand()`] function.</span>
-<span class="doccomment">//!   Activating this feature also activates the **rand-core** feature. Dropping</span>
-<span class="doccomment">//!   this feature removes the [`rand`] dependency.</span>
-<span class="doccomment">//! - **rand-core** - Enables implementations of [`RngCore`] on [`Random`] and</span>
+<span class="doccomment">//! - **random-rand** - Enables range sampling methods for the [`rand()`]</span>
+<span class="doccomment">//!   function.  Activating this feature also activates the **rand-traits**</span>
+<span class="doccomment">//!   feature. Dropping this feature removes the [`rand`] dependency.</span>
+<span class="doccomment">//! - **rand-traits** - Enables implementations of [`RngCore`] on [`Random`] and</span>
 <span class="doccomment">//!   [`Mt`] types. Dropping this feature removes the [`rand_core`] dependency.</span>
 <span class="doccomment">//! - **std** - Enables a dependency on the Rust Standard Library. Activating</span>
 <span class="doccomment">//!   this feature enables [`std::error::Error`] impls on error types in this</span>
@@ -637,9 +636,8 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [ruby-random]: https://ruby-doc.org/core-2.6.3/Random.html</span>
 <span class="doccomment">//! [`alloc`]: https://doc.rust-lang.org/alloc/</span>
-<span class="doccomment">//! [`RngCore`]: rand_core_::RngCore</span>
-<span class="doccomment">//! [`rand`]: rand_</span>
-<span class="doccomment">//! [`rand_core`]: rand_core_</span>
+<span class="doccomment">//! [`rand`]: ::rand</span>
+<span class="doccomment">//! [`RngCore`]: rand_core::RngCore</span>
 
 <span class="attribute">#![<span class="ident">no_std</span>]</span>
 
@@ -650,13 +648,13 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">rand</span>;
 <span class="kw">mod</span> <span class="ident">random</span>;
 <span class="kw">mod</span> <span class="ident">urandom</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">rand</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">rand</span>::{<span class="ident">rand</span>, <span class="ident">Max</span>, <span class="ident">Rand</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">random</span>::<span class="ident">ruby</span>::<span class="ident">Mt</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">random</span>::{<span class="ident">new_seed</span>, <span class="ident">seed_to_key</span>, <span class="ident">Random</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">urandom</span>::<span class="ident">urandom</span>;
@@ -976,8 +974,8 @@
 <span class="kw">enum</span> <span class="ident">ArgumentErrorInner</span> {
     <span class="ident">Default</span>,
     <span class="ident">DomainError</span>,
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)))]</span>
     <span class="ident">Rand</span>(<span class="ident">Max</span>),
 }
 
@@ -1023,8 +1021,8 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">with_rand_max</span>(<span class="ident">max</span>: <span class="ident">Max</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>(<span class="ident">ArgumentErrorInner</span>::<span class="ident">Rand</span>(<span class="ident">max</span>))
     }
@@ -1054,7 +1052,7 @@
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
             <span class="ident">ArgumentErrorInner</span>::<span class="ident">Default</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;ArgumentError&quot;</span>,
             <span class="ident">ArgumentErrorInner</span>::<span class="ident">DomainError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Numerical argument out of domain&quot;</span>,
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
             <span class="ident">ArgumentErrorInner</span>::<span class="ident">Rand</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;invalid argument&quot;</span>,
         }
     }
@@ -1084,7 +1082,7 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
             <span class="ident">ArgumentErrorInner</span>::<span class="ident">Default</span> <span class="op">|</span> <span class="ident">ArgumentErrorInner</span>::<span class="ident">DomainError</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">message</span>()),
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
             <span class="ident">ArgumentErrorInner</span>::<span class="ident">Rand</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid argument - {}&quot;</span>, <span class="ident">max</span>),
         }
     }

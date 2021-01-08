@@ -204,6 +204,61 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -318,6 +373,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteSlice</span>;
     <span class="kw">use</span> <span class="ident">quickcheck</span>::<span class="ident">quickcheck</span>;
 
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
@@ -329,6 +385,36 @@
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Object.new&quot;</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_err</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">convert_with_trailing_nul</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[<span class="number">0</span>];
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">bytes</span>);
+        <span class="kw">let</span> <span class="ident">retrieved_bytes</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">bytes</span>.<span class="ident">as_bstr</span>(), <span class="ident">retrieved_bytes</span>.<span class="ident">as_bstr</span>());
+
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;bytesize&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">len</span>, <span class="number">1</span>);
+
+        <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;empty?&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">empty</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">empty</span>);
+
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="number">0</span>);
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="number">1</span>);
+
+        <span class="kw">let</span> <span class="ident">str_bytes</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;bytes&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">str_bytes</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;[]&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">first</span>, <span class="number">0_i64</span>);
+
+        <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;byteslice&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>, <span class="ident">one</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">expected</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>[<span class="number">0</span>]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">slice</span>, <span class="ident">expected</span>);
     }
 
     <span class="macro">quickcheck</span><span class="macro">!</span> {
@@ -343,22 +429,34 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="comment">// Borrowed converter</span>
             <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">bytes</span>.<span class="ident">as_slice</span>());
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;length&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;bytesize&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="ident">len</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">len</span>() {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
+
             <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;empty?&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">empty</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="ident">empty</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
+
             <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="number">0</span>);
-            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;[]&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">unwrap</span>();
-            <span class="kw">if</span> <span class="ident">first</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="number">0</span>..<span class="number">1</span>) {
+            <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="number">1</span>);
+
+            <span class="kw">let</span> <span class="ident">str_bytes</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;bytes&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">str_bytes</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;[]&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
+            <span class="kw">if</span> <span class="ident">first</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="number">0</span>).<span class="ident">copied</span>().<span class="ident">map</span>(<span class="ident">i64</span>::<span class="ident">from</span>) {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
+
+            <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;byteslice&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>, <span class="ident">one</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">unwrap</span>();
+            <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">unwrap_or_default</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="number">0</span>..<span class="number">1</span>).<span class="ident">unwrap_or_default</span>() {
+                <span class="kw">return</span> <span class="bool-val">false</span>;
+            }
+
             <span class="kw">let</span> <span class="ident">recovered</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">value</span>).<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="ident">recovered</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span> {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
@@ -371,22 +469,34 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
             <span class="comment">// Owned converter</span>
             <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert_mut</span>(<span class="ident">bytes</span>.<span class="ident">to_vec</span>());
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;length&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;bytesize&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="ident">len</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">len</span>() {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
+
             <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;empty?&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">empty</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="ident">empty</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">is_empty</span>() {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
+
             <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="number">0</span>);
-            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;[]&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">unwrap</span>();
-            <span class="kw">if</span> <span class="ident">first</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="number">0</span>..<span class="number">1</span>) {
+            <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="number">1</span>);
+
+            <span class="kw">let</span> <span class="ident">str_bytes</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;bytes&quot;</span>, <span class="kw-2">&amp;</span>[], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">str_bytes</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;[]&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>).<span class="ident">unwrap</span>();
+            <span class="kw">if</span> <span class="ident">first</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="number">0</span>).<span class="ident">copied</span>().<span class="ident">map</span>(<span class="ident">i64</span>::<span class="ident">from</span>) {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
+
+            <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">funcall</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;byteslice&quot;</span>, <span class="kw-2">&amp;</span>[<span class="ident">zero</span>, <span class="ident">one</span>], <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">try_into_mut</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>).<span class="ident">unwrap</span>();
+            <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">unwrap_or_default</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">get</span>(<span class="number">0</span>..<span class="number">1</span>).<span class="ident">unwrap_or_default</span>() {
+                <span class="kw">return</span> <span class="bool-val">false</span>;
+            }
+
             <span class="kw">let</span> <span class="ident">recovered</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">value</span>).<span class="ident">unwrap</span>();
             <span class="kw">if</span> <span class="ident">recovered</span> <span class="op">!</span><span class="op">=</span> <span class="ident">bytes</span> {
                 <span class="kw">return</span> <span class="bool-val">false</span>;

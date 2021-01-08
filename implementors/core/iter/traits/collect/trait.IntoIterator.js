@@ -2,6 +2,7 @@
 implementors["artichoke_backend"] = [{"text":"impl&lt;'a, S&gt; IntoIterator for &amp;'a Registry&lt;S&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a Array","synthetic":false,"types":[]},{"text":"impl&lt;'a, S&gt; IntoIterator for &amp;'a Registry&lt;S&gt;","synthetic":false,"types":[]}];
 implementors["intaglio"] = [{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a SymbolTable","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a SymbolTable","synthetic":false,"types":[]}];
 implementors["onig"] = [{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a Region","synthetic":false,"types":[]}];
+implementors["rand"] = [{"text":"impl IntoIterator for IndexVec","synthetic":false,"types":[]}];
 implementors["regex"] = [{"text":"impl IntoIterator for SetMatches","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a SetMatches","synthetic":false,"types":[]},{"text":"impl IntoIterator for SetMatches","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a SetMatches","synthetic":false,"types":[]}];
 implementors["regex_syntax"] = [{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a Utf8Sequence","synthetic":false,"types":[]}];
 implementors["rustyline"] = [{"text":"impl&lt;'a&gt; IntoIterator for &amp;'a History","synthetic":false,"types":[]}];

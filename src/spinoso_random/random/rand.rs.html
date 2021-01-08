@@ -134,7 +134,7 @@
 <span id="131">131</span>
 <span id="132">132</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">rand_core_</span>::{<span class="ident">Error</span>, <span class="ident">RngCore</span>, <span class="ident">SeedableRng</span>};
+<span class="kw">use</span> <span class="ident">rand_core</span>::{<span class="ident">Error</span>, <span class="ident">RngCore</span>, <span class="ident">SeedableRng</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">seed_to_key</span>, <span class="ident">Random</span>, <span class="ident">DEFAULT_SEED_BYTES</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Mt</span>;
@@ -147,7 +147,7 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use rand_core_::{RngCore, SeedableRng};</span>
+    <span class="doccomment">/// # use rand_core::{RngCore, SeedableRng};</span>
     <span class="doccomment">/// # use spinoso_random::Random;</span>
     <span class="doccomment">/// // Default MT seed</span>
     <span class="doccomment">/// let seed = 5489_u128.to_le_bytes();</span>
@@ -171,7 +171,7 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use rand_core_::RngCore;</span>
+    <span class="doccomment">/// # use rand_core::RngCore;</span>
     <span class="doccomment">/// # use spinoso_random::Random;</span>
     <span class="doccomment">/// let mut random = Random::with_seed(33);</span>
     <span class="doccomment">/// assert_ne!(random.next_u64(), random.next_u64());</span>
@@ -190,7 +190,7 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use rand_core_::RngCore;</span>
+    <span class="doccomment">/// # use rand_core::RngCore;</span>
     <span class="doccomment">/// # use spinoso_random::Random;</span>
     <span class="doccomment">/// let mut random = Random::with_seed(33);</span>
     <span class="doccomment">/// assert_ne!(random.next_u32(), random.next_u32());</span>
@@ -212,7 +212,7 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use rand_core_::RngCore;</span>
+    <span class="doccomment">/// # use rand_core::RngCore;</span>
     <span class="doccomment">/// # use spinoso_random::Random;</span>
     <span class="doccomment">/// let mut random = Random::with_seed(33);</span>
     <span class="doccomment">/// let mut buf = [0; 32];</span>
@@ -240,7 +240,7 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use rand_core_::{Error, RngCore};</span>
+    <span class="doccomment">/// # use rand_core::{Error, RngCore};</span>
     <span class="doccomment">/// # use spinoso_random::Random;</span>
     <span class="doccomment">/// # fn example() -&gt; Result&lt;(), Error&gt; {</span>
     <span class="doccomment">/// let mut random = Random::with_seed(33);</span>

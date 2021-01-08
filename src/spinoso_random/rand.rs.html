@@ -235,17 +235,17 @@
 <span id="232">232</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">rand_</span>::<span class="ident">Rng</span>;
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ArgumentError</span>, <span class="ident">Random</span>};
 
 <span class="doccomment">/// A range constraint for generating random numbers.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This enum is an input to the [`rand`] function. See its documentation for</span>
+<span class="doccomment">/// This enum is an input to the [`rand()`] function. See its documentation for</span>
 <span class="doccomment">/// more details.</span>
 <span class="comment">// TODO: Add range variants</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Max</span> {
     <span class="doccomment">/// A maximum float bound.</span>
     <span class="doccomment">///</span>
@@ -279,19 +279,19 @@
 
 <span class="doccomment">/// A generated random number.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This enum is returned by the [`rand`] function. See its documentation for</span>
+<span class="doccomment">/// This enum is returned by the [`rand()`] function. See its documentation for</span>
 <span class="doccomment">/// more details.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Rand</span> {
     <span class="doccomment">/// A random float.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// A random float is returned from [`rand`] when given [`Max::Float`] or</span>
+    <span class="doccomment">/// A random float is returned from [`rand()`] when given [`Max::Float`] or</span>
     <span class="doccomment">/// [`Max::None`] max constraint.</span>
     <span class="ident">Float</span>(<span class="ident">f64</span>),
     <span class="doccomment">/// A random integer.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// A random integer is returned from [`rand`] when given [`Max::Integer`]</span>
+    <span class="doccomment">/// A random integer is returned from [`rand()`] when given [`Max::Integer`]</span>
     <span class="doccomment">/// max constraint.</span>
     <span class="ident">Integer</span>(<span class="ident">i64</span>),
 }
@@ -357,8 +357,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// When `max` is a non-finite `f64`, `rand` returns a domain error</span>
 <span class="doccomment">/// [`ArgumentError`].</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random-rand&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rand</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Random</span>, <span class="ident">max</span>: <span class="ident">Max</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rand</span>, <span class="ident">ArgumentError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">constraint</span> <span class="op">=</span> <span class="ident">max</span>;
     <span class="kw">match</span> <span class="ident">constraint</span> {
@@ -375,7 +375,7 @@
             <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="ident">max</span>);
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..<span class="ident">max</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Float</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">max</span>) <span class="kw">if</span> <span class="ident">max</span> <span class="op">&lt;</span> <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -383,7 +383,7 @@
             <span class="prelude-val">Err</span>(<span class="ident">err</span>)
         }
         <span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">max</span>);
+            <span class="kw">let</span> <span class="ident">number</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>..<span class="ident">max</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">Rand</span>::<span class="ident">Integer</span>(<span class="ident">number</span>))
         }
         <span class="ident">Max</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
