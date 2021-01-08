@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["entrypoint","Main entrypoint for Artichoke's version of the `ruby` CLI."]]});
+initSidebarItems({"fn":[["entrypoint","Main entrypoint for Artichoke's version of the `ruby` CLI."]],"struct":[["Args","Command line arguments for Artichoke `ruby` frontend."]]});

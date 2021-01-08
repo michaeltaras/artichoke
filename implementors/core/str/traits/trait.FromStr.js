@@ -4,7 +4,6 @@ implementors["chrono_tz"] = [{"text":"impl FromStr for Tz","synthetic":false,"ty
 implementors["clap"] = [{"text":"impl FromStr for AppSettings","synthetic":false,"types":[]},{"text":"impl FromStr for ArgSettings","synthetic":false,"types":[]},{"text":"impl FromStr for Shell","synthetic":false,"types":[]}];
 implementors["log"] = [{"text":"impl FromStr for Level","synthetic":false,"types":[]},{"text":"impl FromStr for LevelFilter","synthetic":false,"types":[]}];
 implementors["nix"] = [{"text":"impl FromStr for Signal","synthetic":false,"types":[]}];
-implementors["proc_macro2"] = [{"text":"impl FromStr for TokenStream","synthetic":false,"types":[]}];
 implementors["regex"] = [{"text":"impl FromStr for Regex","synthetic":false,"types":[]},{"text":"impl FromStr for Regex","synthetic":false,"types":[]}];
 implementors["spinoso_symbol"] = [{"text":"impl FromStr for IdentifierType","synthetic":false,"types":[]}];
 implementors["termcolor"] = [{"text":"impl FromStr for Color","synthetic":false,"types":[]}];
