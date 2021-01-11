@@ -1037,6 +1037,12 @@
 <span id="1034">1034</span>
 <span id="1035">1035</span>
 <span id="1036">1036</span>
+<span id="1037">1037</span>
+<span id="1038">1038</span>
+<span id="1039">1039</span>
+<span id="1040">1040</span>
+<span id="1041">1041</span>
+<span id="1042">1042</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -1227,23 +1233,29 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="kw">struct</span> <span class="ident">Flags</span>(<span class="ident">u8</span>);
+<span class="kw">struct</span> <span class="ident">Flags</span> {
+    <span class="ident">bits</span>: <span class="ident">u8</span>,
+}
 
 <span class="kw">impl</span> <span class="ident">Flags</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">ident</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="number">0b1000_0001</span>)
-    }
+    <span class="comment">// Bit flags</span>
+    <span class="kw">const</span> <span class="ident">IS_IDENT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span> { <span class="ident">bits</span>: <span class="number">0b1000_0000</span> };
+    <span class="kw">const</span> <span class="ident">EMIT_LEADING_COLON</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span> { <span class="ident">bits</span>: <span class="number">0b0000_1000</span> };
+    <span class="kw">const</span> <span class="ident">EMIT_LEADING_QUOTE</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span> { <span class="ident">bits</span>: <span class="number">0b0000_0001</span> };
+    <span class="kw">const</span> <span class="ident">EMIT_TRAILING_QUOTE</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span> { <span class="ident">bits</span>: <span class="number">0b0000_0010</span> };
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">quoted</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="number">0b0000_0111</span>)
-    }
+    <span class="comment">// Initial states</span>
+    <span class="kw">const</span> <span class="ident">IDENT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span> {
+        <span class="ident">bits</span>: <span class="self">Self</span>::<span class="ident">IS_IDENT</span>.<span class="ident">bits</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">EMIT_LEADING_COLON</span>.<span class="ident">bits</span>,
+    };
+    <span class="kw">const</span> <span class="ident">QUOTED</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span> {
+        <span class="ident">bits</span>: <span class="self">Self</span>::<span class="ident">EMIT_LEADING_COLON</span>.<span class="ident">bits</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">EMIT_LEADING_QUOTE</span>.<span class="ident">bits</span> <span class="op">|</span> <span class="self">Self</span>::<span class="ident">EMIT_TRAILING_QUOTE</span>.<span class="ident">bits</span>,
+    };
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">emit_leading_colon</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> <span class="number">0b0000_0001</span> <span class="op">&gt;</span> <span class="number">0</span> {
-            <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;=</span> <span class="number">0b1111_1110</span>;
+        <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">EMIT_LEADING_COLON</span>.<span class="ident">bits</span>) <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">EMIT_LEADING_COLON</span>.<span class="ident">bits</span> {
+            <span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;=</span> <span class="op">!</span><span class="self">Self</span>::<span class="ident">EMIT_LEADING_COLON</span>.<span class="ident">bits</span>;
             <span class="prelude-val">Some</span>(<span class="string">&#39;:&#39;</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -1252,8 +1264,8 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">emit_leading_quote</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> <span class="number">0b0000_0010</span> <span class="op">&gt;</span> <span class="number">0</span> {
-            <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;=</span> <span class="number">0b1111_1101</span>;
+        <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">EMIT_LEADING_QUOTE</span>.<span class="ident">bits</span>) <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">EMIT_LEADING_QUOTE</span>.<span class="ident">bits</span> {
+            <span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;=</span> <span class="op">!</span><span class="self">Self</span>::<span class="ident">EMIT_LEADING_QUOTE</span>.<span class="ident">bits</span>;
             <span class="prelude-val">Some</span>(<span class="string">&#39;&quot;&#39;</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -1262,8 +1274,8 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">emit_trailing_quote</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> <span class="number">0b0000_0100</span> <span class="op">&gt;</span> <span class="number">0</span> {
-            <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;=</span> <span class="number">0b1111_1011</span>;
+        <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">EMIT_TRAILING_QUOTE</span>.<span class="ident">bits</span>) <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">EMIT_TRAILING_QUOTE</span>.<span class="ident">bits</span> {
+            <span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;=</span> <span class="op">!</span><span class="self">Self</span>::<span class="ident">EMIT_TRAILING_QUOTE</span>.<span class="ident">bits</span>;
             <span class="prelude-val">Some</span>(<span class="string">&#39;&quot;&#39;</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -1272,7 +1284,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_ident</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> <span class="number">0b1000_0000</span> <span class="op">&gt;</span> <span class="number">0</span>
+        (<span class="self">self</span>.<span class="ident">bits</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">IS_IDENT</span>.<span class="ident">bits</span>) <span class="op">=</span><span class="op">=</span> <span class="self">Self</span>::<span class="ident">IS_IDENT</span>.<span class="ident">bits</span>
     }
 }
 
@@ -1366,7 +1378,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">ident</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">flags</span>: <span class="ident">Flags</span>::<span class="ident">ident</span>(),
+            <span class="ident">flags</span>: <span class="ident">Flags</span>::<span class="ident">IDENT</span>,
             <span class="ident">forward_byte_literal</span>: <span class="ident">ByteLiteral</span>::<span class="ident">default</span>(),
             <span class="ident">bytes</span>,
             <span class="ident">reverse_byte_literal</span>: <span class="ident">ByteLiteral</span>::<span class="ident">default</span>(),
@@ -1379,7 +1391,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">quoted</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">flags</span>: <span class="ident">Flags</span>::<span class="ident">quoted</span>(),
+            <span class="ident">flags</span>: <span class="ident">Flags</span>::<span class="ident">QUOTED</span>,
             <span class="ident">forward_byte_literal</span>: <span class="ident">ByteLiteral</span>::<span class="ident">default</span>(),
             <span class="ident">bytes</span>,
             <span class="ident">reverse_byte_literal</span>: <span class="ident">ByteLiteral</span>::<span class="ident">default</span>(),
@@ -1800,7 +1812,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">flags_ident</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">Flags</span>::<span class="ident">ident</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">Flags</span>::<span class="ident">IDENT</span>;
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">flags</span>.<span class="ident">is_ident</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">flags</span>.<span class="ident">emit_leading_colon</span>(), <span class="prelude-val">Some</span>(<span class="string">&#39;:&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">flags</span>.<span class="ident">is_ident</span>());
@@ -1816,7 +1828,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">flags_quoted</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">Flags</span>::<span class="ident">quoted</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">Flags</span>::<span class="ident">QUOTED</span>;
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">flags</span>.<span class="ident">is_ident</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">flags</span>.<span class="ident">emit_leading_colon</span>(), <span class="prelude-val">Some</span>(<span class="string">&#39;:&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">flags</span>.<span class="ident">is_ident</span>());
