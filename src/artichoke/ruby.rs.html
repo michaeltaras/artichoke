@@ -197,16 +197,6 @@
 <span id="196">196</span>
 <span id="197">197</span>
 <span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Artichoke CLI entrypoint.</span>
 <span class="doccomment">//!</span>
@@ -224,18 +214,8 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">state</span>::<span class="ident">parser</span>::<span class="ident">Context</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">string</span>::<span class="ident">format_unicode_debug_into</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backtrace</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">filename</span>::<span class="ident">INLINE_EVAL_SWITCH</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
-
-<span class="kw">const</span> <span class="ident">INLINE_EVAL_SWITCH_FILENAME</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="string">b&quot;-e&quot;</span>;
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">filename_test</span> {
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">inline_eval_switch_filename_does_not_contain_nul_byte</span>() {
-        <span class="kw">let</span> <span class="ident">contains_nul_byte</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">INLINE_EVAL_SWITCH_FILENAME</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\0&#39;</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">contains_nul_byte</span>);
-    }
-}
 
 <span class="doccomment">/// Command line arguments for Artichoke `ruby` frontend.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
@@ -351,12 +331,12 @@
     <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span> <span class="op">+</span> <span class="ident">WriteColor</span>,
 {
     <span class="ident">interp</span>.<span class="ident">pop_context</span>()<span class="question-mark">?</span>;
-    <span class="comment">// safety:</span>
+    <span class="comment">// Safety:</span>
     <span class="comment">//</span>
     <span class="comment">// - `Context::new_unchecked` requires that its argument has no NUL bytes.</span>
-    <span class="comment">// - `INLINE_EVAL_SWITCH_FILENAME` is controlled by this crate.</span>
-    <span class="comment">// - A test asserts that `INLINE_EVAL_SWITCH_FILENAME` has no NUL bytes.</span>
-    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">INLINE_EVAL_SWITCH_FILENAME</span>) };
+    <span class="comment">// - `INLINE_EVAL_SWITCH` is controlled by this crate.</span>
+    <span class="comment">// - A test asserts that `INLINE_EVAL_SWITCH` has no NUL bytes.</span>
+    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Context</span>::<span class="ident">new_unchecked</span>(<span class="ident">INLINE_EVAL_SWITCH</span>) };
     <span class="ident">interp</span>.<span class="ident">push_context</span>(<span class="ident">context</span>)<span class="question-mark">?</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">fixture</span>) <span class="op">=</span> <span class="ident">fixture</span> {
         <span class="ident">setup_fixture_hack</span>(<span class="ident">interp</span>, <span class="ident">fixture</span>)<span class="question-mark">?</span>;
