@@ -285,6 +285,24 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 
@@ -474,8 +492,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Object.new&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Object</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">object</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">env</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;ENV&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Object</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">env</span>.<span class="ident">inner</span>()));
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-env&quot;</span>)]</span>
+        {
+            <span class="kw">let</span> <span class="ident">env</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;ENV&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Object</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">env</span>.<span class="ident">inner</span>()));
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -485,8 +506,11 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Class</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">builtin</span>.<span class="ident">inner</span>()));
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Array&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Class</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">data</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Math::DomainError&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Class</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">source</span>.<span class="ident">inner</span>()));
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-math&quot;</span>)]</span>
+        {
+            <span class="kw">let</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Math::DomainError&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Class</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">source</span>.<span class="ident">inner</span>()));
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -494,8 +518,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">builtin</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Comparable&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Module</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">builtin</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Math&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Module</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">data</span>.<span class="ident">inner</span>()));
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-math&quot;</span>)]</span>
+        {
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Math&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Module</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">data</span>.<span class="ident">inner</span>()));
+        }
         <span class="kw">let</span> <span class="ident">artichoke</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Artichoke&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Module</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">artichoke</span>.<span class="ident">inner</span>()));
     }
@@ -529,8 +556,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;[]&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">empty</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;[1, /./, Object.new]&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">array</span>.<span class="ident">inner</span>()));
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-regexp&quot;</span>)]</span>
+        {
+            <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;[1, /./, Object.new]&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">array</span>.<span class="ident">inner</span>()));
+        }
         <span class="kw">let</span> <span class="ident">ary</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>];
         <span class="kw">let</span> <span class="ident">converted</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">try_convert_mut</span>(<span class="ident">ary</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Array</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">converted</span>.<span class="ident">inner</span>()));
@@ -541,8 +571,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;{}&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Hash</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">empty</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;{a: 1, b: [/./]}&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Hash</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">hash</span>.<span class="ident">inner</span>()));
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-regexp&quot;</span>)]</span>
+        {
+            <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;{a: 1, b: [/./]}&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Hash</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">hash</span>.<span class="ident">inner</span>()));
+        }
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">default</span>();
         <span class="ident">map</span>.<span class="ident">insert</span>(<span class="string">b&quot;a&quot;</span>.<span class="ident">to_vec</span>(), <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0_u8</span>]);
         <span class="ident">map</span>.<span class="ident">insert</span>(<span class="string">b&quot;b&quot;</span>.<span class="ident">to_vec</span>(), <span class="string">b&quot;binary&quot;</span>.<span class="ident">to_vec</span>());
@@ -568,8 +601,11 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Exception</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">stderror</span>.<span class="ident">inner</span>()));
         <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;IndexError.new&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Exception</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">index</span>.<span class="ident">inner</span>()));
-        <span class="kw">let</span> <span class="ident">domain</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Math::DomainError.new&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Exception</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">domain</span>.<span class="ident">inner</span>()));
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-math&quot;</span>)]</span>
+        {
+            <span class="kw">let</span> <span class="ident">domain</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">eval</span>(<span class="string">b&quot;Math::DomainError.new&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Ruby</span>::<span class="ident">Exception</span>, <span class="ident">types</span>::<span class="ident">ruby_from_mrb_value</span>(<span class="ident">domain</span>.<span class="ident">inner</span>()));
+        }
     }
 }
 </pre></div>
