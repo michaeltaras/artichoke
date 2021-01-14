@@ -252,6 +252,9 @@
 <span id="249">249</span>
 <span id="250">250</span>
 <span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse encoding parameter to `Regexp#initialize` and `Regexp::compile`.</span>
 
@@ -465,6 +468,9 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Encoding</span> {
+    <span class="doccomment">/// Construct a new [`None`] encoding.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`None`]: Self::None</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="prelude-val">None</span>
