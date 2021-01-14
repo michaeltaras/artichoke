@@ -7,4 +7,5 @@ implementors["regex_syntax"] = [{"text":"impl Deref for Literal","synthetic":fal
 implementors["rustyline"] = [{"text":"impl Deref for LineBuffer","synthetic":false,"types":[]}];
 implementors["smallvec"] = [{"text":"impl&lt;A:&nbsp;Array&gt; Deref for SmallVec&lt;A&gt;","synthetic":false,"types":[]}];
 implementors["spinoso_array"] = [{"text":"impl&lt;T&gt; Deref for SmallArray&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T&gt; Deref for Array&lt;T&gt;","synthetic":false,"types":[]}];
+implementors["spinoso_string"] = [{"text":"impl Deref for String","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -5,4 +5,5 @@ implementors["once_cell"] = [{"text":"impl&lt;T, F:&nbsp;FnOnce() -&gt; T&gt; De
 implementors["regex_syntax"] = [{"text":"impl DerefMut for Literal","synthetic":false,"types":[]}];
 implementors["smallvec"] = [{"text":"impl&lt;A:&nbsp;Array&gt; DerefMut for SmallVec&lt;A&gt;","synthetic":false,"types":[]}];
 implementors["spinoso_array"] = [{"text":"impl&lt;T&gt; DerefMut for SmallArray&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T&gt; DerefMut for Array&lt;T&gt;","synthetic":false,"types":[]}];
+implementors["spinoso_string"] = [{"text":"impl DerefMut for String","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

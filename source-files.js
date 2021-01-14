@@ -46,6 +46,7 @@ sourcesIndex["spinoso_math"] = {"name":"","files":["lib.rs","math.rs"]};
 sourcesIndex["spinoso_random"] = {"name":"","dirs":[{"name":"random","dirs":[{"name":"ruby","files":["mod.rs","rand.rs"]}],"files":["mod.rs","rand.rs"]}],"files":["lib.rs","rand.rs","urandom.rs"]};
 sourcesIndex["spinoso_regexp"] = {"name":"","dirs":[{"name":"regexp","dirs":[{"name":"regex","files":["mod.rs"]}],"files":["mod.rs","oniguruma.rs"]}],"files":["debug.rs","encoding.rs","error.rs","lib.rs","options.rs"]};
 sourcesIndex["spinoso_securerandom"] = {"name":"","files":["lib.rs","uuid.rs"]};
+sourcesIndex["spinoso_string"] = {"name":"","files":["chars.rs","encoding.rs","eq.rs","impls.rs","lib.rs"]};
 sourcesIndex["spinoso_symbol"] = {"name":"","dirs":[{"name":"casecmp","files":["ascii.rs","mod.rs","unicode.rs"]}],"files":["all_symbols.rs","convert.rs","eq.rs","ident.rs","inspect.rs","lib.rs"]};
 sourcesIndex["spinoso_time"] = {"name":"","dirs":[{"name":"time","dirs":[{"name":"chrono","files":["build.rs","convert.rs","date.rs","math.rs","mod.rs","offset.rs","ops.rs","ordinal.rs","time.rs","timezone.rs","weekday.rs"]}],"files":["mod.rs"]}],"files":["lib.rs"]};
 sourcesIndex["strsim"] = {"name":"","files":["lib.rs"]};
