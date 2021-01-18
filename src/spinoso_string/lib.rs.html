@@ -2337,6 +2337,57 @@
 <span id="2334">2334</span>
 <span id="2335">2335</span>
 <span id="2336">2336</span>
+<span id="2337">2337</span>
+<span id="2338">2338</span>
+<span id="2339">2339</span>
+<span id="2340">2340</span>
+<span id="2341">2341</span>
+<span id="2342">2342</span>
+<span id="2343">2343</span>
+<span id="2344">2344</span>
+<span id="2345">2345</span>
+<span id="2346">2346</span>
+<span id="2347">2347</span>
+<span id="2348">2348</span>
+<span id="2349">2349</span>
+<span id="2350">2350</span>
+<span id="2351">2351</span>
+<span id="2352">2352</span>
+<span id="2353">2353</span>
+<span id="2354">2354</span>
+<span id="2355">2355</span>
+<span id="2356">2356</span>
+<span id="2357">2357</span>
+<span id="2358">2358</span>
+<span id="2359">2359</span>
+<span id="2360">2360</span>
+<span id="2361">2361</span>
+<span id="2362">2362</span>
+<span id="2363">2363</span>
+<span id="2364">2364</span>
+<span id="2365">2365</span>
+<span id="2366">2366</span>
+<span id="2367">2367</span>
+<span id="2368">2368</span>
+<span id="2369">2369</span>
+<span id="2370">2370</span>
+<span id="2371">2371</span>
+<span id="2372">2372</span>
+<span id="2373">2373</span>
+<span id="2374">2374</span>
+<span id="2375">2375</span>
+<span id="2376">2376</span>
+<span id="2377">2377</span>
+<span id="2378">2378</span>
+<span id="2379">2379</span>
+<span id="2380">2380</span>
+<span id="2381">2381</span>
+<span id="2382">2382</span>
+<span id="2383">2383</span>
+<span id="2384">2384</span>
+<span id="2385">2385</span>
+<span id="2386">2386</span>
+<span id="2387">2387</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -4129,6 +4180,57 @@
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">encoding</span> {
             <span class="ident">Encoding</span>::<span class="ident">Ascii</span> <span class="op">|</span> <span class="ident">Encoding</span>::<span class="ident">Binary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">len</span>(),
             <span class="ident">Encoding</span>::<span class="ident">Utf8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">conventionally_utf8_bytestring_len</span>(<span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">as_slice</span>()),
+        }
+    }
+
+    <span class="doccomment">/// Returns true for a `String` which is encoded correctly.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For this method to return true, `String`s with [conventionally UTF-8]</span>
+    <span class="doccomment">/// must be well-formed UTF-8; [ASCII]-encoded `String`s must only contain</span>
+    <span class="doccomment">/// bytes in the range `0..=127`; [binary]-encoded `String`s may contain any</span>
+    <span class="doccomment">/// byte sequence.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method is suitable for implementing the Ruby method</span>
+    <span class="doccomment">/// [`String#valid_encoding?`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use spinoso_string::{Encoding, String};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let s = String::utf8(b&quot;xyz&quot;.to_vec());</span>
+    <span class="doccomment">/// assert!(s.is_valid_encoding());</span>
+    <span class="doccomment">/// let s = String::utf8(&quot;🚀&quot;.to_string().into_bytes());</span>
+    <span class="doccomment">/// assert!(s.is_valid_encoding());</span>
+    <span class="doccomment">/// let s = String::utf8(b&quot;abc\xFF\xFExyz&quot;.to_vec());</span>
+    <span class="doccomment">/// assert!(!s.is_valid_encoding());</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let s = String::ascii(b&quot;xyz&quot;.to_vec());</span>
+    <span class="doccomment">/// assert!(s.is_valid_encoding());</span>
+    <span class="doccomment">/// let s = String::ascii(&quot;🚀&quot;.to_string().into_bytes());</span>
+    <span class="doccomment">/// assert!(!s.is_valid_encoding());</span>
+    <span class="doccomment">/// let s = String::ascii(b&quot;abc\xFF\xFExyz&quot;.to_vec());</span>
+    <span class="doccomment">/// assert!(!s.is_valid_encoding());</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let s = String::binary(b&quot;xyz&quot;.to_vec());</span>
+    <span class="doccomment">/// assert!(s.is_valid_encoding());</span>
+    <span class="doccomment">/// let s = String::binary(&quot;🚀&quot;.to_string().into_bytes());</span>
+    <span class="doccomment">/// assert!(s.is_valid_encoding());</span>
+    <span class="doccomment">/// let s = String::binary(b&quot;abc\xFF\xFExyz&quot;.to_vec());</span>
+    <span class="doccomment">/// assert!(s.is_valid_encoding());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [conventionally UTF-8]: crate::Encoding::Utf8</span>
+    <span class="doccomment">/// [ASCII]: crate::Encoding::Ascii</span>
+    <span class="doccomment">/// [binary]: crate::Encoding::Binary</span>
+    <span class="doccomment">/// [`String#valid_encoding?`]: https://ruby-doc.org/core-3.0.0/String.html#method-i-valid_encoding-3F</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_valid_encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">encoding</span> {
+            <span class="ident">Encoding</span>::<span class="ident">Utf8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">is_utf8</span>(),
+            <span class="ident">Encoding</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">is_ascii</span>(),
+            <span class="ident">Encoding</span>::<span class="ident">Binary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         }
     }
 }
