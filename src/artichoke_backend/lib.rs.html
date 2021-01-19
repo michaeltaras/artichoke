@@ -188,6 +188,8 @@
 <span id="187">187</span>
 <span id="188">188</span>
 <span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -232,6 +234,7 @@
 <span class="doccomment">//! let result = interp.eval(b&quot;10 * 10&quot;)?;</span>
 <span class="doccomment">//! let result = result.try_into::&lt;i64&gt;(&amp;interp)?;</span>
 <span class="doccomment">//! assert_eq!(result, 100);</span>
+<span class="doccomment">//! # interp.close();</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! # example().unwrap();</span>
@@ -252,6 +255,7 @@
 <span class="doccomment">//! let result = result.funcall(&amp;mut interp, &quot;length&quot;, &amp;[], None)?;</span>
 <span class="doccomment">//! let result = result.try_into::&lt;i64&gt;(&amp;mut interp)?;</span>
 <span class="doccomment">//! assert_eq!(result, 12);</span>
+<span class="doccomment">//! # interp.close();</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! # example().unwrap();</span>

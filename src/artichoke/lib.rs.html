@@ -146,6 +146,8 @@
 <span id="145">145</span>
 <span id="146">146</span>
 <span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -191,6 +193,7 @@
 <span class="doccomment">//! # fn example() -&gt; Result&lt;(), Error&gt; {</span>
 <span class="doccomment">//! let mut interp = artichoke::interpreter()?;</span>
 <span class="doccomment">//! let result = interp.eval(b&quot;2 + 5&quot;)?;</span>
+<span class="doccomment">//! # interp.close();</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! # example().unwrap();</span>
@@ -208,6 +211,7 @@
 <span class="doccomment">//! let codepoint = s.funcall(&amp;mut interp, &quot;ord&quot;, &amp;[] /* args */, None /* block */)?;</span>
 <span class="doccomment">//! let codepoint = codepoint.try_into::&lt;u32&gt;(&amp;interp)?;</span>
 <span class="doccomment">//! assert_eq!(128142, codepoint);</span>
+<span class="doccomment">//! # interp.close();</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! # example().unwrap();</span>
