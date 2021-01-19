@@ -1737,6 +1737,49 @@
 <span id="1734">1734</span>
 <span id="1735">1735</span>
 <span id="1736">1736</span>
+<span id="1737">1737</span>
+<span id="1738">1738</span>
+<span id="1739">1739</span>
+<span id="1740">1740</span>
+<span id="1741">1741</span>
+<span id="1742">1742</span>
+<span id="1743">1743</span>
+<span id="1744">1744</span>
+<span id="1745">1745</span>
+<span id="1746">1746</span>
+<span id="1747">1747</span>
+<span id="1748">1748</span>
+<span id="1749">1749</span>
+<span id="1750">1750</span>
+<span id="1751">1751</span>
+<span id="1752">1752</span>
+<span id="1753">1753</span>
+<span id="1754">1754</span>
+<span id="1755">1755</span>
+<span id="1756">1756</span>
+<span id="1757">1757</span>
+<span id="1758">1758</span>
+<span id="1759">1759</span>
+<span id="1760">1760</span>
+<span id="1761">1761</span>
+<span id="1762">1762</span>
+<span id="1763">1763</span>
+<span id="1764">1764</span>
+<span id="1765">1765</span>
+<span id="1766">1766</span>
+<span id="1767">1767</span>
+<span id="1768">1768</span>
+<span id="1769">1769</span>
+<span id="1770">1770</span>
+<span id="1771">1771</span>
+<span id="1772">1772</span>
+<span id="1773">1773</span>
+<span id="1774">1774</span>
+<span id="1775">1775</span>
+<span id="1776">1776</span>
+<span id="1777">1777</span>
+<span id="1778">1778</span>
+<span id="1779">1779</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Ruby `Array` based on [`Vec`].</span>
 
@@ -2710,6 +2753,49 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tail</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">split_off</span>(<span class="number">0</span>);
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">extend_from_slice</span>(<span class="ident">other</span>);
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">tail</span>);
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Copy</span>,
+{
+    <span class="doccomment">/// Creates a new array by repeating this array `n` times.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function will not panic. If the resulting `Array`&#39;s capacity would</span>
+    <span class="doccomment">/// overflow, [`None`] is returned.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Basic usage:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use spinoso_array::Array;</span>
+    <span class="doccomment">/// # fn example() -&gt; Option&lt;()&gt; {</span>
+    <span class="doccomment">/// let mut ary = Array::from(&amp;[1, 2]);</span>
+    <span class="doccomment">/// let repeated_ary = ary.repeat(3)?;</span>
+    <span class="doccomment">/// assert_eq!(repeated_ary, &amp;[1, 2, 1, 2, 1, 2]);</span>
+    <span class="doccomment">/// # Some(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// # example().unwrap();</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`None`] should be returned on overflow:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use spinoso_array::Array;</span>
+    <span class="doccomment">/// let mut ary = Array::from(&amp;[1, 2]);</span>
+    <span class="doccomment">/// let repeated_ary = ary.repeat(usize::MAX);</span>
+    <span class="doccomment">/// assert_eq!(repeated_ary, None);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">repeat</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_slice</span>();
+        <span class="kw">if</span> <span class="ident">slice</span>.<span class="ident">len</span>().<span class="ident">checked_mul</span>(<span class="ident">n</span>).<span class="ident">is_some</span>() {
+            <span class="prelude-val">Some</span>(<span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">slice</span>.<span class="ident">repeat</span>(<span class="ident">n</span>)))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
+        }
     }
 }
 
