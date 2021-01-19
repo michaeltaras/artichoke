@@ -300,6 +300,13 @@
 <span id="299">299</span>
 <span id="300">300</span>
 <span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
@@ -430,7 +437,7 @@
     <span class="kw">if</span> <span class="ident">ary</span>.<span class="ident">is_frozen</span>(<span class="ident">interp</span>) {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">FrozenError</span>::<span class="ident">with_message</span>(<span class="string">&quot;can&#39;t modify frozen Array&quot;</span>).<span class="ident">into</span>());
     }
-    <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ary</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
 
     <span class="comment">// Allocate a new buffer and concatenate into it to allow preserving the&#39;</span>
     <span class="comment">// original `Array` items if `ary` is concatenated with itself.</span>
@@ -463,7 +470,14 @@
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TypeError</span>::<span class="ident">from</span>(<span class="ident">message</span>).<span class="ident">into</span>());
         }
     }
-    <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">replacement</span>, <span class="ident">ary</span>, <span class="ident">interp</span>)
+    <span class="kw-2">*</span><span class="ident">array</span>.<span class="ident">as_mut</span>() <span class="op">=</span> <span class="ident">replacement</span>;
+
+    <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
+    <span class="ident">drop</span>(<span class="ident">array</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+    }
+    <span class="prelude-val">Ok</span>(<span class="ident">ary</span>)
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">first</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="kw-2">mut</span> <span class="ident">ary</span>: <span class="ident">Value</span>, <span class="ident">num</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
