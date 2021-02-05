@@ -198,6 +198,8 @@
 <span id="197">197</span>
 <span id="198">198</span>
 <span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -219,10 +221,12 @@
 <span class="kw">mod</span> <span class="ident">fixnum</span>;
 <span class="kw">mod</span> <span class="ident">float</span>;
 <span class="kw">mod</span> <span class="ident">hash</span>;
+<span class="kw">mod</span> <span class="ident">implicit</span>;
 <span class="kw">mod</span> <span class="ident">nilable</span>;
 <span class="kw">mod</span> <span class="ident">string</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">boxing</span>::{<span class="ident">BoxUnboxVmValue</span>, <span class="ident">HeapAllocated</span>, <span class="ident">HeapAllocatedData</span>, <span class="ident">Immediate</span>, <span class="ident">UnboxedValueGuard</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">implicit</span>::{<span class="ident">implicitly_convert_to_int</span>, <span class="ident">implicitly_convert_to_nilable_string</span>, <span class="ident">implicitly_convert_to_string</span>};
 
 <span class="doccomment">/// Provide a fallible converter for types that implement an infallible</span>
 <span class="doccomment">/// conversion.</span>

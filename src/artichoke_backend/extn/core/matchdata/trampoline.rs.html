@@ -169,9 +169,11 @@
 <span id="168">168</span>
 <span id="169">169</span>
 <span id="170">170</span>
+<span id="171">171</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">implicitly_convert_to_int</span>, <span class="ident">implicitly_convert_to_string</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">array</span>::<span class="ident">Array</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::{<span class="ident">Capture</span>, <span class="ident">CaptureAt</span>, <span class="ident">CaptureExtract</span>, <span class="ident">MatchData</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Regexp</span>;
@@ -211,15 +213,15 @@
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">MatchData</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="ident">interp</span>)<span class="question-mark">?</span> };
     <span class="kw">let</span> <span class="ident">at</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="ident">len</span> {
-        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">len</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>, <span class="ident">elem</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>, <span class="ident">len</span>)<span class="question-mark">?</span>;
         <span class="ident">CaptureAt</span>::<span class="ident">StartLen</span>(<span class="ident">start</span>, <span class="ident">len</span>)
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>) {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">implicitly_convert_to_int</span>(<span class="ident">interp</span>, <span class="ident">elem</span>) {
         <span class="ident">CaptureAt</span>::<span class="ident">GroupIndex</span>(<span class="ident">index</span>)
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">name</span>) <span class="op">=</span> <span class="ident">elem</span>.<span class="ident">implicitly_convert_to_string</span>(<span class="ident">interp</span>) {
-        <span class="ident">CaptureAt</span>::<span class="ident">GroupName</span>(<span class="ident">name</span>)
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">symbol</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Symbol</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">elem</span>, <span class="ident">interp</span>) } {
         <span class="ident">CaptureAt</span>::<span class="ident">GroupName</span>(<span class="ident">symbol</span>.<span class="ident">bytes</span>(<span class="ident">interp</span>))
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">name</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">implicitly_convert_to_string</span>(<span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">elem</span>) } {
+        <span class="ident">CaptureAt</span>::<span class="ident">GroupName</span>(<span class="ident">name</span>)
     } <span class="kw">else</span> {
         <span class="comment">// NOTE(lopopolo): Encapsulation is broken here by reaching into the</span>
         <span class="comment">// inner regexp.</span>

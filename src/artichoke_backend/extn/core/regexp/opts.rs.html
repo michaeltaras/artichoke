@@ -21,10 +21,12 @@
 <span id="20">20</span>
 <span id="21">21</span>
 <span id="22">22</span>
+<span id="23">23</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse options parameter to `Regexp#initialize` and `Regexp::compile`.</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Options</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">implicitly_convert_to_int</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">impl</span> <span class="ident">ConvertMut</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Options</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Artichoke</span> {
@@ -33,7 +35,7 @@
         <span class="comment">// Regexp::EXTENDED, Regexp::IGNORECASE, and Regexp::MULTILINE, logically</span>
         <span class="comment">// or-ed together. Otherwise, if options is not nil or false, the regexp</span>
         <span class="comment">// will be case insensitive.</span>
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">options</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="self">self</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">options</span>) <span class="op">=</span> <span class="ident">implicitly_convert_to_int</span>(<span class="self">self</span>, <span class="ident">value</span>) {
             <span class="ident">Options</span>::<span class="ident">from</span>(<span class="ident">options</span>)
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">options</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>) {
             <span class="ident">Options</span>::<span class="ident">from</span>(<span class="ident">options</span>)

@@ -103,6 +103,7 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
+<span id="105">105</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Secure random number generator interface.</span>
 <span class="doccomment">//!</span>
@@ -122,6 +123,7 @@
 <span class="doccomment">//! [`SecureRandom`]: https://ruby-doc.org/stdlib-2.6.3/libdoc/securerandom/rdoc/SecureRandom.html</span>
 <span class="doccomment">//! [`getrandom`]: https://crates.io/crates/getrandom</span>
 
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">implicitly_convert_to_int</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">exception</span> <span class="kw">as</span> <span class="ident">exc</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
@@ -186,9 +188,9 @@
                     <span class="prelude-val">Ok</span>(<span class="ident">Max</span>::<span class="ident">Float</span>(<span class="ident">max</span>))
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">max</span>.<span class="ident">implicitly_convert_to_int</span>(<span class="self">self</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                    <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">implicitly_convert_to_int</span>(<span class="self">self</span>, <span class="ident">max</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">b&quot;invalid argument - &quot;</span>.<span class="ident">to_vec</span>();
-                        <span class="ident">message</span>.<span class="ident">extend</span>(<span class="ident">max</span>.<span class="ident">inspect</span>(<span class="self">self</span>).<span class="ident">as_slice</span>());
+                        <span class="ident">message</span>.<span class="ident">extend_from_slice</span>(<span class="ident">max</span>.<span class="ident">inspect</span>(<span class="self">self</span>).<span class="ident">as_slice</span>());
                         <span class="ident">exc</span>::<span class="ident">ArgumentError</span>::<span class="ident">from</span>(<span class="ident">message</span>)
                     })<span class="question-mark">?</span>;
                     <span class="prelude-val">Ok</span>(<span class="ident">Max</span>::<span class="ident">Integer</span>(<span class="ident">max</span>))
