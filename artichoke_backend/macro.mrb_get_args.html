@@ -15,7 +15,7 @@
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mrb</span>:<span class="ident">expr</span>, <span class="kw-2">*</span><span class="ident">args</span>) <span class="op">=</span><span class="op">&gt;</span> { ... };
 }</pre></div>
 </div><div class="docblock"><p>Extract <a href="../artichoke_backend/sys/struct.mrb_value.html"><code>sys::mrb_value</code></a>s from a <a href="../artichoke_backend/sys/struct.mrb_state.html"><code>sys::mrb_state</code></a> to adapt a C
-entrypoint to a Rust implementation of a Ruby function.</p>
+entry point to a Rust implementation of a Ruby function.</p>
 <p>This macro exists because the mruby VM <a href="https://github.com/mruby/mruby/issues/4688">does not validate argspecs</a> attached
 to native functions.</p>
 <p>This macro calls <code>unsafe</code> functions.</p>

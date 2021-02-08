@@ -180,7 +180,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Because this precondition must hold for all frames between the caller and</span>
 <span class="doccomment">/// the closest [`sys::mrb_protect`] landing pad, this function should only be</span>
-<span class="doccomment">/// called in the entrypoint into Rust from mruby.</span>
+<span class="doccomment">/// called in the entry point into Rust from mruby.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">raise</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">guard</span>: <span class="ident">Guard</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">exception</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="op">!</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">RubyException</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span>,

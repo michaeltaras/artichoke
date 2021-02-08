@@ -6,6 +6,6 @@ landing pads for panics and exit routines for cleaning up borrows. Callers
 should ensure that only <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="Copy"><code>Copy</code></a> items are alive in the current stack frame.</p>
 <p>Because this precondition must hold for all frames between the caller and
 the closest <a href="../../artichoke_backend/sys/fn.mrb_protect.html" title="sys::mrb_protect"><code>sys::mrb_protect</code></a> landing pad, this function should only be
-called in the entrypoint into Rust from mruby.</p>
+called in the entry point into Rust from mruby.</p>
 </div></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="artichoke_backend"></div>
     <script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
