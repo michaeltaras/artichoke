@@ -376,7 +376,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>().<span class="ident">unwrap</span>();
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">2000</span> {
             <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">eval</span>(<span class="string">b&quot;&#39;a&#39;&quot;</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>);
+            <span class="kw">let</span> <span class="ident">_display</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>);
         }
         <span class="ident">arena</span>.<span class="ident">restore</span>();
         <span class="ident">interp</span>.<span class="ident">full_gc</span>();
@@ -397,7 +397,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arena</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">create_arena_savepoint</span>().<span class="ident">unwrap</span>();
             <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">2000</span> {
                 <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">arena</span>.<span class="ident">eval</span>(<span class="string">b&quot;&#39;a&#39;&quot;</span>).<span class="ident">unwrap</span>();
-                <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>);
+                <span class="kw">let</span> <span class="ident">_display</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arena</span>);
             }
         }
         <span class="ident">interp</span>.<span class="ident">full_gc</span>();
