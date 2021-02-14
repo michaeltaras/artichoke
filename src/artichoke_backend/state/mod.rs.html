@@ -91,7 +91,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">class</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;core-random&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">random</span>::<span class="ident">Random</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>::{<span class="self">self</span>, <span class="ident">Filesystem</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fs</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interpreter</span>::<span class="ident">InterpreterAllocError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">module</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
@@ -114,7 +114,7 @@
     <span class="kw">pub</span> <span class="ident">parser</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">parser</span>::<span class="ident">State</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>,
     <span class="kw">pub</span> <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>,
-    <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">Adapter</span>,
     <span class="kw">pub</span> <span class="ident">regexp</span>: <span class="ident">regexp</span>::<span class="ident">State</span>,
     <span class="kw">pub</span> <span class="ident">symbols</span>: <span class="ident">SymbolTable</span>,
     <span class="kw">pub</span> <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>,
@@ -153,7 +153,7 @@
             <span class="ident">parser</span>: <span class="prelude-val">None</span>,
             <span class="ident">classes</span>: <span class="ident">class</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
             <span class="ident">modules</span>: <span class="ident">module</span>::<span class="ident">Registry</span>::<span class="ident">new</span>(),
-            <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">filesystem</span>(),
+            <span class="ident">vfs</span>: <span class="ident">fs</span>::<span class="ident">Adapter</span>::<span class="ident">new</span>(),
             <span class="ident">regexp</span>: <span class="ident">regexp</span>::<span class="ident">State</span>::<span class="ident">new</span>(),
             <span class="ident">symbols</span>: <span class="ident">SymbolTable</span>::<span class="ident">new</span>(),
             <span class="ident">output</span>: <span class="ident">output</span>::<span class="ident">Strategy</span>::<span class="ident">new</span>(),

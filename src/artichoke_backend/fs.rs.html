@@ -253,67 +253,6 @@
 <span id="252">252</span>
 <span id="253">253</span>
 <span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
-<span id="290">290</span>
-<span id="291">291</span>
-<span id="292">292</span>
-<span id="293">293</span>
-<span id="294">294</span>
-<span id="295">295</span>
-<span id="296">296</span>
-<span id="297">297</span>
-<span id="298">298</span>
-<span id="299">299</span>
-<span id="300">300</span>
-<span id="301">301</span>
-<span id="302">302</span>
-<span id="303">303</span>
-<span id="304">304</span>
-<span id="305">305</span>
-<span id="306">306</span>
-<span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
-<span id="312">312</span>
-<span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Virtual filesystem.</span>
 <span class="doccomment">//!</span>
@@ -328,125 +267,50 @@
 <span class="doccomment">//! Artichoke has several virtual filesystem implementations. Only some of them</span>
 <span class="doccomment">//! support reading from the system fs.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+<span class="kw">use</span> <span class="ident">bstr</span>::<span class="ident">ByteVec</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Component</span>, <span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">ConvertBytesError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hybrid</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">memory</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">native</span>;
+<span class="kw">mod</span> <span class="ident">hybrid</span>;
+<span class="kw">mod</span> <span class="ident">memory</span>;
+<span class="kw">mod</span> <span class="ident">native</span>;
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hybrid</span>::<span class="ident">Hybrid</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">memory</span>::<span class="ident">Memory</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">native</span>::<span class="ident">Native</span>;
+
+<span class="doccomment">/// Directory at which the [in-memory filesystem](Memory) is mounted.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Hybrid`] filesystems mount the `Memory` filesystem at this path.</span>
+<span class="doccomment">/// `RUBY_LOAD_PATH` is found within this path prefix.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MEMORY_FILESYSTEM_MOUNT_POINT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/artichoke/virtual_root&quot;</span>;
 
 <span class="doccomment">/// Directory at which Ruby sources and extensions are stored in the virtual</span>
 <span class="doccomment">/// filesystem.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// `RUBY_LOAD_PATH` is the default current working directory for</span>
-<span class="doccomment">/// [`Memory`](memory::Memory) filesystems.</span>
+<span class="doccomment">/// [`Memory`] filesystems.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`Hybrid`](hybrid::Hybrid) filesystems mount the `Memory` filessytem at</span>
-<span class="doccomment">/// `RUBY_LOAD_PATH`.</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RUBY_LOAD_PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/src/lib&quot;</span>;
+<span class="doccomment">/// [`Hybrid`] filesystems locate the this path on a `Memory` filesystem below</span>
+<span class="doccomment">/// [`MEMORY_FILESYSTEM_MOUNT_POINT`].</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RUBY_LOAD_PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/artichoke/virtual_root/src/lib&quot;</span>;
 
 <span class="doccomment">/// Function type for extension hooks stored in the virtual filesystem.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This signature is equivalent to the signature for `File::require` as defined</span>
-<span class="doccomment">/// by the `artichoke-backend` implementation of</span>
-<span class="doccomment">/// [`LoadSources`](crate::core::LoadSources).</span>
+<span class="doccomment">/// This signature is equivalent to the signature for [`File::require`] as</span>
+<span class="doccomment">/// defined by the `artichoke-backend` implementation of [`LoadSources`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`File::require`]: artichoke_core::file::File::require</span>
+<span class="doccomment">/// [`LoadSources`]: crate::core::LoadSources</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ExtensionHook</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>;
 
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;native-filesystem-access&quot;</span>, <span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">test</span>, <span class="ident">doctest</span>))))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filesystem</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">fs</span> <span class="op">=</span> <span class="ident">hybrid</span>::<span class="ident">Hybrid</span>::<span class="ident">default</span>();
-    <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">fs</span>)
-}
-
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;native-filesystem-access&quot;</span>, <span class="ident">test</span>, <span class="ident">doctest</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filesystem</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">fs</span> <span class="op">=</span> <span class="ident">memory</span>::<span class="ident">Memory</span>::<span class="ident">default</span>();
-    <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">fs</span>)
-}
-
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">doctest</span>, <span class="ident">test</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filesystem</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">fs</span> <span class="op">=</span> <span class="ident">memory</span>::<span class="ident">Memory</span>::<span class="ident">default</span>();
-    <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">fs</span>)
-}
-
-<span class="doccomment">/// Filesystem APIs required by an Artichoke interpreter.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Filesystem</span>: <span class="ident">fmt</span>::<span class="ident">Debug</span> {
-    <span class="doccomment">/// Check whether `path` points to a file in the virtual filesystem.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This API is infallible and will return `false` for non-existent paths.</span>
-    <span class="kw">fn</span> <span class="ident">is_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-
-    <span class="doccomment">/// Read file contents for the file at `path`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a byte slice of complete file contents. If `path` is relative,</span>
-    <span class="doccomment">/// it is absolutized relative to the current working directory of the</span>
-    <span class="doccomment">/// virtual file system.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If `path` does not exist, an [`io::Error`] with error kind</span>
-    <span class="doccomment">/// [`io::ErrorKind::NotFound`] is returned.</span>
-    <span class="kw">fn</span> <span class="ident">read_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Write file contents into the virtual file system at `path`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Writes the full file contents. If any file contents already exist at</span>
-    <span class="doccomment">/// `path`, they are replaced. Extension hooks are preserved.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This API is currently infallible but returns [`io::Result`] to reserve</span>
-    <span class="doccomment">/// the ability to return errors in the future.</span>
-    <span class="kw">fn</span> <span class="ident">write_file</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">buf</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Retrieve an extension hook for the file at `path`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This API is infallible and will return `None` for non-existent paths.</span>
-    <span class="kw">fn</span> <span class="ident">get_extension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ExtensionHook</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Write extension hook into the virtual file system at `path`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If any extension hooks already exist at `path`, they are replaced. File</span>
-    <span class="doccomment">/// contents are preserved.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This API is currently infallible but returns [`io::Result`] to reserve</span>
-    <span class="doccomment">/// the ability to return errors in the future.</span>
-    <span class="kw">fn</span> <span class="ident">register_extension</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">extension</span>: <span class="ident">ExtensionHook</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
-
-    <span class="doccomment">/// Check whether a file at `path` has been required already.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This API is infallible and will return `false` for non-existent paths.</span>
-    <span class="kw">fn</span> <span class="ident">is_required</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-
-    <span class="doccomment">/// Mark a source at `path` as required on the interpreter.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This metadata is used by `Kernel#require` and friends to enforce that</span>
-    <span class="doccomment">/// Ruby sources are only loaded into the interpreter once to limit side</span>
-    <span class="doccomment">/// effects.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If `path` does not exist, an [`io::Error`] with error kind</span>
-    <span class="doccomment">/// [`io::ErrorKind::NotFound`] is returned.</span>
-    <span class="kw">fn</span> <span class="ident">mark_required</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
-}
-
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Filesystem</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">filesystem</span>()
-    }
-}
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Adapter</span> <span class="op">=</span> <span class="ident">Hybrid</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;native-filesystem-access&quot;</span>), <span class="ident">test</span>, <span class="ident">doctest</span>))]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Adapter</span> <span class="op">=</span> <span class="ident">Memory</span>;
 
 <span class="kw">fn</span> <span class="ident">absolutize_relative_to</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="ident">T</span>, <span class="ident">cwd</span>: <span class="ident">U</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PathBuf</span>
 <span class="kw">where</span>
@@ -480,6 +344,20 @@
         }
     }
     <span class="ident">components</span>.<span class="ident">into_iter</span>().<span class="ident">collect</span>()
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize_slashes</span>(<span class="ident">path</span>: <span class="ident">PathBuf</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">ConvertBytesError</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from_path_buf</span>(<span class="ident">path</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConvertBytesError</span>::<span class="ident">new</span>())<span class="question-mark">?</span>;
+    <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">windows</span>) {
+        <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">path</span> {
+            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">byte</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\\&#39;</span> {
+                <span class="kw-2">*</span><span class="ident">byte</span> <span class="op">=</span> <span class="string">b&#39;/&#39;</span>;
+            }
+        }
+        <span class="prelude-val">Ok</span>(<span class="ident">path</span>)
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">path</span>)
+    }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
