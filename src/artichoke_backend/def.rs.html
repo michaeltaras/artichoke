@@ -598,6 +598,31 @@
 <span id="597">597</span>
 <span id="598">598</span>
 <span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -683,15 +708,15 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ClassScope</span> {
-    <span class="ident">name</span>: <span class="ident">String</span>,
-    <span class="ident">cstring</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>,
+    <span class="ident">name</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="ident">name_cstr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
     <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ModuleScope</span> {
-    <span class="ident">name</span>: <span class="ident">String</span>,
-    <span class="ident">cstring</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>,
+    <span class="ident">name</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="ident">name_cstr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
     <span class="ident">name_symbol</span>: <span class="ident">u32</span>,
     <span class="ident">enclosing_scope</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">EnclosingRubyScope</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
@@ -725,15 +750,10 @@
     <span class="doccomment">/// class registry.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">class</span>(<span class="ident">spec</span>: <span class="kw-2">&amp;</span><span class="ident">class</span>::<span class="ident">Spec</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">name_c_str</span>();
-        <span class="comment">// Safety</span>
-        <span class="comment">//</span>
-        <span class="comment">// This CStr is being constructed with another CStr including the nul</span>
-        <span class="comment">// byte.</span>
-        <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">cstring</span>.<span class="ident">to_bytes_with_nul</span>()) };
+        <span class="kw">let</span> <span class="ident">name_cstr</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">name_c_str</span>();
         <span class="self">Self</span>::<span class="ident">Class</span>(<span class="ident">ClassScope</span> {
-            <span class="ident">name</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">spec</span>.<span class="ident">name</span>()),
-            <span class="ident">cstring</span>: <span class="ident">cstring</span>.<span class="ident">into</span>(),
+            <span class="ident">name</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">spec</span>.<span class="ident">name</span>()).<span class="ident">into_boxed_str</span>(),
+            <span class="ident">name_cstr</span>,
             <span class="ident">enclosing_scope</span>: <span class="ident">spec</span>.<span class="ident">enclosing_scope</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>).<span class="ident">map</span>(<span class="ident">Box</span>::<span class="ident">new</span>),
         })
     }
@@ -745,15 +765,10 @@
     <span class="doccomment">/// module registry.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">module</span>(<span class="ident">spec</span>: <span class="kw-2">&amp;</span><span class="ident">module</span>::<span class="ident">Spec</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">name_c_str</span>();
-        <span class="comment">// Safety</span>
-        <span class="comment">//</span>
-        <span class="comment">// This CStr is being constructed with another CStr including the nul</span>
-        <span class="comment">// byte.</span>
-        <span class="kw">let</span> <span class="ident">cstring</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul_unchecked</span>(<span class="ident">cstring</span>.<span class="ident">to_bytes_with_nul</span>()) };
+        <span class="kw">let</span> <span class="ident">name_cstr</span> <span class="op">=</span> <span class="ident">spec</span>.<span class="ident">name_c_str</span>();
         <span class="self">Self</span>::<span class="ident">Module</span>(<span class="ident">ModuleScope</span> {
-            <span class="ident">name</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">spec</span>.<span class="ident">name</span>()),
-            <span class="ident">cstring</span>: <span class="ident">cstring</span>.<span class="ident">into</span>(),
+            <span class="ident">name</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">spec</span>.<span class="ident">name</span>()).<span class="ident">into_boxed_str</span>(),
+            <span class="ident">name_cstr</span>,
             <span class="ident">name_symbol</span>: <span class="ident">spec</span>.<span class="ident">name_symbol</span>(),
             <span class="ident">enclosing_scope</span>: <span class="ident">spec</span>.<span class="ident">enclosing_scope</span>().<span class="ident">map</span>(<span class="ident">Clone</span>::<span class="ident">clone</span>).<span class="ident">map</span>(<span class="ident">Box</span>::<span class="ident">new</span>),
         })
@@ -775,11 +790,11 @@
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Class</span>(<span class="ident">scope</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">enclosing_scope</span> <span class="op">=</span> <span class="ident">scope</span>.<span class="ident">enclosing_scope</span>.<span class="ident">clone</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">scope</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">scope</span>);
-                <span class="ident">class</span>::<span class="ident">Rclass</span>::<span class="ident">new</span>(<span class="ident">scope</span>.<span class="ident">cstring</span>.<span class="ident">clone</span>(), <span class="ident">enclosing_scope</span>).<span class="ident">resolve</span>(<span class="ident">mrb</span>)
+                <span class="ident">class</span>::<span class="ident">Rclass</span>::<span class="ident">new</span>(<span class="ident">scope</span>.<span class="ident">name_cstr</span>, <span class="ident">enclosing_scope</span>).<span class="ident">resolve</span>(<span class="ident">mrb</span>)
             }
             <span class="self">Self</span>::<span class="ident">Module</span>(<span class="ident">scope</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">enclosing_scope</span> <span class="op">=</span> <span class="ident">scope</span>.<span class="ident">enclosing_scope</span>.<span class="ident">clone</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">scope</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">scope</span>);
-                <span class="ident">module</span>::<span class="ident">Rclass</span>::<span class="ident">new</span>(<span class="ident">scope</span>.<span class="ident">name_symbol</span>, <span class="ident">scope</span>.<span class="ident">cstring</span>.<span class="ident">clone</span>(), <span class="ident">enclosing_scope</span>).<span class="ident">resolve</span>(<span class="ident">mrb</span>)
+                <span class="ident">module</span>::<span class="ident">Rclass</span>::<span class="ident">new</span>(<span class="ident">scope</span>.<span class="ident">name_symbol</span>, <span class="ident">scope</span>.<span class="ident">name_cstr</span>, <span class="ident">enclosing_scope</span>).<span class="ident">resolve</span>(<span class="ident">mrb</span>)
             }
         }
     }
@@ -803,8 +818,8 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fqname</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">name</span>, <span class="ident">enclosing_scope</span>) <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Class</span>(<span class="ident">scope</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="kw-2">&amp;</span><span class="ident">scope</span>.<span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="ident">scope</span>.<span class="ident">enclosing_scope</span>),
-            <span class="self">Self</span>::<span class="ident">Module</span>(<span class="ident">scope</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="kw-2">&amp;</span><span class="ident">scope</span>.<span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="ident">scope</span>.<span class="ident">enclosing_scope</span>),
+            <span class="self">Self</span>::<span class="ident">Class</span>(<span class="ident">scope</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">scope</span>.<span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="ident">scope</span>.<span class="ident">enclosing_scope</span>),
+            <span class="self">Self</span>::<span class="ident">Module</span>(<span class="ident">scope</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">scope</span>.<span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="ident">scope</span>.<span class="ident">enclosing_scope</span>),
         };
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">scope</span>) <span class="op">=</span> <span class="ident">enclosing_scope</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fqname</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">scope</span>.<span class="ident">fqname</span>());
@@ -1090,14 +1105,37 @@
         <span class="kw">fn</span> <span class="ident">integration_test</span>() {
             <span class="comment">// Setup: define module and class hierarchy</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;A&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;B&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>))).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;C&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span>
-                <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;D&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span>
-                <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;E&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>))).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;F&quot;</span>, <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;A&quot;</span>, <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;A&quot;</span>), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">mod_under_root</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>,
+                <span class="string">&quot;B&quot;</span>,
+                <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;B&quot;</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)),
+            )
+            .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">cls_under_root</span> <span class="op">=</span>
+                <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;C&quot;</span>, <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;C&quot;</span>), <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">root</span>)), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">cls_under_mod</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="string">&quot;D&quot;</span>,
+                <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;D&quot;</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)),
+                <span class="prelude-val">None</span>,
+            )
+            .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">mod_under_cls</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>,
+                <span class="string">&quot;E&quot;</span>,
+                <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;E&quot;</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)),
+            )
+            .<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">cls_under_cls</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="string">&quot;F&quot;</span>,
+                <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;F&quot;</span>),
+                <span class="prelude-val">Some</span>(<span class="ident">EnclosingRubyScope</span>::<span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="ident">cls_under_root</span>)),
+                <span class="prelude-val">None</span>,
+            )
+            .<span class="ident">unwrap</span>();
             <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">root</span>).<span class="ident">define</span>().<span class="ident">unwrap</span>();
             <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">mod_under_root</span>)
                 .<span class="ident">define</span>()
@@ -1151,7 +1189,13 @@
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="ident">define_method</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interp</span> <span class="op">=</span> <span class="ident">interpreter</span>().<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="string">&quot;DefineMethodTestClass&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">class</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="string">&quot;DefineMethodTestClass&quot;</span>,
+                <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;DefineMethodTestClass&quot;</span>),
+                <span class="prelude-val">None</span>,
+                <span class="prelude-val">None</span>,
+            )
+            .<span class="ident">unwrap</span>();
             <span class="ident">class</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">class</span>)
                 .<span class="ident">add_method</span>(<span class="string">&quot;value&quot;</span>, <span class="ident">value</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())
                 .<span class="ident">unwrap</span>()
@@ -1160,7 +1204,13 @@
                 .<span class="ident">define</span>()
                 .<span class="ident">unwrap</span>();
             <span class="ident">interp</span>.<span class="ident">def_class</span>::<span class="op">&lt;</span><span class="ident">Class</span><span class="op">&gt;</span>(<span class="ident">class</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="string">&quot;DefineMethodTestModule&quot;</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">module</span>::<span class="ident">Spec</span>::<span class="ident">new</span>(
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>,
+                <span class="string">&quot;DefineMethodTestModule&quot;</span>,
+                <span class="ident">cstr</span>::<span class="macro">cstr</span><span class="macro">!</span>(<span class="string">&quot;DefineMethodTestModule&quot;</span>),
+                <span class="prelude-val">None</span>,
+            )
+            .<span class="ident">unwrap</span>();
             <span class="ident">module</span>::<span class="ident">Builder</span>::<span class="ident">for_spec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">interp</span>, <span class="kw-2">&amp;</span><span class="ident">module</span>)
                 .<span class="ident">add_method</span>(<span class="string">&quot;value&quot;</span>, <span class="ident">value</span>, <span class="ident">sys</span>::<span class="ident">mrb_args_none</span>())
                 .<span class="ident">unwrap</span>()

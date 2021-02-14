@@ -17,7 +17,7 @@ of this item.</p>
 <p>In other words, if you only use this method to add items to a union
 and you set the spans on each item correctly, then you should never
 need to adjust the span of the union directly.</p>
-</div><h4 id="method.into_item" class="method"><code>pub fn <a href="#method.into_item" class="fnname">into_item</a>(mut self: Self) -&gt; <a class="enum" href="../../regex_syntax/ast/enum.ClassSetItem.html" title="enum regex_syntax::ast::ClassSetItem">ClassSetItem</a></code><a class="srclink" href="../../src/regex_syntax/ast/mod.rs.html#1052-1058" title="goto source code">[src]</a></h4><div class="docblock"><p>Return this union as a character class set item.</p>
+</div><h4 id="method.into_item" class="method"><code>pub fn <a href="#method.into_item" class="fnname">into_item</a>(self) -&gt; <a class="enum" href="../../regex_syntax/ast/enum.ClassSetItem.html" title="enum regex_syntax::ast::ClassSetItem">ClassSetItem</a></code><a class="srclink" href="../../src/regex_syntax/ast/mod.rs.html#1052-1058" title="goto source code">[src]</a></h4><div class="docblock"><p>Return this union as a character class set item.</p>
 <p>If this union contains zero items, then an empty union is
 returned. If this concatenation contains exactly 1 item, then the
 corresponding item is returned. Otherwise, ClassSetItem::Union is
