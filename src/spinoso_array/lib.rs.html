@@ -162,6 +162,13 @@
 <span id="159">159</span>
 <span id="160">160</span>
 <span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -204,7 +211,11 @@
 <span class="doccomment">//!   library. This Spinoso array type is enabled by default.</span>
 <span class="doccomment">//! - [`SmallArray`] is based on [`SmallVec`] and implements the small vector</span>
 <span class="doccomment">//!   optimization – small arrays are stored inline without a heap allocation.</span>
-<span class="doccomment">//!   This Spinoso array type requires the `small-array` Cargo feature.</span>
+<span class="doccomment">//!   This Spinoso array type requires the **small-array** Cargo feature.</span>
+<span class="doccomment">//! - [`TinyArray`] is based on [`TinyVec`] and implements the small vector</span>
+<span class="doccomment">//!   optimization – small arrays are stored inline without a heap allocation.</span>
+<span class="doccomment">//!   This Spinoso array type requires the **tiny-array** Cargo feature.</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # `no_std`</span>
 <span class="doccomment">//!</span>
@@ -284,6 +295,7 @@
 <span class="doccomment">//! [Artichoke Ruby]: https://www.artichokeruby.org/</span>
 <span class="doccomment">//! [`Vec`]: alloc::vec::Vec</span>
 <span class="doccomment">//! [`SmallVec`]: smallvec::SmallVec</span>
+<span class="doccomment">//! [`TinyVec`]: tinyvec::TinyVec</span>
 <span class="doccomment">//! [`From`]: core::convert::From</span>
 <span class="doccomment">//! [`FromIterator`]: core::iter::FromIterator</span>
 <span class="doccomment">//! [`Index`]: core::ops::Index</span>
@@ -320,7 +332,9 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">array</span>::<span class="ident">smallvec</span>::<span class="ident">SmallArray</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tiny-array&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">array</span>::<span class="ident">tinyvec</span>::<span class="ident">TinyArray</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tiny-array&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">array</span>::<span class="ident">INLINE_CAPACITY</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">array</span>::<span class="ident">vec</span>::<span class="ident">Array</span>;

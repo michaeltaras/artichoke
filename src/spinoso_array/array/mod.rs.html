@@ -29,12 +29,15 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Implementations of Ruby [`Array`], a growable vector.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This module contains multiple implementations of a backing store for the</span>
 <span class="doccomment">//! Ruby `Array` core class. [`Array`](vec::Array) is based on the [`Vec`] type</span>
 <span class="doccomment">//! in `std`. [`SmallArray`](smallvec::SmallArray) is based on [`SmallVec`].</span>
+<span class="doccomment">//! [`TinyArray`](tinyvec::TinyArray) is based on [`TinyVec`].</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The smallvec backend uses small vector optimization to store</span>
 <span class="doccomment">//! [some elements][inline-capacity] inline without spilling to the heap.</span>
@@ -45,18 +48,19 @@
 <span class="doccomment">//! [`Array`]: https://ruby-doc.org/core-2.6.3/Array.html</span>
 <span class="doccomment">//! [`Vec`]: alloc::vec::Vec</span>
 <span class="doccomment">//! [`SmallVec`]: ::smallvec::SmallVec</span>
+<span class="doccomment">//! [`TinyVec`]: ::tinyvec::TinyVec</span>
 <span class="doccomment">//! [inline-capacity]: INLINE_CAPACITY</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">smallvec</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tiny-array&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tinyvec</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">vec</span>;
 
 <span class="doccomment">/// Vectors that implement the small vector optimization can store 8 elements</span>
 <span class="doccomment">/// inline without a heap allocation.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// See [`SmallArray`](smallvec::SmallArray).</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tiny-array&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;small-array&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tiny-array&quot;</span>))))]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">INLINE_CAPACITY</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">8</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="spinoso_array"></div>
