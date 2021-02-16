@@ -306,20 +306,6 @@
 <span id="305">305</span>
 <span id="306">306</span>
 <span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
-<span id="312">312</span>
-<span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
-<span id="316">316</span>
-<span id="317">317</span>
-<span id="318">318</span>
-<span id="319">319</span>
-<span id="320">320</span>
-<span id="321">321</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>;
@@ -430,10 +416,8 @@
             );
         }
 
-        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
-        <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>.<span class="ident">into</span>(), <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>).<span class="ident">is_err</span>() {
-            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Failed to rebox Array&quot;</span>);
-        }
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">take</span>();
+        <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">inner</span>, <span class="ident">ary</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">expect</span>(<span class="string">&quot;Array reboxing should not fail&quot;</span>);
     }
 }
 
@@ -445,10 +429,8 @@
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">array</span>) <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">array</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>) {
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">convert</span>(<span class="ident">array</span>.<span class="ident">pop</span>());
 
-        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
-        <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>.<span class="ident">into</span>(), <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>).<span class="ident">is_err</span>() {
-            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Failed to rebox Array&quot;</span>);
-        }
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">take</span>();
+        <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">inner</span>, <span class="ident">ary</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">expect</span>(<span class="string">&quot;Array reboxing should not fail&quot;</span>);
 
         <span class="ident">result</span>
     } <span class="kw">else</span> {
@@ -468,10 +450,8 @@
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">array</span>) <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">array</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>) {
         <span class="ident">array</span>.<span class="ident">push</span>(<span class="ident">value</span>);
 
-        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
-        <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>.<span class="ident">into</span>(), <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>).<span class="ident">is_err</span>() {
-            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Failed to rebox Array&quot;</span>);
-        }
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">take</span>();
+        <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">inner</span>, <span class="ident">ary</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">expect</span>(<span class="string">&quot;Array reboxing should not fail&quot;</span>);
     }
     <span class="kw">let</span> <span class="ident">basic</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_basic_ptr</span>(<span class="ident">ary</span>);
     <span class="ident">sys</span>::<span class="ident">mrb_write_barrier</span>(<span class="ident">mrb</span>, <span class="ident">basic</span>);
@@ -526,10 +506,8 @@
             <span class="ident">array</span>.<span class="ident">set</span>(<span class="ident">offset</span>, <span class="ident">value</span>);
         }
 
-        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
-        <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>.<span class="ident">into</span>(), <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>).<span class="ident">is_err</span>() {
-            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Failed to rebox Array&quot;</span>);
-        }
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">take</span>();
+        <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">inner</span>, <span class="ident">ary</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">expect</span>(<span class="string">&quot;Array reboxing should not fail&quot;</span>);
     }
     <span class="kw">let</span> <span class="ident">basic</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_basic_ptr</span>(<span class="ident">ary</span>);
     <span class="ident">sys</span>::<span class="ident">mrb_write_barrier</span>(<span class="ident">mrb</span>, <span class="ident">basic</span>);
@@ -541,13 +519,10 @@
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">ary</span>);
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">array</span>) <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">array</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>) {
-        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">get</span>(<span class="number">0</span>);
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">set_slice</span>(<span class="number">0</span>, <span class="number">1</span>, <span class="kw-2">&amp;</span>[]);
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">shift</span>();
 
-        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
-        <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>.<span class="ident">into</span>(), <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>).<span class="ident">is_err</span>() {
-            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Failed to rebox Array&quot;</span>);
-        }
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">take</span>();
+        <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">inner</span>, <span class="ident">ary</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">expect</span>(<span class="string">&quot;Array reboxing should not fail&quot;</span>);
 
         <span class="ident">guard</span>.<span class="ident">convert</span>(<span class="ident">result</span>)
     } <span class="kw">else</span> {
@@ -567,18 +542,15 @@
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
     <span class="macro">unwrap_interpreter</span><span class="macro">!</span>(<span class="ident">mrb</span>, <span class="ident">to</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">guard</span>);
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">ary</span>);
-    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from</span>(<span class="ident">value</span>);
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">array</span>) <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">unbox_from_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">array</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>) {
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">set_with_drain</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="ident">value</span>);
+        <span class="ident">array</span>.<span class="number">0</span>.<span class="ident">unshift</span>(<span class="ident">value</span>);
 
-        <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> (<span class="ident">array</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">array</span>.<span class="ident">len</span>(), <span class="ident">array</span>.<span class="ident">capacity</span>());
-        <span class="kw">if</span> <span class="ident">Array</span>::<span class="ident">rebox_into_value</span>(<span class="ident">ary</span>.<span class="ident">into</span>(), <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>).<span class="ident">is_err</span>() {
-            <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Failed to rebox Array&quot;</span>);
-        }
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">take</span>();
+        <span class="ident">Array</span>::<span class="ident">box_into_value</span>(<span class="ident">inner</span>, <span class="ident">ary</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>).<span class="ident">expect</span>(<span class="string">&quot;Array reboxing should not fail&quot;</span>);
     }
     <span class="kw">let</span> <span class="ident">basic</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_sys_basic_ptr</span>(<span class="ident">ary</span>);
     <span class="ident">sys</span>::<span class="ident">mrb_write_barrier</span>(<span class="ident">mrb</span>, <span class="ident">basic</span>);
-    <span class="ident">value</span>.<span class="ident">inner</span>()
+    <span class="ident">value</span>
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>

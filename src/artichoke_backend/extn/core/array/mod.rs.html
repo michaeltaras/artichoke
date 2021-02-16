@@ -616,26 +616,6 @@
 <span id="615">615</span>
 <span id="616">616</span>
 <span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">spinoso_array</span>::<span class="ident">Array</span> <span class="kw">as</span> <span class="ident">SpinosoArray</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -1055,14 +1035,6 @@
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">set</span>(<span class="ident">index</span>, <span class="ident">elem</span>.<span class="ident">inner</span>());
     }
 
-    <span class="kw">fn</span> <span class="ident">set_with_drain</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">start</span>: <span class="ident">usize</span>, <span class="ident">drain</span>: <span class="ident">usize</span>, <span class="ident">elem</span>: <span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">set_with_drain</span>(<span class="ident">start</span>, <span class="ident">drain</span>, <span class="ident">elem</span>.<span class="ident">inner</span>())
-    }
-
-    <span class="kw">fn</span> <span class="ident">set_slice</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">start</span>: <span class="ident">usize</span>, <span class="ident">drain</span>: <span class="ident">usize</span>, <span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">sys</span>::<span class="ident">mrb_value</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">set_slice</span>(<span class="ident">start</span>, <span class="ident">drain</span>, <span class="ident">src</span>)
-    }
-
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">pop</span>().<span class="ident">map</span>(<span class="ident">Value</span>::<span class="ident">from</span>)
     }
@@ -1131,29 +1103,6 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_raw_parts</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">into_raw_parts</span>()
     }
-
-    <span class="doccomment">/// Pack the raw triple of an `Array` into an [`RArray`](sys::RArray)-backed</span>
-    <span class="doccomment">/// [`sys::mrb_value`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Calling this function takes ownership of the allocation pointed to by</span>
-    <span class="doccomment">/// `ptr`. `ptr` or its source cannot be safely accessed until calling</span>
-    <span class="doccomment">/// [`Array::from_raw_parts`].</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_truncation</span>)]</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_sign_loss</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">rebox_into_value</span>(
-        <span class="ident">into</span>: <span class="ident">Value</span>,
-        <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span>,
-        <span class="ident">len</span>: <span class="ident">usize</span>,
-        <span class="ident">capacity</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(<span class="ident">into</span>.<span class="ident">ruby_type</span>(), <span class="ident">Ruby</span>::<span class="ident">Array</span>) {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Tried to box Array into {:?} value&quot;</span>, <span class="ident">into</span>.<span class="ident">ruby_type</span>());
-        }
-        <span class="ident">sys</span>::<span class="ident">mrb_sys_repack_into_rarray</span>(<span class="ident">ptr</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">sys</span>::<span class="ident">mrb_int</span>, <span class="ident">capacity</span> <span class="kw">as</span> <span class="ident">sys</span>::<span class="ident">mrb_int</span>, <span class="ident">into</span>.<span class="ident">inner</span>());
-        <span class="prelude-val">Ok</span>(())
-    }
 }
 
 <span class="kw">impl</span> <span class="ident">BoxUnboxVmValue</span> <span class="kw">for</span> <span class="ident">Array</span> {
@@ -1207,10 +1156,21 @@
 
     <span class="kw">fn</span> <span class="ident">box_into_value</span>(<span class="ident">value</span>: <span class="self">Self</span>::<span class="ident">Unboxed</span>, <span class="ident">into</span>: <span class="ident">Value</span>, <span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">interp</span>;
+
+        <span class="comment">// Make sure we have an Array otherwise boxing will produce undefined</span>
+        <span class="comment">// behavior.</span>
+        <span class="comment">//</span>
+        <span class="comment">// This check is critical to the memory safety of future runs of the</span>
+        <span class="comment">// garbage collector.</span>
+        <span class="kw">if</span> <span class="ident">into</span>.<span class="ident">ruby_type</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">Ruby</span>::<span class="ident">Array</span> {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Tried to box Array into {:?} value&quot;</span>, <span class="ident">into</span>.<span class="ident">ruby_type</span>());
+        }
+
         <span class="kw">let</span> (<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>) <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">into_raw_parts</span>(<span class="ident">value</span>);
         <span class="kw">unsafe</span> {
-            <span class="self">Self</span>::<span class="ident">rebox_into_value</span>(<span class="ident">into</span>, <span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">capacity</span>)<span class="question-mark">?</span>;
+            <span class="ident">sys</span>::<span class="ident">mrb_sys_repack_into_rarray</span>(<span class="ident">ptr</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">sys</span>::<span class="ident">mrb_int</span>, <span class="ident">capacity</span> <span class="kw">as</span> <span class="ident">sys</span>::<span class="ident">mrb_int</span>, <span class="ident">into</span>.<span class="ident">inner</span>());
         }
+
         <span class="prelude-val">Ok</span>(<span class="ident">interp</span>.<span class="ident">protect</span>(<span class="ident">into</span>))
     }
 
