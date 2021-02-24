@@ -15,8 +15,8 @@ which Chrono builds upon and should acknowledge:</p>
 <ul>
 <li><a href="https://github.com/rust-lang/rust-wiki-backup/blob/master/Lib-datetime.md">Initial research on
 the wiki</a></li>
-<li>Dietrich Epp's <a href="https://github.com/depp/datetime-rs">datetime-rs</a></li>
-<li>Luis de Bethencourt's <a href="https://github.com/luisbg/rust-datetime">rust-datetime</a></li>
+<li>Dietrich Epp’s <a href="https://github.com/depp/datetime-rs">datetime-rs</a></li>
+<li>Luis de Bethencourt’s <a href="https://github.com/luisbg/rust-datetime">rust-datetime</a></li>
 </ul>
 <p>Any significant changes to Chrono are documented in
 the <a href="https://github.com/chronotope/chrono/blob/main/CHANGELOG.md"><code>CHANGELOG.md</code></a> file.</p>
@@ -50,8 +50,8 @@ removed in a patch release. Feedback welcome.</li>
 <p>Chrono currently uses its own <a href="../chrono/struct.Duration.html" title="Duration"><code>Duration</code></a> type to represent the magnitude
 of a time span. Since this has the same name as the newer, standard type for
 duration, the reference will refer this type as <code>OldDuration</code>.</p>
-<p>Note that this is an &quot;accurate&quot; duration represented as seconds and
-nanoseconds and does not represent &quot;nominal&quot; components such as days or
+<p>Note that this is an “accurate” duration represented as seconds and
+nanoseconds and does not represent “nominal” components such as days or
 months.</p>
 <p>When the <code>oldtime</code> feature is enabled, <a href="../chrono/struct.Duration.html" title="Duration"><code>Duration</code></a> is an alias for the
 <a href="https://docs.rs/time/0.1.40/time/struct.Duration.html"><code>time::Duration</code></a>
@@ -111,7 +111,7 @@ or in the local time zone
 <span class="kw">let</span> <span class="ident">utc</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Utc</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Utc</span>::<span class="ident">now</span>();       <span class="comment">// e.g. `2014-11-28T12:45:59.324310806Z`</span>
 <span class="kw">let</span> <span class="ident">local</span>: <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Local</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Local</span>::<span class="ident">now</span>(); <span class="comment">// e.g. `2014-11-28T21:45:59.324310806+09:00`</span></pre></div>
 <p>Alternatively, you can create your own date and time.
-This is a bit verbose due to Rust's lack of function and method overloading,
+This is a bit verbose due to Rust’s lack of function and method overloading,
 but in turn we get a rich combination of initialization methods.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -335,14 +335,14 @@ Be very careful if you really have to deal with pre-20C dates, they can be in Ju
 <p>Date types are limited in about +/- 262,000 years from the common epoch.
 Time types are limited in the nanosecond accuracy.</p>
 <p><a href="./naive/struct.NaiveTime.html#leap-second-handling">Leap seconds are supported in the representation but
-Chrono doesn't try to make use of them</a>.
+Chrono doesn’t try to make use of them</a>.
 (The main reason is that leap seconds are not really predictable.)
 Almost <em>every</em> operation over the possible leap seconds will ignore them.
 Consider using <code>NaiveDateTime</code> with the implicit TAI (International Atomic Time) scale
 if you want.</p>
 <p>Chrono inherently does not support an inaccurate or partial date and time representation.
 Any operation that can be ambiguous will return <code>None</code> in such cases.
-For example, &quot;a month later&quot; of 2014-01-30 is not well-defined
+For example, “a month later” of 2014-01-30 is not well-defined
 and consequently <code>Utc.ymd(2014, 1, 30).with_month(2)</code> returns <code>None</code>.</p>
 <p>Non ISO week handling is not yet supported.
 For now you can use the <a href="https://crates.io/crates/chrono_ext">chrono_ext</a>

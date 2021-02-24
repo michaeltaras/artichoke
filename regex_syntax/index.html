@@ -12,7 +12,7 @@ can be converted back to the original concrete syntax (modulo some details,
 like whitespace). To a first approximation, the abstract syntax is complex
 and difficult to analyze.</li>
 <li><a href="hir/struct.Hir.html"><code>Hir</code></a> is the high-level intermediate representation
-(&quot;HIR&quot; or &quot;high-level IR&quot; for short) of regular expression. It corresponds to
+(“HIR” or “high-level IR” for short) of regular expression. It corresponds to
 an intermediate state of a regular expression that sits between the abstract
 syntax and the low level compiled opcodes that are eventually responsible for
 executing a regular expression search. Given some high-level IR, it is not
@@ -59,7 +59,7 @@ worrying about stack overflow.</li>
 great lengths to ensure that all interactions with both the <code>Ast</code> and the
 <code>Hir</code> do not use recursion. Namely, they use constant stack space and heap
 space proportional to the size of the original pattern string (in bytes).
-This includes the type's corresponding destructors. (One exception to this
+This includes the type’s corresponding destructors. (One exception to this
 is literal extraction, but this will eventually get fixed.)</li>
 </ol>
 <h1 id="error-reporting" class="section-header"><a href="#error-reporting">Error reporting</a></h1>
@@ -109,7 +109,7 @@ is not included here, but contains properties like <code>Alphabetic</code>, <cod
 <code>Lowercase</code>, <code>Math</code>, <code>Uppercase</code> and <code>White_Space</code>.</li>
 <li><strong>unicode-case</strong> -
 Provide the data for case insensitive matching using
-<a href="https://www.unicode.org/reports/tr18/#Simple_Loose_Matches">Unicode's &quot;simple loose matches&quot; specification</a>.</li>
+<a href="https://www.unicode.org/reports/tr18/#Simple_Loose_Matches">Unicode’s “simple loose matches” specification</a>.</li>
 <li><strong>unicode-gencat</strong> -
 Provide the data for
 <a href="https://www.unicode.org/reports/tr44/tr44-24.html#General_Category_Values">Uncode general categories</a>.

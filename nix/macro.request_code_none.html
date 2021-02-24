@@ -7,8 +7,8 @@
 }</pre></div>
 </div><div class="docblock"><p>Generate an ioctl request code for a command that passes no data.</p>
 <p>This is equivalent to the <code>_IO()</code> macro exposed by the C ioctl API.</p>
-<p>You should only use this macro directly if the <code>ioctl</code> you're working
-with is &quot;bad&quot; and you cannot use <code>ioctl_none!()</code> directly.</p>
+<p>You should only use this macro directly if the <code>ioctl</code> you’re working
+with is “bad” and you cannot use <code>ioctl_none!()</code> directly.</p>
 <h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">const</span> <span class="ident">KVMIO</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0xAE</span>;

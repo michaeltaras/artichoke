@@ -63,7 +63,7 @@ implements <code>io::Write</code> and <code>io::WriteColor</code>.</p>
 <p>In many scenarios when using color, one often wants to enable colors
 automatically when writing to a terminal and disable colors automatically when
 writing to anything else. The typical way to achieve this in Unix environments
-is via libc's
+is via libc’s
 <a href="http://man7.org/linux/man-pages/man3/isatty.3.html"><code>isatty</code></a>
 function.
 Unfortunately, this notoriously does not work well in Windows environments. To

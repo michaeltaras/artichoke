@@ -5,7 +5,7 @@
 <a href="http://man7.org/linux/man-pages/man3/daemon.3.html">daemon(3)</a>).</p>
 <p>When a process is launched it is typically associated with a parent and it,
 in turn, by its controlling terminal/process.  In order for a process to run
-in the &quot;background&quot; it must daemonize itself by detaching itself.  Under
+in the “background” it must daemonize itself by detaching itself.  Under
 posix, this is done by doing the following:</p>
 <ol>
 <li>Parent process (this one) forks</li>
@@ -21,9 +21,9 @@ be the root direcory, <code>/</code>.</li>
 </ul>
 <p><code>noclose</code>:</p>
 <ul>
-<li><code>noclose = true</code>: The process' current stdin, stdout, and stderr file
+<li><code>noclose = true</code>: The process’ current stdin, stdout, and stderr file
 descriptors will remain identical after daemonizing.</li>
-<li><code>noclose = false</code>: The process' stdin, stdout, and stderr will point to
+<li><code>noclose = false</code>: The process’ stdin, stdout, and stderr will point to
 <code>/dev/null</code> after daemonizing.</li>
 </ul>
 </div></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="nix"></div>

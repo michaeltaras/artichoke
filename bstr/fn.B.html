@@ -8,9 +8,9 @@ in a uniform way. For example, consider this code that does not compile:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="kw">let</span> <span class="ident">strs</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;a&quot;</span>, <span class="string">b&quot;xy&quot;</span>];</pre></div>
-<p>The above code doesn't compile because the type of the byte string literal
+<p>The above code doesn’t compile because the type of the byte string literal
 <code>b&quot;a&quot;</code> is <code>&amp;'static [u8; 1]</code>, and the type of <code>b&quot;xy&quot;</code> is
-<code>&amp;'static [u8; 2]</code>. Since their types aren't the same, they can't be stored
+<code>&amp;'static [u8; 2]</code>. Since their types aren’t the same, they can’t be stored
 in the same <code>Vec</code>. (This is dissimilar from normal Unicode string slices,
 where both <code>&quot;a&quot;</code> and <code>&quot;xy&quot;</code> have the same type of <code>&amp;'static str</code>.)</p>
 <p>One way of getting the above code to compile is to convert byte strings to
@@ -26,7 +26,7 @@ slices. You might try this:</p>
 <span class="comment">// or</span>
 <span class="kw">let</span> <span class="ident">strs</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;a&quot;</span>.<span class="ident">as_ref</span>(), <span class="string">b&quot;xy&quot;</span>.<span class="ident">as_ref</span>()];</pre></div>
 <p>But neither of these are particularly convenient to type, especially when
-it's something as common as a string literal. Thus, this constructor
+it’s something as common as a string literal. Thus, this constructor
 permits writing the following instead:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">

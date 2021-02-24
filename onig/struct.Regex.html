@@ -28,7 +28,7 @@ in <code>text</code>. This is operationally the same as <code>find_iter</code> (
 yields information about submatches).</p>
 <h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
 <p>We can use this to find all movie titles and their release years in
-some text, where the movie is formatted like &quot;'Title' (xxxx)&quot;:</p>
+some text, where the movie is formatted like “‘Title’ (xxxx)”:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="string">r&quot;&#39;([^&#39;]+)&#39;\s+\((\d{4})\)&quot;</span>)
@@ -43,7 +43,7 @@ some text, where the movie is formatted like &quot;'Title' (xxxx)&quot;:</p>
 <span class="comment">// Movie: M, Released: 1931</span></pre></div>
 </div><h4 id="method.split" class="method"><code>pub fn <a href="#method.split" class="fnname">split</a>&lt;'r, 't&gt;(&amp;'r self, text: &amp;'t <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="struct" href="../onig/struct.RegexSplits.html" title="struct onig::RegexSplits">RegexSplits</a>&lt;'r, 't&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<div class="notable-traits-tooltiptext"><span class="docblock"><h3 class="notable">Notable traits for <a class="struct" href="../onig/struct.RegexSplits.html" title="struct onig::RegexSplits">RegexSplits</a>&lt;'r, 't&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'r, 't&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for <a class="struct" href="../onig/struct.RegexSplits.html" title="struct onig::RegexSplits">RegexSplits</a>&lt;'r, 't&gt;</span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item" class="type">Item</a> = &amp;'t <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;</span></code></span></div></span></span></code><a class="srclink" href="../src/onig/find.rs.html#108-113" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns an iterator of substrings of <code>text</code> delimited by a match
 of the regular expression.
-Namely, each element of the iterator corresponds to text that <em>isn't</em>
+Namely, each element of the iterator corresponds to text that <em>isn’t</em>
 matched by the regular expression.</p>
 <p>This method will <em>not</em> copy the text given.</p>
 <h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
@@ -56,7 +56,7 @@ matched by the regular expression.</p>
 </div><h4 id="method.splitn" class="method"><code>pub fn <a href="#method.splitn" class="fnname">splitn</a>&lt;'r, 't&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;'r self, <br>&nbsp;&nbsp;&nbsp;&nbsp;text: &amp;'t <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;limit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><br>) -&gt; <a class="struct" href="../onig/struct.RegexSplitsN.html" title="struct onig::RegexSplitsN">RegexSplitsN</a>&lt;'r, 't&gt;<span class="notable-traits"><span class="notable-traits-tooltip">ⓘ<div class="notable-traits-tooltiptext"><span class="docblock"><h3 class="notable">Notable traits for <a class="struct" href="../onig/struct.RegexSplitsN.html" title="struct onig::RegexSplitsN">RegexSplitsN</a>&lt;'r, 't&gt;</h3><code class="content"><span class="where fmt-newline">impl&lt;'r, 't&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html" title="trait core::iter::traits::iterator::Iterator">Iterator</a> for <a class="struct" href="../onig/struct.RegexSplitsN.html" title="struct onig::RegexSplitsN">RegexSplitsN</a>&lt;'r, 't&gt;</span><span class="where fmt-newline">    type <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#associatedtype.Item" class="type">Item</a> = &amp;'t <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;</span></code></span></div></span></span></code><a class="srclink" href="../src/onig/find.rs.html#137-142" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns an iterator of at most <code>limit</code> substrings of <code>text</code> delimited
 by a match of the regular expression. (A <code>limit</code> of <code>0</code> will return no
 substrings.)
-Namely, each element of the iterator corresponds to text that <em>isn't</em>
+Namely, each element of the iterator corresponds to text that <em>isn’t</em>
 matched by the regular expression.
 The remainder of the string that is not split will be the last element
 in the iterator.</p>
@@ -190,7 +190,7 @@ Search</a></p>
 </ul>
 <h1 id="returns" class="section-header"><a href="#returns">Returns</a></h1>
 <p><code>Some(len)</code> if the regex matched, with <code>len</code> being the number
-of bytes matched. <code>None</code> if the regex doesn't match.</p>
+of bytes matched. <code>None</code> if the regex doesn’t match.</p>
 <h1 id="examples-5" class="section-header"><a href="#examples-5">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">onig</span>::{<span class="ident">Regex</span>, <span class="ident">SearchOptions</span>};
@@ -203,7 +203,7 @@ of bytes matched. <code>None</code> if the regex doesn't match.</p>
 <p>Match the regex against a string. This method will start at
 the offset <code>at</code> into the string and try and match the
 regex. If the regex matches then the return value is the
-number of characters which matched. If the regex doesn't match
+number of characters which matched. If the regex doesn’t match
 the return is <code>None</code>.</p>
 <p>For more information see <a href="index.html#match-vs-search">Match vs
 Search</a></p>
@@ -218,7 +218,7 @@ used to construct the regex.</p>
 </ul>
 <h1 id="returns-1" class="section-header"><a href="#returns-1">Returns</a></h1>
 <p><code>Some(len)</code> if the regex matched, with <code>len</code> being the number
-of bytes matched. <code>None</code> if the regex doesn't match.</p>
+of bytes matched. <code>None</code> if the regex doesn’t match.</p>
 <h1 id="examples-6" class="section-header"><a href="#examples-6">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">onig</span>::{<span class="ident">Regex</span>, <span class="ident">EncodedBytes</span>, <span class="ident">SearchOptions</span>};
@@ -232,7 +232,7 @@ of bytes matched. <code>None</code> if the regex doesn't match.</p>
 <p>Match the regex against a string. This method will start at
 the offset <code>at</code> into the string and try and match the
 regex. If the regex matches then the return value is the
-number of characters which matched. If the regex doesn't match
+number of characters which matched. If the regex doesn’t match
 the return is <code>None</code>.</p>
 <p>For more information see <a href="index.html#match-vs-search">Match vs
 Search</a></p>
@@ -248,7 +248,7 @@ used to construct the regex.</p>
 </ul>
 <h1 id="returns-2" class="section-header"><a href="#returns-2">Returns</a></h1>
 <p><code>Ok(Some(len))</code> if the regex matched, with <code>len</code> being the number
-of bytes matched. <code>Ok(None)</code> if the regex doesn't match. <code>Err</code> with an
+of bytes matched. <code>Ok(None)</code> if the regex doesn’t match. <code>Err</code> with an
 <code>Error</code> if an error occurred (e.g. retry-limit-in-match exceeded).</p>
 <h1 id="examples-7" class="section-header"><a href="#examples-7">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -278,7 +278,7 @@ Search</a></p>
 <h1 id="returns-3" class="section-header"><a href="#returns-3">Returns</a></h1>
 <p><code>Some(pos)</code> if the regex matches, where <code>pos</code> is the
 byte-position of the start of the match. <code>None</code> if the regex
-doesn't match anywhere in <code>str</code>.</p>
+doesn’t match anywhere in <code>str</code>.</p>
 <h1 id="examples-8" class="section-header"><a href="#examples-8">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">onig</span>::{<span class="ident">Regex</span>, <span class="ident">SearchOptions</span>};
@@ -308,7 +308,7 @@ encoding of the regex.</p>
 <h1 id="returns-4" class="section-header"><a href="#returns-4">Returns</a></h1>
 <p><code>Some(pos)</code> if the regex matches, where <code>pos</code> is the
 byte-position of the start of the match. <code>None</code> if the regex
-doesn't match anywhere in <code>chars</code>.</p>
+doesn’t match anywhere in <code>chars</code>.</p>
 <h1 id="examples-9" class="section-header"><a href="#examples-9">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">onig</span>::{<span class="ident">Regex</span>, <span class="ident">EncodedBytes</span>, <span class="ident">SearchOptions</span>};
@@ -340,7 +340,7 @@ encoding of the regex.</p>
 <h1 id="returns-5" class="section-header"><a href="#returns-5">Returns</a></h1>
 <p><code>Ok(Some(pos))</code> if the regex matches, where <code>pos</code> is the
 byte-position of the start of the match. <code>Ok(None)</code> if the regex
-doesn't match anywhere in <code>chars</code>. <code>Err</code> with an <code>Error</code> if an error
+doesn’t match anywhere in <code>chars</code>. <code>Err</code> with an <code>Error</code> if an error
 occurred (e.g. retry-limit-in-match exceeded).</p>
 <h1 id="examples-10" class="section-header"><a href="#examples-10">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">

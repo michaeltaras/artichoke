@@ -4,7 +4,7 @@
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">aho_corasick</a>::<wbr><a class="mod" href="">packed</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/aho_corasick/packed/mod.rs.html#1-117" title="goto source code">[src]</a></span></h1><div class="docblock"><p>A lower level API for packed multiple substring search, principally for a small
 number of patterns.</p>
 <p>This sub-module provides vectorized routines for quickly finding matches of a
-small number of patterns. In general, users of this crate shouldn't need to
+small number of patterns. In general, users of this crate shouldn’t need to
 interface with this module directory, as the primary
 <a href="../struct.AhoCorasick.html"><code>AhoCorasick</code></a>
 searcher will use these routines automatically as a prefilter when applicable.
@@ -72,7 +72,7 @@ common reasons:</p>
 <ul>
 <li>Too many patterns were given. Typically, the limit is on the order of 100 or
 so, but this limit may fluctuate based on available CPU features.</li>
-<li>The available packed algorithms require CPU features that aren't available.
+<li>The available packed algorithms require CPU features that aren’t available.
 For example, currently, this crate only provides packed algorithms for
 <code>x86_64</code>. Therefore, constructing a packed searcher on any other target
 (e.g., ARM) will always fail.</li>

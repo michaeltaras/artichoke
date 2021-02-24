@@ -24,7 +24,7 @@ progress.</p>
 <ul>
 <li><code>fd</code>:           File descriptor.  Required for all aio functions.</li>
 <li><code>prio</code>:         If POSIX Prioritized IO is supported, then the
-operation will be prioritized at the process's
+operation will be prioritized at the process’s
 priority level minus <code>prio</code>.</li>
 <li><code>sigev_notify</code>: Determines how you will be notified of event
 completion.</li>
@@ -53,7 +53,7 @@ is stack-allocated.  If the borrow checker gives you trouble, try using
 <li><code>offs</code>:         File offset</li>
 <li><code>buf</code>:          A memory buffer</li>
 <li><code>prio</code>:         If POSIX Prioritized IO is supported, then the
-operation will be prioritized at the process's
+operation will be prioritized at the process’s
 priority level minus <code>prio</code></li>
 <li><code>sigev_notify</code>: Determines how you will be notified of event
 completion.</li>
@@ -88,7 +88,7 @@ aiocb</li>
 <p>Unlike <a href="#method.from_slice"><code>from_slice</code></a>, this method returns a structure suitable for
 placement on the heap.  It may be used for write operations, but not
 read operations.  Unlike <code>from_ptr</code>, this method will ensure that the
-buffer doesn't <code>drop</code> while the kernel is still processing it.  Any
+buffer doesn’t <code>drop</code> while the kernel is still processing it.  Any
 object that can be borrowed as a boxed slice will work.</p>
 <h1 id="parameters-2" class="section-header"><a href="#parameters-2">Parameters</a></h1>
 <ul>
@@ -96,7 +96,7 @@ object that can be borrowed as a boxed slice will work.</p>
 <li><code>offs</code>:         File offset</li>
 <li><code>buf</code>:          A boxed slice-like object</li>
 <li><code>prio</code>:         If POSIX Prioritized IO is supported, then the
-operation will be prioritized at the process's
+operation will be prioritized at the process’s
 priority level minus <code>prio</code></li>
 <li><code>sigev_notify</code>: Determines how you will be notified of event
 completion.</li>
@@ -133,8 +133,8 @@ aiocb</li>
     <span class="number">0</span>,   <span class="comment">//priority</span>
     <span class="ident">SigevNotify</span>::<span class="ident">SigevNone</span>,
     <span class="ident">LioOpcode</span>::<span class="ident">LIO_NOP</span>);</pre></div>
-<p>If a library needs to work with buffers that aren't <code>Box</code>ed, it can
-create a <code>Box</code>ed container for use with this method.  Here's an example
+<p>If a library needs to work with buffers that aren’t <code>Box</code>ed, it can
+create a <code>Box</code>ed container for use with this method.  Here’s an example
 using an un<code>Box</code>ed <code>Bytes</code> object.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -195,7 +195,7 @@ wrapped in a <code>struct</code> that implements <code>BorrowMut&lt;[u8]&gt;</co
 <li><code>buf</code>:          Pointer to the memory buffer</li>
 <li><code>len</code>:          Length of the buffer pointed to by <code>buf</code></li>
 <li><code>prio</code>:         If POSIX Prioritized IO is supported, then the
-operation will be prioritized at the process's
+operation will be prioritized at the process’s
 priority level minus <code>prio</code></li>
 <li><code>sigev_notify</code>: Determines how you will be notified of event
 completion.</li>
@@ -205,7 +205,7 @@ aiocb</li>
 </ul>
 <h1 id="safety" class="section-header"><a href="#safety">Safety</a></h1>
 <p>The caller must ensure that the storage pointed to by <code>buf</code> outlives the
-<code>AioCb</code>.  The lifetime checker can't help here.</p>
+<code>AioCb</code>.  The lifetime checker can’t help here.</p>
 </div><h4 id="method.from_ptr" class="method"><code>pub unsafe fn <a href="#method.from_ptr" class="fnname">from_ptr</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;fd: <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/unix/ext/io/type.RawFd.html" title="type std::sys::unix::ext::io::RawFd">RawFd</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;offs: <a class="type" href="../../../libc/unix/linux_like/linux/gnu/b64/type.off_t.html" title="type libc::unix::linux_like::linux::gnu::b64::off_t">off_t</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html" title="enum core::ffi::c_void">c_void</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;prio: <a class="type" href="../../../libc/unix/type.c_int.html" title="type libc::unix::c_int">c_int</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;sigev_notify: <a class="enum" href="../../../nix/sys/signal/enum.SigevNotify.html" title="enum nix::sys::signal::SigevNotify">SigevNotify</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opcode: <a class="enum" href="../../../nix/sys/aio/enum.LioOpcode.html" title="enum nix::sys::aio::LioOpcode">LioOpcode</a><br>) -&gt; <a class="struct" href="../../../nix/sys/aio/struct.AioCb.html" title="struct nix::sys::aio::AioCb">AioCb</a>&lt;'a&gt;</code><a class="srclink" href="../../../src/nix/sys/aio.rs.html#597-615" title="goto source code">[src]</a></h4><div class="docblock"><p>Constructs a new <code>AioCb</code> from a raw pointer.</p>
 <p>Unlike <code>from_slice</code>, this method returns a structure suitable for
 placement on the heap.  Due to its unsafety, this method is not
@@ -219,7 +219,7 @@ some reason the data cannot be wrapped in a <code>struct</code> that implements
 <li><code>buf</code>:          Pointer to the memory buffer</li>
 <li><code>len</code>:          Length of the buffer pointed to by <code>buf</code></li>
 <li><code>prio</code>:         If POSIX Prioritized IO is supported, then the
-operation will be prioritized at the process's
+operation will be prioritized at the process’s
 priority level minus <code>prio</code></li>
 <li><code>sigev_notify</code>: Determines how you will be notified of event
 completion.</li>
@@ -229,12 +229,12 @@ aiocb</li>
 </ul>
 <h1 id="safety-1" class="section-header"><a href="#safety-1">Safety</a></h1>
 <p>The caller must ensure that the storage pointed to by <code>buf</code> outlives the
-<code>AioCb</code>.  The lifetime checker can't help here.</p>
+<code>AioCb</code>.  The lifetime checker can’t help here.</p>
 </div><h4 id="method.from_slice" class="method"><code>pub fn <a href="#method.from_slice" class="fnname">from_slice</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;fd: <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/unix/ext/io/type.RawFd.html" title="type std::sys::unix::ext::io::RawFd">RawFd</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;offs: <a class="type" href="../../../libc/unix/linux_like/linux/gnu/b64/type.off_t.html" title="type libc::unix::linux_like::linux::gnu::b64::off_t">off_t</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'a [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;prio: <a class="type" href="../../../libc/unix/type.c_int.html" title="type libc::unix::c_int">c_int</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;sigev_notify: <a class="enum" href="../../../nix/sys/signal/enum.SigevNotify.html" title="enum nix::sys::signal::SigevNotify">SigevNotify</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opcode: <a class="enum" href="../../../nix/sys/aio/enum.LioOpcode.html" title="enum nix::sys::aio::LioOpcode">LioOpcode</a><br>) -&gt; <a class="struct" href="../../../nix/sys/aio/struct.AioCb.html" title="struct nix::sys::aio::AioCb">AioCb</a>&lt;'_&gt;</code><a class="srclink" href="../../../src/nix/sys/aio.rs.html#658-677" title="goto source code">[src]</a></h4><div class="docblock"><p>Like <code>from_mut_slice</code>, but works on constant slices rather than
 mutable slices.</p>
 <p>An <code>AioCb</code> created this way cannot be used with <code>read</code>, and its
 <code>LioOpcode</code> cannot be set to <code>LIO_READ</code>.  This method is useful when
-writing a const buffer with <code>AioCb::write</code>, since <code>from_mut_slice</code> can't
+writing a const buffer with <code>AioCb::write</code>, since <code>from_mut_slice</code> can’t
 work with const buffers.</p>
 <h1 id="examples-4" class="section-header"><a href="#examples-4">Examples</a></h1>
 <p>Construct an <code>AioCb</code> from a slice and use it for writing.</p>
@@ -262,7 +262,7 @@ result and handle operations that were not canceled or that have already
 completed.</p>
 <h1 id="examples-5" class="section-header"><a href="#examples-5">Examples</a></h1>
 <p>Cancel an outstanding aio operation.  Note that we must still call
-<code>aio_return</code> to free resources, even though we don't care about the
+<code>aio_return</code> to free resources, even though we don’t care about the
 result.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -311,7 +311,7 @@ is an alternative to <code>aio_suspend</code>, used by most of the other example
 </div><h4 id="method.fsync" class="method"><code>pub fn <a href="#method.fsync" class="fnname">fsync</a>(&amp;mut self, mode: <a class="enum" href="../../../nix/sys/aio/enum.AioFsyncMode.html" title="enum nix::sys::aio::AioFsyncMode">AioFsyncMode</a>) -&gt; <a class="type" href="../../../nix/type.Result.html" title="type nix::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class="srclink" href="../../../src/nix/sys/aio.rs.html#806-813" title="goto source code">[src]</a></h4><div class="docblock"><p>An asynchronous version of <code>fsync(2)</code>.</p>
 <h1 id="references-2" class="section-header"><a href="#references-2">References</a></h1>
 <p><a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/aio_fsync.html">aio_fsync</a></p>
-</div><h4 id="method.lio_opcode" class="method"><code>pub fn <a href="#method.lio_opcode" class="fnname">lio_opcode</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="../../../nix/sys/aio/enum.LioOpcode.html" title="enum nix::sys::aio::LioOpcode">LioOpcode</a>&gt;</code><a class="srclink" href="../../../src/nix/sys/aio.rs.html#819-826" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns the <code>aiocb</code>'s <code>LioOpcode</code> field</p>
+</div><h4 id="method.lio_opcode" class="method"><code>pub fn <a href="#method.lio_opcode" class="fnname">lio_opcode</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="../../../nix/sys/aio/enum.LioOpcode.html" title="enum nix::sys::aio::LioOpcode">LioOpcode</a>&gt;</code><a class="srclink" href="../../../src/nix/sys/aio.rs.html#819-826" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns the <code>aiocb</code>’s <code>LioOpcode</code> field</p>
 <p>If the value cannot be represented as an <code>LioOpcode</code>, returns <code>None</code>
 instead.</p>
 </div><h4 id="method.nbytes" class="method"><code>pub fn <a href="#method.nbytes" class="fnname">nbytes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code><a class="srclink" href="../../../src/nix/sys/aio.rs.html#833-835" title="goto source code">[src]</a></h4><div class="docblock"><p>Returns the requested length of the aio operation in bytes</p>

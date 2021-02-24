@@ -4,8 +4,8 @@
                 <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Function <a href="index.html">spinoso_random</a>::<wbr><a class="fn" href="">urandom</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/spinoso_random/urandom.rs.html#33-38" title="goto source code">[src]</a></span></h1><pre class="rust fn">pub fn urandom(dest: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../spinoso_random/struct.UrandomError.html" title="struct spinoso_random::UrandomError">UrandomError</a>&gt;</pre><div class="docblock"><p>Read random bytes, using platform-provided randomness.</p>
 <p><code>dest</code> is completely filled with bytes that are expected to be a
 cryptographically secure pseudo-random number in binary form.</p>
-<p>In 2017, Linux manpage random(7) writes that &quot;no cryptographic primitive
-available today can hope to promise more than 256 bits of security&quot;. So it
+<p>In 2017, Linux manpage random(7) writes that “no cryptographic primitive
+available today can hope to promise more than 256 bits of security”. So it
 might be questionable to pass a slice where <code>dest.len() &gt; 32</code> to this
 method.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>

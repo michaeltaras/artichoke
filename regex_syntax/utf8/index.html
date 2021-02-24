@@ -8,7 +8,7 @@ with the <a href="../hir/struct.ClassUnicodeRange.html"><code>hir::ClassUnicodeR
 <p>See the documentation on the <code>Utf8Sequences</code> iterator for more details and
 an example.</p>
 <h1 id="wait-what-is-this" class="section-header"><a href="#wait-what-is-this">Wait, what is this?</a></h1>
-<p>This is simplest to explain with an example. Let's say you wanted to test
+<p>This is simplest to explain with an example. Let’s say you wanted to test
 whether a particular byte sequence was a Cyrillic character. One possible
 scalar value range is <code>[0400-04FF]</code>. The set of allowed bytes for this
 range can be expressed as a sequence of byte ranges:</p>
@@ -20,10 +20,10 @@ range can be expressed as a sequence of byte ranges:</p>
 corresponding pair of bytes: <code>D0</code> to <code>D3</code> and <code>80</code> to <code>BF</code>.</p>
 <p>However, what if you wanted to add the Cyrillic Supplementary characters to
 your range? Your range might then become <code>[0400-052F]</code>. The same procedure
-as above doesn't quite work because <code>052F</code> encodes to <code>D4 AF</code>. The byte ranges
-you'd get from the previous transformation would be <code>[D0-D4][80-AF]</code>. However,
-this isn't quite correct because this range doesn't capture many characters,
-for example, <code>04FF</code> (because its last byte, <code>BF</code> isn't in the range <code>80-AF</code>).</p>
+as above doesn’t quite work because <code>052F</code> encodes to <code>D4 AF</code>. The byte ranges
+you’d get from the previous transformation would be <code>[D0-D4][80-AF]</code>. However,
+this isn’t quite correct because this range doesn’t capture many characters,
+for example, <code>04FF</code> (because its last byte, <code>BF</code> isn’t in the range <code>80-AF</code>).</p>
 <p>Instead, you need multiple sequences of byte ranges:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
@@ -59,7 +59,7 @@ Unicode scalar values.</p>
 <h1 id="lineage" class="section-header"><a href="#lineage">Lineage</a></h1>
 <p>I got the idea and general implementation strategy from Russ Cox in his
 <a href="https://web.archive.org/web/20160404141123/https://swtch.com/%7Ersc/regexp/regexp3.html">article on regexps</a> and RE2.
-Russ Cox got it from Ken Thompson's <code>grep</code> (no source, folk lore?).
+Russ Cox got it from Ken Thompson’s <code>grep</code> (no source, folk lore?).
 I also got the idea from
 <a href="https://github.com/apache/lucene-solr/blob/ae93f4e7ac6a3908046391de35d4f50a0d3c59ca/lucene/core/src/java/org/apache/lucene/util/automaton/UTF32ToUTF8.java">Lucene</a>,
 which uses it for executing automata on their term index.</p>

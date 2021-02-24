@@ -4,7 +4,7 @@
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../../index.html">nix</a>::<wbr><a href="../index.html">unistd</a>::<wbr><a class="mod" href="">alarm</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../../src/nix/unistd.rs.html#1610-1685" title="goto source code">[src]</a></span></h1><div class="docblock"><p>Alarm signal scheduling.</p>
 <p>Scheduling an alarm will trigger a <code>SIGALRM</code> signal when the time has
 elapsed, which has to be caught, because the default action for the
-signal is to terminate the program. This signal also can't be ignored
+signal is to terminate the program. This signal also can’t be ignored
 because the system calls like <code>pause</code> will not be interrupted, see the
 second example below.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>

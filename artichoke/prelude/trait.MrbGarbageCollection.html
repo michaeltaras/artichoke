@@ -12,7 +12,7 @@
 <p>Savepoints allow mruby to deallocate all of the objects created via the
 C API.</p>
 <p>Normally objects created via the C API are marked as permanently alive
-(&quot;white&quot; GC color) with a call to
+(“white” GC color) with a call to
 <a href="../../artichoke_backend/sys/ffi/fn.mrb_gc_protect.html"><code>mrb_gc_protect</code></a>.</p>
 <p>The returned <a href="../../artichoke_backend/gc/arena/struct.ArenaIndex.html" title="ArenaIndex"><code>ArenaIndex</code></a> implements <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="Drop"><code>Drop</code></a>, so it is sufficient to
 let it go out of scope to ensure objects are eventually collected.</p>

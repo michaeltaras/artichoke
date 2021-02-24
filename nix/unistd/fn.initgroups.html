@@ -12,8 +12,8 @@ with the <code>opendirectoryd</code> service.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p><code>initgroups</code> can be used when dropping privileges from the root user to
 another user. For example, given the user <code>www-data</code>, we could look up the
-UID and GID for the user in the system's password database (usually found
-in <code>/etc/passwd</code>). If the <code>www-data</code> user's UID and GID were <code>33</code> and <code>33</code>,
+UID and GID for the user in the system’s password database (usually found
+in <code>/etc/passwd</code>). If the <code>www-data</code> user’s UID and GID were <code>33</code> and <code>33</code>,
 respectively, one could switch the user as follows:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">

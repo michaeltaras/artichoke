@@ -30,7 +30,7 @@ is used where <code>String</code> would have been used.</li>
 <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">table</span>.<span class="ident">iter</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">map</span>, <span class="ident">iter</span>.<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>());</pre></div>
 <h1 id="performance" class="section-header"><a href="#performance">Performance</a></h1>
-<p>In general, one should expect this crate's performance on <code>&amp;[u8]</code> to be
+<p>In general, one should expect this crate’s performance on <code>&amp;[u8]</code> to be
 roughly similar to performance on <code>&amp;str</code>.</p>
 </div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
 <table><tr class="module-item"><td><a class="struct" href="struct.AllSymbols.html" title="intaglio::bytes::AllSymbols struct">AllSymbols</a></td><td class="docblock-short"><p>An iterator over all <a href="../../intaglio/struct.Symbol.html" title="Symbol"><code>Symbol</code></a>s in a <a href="../../intaglio/bytes/struct.SymbolTable.html" title="SymbolTable"><code>SymbolTable</code></a>.</p>

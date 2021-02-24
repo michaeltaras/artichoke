@@ -8,7 +8,7 @@
 <div class="item-spacer"></div>    fn <a href="#method.by_ref" class="fnname">by_ref</a>&lt;'r&gt;(&amp;'r mut self) -&gt; <a class="struct" href="../../regex/bytes/struct.ReplacerRef.html" title="struct regex::bytes::ReplacerRef">ReplacerRef</a>&lt;'r, Self&gt; { ... }
 }</pre></div><div class="docblock"><p>Replacer describes types that can be used to replace matches in a byte
 string.</p>
-<p>In general, users of this crate shouldn't need to implement this trait,
+<p>In general, users of this crate shouldn’t need to implement this trait,
 since implementations are already provided for <code>&amp;[u8]</code> and
 <code>FnMut(&amp;Captures) -&gt; Vec&lt;u8&gt;</code> (or any <code>FnMut(&amp;Captures) -&gt; T</code>
 where <code>T: AsRef&lt;[u8]&gt;</code>), which covers most use cases.</p>

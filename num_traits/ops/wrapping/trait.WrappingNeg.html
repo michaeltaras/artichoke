@@ -8,10 +8,10 @@
 wrapping around at the boundary of the type.</p>
 <p>Since unsigned types do not have negative equivalents
 all applications of this function will wrap (except for <code>-0</code>).
-For values smaller than the corresponding signed type's maximum
+For values smaller than the corresponding signed type’s maximum
 the result is the same as casting the corresponding signed value.
 Any larger values are equivalent to <code>MAX + 1 - (val - MAX - 1)</code> where
-<code>MAX</code> is the corresponding signed type's maximum.</p>
+<code>MAX</code> is the corresponding signed type’s maximum.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">WrappingNeg</span>;

@@ -22,8 +22,8 @@ end of lines.</p>
 </div><h4 id="method.dot_matches_new_line" class="method"><code>pub fn <a href="#method.dot_matches_new_line" class="fnname">dot_matches_new_line</a>(&amp;mut self, yes: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; &amp;mut <a class="struct" href="../regex/struct.RegexBuilder.html" title="struct regex::RegexBuilder">RegexBuilder</a></code><a class="srclink" href="../src/regex/re_builder.rs.html#232" title="goto source code">[src]</a></h4><div class="docblock"><p>Set the value for the any character (<code>s</code>) flag, where in <code>.</code> matches
 anything when <code>s</code> is set and matches anything except for new line when
 it is not set (the default).</p>
-<p>N.B. &quot;matches anything&quot; means &quot;any byte&quot; when Unicode is disabled and
-means &quot;any valid UTF-8 encoding of any Unicode scalar value&quot; when
+<p>N.B. “matches anything” means “any byte” when Unicode is disabled and
+means “any valid UTF-8 encoding of any Unicode scalar value” when
 Unicode is enabled.</p>
 </div><h4 id="method.swap_greed" class="method"><code>pub fn <a href="#method.swap_greed" class="fnname">swap_greed</a>(&amp;mut self, yes: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; &amp;mut <a class="struct" href="../regex/struct.RegexBuilder.html" title="struct regex::RegexBuilder">RegexBuilder</a></code><a class="srclink" href="../src/regex/re_builder.rs.html#232" title="goto source code">[src]</a></h4><div class="docblock"><p>Set the value for the greedy swap (<code>U</code>) flag.</p>
 <p>When enabled, a pattern like <code>a*</code> is lazy (tries to find shortest
@@ -41,12 +41,12 @@ match ASCII word characters instead of all Unicode word characters.</p>
 a regular expression. For example, <code>a</code>, <code>\x61</code>, <code>\u0061</code> and
 <code>\141</code> are all equivalent regular expressions, where the last example
 shows octal syntax.</p>
-<p>While supporting octal syntax isn't in and of itself a problem, it does
+<p>While supporting octal syntax isn’t in and of itself a problem, it does
 make good error messages harder. That is, in PCRE based regex engines,
 syntax like <code>\0</code> invokes a backreference, which is explicitly
-unsupported in Rust's regex engine. However, many users expect it to
+unsupported in Rust’s regex engine. However, many users expect it to
 be supported. Therefore, when octal support is disabled, the error
-message will explicitly mention that backreferences aren't supported.</p>
+message will explicitly mention that backreferences aren’t supported.</p>
 <p>Octal syntax is disabled by default.</p>
 </div><h4 id="method.size_limit" class="method"><code>pub fn <a href="#method.size_limit" class="fnname">size_limit</a>(&amp;mut self, limit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &amp;mut <a class="struct" href="../regex/struct.RegexBuilder.html" title="struct regex::RegexBuilder">RegexBuilder</a></code><a class="srclink" href="../src/regex/re_builder.rs.html#232" title="goto source code">[src]</a></h4><div class="docblock"><p>Set the approximate size limit of the compiled regular expression.</p>
 <p>This roughly corresponds to the number of bytes occupied by a single

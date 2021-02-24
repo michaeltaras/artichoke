@@ -26,7 +26,7 @@ Artichoke implementation calls mruby FFI functions, the <code>State</code> must 
 moved into the <a href="../../artichoke_backend/sys/struct.mrb_state.html" title="sys::mrb_state"><code>sys::mrb_state</code></a> userdata pointer.</p>
 <h1 id="safety" class="section-header"><a href="#safety">Safety</a></h1>
 <p>This method moves the <code>State</code> out of this instance into the <code>mrb</code>
-instance. During this function's execution, this instance may be
+instance. During this function’s execution, this instance may be
 partially initialized.</p>
 <p>This function is only safe to call if the closure only calls FFI
 functions that use a raw <code>*mut sys::mrb_state</code>.</p>

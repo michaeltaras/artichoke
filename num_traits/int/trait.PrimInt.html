@@ -20,7 +20,7 @@
 <div class="item-spacer"></div>    fn <a href="#tymethod.pow" class="fnname">pow</a>(self, exp: u32) -&gt; Self;
 }</pre></div><div class="docblock"><p>Generic trait for primitive integers.</p>
 <p>The <code>PrimInt</code> trait is an abstraction over the builtin primitive integer types (e.g., <code>u8</code>,
-<code>u32</code>, <code>isize</code>, <code>i128</code>, ...). It inherits the basic numeric traits and extends them with
+<code>u32</code>, <code>isize</code>, <code>i128</code>, …). It inherits the basic numeric traits and extends them with
 bitwise operators and non-wrapping arithmetic.</p>
 <p>The trait explicitly inherits <code>Copy</code>, <code>Eq</code>, <code>Ord</code>, and <code>Sized</code>. The intention is that all
 types implementing this trait behave like primitive types that are passed by value by default
@@ -105,7 +105,7 @@ zeros in the least significant bits.</p>
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">n</span>.<span class="ident">signed_shl</span>(<span class="number">12</span>), <span class="ident">m</span>);</pre></div>
 </div><h3 id="tymethod.signed_shr" class="method"><code>fn <a href="#tymethod.signed_shr" class="fnname">signed_shr</a>(self, n: u32) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#171" title="goto source code">[src]</a></h3><div class="docblock"><p>Shifts the bits to the right by a specified amount, <code>n</code>, copying
-the &quot;sign bit&quot; in the most significant bits even for unsigned types.</p>
+the “sign bit” in the most significant bits even for unsigned types.</p>
 <p>This is bitwise equivalent to signed <code>Shr</code>.</p>
 <h1 id="examples-7" class="section-header"><a href="#examples-7">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -146,7 +146,7 @@ zeros in the most significant bits.</p>
 <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="number">0xEFCDAB8967452301u64</span>;
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">n</span>.<span class="ident">swap_bytes</span>(), <span class="ident">m</span>);</pre></div>
-</div><h3 id="tymethod.from_be" class="method"><code>fn <a href="#tymethod.from_be" class="fnname">from_be</a>(x: Self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#238" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert an integer from big endian to the target's endianness.</p>
+</div><h3 id="tymethod.from_be" class="method"><code>fn <a href="#tymethod.from_be" class="fnname">from_be</a>(x: Self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#238" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert an integer from big endian to the target’s endianness.</p>
 <p>On big endian this is a no-op. On little endian the bytes are swapped.</p>
 <h1 id="examples-11" class="section-header"><a href="#examples-11">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -159,7 +159,7 @@ zeros in the most significant bits.</p>
 } <span class="kw">else</span> {
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">u64</span>::<span class="ident">from_be</span>(<span class="ident">n</span>), <span class="ident">n</span>.<span class="ident">swap_bytes</span>())
 }</pre></div>
-</div><h3 id="tymethod.from_le" class="method"><code>fn <a href="#tymethod.from_le" class="fnname">from_le</a>(x: Self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#257" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert an integer from little endian to the target's endianness.</p>
+</div><h3 id="tymethod.from_le" class="method"><code>fn <a href="#tymethod.from_le" class="fnname">from_le</a>(x: Self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#257" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert an integer from little endian to the target’s endianness.</p>
 <p>On little endian this is a no-op. On big endian the bytes are swapped.</p>
 <h1 id="examples-12" class="section-header"><a href="#examples-12">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -172,7 +172,7 @@ zeros in the most significant bits.</p>
 } <span class="kw">else</span> {
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">u64</span>::<span class="ident">from_le</span>(<span class="ident">n</span>), <span class="ident">n</span>.<span class="ident">swap_bytes</span>())
 }</pre></div>
-</div><h3 id="tymethod.to_be" class="method"><code>fn <a href="#tymethod.to_be" class="fnname">to_be</a>(self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#276" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert <code>self</code> to big endian from the target's endianness.</p>
+</div><h3 id="tymethod.to_be" class="method"><code>fn <a href="#tymethod.to_be" class="fnname">to_be</a>(self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#276" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert <code>self</code> to big endian from the target’s endianness.</p>
 <p>On big endian this is a no-op. On little endian the bytes are swapped.</p>
 <h1 id="examples-13" class="section-header"><a href="#examples-13">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -185,7 +185,7 @@ zeros in the most significant bits.</p>
 } <span class="kw">else</span> {
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">n</span>.<span class="ident">to_be</span>(), <span class="ident">n</span>.<span class="ident">swap_bytes</span>())
 }</pre></div>
-</div><h3 id="tymethod.to_le" class="method"><code>fn <a href="#tymethod.to_le" class="fnname">to_le</a>(self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#295" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert <code>self</code> to little endian from the target's endianness.</p>
+</div><h3 id="tymethod.to_le" class="method"><code>fn <a href="#tymethod.to_le" class="fnname">to_le</a>(self) -&gt; Self</code><a class="srclink" href="../../src/num_traits/int.rs.html#295" title="goto source code">[src]</a></h3><div class="docblock"><p>Convert <code>self</code> to little endian from the target’s endianness.</p>
 <p>On little endian this is a no-op. On big endian the bytes are swapped.</p>
 <h1 id="examples-14" class="section-header"><a href="#examples-14">Examples</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">

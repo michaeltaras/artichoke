@@ -5,7 +5,7 @@
 <p>It loads an ELF image into kernel space,
 performs any necessary symbol relocations,
 initializes module parameters to values provided by the caller,
-and then runs the module's init function.</p>
+and then runs the module’s init function.</p>
 <p>This function requires <code>CAP_SYS_MODULE</code> privilege.</p>
 <p>The <code>module_image</code> argument points to a buffer containing the binary image
 to be loaded. The buffer should contain a valid ELF image

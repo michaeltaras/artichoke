@@ -5,7 +5,7 @@
 <p>If the <code>set</code> parameter is <code>Some(..)</code>, then the signal mask will be updated with the signal set.
 The <code>how</code> flag decides the type of update. If <code>set</code> is <code>None</code>, <code>how</code> will be ignored,
 and no modification will take place.</p>
-<p>If the 'oldset' parameter is <code>Some(..)</code> then the current signal mask will be written into it.</p>
+<p>If the ‘oldset’ parameter is <code>Some(..)</code> then the current signal mask will be written into it.</p>
 <p>If both <code>set</code> and <code>oldset</code> is <code>Some(..)</code>, the current signal mask will be written into oldset,
 and then it will be updated with <code>set</code>.</p>
 <p>If both <code>set</code> and <code>oldset</code> is None, this function is a no-op.</p>

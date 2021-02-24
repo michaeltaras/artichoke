@@ -18,7 +18,7 @@
 parsing arguments. This enum also provides a <code>variants()</code> function which can be used to
 retrieve a <code>Vec&lt;&amp;'static str&gt;</code> of the variant names, as well as implementing <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> and
 <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html"><code>Display</code></a> automatically.</p>
-<p><strong>NOTE:</strong> Case insensitivity is supported for ASCII characters only. It's highly recommended to
+<p><strong>NOTE:</strong> Case insensitivity is supported for ASCII characters only. It’s highly recommended to
 use <a href="./struct.Arg.html#method.case_insensitive"><code>Arg::case_insensitive(true)</code></a> for args that will be used with these enums</p>
 <p><strong>NOTE:</strong> This macro automatically implements <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>std::str::FromStr</code></a> and <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html"><code>std::fmt::Display</code></a></p>
 <p><strong>NOTE:</strong> These enums support pub (or not) and uses of the <code>#[derive()]</code> traits</p>

@@ -3,13 +3,13 @@
     fn <a href="#tymethod.width" class="fnname">width</a>&lt;'a&gt;(&amp;'a self) -&gt; usize;
 <div class="item-spacer"></div>    fn <a href="#tymethod.width_cjk" class="fnname">width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; usize;
 }</pre></div><div class="docblock"><p>Methods for determining displayed width of Unicode strings.</p>
-</div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><h3 id="tymethod.width" class="method"><code>fn <a href="#tymethod.width" class="fnname">width</a>&lt;'a&gt;(&amp;'a self) -&gt; usize</code><a class="srclink" href="../src/unicode_width/lib.rs.html#108" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns the string's displayed width in columns.</p>
+</div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><h3 id="tymethod.width" class="method"><code>fn <a href="#tymethod.width" class="fnname">width</a>&lt;'a&gt;(&amp;'a self) -&gt; usize</code><a class="srclink" href="../src/unicode_width/lib.rs.html#108" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns the string’s displayed width in columns.</p>
 <p>Control characters are treated as having zero width.</p>
 <p>This function treats characters in the Ambiguous category according
 to <a href="http://www.unicode.org/reports/tr11/">Unicode Standard Annex #11</a>
 as 1 column wide. This is consistent with the recommendations for
 non-CJK contexts, or when the context cannot be reliably determined.</p>
-</div><h3 id="tymethod.width_cjk" class="method"><code>fn <a href="#tymethod.width_cjk" class="fnname">width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; usize</code><a class="srclink" href="../src/unicode_width/lib.rs.html#118" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns the string's displayed width in columns.</p>
+</div><h3 id="tymethod.width_cjk" class="method"><code>fn <a href="#tymethod.width_cjk" class="fnname">width_cjk</a>&lt;'a&gt;(&amp;'a self) -&gt; usize</code><a class="srclink" href="../src/unicode_width/lib.rs.html#118" title="goto source code">[src]</a></h3><div class="docblock"><p>Returns the string’s displayed width in columns.</p>
 <p>Control characters are treated as having zero width.</p>
 <p>This function treats characters in the Ambiguous category according
 to <a href="http://www.unicode.org/reports/tr11/">Unicode Standard Annex #11</a>

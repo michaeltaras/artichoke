@@ -12,7 +12,7 @@ if <code>dirfd</code> is <code>None</code>.</p>
 <p>If <code>flag</code> is <code>FchownatFlags::NoFollowSymlink</code> and <code>path</code> names a symbolic link,
 then the mode of the symbolic link is changed.</p>
 <p><code>fchownat(None, path, mode, FchownatFlags::NoFollowSymlink)</code> is identical to
-a call <code>libc::lchown(path, mode)</code>.  That's why <code>lchmod</code> is unimplemented in
+a call <code>libc::lchown(path, mode)</code>.  That’s why <code>lchmod</code> is unimplemented in
 the <code>nix</code> crate.</p>
 <h1 id="references" class="section-header"><a href="#references">References</a></h1>
 <p><a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/fchownat.html">fchownat(2)</a>.</p>

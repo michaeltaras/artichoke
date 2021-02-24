@@ -7,7 +7,7 @@
     fn <a href="#method.no_expansion" class="fnname">no_expansion</a>&lt;'r&gt;(&amp;'r mut self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'r, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt; { ... }
 <div class="item-spacer"></div>    fn <a href="#method.by_ref" class="fnname">by_ref</a>&lt;'r&gt;(&amp;'r mut self) -&gt; <a class="struct" href="../regex/struct.ReplacerRef.html" title="struct regex::ReplacerRef">ReplacerRef</a>&lt;'r, Self&gt; { ... }
 }</pre></div><div class="docblock"><p>Replacer describes types that can be used to replace matches in a string.</p>
-<p>In general, users of this crate shouldn't need to implement this trait,
+<p>In general, users of this crate shouldn’t need to implement this trait,
 since implementations are already provided for <code>&amp;str</code> and
 <code>FnMut(&amp;Captures) -&gt; String</code> (or any <code>FnMut(&amp;Captures) -&gt; T</code>
 where <code>T: AsRef&lt;str&gt;</code>), which covers most use cases.</p>
