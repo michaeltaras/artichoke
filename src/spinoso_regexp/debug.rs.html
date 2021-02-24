@@ -615,74 +615,11 @@
 <span id="612">612</span>
 <span id="613">613</span>
 <span id="614">614</span>
-<span id="615">615</span>
-<span id="616">616</span>
-<span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
-<span id="638">638</span>
-<span id="639">639</span>
-<span id="640">640</span>
-<span id="641">641</span>
-<span id="642">642</span>
-<span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
-<span id="647">647</span>
-<span id="648">648</span>
-<span id="649">649</span>
-<span id="650">650</span>
-<span id="651">651</span>
-<span id="652">652</span>
-<span id="653">653</span>
-<span id="654">654</span>
-<span id="655">655</span>
-<span id="656">656</span>
-<span id="657">657</span>
-<span id="658">658</span>
-<span id="659">659</span>
-<span id="660">660</span>
-<span id="661">661</span>
-<span id="662">662</span>
-<span id="663">663</span>
-<span id="664">664</span>
-<span id="665">665</span>
-<span id="666">666</span>
-<span id="667">667</span>
-<span id="668">668</span>
-<span id="669">669</span>
-<span id="670">670</span>
-<span id="671">671</span>
-<span id="672">672</span>
-<span id="673">673</span>
-<span id="674">674</span>
-<span id="675">675</span>
-<span id="676">676</span>
-<span id="677">677</span>
-<span id="678">678</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span>;
-<span class="kw">use</span> <span class="ident">scolapasta_string_escape</span>::<span class="ident">Literal</span>;
+<span class="kw">use</span> <span class="ident">scolapasta_string_escape</span>::<span class="ident">InvalidUtf8ByteSequence</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Debug</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
@@ -705,7 +642,7 @@
         <span class="ident">Iter</span> {
             <span class="ident">prefix</span>: <span class="prelude-val">Some</span>(<span class="string">&#39;/&#39;</span>),
             <span class="ident">source</span>: <span class="self">self</span>.<span class="ident">source</span>,
-            <span class="ident">literal</span>: <span class="ident">ByteLiteral</span>::<span class="ident">empty</span>(),
+            <span class="ident">literal</span>: <span class="ident">InvalidUtf8ByteSequence</span>::<span class="ident">new</span>(),
             <span class="ident">suffix</span>: <span class="prelude-val">Some</span>(<span class="string">&#39;/&#39;</span>),
             <span class="ident">options</span>: <span class="self">self</span>.<span class="ident">options</span>,
             <span class="ident">encoding</span>: <span class="self">self</span>.<span class="ident">encoding</span>,
@@ -743,7 +680,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">prefix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
     <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
-    <span class="ident">literal</span>: <span class="ident">ByteLiteral</span>,
+    <span class="ident">literal</span>: <span class="ident">InvalidUtf8ByteSequence</span>,
     <span class="ident">suffix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
     <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
     <span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
@@ -764,14 +701,20 @@
             <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ch</span> {
                 <span class="comment">// &#39;/&#39; is the `Regexp` literal delimeter, so escape it.</span>
                 <span class="prelude-val">Some</span>(<span class="string">&#39;/&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="self">self</span>.<span class="ident">literal</span> <span class="op">=</span> <span class="ident">ByteLiteral</span>::<span class="ident">one</span>(<span class="string">b&#39;/&#39;</span>);
+                    <span class="comment">// While not an invalid byte, we rely on the documented</span>
+                    <span class="comment">// behavior of `InvalidUtf8ByteSequence` to always escape</span>
+                    <span class="comment">// any bytes given to it.</span>
+                    <span class="self">self</span>.<span class="ident">literal</span> <span class="op">=</span> <span class="ident">InvalidUtf8ByteSequence</span>::<span class="ident">with_byte</span>(<span class="string">b&#39;/&#39;</span>);
                     <span class="prelude-val">Some</span>(<span class="string">&#39;\\&#39;</span>)
                 }
                 <span class="prelude-val">Some</span>(<span class="ident">ch</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">ch</span>),
                 <span class="comment">// Otherwise, we&#39;ve gotten invalid UTF-8, which means this is not an</span>
                 <span class="comment">// printable char.</span>
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="self">self</span>.<span class="ident">literal</span> <span class="op">=</span> <span class="ident">ByteLiteral</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">source</span>[..<span class="ident">size</span>]);
+                    <span class="comment">// This conversion is safe to unwrap due to the documented</span>
+                    <span class="comment">// behavior of `bstr::decode_utf8` and `InvalidUtf8ByteSequence`</span>
+                    <span class="comment">// which indicate that `size` is always in the range of 0..=3.</span>
+                    <span class="self">self</span>.<span class="ident">literal</span> <span class="op">=</span> <span class="ident">InvalidUtf8ByteSequence</span>::<span class="ident">try_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">source</span>[..<span class="ident">size</span>]).<span class="ident">unwrap</span>();
                     <span class="comment">// `size` is non-zero because `pattern` is non-empty.</span>
                     <span class="comment">// `Literal`s created from &gt; one byte are always non-empty.</span>
                     <span class="self">self</span>.<span class="ident">literal</span>.<span class="ident">next</span>()
@@ -796,77 +739,6 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FusedIterator</span> <span class="kw">for</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">struct</span> <span class="ident">ByteLiteral</span> {
-    <span class="ident">one</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Literal</span><span class="op">&gt;</span>,
-    <span class="ident">two</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Literal</span><span class="op">&gt;</span>,
-    <span class="ident">three</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Literal</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">ByteLiteral</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">one</span>: <span class="prelude-val">None</span>,
-            <span class="ident">two</span>: <span class="prelude-val">None</span>,
-            <span class="ident">three</span>: <span class="prelude-val">None</span>,
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">one</span>(<span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">one</span>: <span class="prelude-val">Some</span>(<span class="ident">Literal</span>::<span class="ident">from</span>(<span class="ident">byte</span>)),
-            <span class="ident">two</span>: <span class="prelude-val">None</span>,
-            <span class="ident">three</span>: <span class="prelude-val">None</span>,
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">two</span>(<span class="ident">left</span>: <span class="ident">u8</span>, <span class="ident">right</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">one</span>: <span class="prelude-val">Some</span>(<span class="ident">Literal</span>::<span class="ident">from</span>(<span class="ident">left</span>)),
-            <span class="ident">two</span>: <span class="prelude-val">Some</span>(<span class="ident">Literal</span>::<span class="ident">from</span>(<span class="ident">right</span>)),
-            <span class="ident">three</span>: <span class="prelude-val">None</span>,
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">three</span>(<span class="ident">left</span>: <span class="ident">u8</span>, <span class="ident">mid</span>: <span class="ident">u8</span>, <span class="ident">right</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">one</span>: <span class="prelude-val">Some</span>(<span class="ident">Literal</span>::<span class="ident">from</span>(<span class="ident">left</span>)),
-            <span class="ident">two</span>: <span class="prelude-val">Some</span>(<span class="ident">Literal</span>::<span class="ident">from</span>(<span class="ident">mid</span>)),
-            <span class="ident">three</span>: <span class="prelude-val">Some</span>(<span class="ident">Literal</span>::<span class="ident">from</span>(<span class="ident">right</span>)),
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteLiteral</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">bytes</span> {
-            [] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">default</span>(),
-            [<span class="ident">byte</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">one</span>(<span class="ident">byte</span>),
-            [<span class="ident">left</span>, <span class="ident">right</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">two</span>(<span class="ident">left</span>, <span class="ident">right</span>),
-            [<span class="ident">left</span>, <span class="ident">mid</span>, <span class="ident">right</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">three</span>(<span class="ident">left</span>, <span class="ident">mid</span>, <span class="ident">right</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Invalid UTF-8 byte literal sequences can be at most three bytes&quot;</span>),
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">ByteLiteral</span> {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">one</span>
-            .<span class="ident">as_mut</span>()
-            .<span class="ident">and_then</span>(<span class="ident">Iterator</span>::<span class="ident">next</span>)
-            .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">two</span>.<span class="ident">as_mut</span>().<span class="ident">and_then</span>(<span class="ident">Iterator</span>::<span class="ident">next</span>))
-            .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">three</span>.<span class="ident">as_mut</span>().<span class="ident">and_then</span>(<span class="ident">Iterator</span>::<span class="ident">next</span>))
-    }
-}
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
