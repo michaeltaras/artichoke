@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["chr",""],["div",""],["element_reference",""],["size",""]]});
+initSidebarItems({"fn":[["chr",""],["div",""],["element_reference",""],["is_allbits",""],["is_anybits",""],["is_nobits",""],["size",""]]});
