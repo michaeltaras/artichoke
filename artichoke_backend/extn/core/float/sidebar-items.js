@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["init",""]],"struct":[["Float",""]]});
+initSidebarItems({"mod":[["mruby",""]],"struct":[["Float",""]]});
