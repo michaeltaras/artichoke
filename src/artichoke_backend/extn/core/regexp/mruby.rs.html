@@ -339,7 +339,7 @@
     <span class="comment">// Call `mrb_obj_new` instead of allocating an object of class `slf` and</span>
     <span class="comment">// delegating to `trampoline::initialize` to handle cases where subclasses</span>
     <span class="comment">// override initialize.</span>
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">argslen</span>) <span class="op">=</span> <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">args</span>.<span class="ident">len</span>()) {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">argslen</span>) <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">mrb_int</span>::<span class="ident">try_from</span>(<span class="ident">args</span>.<span class="ident">len</span>()) {
         <span class="ident">sys</span>::<span class="ident">mrb_obj_new</span>(<span class="ident">mrb</span>, <span class="ident">sys</span>::<span class="ident">mrb_sys_class_ptr</span>(<span class="ident">slf</span>), <span class="ident">argslen</span>, <span class="ident">args</span>.<span class="ident">as_ptr</span>())
     } <span class="kw">else</span> {
         <span class="ident">sys</span>::<span class="ident">mrb_sys_nil_value</span>()

@@ -348,7 +348,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Seed</span> {
-    <span class="ident">New</span>(<span class="ident">Int</span>),
+    <span class="ident">New</span>(<span class="ident">i64</span>),
     <span class="prelude-val">None</span>,
 }
 
@@ -358,8 +358,8 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Seed</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">seed</span>: <span class="ident">Int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Seed</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Seed</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">seed</span>: <span class="ident">i64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Seed</span> {
         <span class="ident">Seed</span>::<span class="ident">New</span>(<span class="ident">seed</span>)
     }
 }
@@ -410,15 +410,15 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_sign_loss</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_wrap</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_seed</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_seed</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="comment">// TODO: return a bignum instead of truncating.</span>
     <span class="kw">let</span> [<span class="ident">a</span>, <span class="ident">b</span>, <span class="kw">_</span>, <span class="kw">_</span>] <span class="op">=</span> <span class="ident">spinoso_random</span>::<span class="ident">new_seed</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">a</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span> <span class="op">|</span> <span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">b</span>);
-    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed</span> <span class="kw">as</span> <span class="ident">Int</span>;
+    <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed</span> <span class="kw">as</span> <span class="ident">i64</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">seed</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">srand</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="ident">Seed</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Int</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">srand</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Artichoke</span>, <span class="ident">seed</span>: <span class="ident">Seed</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">old_seed</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">prng</span>()<span class="question-mark">?</span>.<span class="ident">seed</span>();
     <span class="kw">let</span> <span class="ident">new_random</span> <span class="op">=</span> <span class="ident">Random</span>::<span class="ident">with_array_seed</span>(<span class="ident">seed</span>.<span class="ident">to_mt_seed</span>())<span class="question-mark">?</span>;
     <span class="comment">// &quot;Reseed&quot; by replacing the RNG with a newly seeded one.</span>
@@ -427,7 +427,7 @@
     <span class="prelude-val">Ok</span>(<span class="ident">old_seed</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">urandom</span>(<span class="ident">size</span>: <span class="ident">i64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">size</span>) {
         <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
         <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -498,7 +498,7 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">random</span>))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">Int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">i64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">usize</span>::<span class="ident">try_from</span>(<span class="ident">size</span>) {
             <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Vec</span>::<span class="ident">new</span>()),
             <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -518,11 +518,11 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_sign_loss</span>)]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cast_possible_wrap</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Int</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">seed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i64</span> {
         <span class="comment">// TODO: return a bignum instead of truncating.</span>
         <span class="kw">let</span> [<span class="ident">a</span>, <span class="ident">b</span>, <span class="kw">_</span>, <span class="kw">_</span>] <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">seed</span>();
         <span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">a</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span> <span class="op">|</span> <span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">b</span>);
-        <span class="ident">seed</span> <span class="kw">as</span> <span class="ident">Int</span>
+        <span class="ident">seed</span> <span class="kw">as</span> <span class="ident">i64</span>
     }
 }
 

@@ -94,7 +94,7 @@
 
     <span class="kw">let</span> <span class="ident">patchlevel</span> <span class="op">=</span> <span class="ident">config</span>
         .<span class="ident">ruby_patchlevel</span>()
-        .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>()
+        .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>()
         .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">global_constant</span>(<span class="string">&quot;RUBY_PATCHLEVEL&quot;</span>))<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">patchlevel</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">patchlevel</span>);
     <span class="ident">interp</span>.<span class="ident">define_global_constant</span>(<span class="string">&quot;RUBY_PATCHLEVEL&quot;</span>, <span class="ident">patchlevel</span>)<span class="question-mark">?</span>;
@@ -109,7 +109,7 @@
 
     <span class="kw">let</span> <span class="ident">revision</span> <span class="op">=</span> <span class="ident">config</span>
         .<span class="ident">ruby_revision</span>()
-        .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>()
+        .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>()
         .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">NotDefinedError</span>::<span class="ident">global_constant</span>(<span class="string">&quot;RUBY_REVISION&quot;</span>))<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">revision</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">convert</span>(<span class="ident">revision</span>);
     <span class="ident">interp</span>.<span class="ident">define_global_constant</span>(<span class="string">&quot;RUBY_REVISION&quot;</span>, <span class="ident">revision</span>)<span class="question-mark">?</span>;
