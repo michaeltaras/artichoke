@@ -1,7 +1,11 @@
 //! Glue between mruby FFI and `Time` Rust implementation.
 
+use std::str;
+
 use crate::extn::core::time::Time;
+use crate::extn::core::symbol::Symbol;
 use crate::extn::prelude::*;
+use crate::convert::{implicitly_convert_to_int};
 
 // Constructor
 
@@ -11,13 +15,48 @@ pub fn now(interp: &mut Artichoke) -> Result<Value, Error> {
     Ok(result)
 }
 
-pub fn at<T>(interp: &mut Artichoke, args: T) -> Result<Value, Error>
-where
+pub fn at<T>(interp: &mut Artichoke, args: T) -> Result<Value, Error> where
     T: IntoIterator<Item = Value>,
 {
-    let _ = interp;
-    let _ = args;
-    Err(NotImplementedError::new().into())
+    let mut args: Vec<Value> = args.into_iter().collect();
+
+    // Pop the zone off the end of args, not yet supported
+    if args.len() > 1 && args.last().unwrap().ruby_type() == Ruby::Hash {
+        let _ = args.pop().unwrap();
+    }
+
+    if args.is_empty() || args.len() > 3 {
+        return Err(ArgumentError::with_message("wrong number of arguments").into());
+    }
+
+    let time_at = if let Ok(time) = unsafe { Time::unbox_from_value(&mut args[0], interp) } {
+        *time
+    } else {
+        let seconds = interp.coerce_to_float(args[0])?;
+        
+        if args.len() == 1 {
+            Time::at(seconds, 0.0)
+        } else {
+            let sub_seconds = interp.coerce_to_float(args[1])?;
+            let unit_multiplier = if args.len() == 3 {
+                let symbol = unsafe { Symbol::unbox_from_value(&mut args[2], interp)? };
+                let units = symbol.bytes(interp).to_vec();
+                match str::from_utf8(&units).unwrap() {
+                    ":millisecond" => 1_000_000.0,
+                    ":microsecond" | ":usec" => 1000.0,
+                    ":nanosecond" | ":nsec" => 1.0,
+                    _ => return Err(ArgumentError::with_message("unexpected unit").into()),
+                }
+            } else {
+                1000.0
+            };
+            let sub_second_nanos = sub_seconds * unit_multiplier;
+            Time::at(seconds, sub_second_nanos)
+        }
+    };
+    
+    let result = Time::alloc_value(time_at, interp)?;
+    Ok(result)
 }
 
 pub fn mkutc<T>(interp: &mut Artichoke, args: T) -> Result<Value, Error>
@@ -134,29 +173,16 @@ pub fn as_utc(interp: &mut Artichoke, mut time: Value) -> Result<Value, Error> {
 
 // Inspect
 
-pub fn asctime(interp: &mut Artichoke, time: Value) -> Result<Value, Error> {
-    let _ = interp;
-    let _ = time;
-    Err(NotImplementedError::new().into())
+pub fn asctime(interp: &mut Artichoke, mut time: Value) -> Result<Value, Error> {
+    let time = unsafe { Time::unbox_from_value(&mut time, interp)? };
+    let string = time.format("%a %b %e %T %Y");
+    Ok(interp.convert_mut(string))
 }
 
-pub fn to_string(interp: &mut Artichoke, time: Value) -> Result<Value, Error> {
-    let _ = time;
-    // XXX: This function is used to implement `Time#inspect`. Raising in an
-    // `#inspect` implementation interacts poorly with the locals table when
-    // running Artichoke in a REPL.
-    //
-    // Rather than fix this, which will involve deep diving into mruby, work
-    // around this by returning a `String` that says `Time#inspect` is not
-    // implemented. This allows us to uphold the API contract without
-    // implementing `strftime`.
-    //
-    // This hack replaces this code:
-    //
-    // ```rust
-    // Err(NotImplementedError::new().into())
-    // ```
-    Ok(interp.convert_mut("Time<Time#inspect is not implemented>"))
+pub fn to_string(interp: &mut Artichoke, mut time: Value) -> Result<Value, Error> {
+    let time = unsafe { Time::unbox_from_value(&mut time, interp)? };
+    let string = time.format("%Y-%m-%d %H:%M:%S %z");
+    Ok(interp.convert_mut(string))
 }
 
 pub fn to_array(interp: &mut Artichoke, time: Value) -> Result<Value, Error> {

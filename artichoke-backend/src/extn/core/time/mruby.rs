@@ -18,7 +18,7 @@ pub fn init(interp: &mut Artichoke) -> InitializeResult<()> {
         .value_is_rust_object()
         // Constructor
         .add_self_method("now", time_self_now, sys::mrb_args_none())?
-        .add_self_method("at", time_self_at, sys::mrb_args_any())?
+        .add_self_method("at", time_self_at, sys::mrb_args_req(1))?
         .add_self_method("utc", time_self_mkutc, sys::mrb_args_any())?
         .add_self_method("gm", time_self_mkutc, sys::mrb_args_any())?
         .add_self_method("local", time_self_mktime, sys::mrb_args_any())?

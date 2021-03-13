@@ -1,6 +1,8 @@
+use std::time::Duration;
 use chrono::prelude::*;
 
 use crate::time::chrono::{Offset, Time};
+use crate::NANOS_IN_SECOND;
 
 impl Default for Time {
     /// The zero-argument [`Time#new`] constructor creates a local time set to
@@ -44,6 +46,38 @@ impl Time {
         let offset = Offset::Local;
         let timestamp = now.timestamp();
         let sub_second_nanos = now.timestamp_subsec_nanos();
+        Self {
+            timestamp,
+            sub_second_nanos,
+            offset,
+        }
+    }
+
+    /// TODO: Add Docs
+    #[inline]
+    #[must_use]
+    pub fn at(seconds: f64, sub_second_nanos: f64) -> Self {
+        let nanos_in_second = NANOS_IN_SECOND as f64;
+        let offset = Offset::Local;
+        let mut timestamp = seconds;
+        let mut sub_second_nanos = sub_second_nanos;
+
+        // If seconds is fractional, add fractional seconds to sub_second_nanos
+        if timestamp.fract() != 0.0 {
+            let nanos_from_fraction = seconds.fract() * nanos_in_second;
+            timestamp = timestamp.floor();
+            sub_second_nanos += nanos_from_fraction;
+        }
+
+        // If sub_second_nanos is more than 1 second, move overflow into seconds
+        if sub_second_nanos.abs() > nanos_in_second {
+            timestamp += sub_second_nanos / nanos_in_second;
+            sub_second_nanos %= nanos_in_second;
+        }
+        
+        let timestamp = timestamp as i64;
+        let sub_second_nanos = sub_second_nanos as u32;
+
         Self {
             timestamp,
             sub_second_nanos,

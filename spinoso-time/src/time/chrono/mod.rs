@@ -1,4 +1,5 @@
 use chrono::prelude::*;
+use chrono_tz::Tz;
 use core::cmp::Ordering;
 use core::convert::TryFrom;
 use core::hash::{Hash, Hasher};
@@ -174,6 +175,39 @@ impl Time {
     #[must_use]
     pub fn to_a(self) -> ToA {
         self.into()
+    }
+
+    /// TODO: Add doc
+    #[inline]
+    #[must_use]
+    pub fn format(self, fmt: &str) -> String {
+        let Self {
+            timestamp,
+            sub_second_nanos,
+            offset,
+        } = self;
+
+        let naive = NaiveDateTime::from_timestamp(timestamp, sub_second_nanos);
+        match offset {
+            Offset::Utc => {
+                let aware = DateTime::<Utc>::from_utc(naive, Utc);
+                aware.format(fmt).to_string()
+            }
+            Offset::Local => {
+                let offset = Local.offset_from_utc_datetime(&naive);
+                let aware = DateTime::<Local>::from_utc(naive, offset);
+                aware.format(fmt).to_string()
+            }
+            Offset::Tz(timezone) => {
+                let offset = timezone.offset_from_utc_datetime(&naive);
+                let aware = DateTime::<Tz>::from_utc(naive, offset);
+                aware.format(fmt).to_string()
+            }
+            Offset::Fixed(offset) => {
+                let aware = DateTime::<FixedOffset>::from_utc(naive, offset);
+                aware.format(fmt).to_string()
+            }
+        }
     }
 }
 
